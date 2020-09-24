@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_15dp"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:background="@drawable/bj_shape_line_theme_2"
+        android:drawableStart="@drawable/icon_like"
+        android:drawablePadding="@dimen/dimen_5dp"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:text="加关注"
+        android:textColor="@color/color_text_theme"
+        android:textSize="10sp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_60dp"
+        android:layout_height="@dimen/dimen_25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:background="@drawable/bj_shape_line_66_6"
+        android:gravity="center"
+        android:text="已关注"
+        android:textColor="@color/color_808080"
+        android:textSize="10sp" />
+
+    <ImageView
+        android:id="@+id/iv_head_img"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="@dimen/dp_10"
+        android:src="@mipmap/ic_6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iv_head_img"
+        android:drawablePadding="@dimen/dp_10"
+        android:gravity="center"
+        android:drawableEnd="@drawable/icon_xb_nan"
+        android:layout_toEndOf="@id/iv_head_img"
+        android:text="吴帅帅"
+        android:textColor="@color/color_333333"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv_head_img"
+        android:layout_toEndOf="@id/iv_head_img"
+        android:text="2002-15-16"
+        android:textColor="@color/color_999999"
+        android:textSize="12sp" />
+
+
+</RelativeLayout>

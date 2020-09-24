@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/rl_actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/dimen_25dp"
+            android:layout_height="@dimen/dimen_25dp"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:paddingLeft="@dimen/dimen_2dp"
+            android:paddingRight="@dimen/dimen_2dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_back_h" />
+
+        <TextView
+            android:id="@+id/tv_search_topic"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_50dp"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_weight="1"
+            android:background="@drawable/ic_shade_img"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dimen_15dp"
+            android:text="圈子广场"
+            android:textColor="@color/color_999999"
+            android:textFontWeight="1"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_right_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_msg_add"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/dimen_15dp"
+            android:text="创建"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/dimen_16dp" />
+
+    </LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="#ffffff"
+        app:tabIndicatorColor="@color/color_text_theme"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="2dp"
+        app:tabMode="scrollable"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabSelectedTextColor="@color/color_333333"
+        app:tabTextColor="@color/color_808080" />
+
+
+    <com.jxkj.fit_5a.conpoment.view.AutoHeightViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_ffffff" />
+</LinearLayout>

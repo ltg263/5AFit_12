@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:layout_marginStart="@dimen/dp_10"
+    android:background="@drawable/ic_shade_img"
+    android:padding="@dimen/dimen_20dp">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="@dimen/dimen_30dp"
+        android:layout_height="@dimen/dimen_30dp"
+        android:layout_alignTop="@id/tv_name"
+        android:background="@drawable/bj_circle_dot_theme"
+        android:scaleType="center"
+        android:src="@drawable/icon_home_kll" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_toEndOf="@id/iv_icon"
+        android:text="当前速度"
+        android:textColor="@color/color_666666"
+        android:textSize="17sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dimen_5dp"
+        android:layout_toEndOf="@id/iv_icon"
+        android:text="140cal"
+        android:textColor="#212121"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

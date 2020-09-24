@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_titlebar_common" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5dp"
+        android:background="@color/line_color" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp_10"
+                android:text="所有品牌"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="@dimen/dimen_60dp"
+                android:layout_height="@dimen/dimen_2dp"
+                android:layout_below="@id/tv1"
+                android:layout_marginTop="-5dp"
+                android:background="@drawable/line_shape_bj_select" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_all_list"
+                android:layout_width="match_parent"
+                android:overScrollMode="never"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_30dp"
+                android:drawablePadding="@dimen/dp_10"
+                android:text="视频教程"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="@dimen/dimen_60dp"
+                android:layout_height="@dimen/dimen_2dp"
+                android:layout_below="@id/tv1"
+                android:layout_marginTop="-5dp"
+                android:background="@drawable/line_shape_bj_select" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_15dp">
+
+                <VideoView
+                    android:id="@+id/video_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_220dp" />
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:id="@+id/ll_connect"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_45dp"
+                android:layout_marginHorizontal="@dimen/dimen_30dp"
+                android:layout_marginVertical="@dimen/dp_10"
+                android:background="@drawable/btn_shape_bj_theme_25"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10">
+
+                <ImageView
+                    android:id="@+id/iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:src="@drawable/icon_lanya" />
+
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="蓝牙连接"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@drawable/lanyac_onnect_anim"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

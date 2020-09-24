@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/dimen_75dp"
+    android:layout_marginStart="@dimen/dp_10"
+    android:background="@drawable/ic_shade_img"
+    android:padding="@dimen/dimen_15dp">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_name"
+        android:layout_alignBottom="@id/tv_name"
+        android:src="@drawable/icon_home_kll" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_toEndOf="@id/iv_icon"
+        android:text="卡路里"
+        android:textColor="@color/color_333333" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dimen_5dp"
+        android:layout_toEndOf="@id/iv_icon"
+        android:text="140cal"
+        android:textColor="@color/color_666666" />
+
+</RelativeLayout>

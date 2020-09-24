@@ -1,0 +1,37 @@
+package com.jxkj.fit_5a.view.adapter;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.conpoment.view.PileAvertView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * author : LiuJie
+ * date   : 2020/5/2914:03
+ */
+public class HomeThreeRmhtAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+    public HomeThreeRmhtAdapter(@Nullable List<String> data) {
+        super(R.layout.item_home_three_rmht, data);
+    }
+
+    @Override
+    protected void convert(@NonNull BaseViewHolder helper, String item) {
+        PileAvertView pile_view_1 = helper.getView(R.id.pile_view_1);
+        List<String> urls=new ArrayList<>();
+        urls.clear();
+        urls.add("https://gw.alicdn.com/tps/TB1W_X6OXXXXXcZXVXXXXXXXXXX-400-400.png");
+        urls.add("https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2979410926,2911304023&fm=26&gp=0.jpg");
+        urls.add("https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2979410926,2911304023&fm=26&gp=0.jpg");
+        urls.add("https://gw.alicdn.com/tps/TB1W_X6OXXXXXcZXVXXXXXXXXXX-400-400.png");
+        urls.add("https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2979410926,2911304023&fm=26&gp=0.jpg");
+//设置数据源
+        pile_view_1.setAvertImages(urls);
+    }
+
+}

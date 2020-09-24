@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_5dp"
+    android:background="@drawable/ic_shade_img"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_toEndOf="@id/iv"
+        android:padding="@dimen/dimen_5dp"
+        android:text="圈子名称"
+        android:textColor="@color/color_000000"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
+        android:layout_alignStart="@id/tv1"
+        android:layout_marginTop="@dimen/dp_10"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:minLines="2"
+        android:padding="@dimen/dimen_5dp"
+        android:paddingStart="@dimen/dimen_5dp"
+        android:text="分享一些健身的随身好物或者成都市大分享一些健身的随身好物或者成都市大..."
+        android:textColor="@color/color_808080"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv2"
+        android:layout_alignStart="@id/tv1"
+        android:layout_marginTop="@dimen/dimen_5dp"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:drawableStart="@drawable/ic_interest_xr"
+        android:drawablePadding="@dimen/dimen_5dp"
+        android:paddingStart="@dimen/dimen_5dp"
+        android:text="1385人"
+        android:textColor="@color/color_808080"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tv4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv3"
+        android:layout_marginStart="@dimen/dimen_50dp"
+        android:layout_marginTop="@dimen/dimen_5dp"
+        android:layout_toEndOf="@id/tv3"
+        android:drawableStart="@drawable/ic_interest_msg"
+        android:drawablePadding="@dimen/dimen_5dp"
+        android:paddingStart="@dimen/dimen_5dp"
+        android:text="6912条"
+        android:textColor="@color/color_808080"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tv5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv1"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:background="@drawable/bj_shape_line_theme_2"
+        android:drawableStart="@drawable/ic_interest_jiaru"
+        android:drawablePadding="@dimen/dimen_5dp"
+        android:paddingHorizontal="@dimen/dimen_7dp"
+        android:paddingVertical="@dimen/dimen_3dp"
+        android:text="加入"
+        android:textColor="@color/color_text_theme"
+        android:textSize="10sp" />
+
+    <com.jxkj.fit_5a.conpoment.view.SquareImageView
+        android:id="@+id/iv"
+        android:layout_width="@dimen/dimen_100dp"
+        android:layout_height="@dimen/dimen_100dp"
+        android:layout_alignBottom="@id/tv4"
+        android:layout_alignTop="@id/tv1"
+        android:layout_margin="@dimen/dp_10"
+        android:src="@mipmap/ic_7" />
+
+</RelativeLayout>
