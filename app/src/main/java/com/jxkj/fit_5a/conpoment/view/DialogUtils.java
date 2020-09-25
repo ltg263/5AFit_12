@@ -1,5 +1,8 @@
 package com.jxkj.fit_5a.conpoment.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -7,17 +10,22 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
 import com.jxkj.fit_5a.R;
@@ -43,33 +51,44 @@ public class DialogUtils {
                 .create();
 
     }
+    @SuppressLint("ClickableViewAccessibility")
     public static void showDialogStartYd(Activity context, final DialogInterfaceS dialogInterface) {
 
         final Dialog dialog = new Dialog(context, R.style.Dialog_Fullscreen);
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_start_sop, null);
 
-        RelativeLayout rl_parent = view.findViewById(R.id.rl_parent);
+        LinearLayout rl_parent = view.findViewById(R.id.rl_parent);
         Bitmap bitmap=screenShotWithoutStatusBar(context);
         rl_parent.setBackground(new BitmapDrawable(context.getResources(),blurBitmap(context,bitmap,10)));
-        TextView tv = view.findViewById(R.id.tv);
-        TextView tv1 = view.findViewById(R.id.tv1);
+        ImageView tv = view.findViewById(R.id.iv_1);
+        ImageView tv1 = view.findViewById(R.id.iv_2);
+        StepArcView_Btn mSv = view.findViewById(R.id.sv);
 
         tv.setOnClickListener(new View.OnClickListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 dialogInterface.btnType(1);
                 dialog.dismiss();
             }
         });
-        tv1.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                dialogInterface.btnType(2);
-                dialog.dismiss();
+        tv1.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_UP){
+                mSv.setStopAnimator();
             }
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                mSv.setCurrentCount(100, 100, new StepArcView_Btn.CurrentAngleInterface() {
+                    @Override
+                    public void complete() {
+                        dialog.dismiss();
+                        dialogInterface.btnType(2);
+                    }
+                });
+            }
+            return true;
         });
+
         dialog.setCancelable(false);
         dialog.setContentView(view);
         dialog.show();

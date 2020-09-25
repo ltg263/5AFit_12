@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.view.ColorFlipPagerTitleView;
+import com.jxkj.fit_5a.view.activity.exercise.CourseSelectionActivity;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -36,7 +37,9 @@ public class MagicIndicatorUtils {
         mMagicIndicator.setBackgroundColor(Color.parseColor("#ffffff"));
         CommonNavigator commonNavigator = new CommonNavigator(mContext);
         commonNavigator.setScrollPivotX(0.25f);
-        commonNavigator.setAdjustMode(true);
+        if(!(mContext instanceof CourseSelectionActivity)){
+            commonNavigator.setAdjustMode(true);
+        }
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {

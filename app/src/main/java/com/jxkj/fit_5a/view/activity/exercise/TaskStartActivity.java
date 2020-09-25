@@ -31,13 +31,16 @@ public class TaskStartActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.ll_back, R.id.rl_sbgl, R.id.ll_kcxz,R.id.ll_xlkz})
+    @OnClick({R.id.ll_back, R.id.rl_sbgl,R.id.btn_start, R.id.ll_kcxz,R.id.ll_xlkz})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
                 finish();
                 break;
             case R.id.rl_sbgl:
+                break;
+            case R.id.btn_start:
+
                 break;
             case R.id.ll_kcxz:
                 startActivity(new Intent(this, CourseSelectionActivity.class));

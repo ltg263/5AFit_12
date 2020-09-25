@@ -108,6 +108,14 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@mipmap/icon_start_d"
+            android:layout_marginTop="@dimen/dimen_30dp" />
+
 
     </RelativeLayout>
 

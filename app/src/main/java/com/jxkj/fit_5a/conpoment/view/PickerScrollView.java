@@ -36,8 +36,8 @@ public class PickerScrollView extends View {
     private int mCurrentSelected;
     private Paint mPaint;
 
-    private float mMaxTextSize = 20;
-    private float mMinTextSize = 10;
+    private float mMaxTextSize = 28;
+    private float mMinTextSize = 16;
 
     private float mMaxTextAlpha = 255;
     private float mMinTextAlpha = 120;

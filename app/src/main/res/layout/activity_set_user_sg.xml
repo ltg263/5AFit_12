@@ -6,7 +6,6 @@
     android:background="@color/color_ffffff"
     android:orientation="vertical">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -42,92 +41,68 @@
             android:textColor="@color/color_999999"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/tv_sg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dimen_25dp"
-            android:layout_marginBottom="210dp"
-            android:text="165"
-            android:textColor="@color/color_333333"
-            android:textSize="26sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/tv_sg"
-            android:layout_toEndOf="@id/tv_sg"
-            android:gravity="bottom"
-            android:paddingBottom="@dimen/dimen_2dp"
-            android:text="cm"
-            android:textColor="@color/color_333333"
-            android:textSize="16sp" />
-
-
-        <ImageView
-            android:id="@+id/iv_xb"
-            android:layout_width="wrap_content"
-            android:layout_height="210dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_ren_nv" />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <com.jxkj.fit_5a.conpoment.view.SquareRelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignTop="@id/tv2"
-            android:layout_marginEnd="@dimen/dimen_20dp"
-            android:layout_marginBottom="@dimen/dimen_30dp">
+            android:layout_below="@id/tv2"
+            android:padding="@dimen/dp_10"
+            android:rotation="90">
 
-            <RelativeLayout
+            <com.jxkj.fit_5a.conpoment.view.RulerView_xz
+                android:id="@+id/ruler_height"
                 android:layout_width="match_parent"
+                android:layout_height="58.0dip"
+                app:alphaEnable="false"
+                app:lineColor="#AAAAAA"
+                app:lineMaxHeight="30dp"
+                app:lineMidHeight="30dp"
+                app:lineMinHeight="15dp"
+                app:lineSpaceWidth="7dp"
+                app:lineWidth="1dip"
+                app:maxValue="300.0"
+                app:minValue="40.0"
+                app:perValue="1"
+                app:selectorValue="60.0"
+                app:textColor="#AAAAAA"
+                app:textSize="12sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:rotation="90">
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-5dp"
+                android:src="@drawable/icon_sg_shu" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="175dp"
+                android:rotation="90"
+                android:src="@mipmap/ic_line" />
+
+            <TextView
+                android:id="@+id/tv_sg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/dimen_20dp"
+                android:rotation="-90"
+                android:text="160cm"
+                android:textColor="@color/color_333333"
+                android:textSize="26sp" />
 
 
-                <com.zkk.view.rulerview.RulerView
-                    android:id="@+id/ruler_height"
-                    android:layout_width="match_parent"
-                    android:layout_height="58.0dip"
-                    app:alphaEnable="false"
-                    app:lineColor="#AAAAAA"
-                    app:lineMaxHeight="30dp"
-                    app:lineMidHeight="30dp"
-                    app:lineMinHeight="15dp"
-                    app:lineSpaceWidth="7dp"
-                    app:lineWidth="1dip"
-                    app:maxValue="300.0"
-                    app:minValue="40.0"
-                    app:perValue="1"
-                    app:selectorValue="60.0"
-                    app:textColor="#AAAAAA"
-                    app:textSize="12sp" />
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="45.0dip"
-                    android:layout_alignTop="@id/ruler_height"
-                    android:layout_centerInParent="true"
-                    android:background="@color/color_ff9c3c" />
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignTop="@id/ruler_height"
-                    android:layout_centerInParent="true"
-                    android:layout_marginStart="@dimen/dimen_100dp"
-                    android:background="@drawable/line_stroke"
-                    android:rotation="90" />
-
-
-                <View
-                    android:layout_width="@dimen/dimen_100dp"
-                    android:layout_height="@dimen/dimen_100dp"
-                    android:background="@color/color_ffffff" />
-            </RelativeLayout>
-        </RelativeLayout>
-
+            <ImageView
+                android:id="@+id/iv_xb"
+                android:layout_width="wrap_content"
+                android:layout_height="170dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:rotation="-90"
+                android:src="@mipmap/ic_ren_nv" />
+        </com.jxkj.fit_5a.conpoment.view.SquareRelativeLayout>
 
     </RelativeLayout>
 
@@ -177,12 +152,13 @@
             app:textColor="#AAAAAA"
             app:textSize="12sp" />
 
-        <View
-            android:layout_width="2dp"
-            android:layout_height="45.0dip"
-            android:layout_alignTop="@id/ruler_weight"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_tz"
             android:layout_centerHorizontal="true"
-            android:background="@color/color_ff9c3c" />
+            android:layout_marginTop="@dimen/dp_10"
+            android:src="@drawable/icon_sg_shu" />
     </RelativeLayout>
 
     <TextView

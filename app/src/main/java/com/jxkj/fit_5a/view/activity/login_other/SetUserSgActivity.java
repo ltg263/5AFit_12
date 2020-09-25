@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.view.RulerView_xz;
 import com.zkk.view.rulerview.RulerView;
 
 import butterknife.BindView;
@@ -24,7 +25,7 @@ public class SetUserSgActivity extends BaseActivity {
     @BindView(R.id.ruler_weight)
     RulerView mRulerWeight;
     @BindView(R.id.ruler_height)
-    RulerView mRulerHeight;
+    RulerView_xz mRulerHeight;
 
     @Override
     protected int getContentView() {
@@ -44,7 +45,7 @@ public class SetUserSgActivity extends BaseActivity {
          */
         mRulerWeight.setValue(60, 40, 300, 0.1f);
 
-        mRulerHeight.setOnValueChangeListener(value -> mTvSg.setText((int) value + ""));
+        mRulerHeight.setOnValueChangeListener(value -> mTvSg.setText((int) value + "cm"));
         /**
          *
          * @param selectorValue 未选择时 默认的值 滑动后表示当前中间指针正在指着的值

@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_30dp"
                 android:layout_marginTop="@dimen/dimen_20dp"
-                android:text="心率模式"
+                android:text="热身模式"
                 android:textColor="@color/color_ffffff"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -118,12 +118,25 @@
                 android:layout_marginHorizontal="@dimen/dimen_15dp"
                 android:layout_marginTop="@dimen/dimen_25dp"
                 android:background="@drawable/ic_shade_img"
-                android:padding="@dimen/dimen_15dp">
+                android:orientation="vertical">
 
-                <com.jxkj.fit_5a.conpoment.view.PickerScrollView
-                    android:id="@+id/address"
+                <com.wx.wheelview.widget.WheelView
+                    android:id="@+id/wheelview"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_150dp" />
+                    android:layout_height="@dimen/dimen_150dp"
+                    android:layout_marginTop="@dimen/dimen_30dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/dimen_75dp"
+                    android:background="@color/line_color" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="125dp"
+                    android:background="@color/line_color" />
             </RelativeLayout>
 
             <TextView

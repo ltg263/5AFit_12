@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_20dp"
-            android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_marginTop="@dimen/dimen_25dp"
             android:text="选择地图"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -73,13 +73,23 @@
             android:layout_marginTop="-5dp"
             android:background="@drawable/line_shape_bj_select" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.jxkj.fit_5a.conpoment.view.VpRecyclerView
             android:id="@+id/rv_list"
-            android:overScrollMode="never"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/dimen_20dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:visibility="gone" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_marginBottom="@dimen/dimen_30dp"
+            android:layout_weight="1"
+            android:overScrollMode="never" />
 
 
         <TextView
@@ -92,16 +102,23 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <View
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dimen_2dp"
+            android:layout_marginStart="@dimen/dimen_20dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="@dimen/dimen_20dp"
+            android:background="@drawable/line_shape_bj_select" />
 
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="@dimen/dimen_2dp"-->
-<!--            android:layout_marginTop="@dimen/dimen_20dp"-->
-<!--            android:background="@drawable/line_bj" />-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2dp"
+            android:background="@drawable/line_bj" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/color_ffffff"
             android:orientation="vertical">
 
             <LinearLayout
@@ -119,6 +136,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_7dp"
                         android:text="运动时间"
                         android:textColor="@color/color_000000"
                         android:textSize="16sp" />
@@ -145,6 +163,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_7dp"
                         android:text="运动时间"
                         android:textColor="@color/color_000000"
                         android:textSize="16sp" />
@@ -166,20 +185,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
                 android:gravity="center_horizontal">
 
-                <com.jxkj.fit_5a.conpoment.view.LinShiView
-                    android:layout_width="@dimen/dimen_100dp"
-                    android:layout_height="@dimen/dimen_100dp"
-                    android:layout_marginBottom="@dimen/dimen_20dp"
-                    android:background="@color/red40" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_25dp"
+                    android:src="@drawable/icon_ksks_tc" />
 
-                <com.jxkj.fit_5a.conpoment.view.LinShiView
-                    android:layout_width="@dimen/dimen_100dp"
-                    android:layout_height="@dimen/dimen_100dp"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_50dp"
-                    android:layout_marginBottom="@dimen/dimen_20dp"
-                    android:background="@color/red40" />
+                    android:layout_marginBottom="@dimen/dimen_25dp"
+                    android:src="@drawable/icon_ksks_bf" />
 
 
             </LinearLayout>

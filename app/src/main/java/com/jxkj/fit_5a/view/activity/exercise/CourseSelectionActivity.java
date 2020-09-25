@@ -8,8 +8,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.utils.MagicIndicatorUtils;
 import com.jxkj.fit_5a.conpoment.view.AutoHeightViewPager;
 import com.jxkj.fit_5a.view.fragment.CourseSelectionFragment;
+
+import net.lucode.hackware.magicindicator.MagicIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +22,9 @@ import butterknife.BindView;
 public class CourseSelectionActivity extends BaseActivity {
     @BindView(R.id.viewpager)
     AutoHeightViewPager mViewpager;
-    @BindView(R.id.tabs)
-    TabLayout mTabs;
+
+    @BindView(R.id.magic_indicator)
+    MagicIndicator mMagicIndicator;
     @Override
     protected int getContentView() {
         return R.layout.activity_course_selection;
@@ -92,8 +96,8 @@ public class CourseSelectionActivity extends BaseActivity {
 
             }
         });
-        mTabs.setupWithViewPager(mViewpager);
         mViewpager.setCurrentItem(0);
+        MagicIndicatorUtils.initMagicIndicator_1(this, lists, mMagicIndicator, mViewpager);
     }
 
 }

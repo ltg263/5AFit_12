@@ -96,19 +96,11 @@
                         android:textColor="@color/color_ffffff"
                         android:textSize="14sp" />
 
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tabs"
+                    <net.lucode.hackware.magicindicator.MagicIndicator
+                        android:id="@+id/magic_indicator"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_40"
-                        android:layout_marginTop="@dimen/dimen_20dp"
-                        android:background="#ffffff"
-                        app:tabIndicatorColor="@color/color_text_theme"
-                        app:tabIndicatorFullWidth="false"
-                        app:tabIndicatorHeight="2dp"
-                        app:tabMode="scrollable"
-                        app:tabRippleColor="@android:color/transparent"
-                        app:tabSelectedTextColor="@color/color_333333"
-                        app:tabTextColor="@color/color_808080" />
+                        android:layout_height="@dimen/dimen_45dp" />
+
                 </LinearLayout>
 
             </RelativeLayout>

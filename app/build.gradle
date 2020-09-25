@@ -256,4 +256,5 @@ dependencies {
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
     //视频缓存
     implementation 'com.danikula:videocache:2.7.1'
+    implementation 'com.wx.wheelview:wheelview:1.3.3'//api:https://github.com/venshine/WheelView
 }
