@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.adapter;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -7,7 +8,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.conpoment.view.ChoicePackageDialog;
+import com.jxkj.fit_5a.conpoment.view.CommentPackageDialog;
 import com.jxkj.fit_5a.conpoment.view.MyVideoPlayer;
+import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 
 import java.util.List;
 
@@ -32,8 +36,30 @@ public class ListVideoAdapter extends VideoBaseAdapter<String, ListVideoAdapter.
         if(holder.mp_video.bottomProgressBar.getProgress()!=0){
             holder.bottom_progress.setProgress(holder.mp_video.bottomProgressBar.getProgress());
         }
+        holder.tv_liuyan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowChoicePackageDialog();
+            }
+        });
     }
 
+    private void ShowChoicePackageDialog() {
+        CommentPackageDialog choicePackageDialog = new CommentPackageDialog((Activity) context);
+        choicePackageDialog.setOnCommentPackageDialogListener(new CommentPackageDialog.OnCommentPackageDialogListener() {
+            @Override
+            public void addListener(String skuId, int num) {
+
+            }
+
+            @Override
+            public void buyListener(String skuId, int num) {
+
+            }
+
+        });
+        choicePackageDialog.showDialog();
+    }
     @Override
     public VideoViewHolder onCreateHolder() {
         return new VideoViewHolder(getViewByRes(R.layout.item_page2));
@@ -44,6 +70,7 @@ public class ListVideoAdapter extends VideoBaseAdapter<String, ListVideoAdapter.
         public View rootView;
         public MyVideoPlayer mp_video;
         public TextView tv_name;
+        public TextView tv_liuyan;
         public ProgressBar bottom_progress;
 
         public VideoViewHolder(View rootView) {
@@ -52,6 +79,7 @@ public class ListVideoAdapter extends VideoBaseAdapter<String, ListVideoAdapter.
             this.mp_video = rootView.findViewById(R.id.mp_video);
             this.tv_name = rootView.findViewById(R.id.tv_name);
             this.bottom_progress = rootView.findViewById(R.id.bottom_progress);
+            this.tv_liuyan = rootView.findViewById(R.id.tv_liuyan);
         }
 
     }
