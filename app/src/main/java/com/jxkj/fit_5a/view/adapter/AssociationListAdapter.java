@@ -25,7 +25,8 @@ public class AssociationListAdapter extends BaseQuickAdapter<String, BaseViewHol
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, String item) {
-        helper.addOnClickListener(R.id.iv_head_img);
+        helper.addOnClickListener(R.id.iv_head_img).addOnClickListener(R.id.rl_all_comment)
+            .addOnClickListener(R.id.tv_liuyan);
         Banner mBanner =  helper.getView(R.id.banner);
         initBannerOne(mBanner);
     }

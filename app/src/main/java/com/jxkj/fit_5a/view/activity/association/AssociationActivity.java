@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.view.CommentPackageDialog;
+import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 import com.jxkj.fit_5a.view.adapter.AssociationListAdapter;
 
@@ -68,12 +70,31 @@ public class AssociationActivity extends BaseActivity {
                     case R.id.iv_head_img:
                         startActivity(new Intent(AssociationActivity.this, UserHomeActivity.class));
                         break;
+                    case R.id.tv_liuyan:
+                    case R.id.rl_all_comment:
+                        ShowCommentPackageDialog();
+                        break;
                 }
             }
         });
 
     }
+    private void ShowCommentPackageDialog() {
+        CommentPackageDialog choicePackageDialog = new CommentPackageDialog(this);
+        choicePackageDialog.setOnCommentPackageDialogListener(new CommentPackageDialog.OnCommentPackageDialogListener() {
+            @Override
+            public void addListener(String skuId, int num) {
 
+            }
+
+            @Override
+            public void buyListener(String skuId, int num) {
+
+            }
+
+        });
+        choicePackageDialog.showDialog();
+    }
     @OnClick({R.id.ll_back, R.id.tv_righttext, R.id.iv_rightimg})
     public void onViewClicked(View view) {
         switch (view.getId()) {

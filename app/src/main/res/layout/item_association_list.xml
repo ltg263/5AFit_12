@@ -347,6 +347,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_all_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dimen_15dp">
