@@ -1,5 +1,8 @@
 package com.jxkj.fit_5a.view.adapter;
 
+import android.util.Log;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -14,14 +17,20 @@ import java.util.List;
  * date   : 2020/5/2914:03
  */
 public class TaskFinishPjAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+
+    int pos = 0;
+
     public TaskFinishPjAdapter(@Nullable List<String> data) {
         super(R.layout.item_task_finish_pj, data);
     }
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, String item) {
+        helper.setImageResource(R.id.iv_select,R.drawable.wxz_1);
         helper.setText(R.id.tv,item);
-
+        if(pos == helper.getLayoutPosition()){
+            helper.setImageResource(R.id.iv_select,R.drawable.wxz_);
+        }
         switch (helper.getLayoutPosition()){
             case 0:
                 helper.setImageResource(R.id.iv,R.mipmap.ic_fin_pj1);
@@ -35,7 +44,26 @@ public class TaskFinishPjAdapter extends BaseQuickAdapter<String, BaseViewHolder
             case 3:
                 helper.setImageResource(R.id.iv,R.mipmap.ic_fin_pj4);
                 break;
+            case 4:
+                helper.setImageResource(R.id.iv,R.mipmap.ic_fin_pj5);
+                break;
+            case 5:
+                helper.setImageResource(R.id.iv,R.mipmap.ic_fin_pj6);
+                break;
+            case 6:
+                helper.setImageResource(R.id.iv,R.mipmap.ic_fin_pj7);
+                break;
+            case 7:
+                helper.setImageResource(R.id.iv,R.mipmap.ic_fin_pj8);
+                break;
+            case 8:
+                helper.setImageResource(R.id.iv,R.mipmap.ic_fin_pj9);
+                break;
         }
+    }
+
+    public void setSelectPos(int pos){
+        this.pos = pos;
     }
 
 }

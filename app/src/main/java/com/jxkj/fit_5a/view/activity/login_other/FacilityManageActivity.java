@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.login_other;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
@@ -88,5 +89,8 @@ public class FacilityManageActivity extends BaseActivity {
             case R.id.tv_ok:
                 break;
         }
+    }
+    public static void intentActivity(Context mContext){
+        mContext.startActivity(new Intent(mContext,FacilityManageActivity.class));
     }
 }

@@ -46,7 +46,7 @@ public class TaskStartActivity extends BaseActivity {
                 startActivity(new Intent(this, CourseSelectionActivity.class));
                 break;
             case R.id.ll_xlkz:
-                startActivity(new Intent(this, RateControlActivity.class));
+                RateControlActivity.intentActivity(this);
                 break;
         }
     }

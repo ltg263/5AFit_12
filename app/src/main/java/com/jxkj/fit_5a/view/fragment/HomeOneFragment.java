@@ -25,7 +25,9 @@ import com.github.mikephil.charting.utils.FileUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
+import com.jxkj.fit_5a.view.activity.exercise.RateControlActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
+import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.HomeCommodityAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
@@ -194,8 +196,10 @@ public class HomeOneFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_left_text:
+                FacilityManageActivity.intentActivity(getActivity());
                 break;
             case R.id.tv_right_text:
+                RateControlActivity.intentActivity(getActivity());
                 break;
             case R.id.tv_top_jyz:
                 mIvY.setVisibility(View.INVISIBLE);
@@ -210,6 +214,7 @@ public class HomeOneFragment extends BaseFragment {
                 mTvTopJyy.setTextColor(getResources().getColor(R.color.black));
                 break;
             case R.id.rv_top_list:
+
                 break;
             case R.id.on_rv_qd:
                 startActivity(new Intent(getActivity(), TaskSignActivity.class));

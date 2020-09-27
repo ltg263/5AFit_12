@@ -3,6 +3,8 @@ package com.jxkj.fit_5a.view.activity.exercise;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -12,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -36,8 +38,12 @@ public class TaskFinishActivity extends BaseActivity {
     RecyclerView mRvListXl;
     @BindView(R.id.viewpager)
     ViewPager mViewpager;
-    @BindView(R.id.chart)
-    PieChart chart;
+    @BindView(R.id.chart1)
+    BarChart chart;
+    @BindView(R.id.ll_txt)
+    LinearLayout mLlTet;
+    @BindView(R.id.tv_xz)
+    TextView mTvXz;
 
     @Override
     protected int getContentView() {
@@ -53,10 +59,6 @@ public class TaskFinishActivity extends BaseActivity {
     }
 
     private void initPC() {
-
-        chart.setUsePercentValues(true);
-        chart.getDescription().setEnabled(false);
-        chart.setExtraOffsets(5, 10, 5, 5);
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
@@ -68,6 +70,21 @@ public class TaskFinishActivity extends BaseActivity {
 
             }
         });
+
+        chart.setDrawBarShadow(false);
+        chart.setDrawValueAboveBar(true);
+
+        chart.getDescription().setEnabled(false);
+
+        // if more than 60 entries are displayed in the chart, no values will be
+        // drawn
+        chart.setMaxVisibleValueCount(60);
+
+        // scaling can now only be done on x- and y-axis separately
+        chart.setPinchZoom(false);
+
+        chart.setDrawGridBackground(false);
+        // chart.setDrawYLabels(false);
     }
 
     List<Fragment> fragments = new ArrayList<>();
@@ -113,8 +130,14 @@ public class TaskFinishActivity extends BaseActivity {
         list.add("非常\n"+"非常弱");
         list.add("非常弱");
         list.add("弱");
+        list.add("适度");
+        list.add("有些强");
+        list.add("强");
+        list.add("非常强");
+        list.add("非常\n非常强");
 
         TaskFinishPjAdapter mTaskFinishPjAdapter = new TaskFinishPjAdapter(list);
+        mTaskFinishPjAdapter.setSelectPos(0);
         LinearLayoutManager ms = new LinearLayoutManager(this);
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRvList.setLayoutManager(ms);
@@ -124,6 +147,8 @@ public class TaskFinishActivity extends BaseActivity {
         mTaskFinishPjAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                mTaskFinishPjAdapter.setSelectPos(position);
+                mTaskFinishPjAdapter.notifyDataSetChanged();
 
             }
         });
@@ -144,7 +169,7 @@ public class TaskFinishActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_back, R.id.tv_go_ffhd, R.id.tv_go_xxyx})
+    @OnClick({R.id.iv_back, R.id.tv_go_ffhd, R.id.tv_go_xxyx,R.id.tv_xz})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -153,6 +178,18 @@ public class TaskFinishActivity extends BaseActivity {
             case R.id.tv_go_ffhd:
                 break;
             case R.id.tv_go_xxyx:
+                break;
+            case R.id.tv_xz:
+                String strXz = mTvXz.getText().toString();
+                if(strXz.equals("条形图")){
+                    mTvXz.setText("饼状图");
+                    chart.setVisibility(View.VISIBLE);
+                    mLlTet.setVisibility(View.GONE);
+                }else{
+                    mTvXz.setText("条形图");
+                    chart.setVisibility(View.GONE);
+                    mLlTet.setVisibility(View.VISIBLE);
+                }
                 break;
         }
     }

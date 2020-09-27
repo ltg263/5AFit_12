@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.exercise;
 
+import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
+import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
 import com.jxkj.fit_5a.view.adapter.FacilityManageAdapter;
 import com.zkk.view.rulerview.RulerView;
 
@@ -112,5 +114,9 @@ public class RateControlActivity extends BaseActivity {
                 startActivity(new Intent(this, RatePatternActivity.class));
                 break;
         }
+    }
+
+    public static void intentActivity(Context mContext){
+        mContext.startActivity(new Intent(mContext, RateControlActivity.class));
     }
 }

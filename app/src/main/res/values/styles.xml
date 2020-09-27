@@ -17,8 +17,8 @@
     </style>
 
     <declare-styleable name="searchmlist">
-        <attr name="search_hint" format="string|reference"/><!--EditText hint-->
-        <attr name="search_baground" format="reference"/><!--EditText  background-->
+        <attr name="search_hint" format="string|reference" /><!--EditText hint-->
+        <attr name="search_baground" format="reference" /><!--EditText  background-->
     </declare-styleable>
 
     <style name="AnimBottom" parent="@android:style/Animation">
@@ -39,6 +39,7 @@
         <!-- 屏幕背景是否变暗 -->
         <item name="android:backgroundDimAmount">0.3</item>
     </style>
+
     <style name="MyDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
@@ -51,6 +52,7 @@
         <item name="android:windowEnterAnimation">@anim/menu_in</item>
         <item name="android:windowExitAnimation">@anim/menu_out</item>
     </style>
+
     <style name="PopupWindowAnimation">
         <item name="android:windowEnterAnimation">@anim/popshow_anim</item>
         <item name="android:windowExitAnimation">@anim/pophidden_anim</item>
@@ -68,11 +70,12 @@
         <attr name="lineMax" format="dimension" />
         <attr name="textMarginTop" format="dimension" />
         <attr name="alphaEnable" format="boolean" />
-        <attr name="minValue" format="float"/>
-        <attr name="maxValue" format="float"/>
-        <attr name="selectorValue" format="float"/>
-        <attr name="perValue" format="float"/>
+        <attr name="minValue" format="float" />
+        <attr name="maxValue" format="float" />
+        <attr name="selectorValue" format="float" />
+        <attr name="perValue" format="float" />
     </declare-styleable>
+
     <style name="date_picker_dialog" parent="android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
@@ -91,15 +94,19 @@
         <item name="android:windowBackground">@color/transparent</item>
         <!--这儿也很重要啊，我这儿用了一张透明的.9.png的图，当然用#00000000也是可以的，否则的话这儿出来后有一个黑色的背景-->
     </style>
+
     <style name="Dialog_Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
     <style name="mProgressBarStyle" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:maxHeight">50dp</item>
         <item name="android:minHeight">10dp</item>
         <item name="android:indeterminateOnly">false</item>
-        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
+        <item name="android:indeterminateDrawable">
+            @android:drawable/progress_indeterminate_horizontal
+        </item>
     </style>
     <!--注意这里的name要和自定义View的名称一致，不然在布局文件中无法引用-->
     <declare-styleable name="StepArcView">
@@ -117,5 +124,27 @@
         <item name="android:layout_height">40dp</item>
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+
+    <style name="Widget" />
+
+    <style name="Widget.ProgressBar">
+        <item name="android:indeterminateOnly">true</item>
+        <item name="android:indeterminateBehavior">repeat</item>
+        <item name="android:indeterminateDuration">3500</item>
+        <item name="android:minWidth">48dip</item>
+        <item name="android:maxWidth">48dip</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:maxHeight">48dip</item>
+    </style>
+
+    <style name="Widget.ProgressBar.Vertical">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/progress_bar_vertical</item>
+        <item name="android:indeterminateDrawable">
+            @android:drawable/progress_indeterminate_horizontal
+        </item>
+        <item name="android:minWidth">1dip</item>
+        <item name="android:maxWidth">12dip</item>
     </style>
 </resources>

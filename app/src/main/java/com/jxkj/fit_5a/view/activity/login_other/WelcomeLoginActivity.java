@@ -35,7 +35,7 @@ public class WelcomeLoginActivity extends BaseActivity {
                 startActivity(new Intent(this, MainActivity.class));
                 break;
             case R.id.tv_go_x:
-                startActivity(new Intent(this,FacilityManageActivity.class));
+                FacilityManageActivity.intentActivity(this);
                 break;
         }
     }

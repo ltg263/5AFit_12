@@ -3,6 +3,7 @@ package com.jxkj.fit_5a.view.activity.exercise;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.PopupWindow;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +23,7 @@ public class TaskSelectionActivity extends BaseActivity {
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
 
+
     @Override
     protected int getContentView() {
         return R.layout.activity_task_selection;
@@ -30,7 +32,7 @@ public class TaskSelectionActivity extends BaseActivity {
     @Override
     protected void initViews() {
         List<String> list = new ArrayList<>();
-        list.add("-1");
+        list.add("");
         list.add("");
         list.add("");
         list.add("");
