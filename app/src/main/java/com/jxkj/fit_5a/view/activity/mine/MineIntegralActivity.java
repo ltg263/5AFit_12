@@ -1,6 +1,5 @@
 package com.jxkj.fit_5a.view.activity.mine;
 
-import android.os.Bundle;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -71,13 +70,16 @@ public class MineIntegralActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_right_text})
+    @OnClick({R.id.iv_back, R.id.tv_right_text,R.id.tv_jfsc})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.tv_right_text:
+                break;
+            case R.id.tv_jfsc:
+                ShoppingActivity.intentStartActivity(this);
                 break;
         }
     }

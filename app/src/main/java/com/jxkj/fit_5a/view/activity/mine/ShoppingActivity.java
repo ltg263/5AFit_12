@@ -1,5 +1,7 @@
 package com.jxkj.fit_5a.view.activity.mine;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -141,5 +143,8 @@ public class ShoppingActivity extends BaseActivity {
         tv.setTextColor(getResources().getColor(R.color.color_000000));
         tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         v.setVisibility(View.VISIBLE);
+    }
+    public static void intentStartActivity(Context mContext){
+        mContext.startActivity(new Intent(mContext, ShoppingActivity.class));
     }
 }

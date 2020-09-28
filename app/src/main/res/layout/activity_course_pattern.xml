@@ -84,7 +84,7 @@
                 android:textColor="@color/color_ffffff"
                 android:textSize="14sp" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="270dp"
                 android:layout_marginHorizontal="@dimen/dimen_15dp"
@@ -92,13 +92,29 @@
                 android:background="@drawable/ic_shade_img">
 
                 <ProgressBar
-                    android:id="@+id/vertical_progressbar"
+                    android:id="@+id/vertical_progressbar1"
                     style="@style/Widget.ProgressBar.Vertical"
-                    android:progress="80"
                     android:layout_width="12dip"
-                    android:layout_height="300dip" />
+                    android:layout_height="270dp"
+                    android:progress="80" />
 
-            </RelativeLayout>
+                <ProgressBar
+                    android:id="@+id/vertical_progressbar2"
+                    style="@style/Widget.ProgressBar.Vertical"
+                    android:layout_width="12dip"
+                    android:layout_height="270dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:progress="80" />
+
+                <ProgressBar
+                    android:id="@+id/vertical_progressbar3"
+                    style="@style/Widget.ProgressBar.Vertical"
+                    android:layout_width="12dip"
+                    android:layout_height="270dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:progress="80" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"

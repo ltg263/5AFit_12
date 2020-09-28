@@ -107,9 +107,9 @@ public class OrderListFragment extends BaseFragment {
             @Override
             public void setQzf(int position) {
                 Bundle bundle1 = new Bundle();
-                bundle1.putString("id", orderDataList.get(position).getId() + "");
-                bundle1.putString("price", orderDataList.get(position).getRealAmount() + "");
-                bundle1.putString("time", orderDataList.get(position).getExpireTime() + "");
+//                bundle1.putString("id", orderDataList.get(position).getId() + "");
+//                bundle1.putString("price", orderDataList.get(position).getRealAmount() + "");
+//                bundle1.putString("time", orderDataList.get(position).getExpireTime() + "");
 //                IntentUtils.getInstence().intent(getActivity(), ShoppingPaymentActivity.class, "order", bundle1);
             }
 

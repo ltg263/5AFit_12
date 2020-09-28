@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':blurringview'
 rootProject.name='5AFit'

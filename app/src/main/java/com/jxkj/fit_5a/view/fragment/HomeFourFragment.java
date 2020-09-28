@@ -81,7 +81,7 @@ public class HomeFourFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), MineHomeActivity.class));
                 break;
             case R.id.rl_jfsc:
-                startActivity(new Intent(getActivity(), ShoppingActivity.class));
+                ShoppingActivity.intentStartActivity(getActivity());
                 break;
             case R.id.on_ll_mine_qb:
                 IntentUtils.getInstence().intent(getActivity(), OrderActivity.class,"type",0);

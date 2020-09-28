@@ -274,10 +274,19 @@
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll"
             android:layout_marginBottom="@dimen/dimen_20dp"
             android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <com.jxkj.fit_5a.conpoment.view.BlurringView
+            android:id="@+id/blurring_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:blurRadius="16"
+            app:downsampleFactor="16"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:overlayColor="#26FFFFFF" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
@@ -290,13 +299,6 @@
         android:layout_marginEnd="@dimen/dimen_20dp"
         android:layout_marginBottom="@dimen/dimen_150dp"
         android:src="@drawable/ic_add_dt" />
-
-    <RelativeLayout
-        android:id="@+id/rl_bl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/rl_actionbar"
-        android:layout_marginTop="@dimen/dimen_45dp" />
 
     <TextView
         android:id="@+id/tv_jiaru"
