@@ -27,12 +27,12 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/6/514:57
  */
-public class CommentPackageDialog {
+public class DialogCommentPackage {
     private View contentView;
     private Dialog dialog;
     private Activity mContext;
     private LayoutInflater mInflater;
-    public CommentPackageDialog(Activity mContext) {
+    public DialogCommentPackage(Activity mContext) {
         this.mContext = mContext;
         this.mInflater = LayoutInflater.from(mContext);
         this.contentView = this.mInflater.inflate(R.layout.dialog_comment_package_layout, null);

@@ -3,7 +3,6 @@ package com.jxkj.fit_5a.view.activity.exercise;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.PopupWindow;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;

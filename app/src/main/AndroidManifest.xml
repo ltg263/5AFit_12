@@ -64,9 +64,11 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon,allowBackup">
         <!--        SplashScreenActivity-->
+
         <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait">
+            android:name=".view.activity.exercise.landscape.MotorPatternActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -76,6 +78,21 @@
         <!--        <activity-->
         <!--            android:name=".MainActivity"-->
         <!--            android:launchMode="singleTask" />-->
+        <activity
+            android:name=".view.activity.exercise.landscape.ClassicExerciseActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+        <activity
+            android:name=".view.activity.exercise.landscape.CreateRoomActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+        <activity
+            android:name=".view.activity.exercise.landscape.CreateRoomMineActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
         <activity
             android:name=".view.activity.login_other.LoginActivity"
             android:launchMode="singleTask"

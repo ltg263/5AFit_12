@@ -21,13 +21,13 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/6/514:57
  */
-public class ChoicePackageDialog {
+public class DialogChoicePackage {
     private View contentView;
     private Dialog dialog;
     private Activity mContext;
     private LayoutInflater mInflater;
     public static int currentNum = 0;
-    public ChoicePackageDialog(Activity mContext) {
+    public DialogChoicePackage(Activity mContext) {
         this.mContext = mContext;
         this.mInflater = LayoutInflater.from(mContext);
         this.contentView = this.mInflater.inflate(R.layout.dialog_choice_package_layout, null);

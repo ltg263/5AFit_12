@@ -18,7 +18,7 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
-import com.jxkj.fit_5a.conpoment.view.ChoicePackageDialog;
+import com.jxkj.fit_5a.conpoment.view.DialogChoicePackage;
 import com.jxkj.fit_5a.conpoment.view.JudgeNestedScrollView;
 import com.jxkj.fit_5a.conpoment.view.SquareBannerLayout;
 import com.jxkj.fit_5a.view.activity.mine.order.OrderAffirmActivity;
@@ -174,8 +174,8 @@ public class ShoppingDetailsActivity extends BaseActivity {
     }
 
     private void ShowChoicePackageDialog() {
-        ChoicePackageDialog choicePackageDialog = new ChoicePackageDialog(ShoppingDetailsActivity.this);
-        choicePackageDialog.setOnChoicePackageDialogListener(new ChoicePackageDialog.OnChoicePackageDialogListener() {
+        DialogChoicePackage choicePackageDialog = new DialogChoicePackage(ShoppingDetailsActivity.this);
+        choicePackageDialog.setOnChoicePackageDialogListener(new DialogChoicePackage.OnChoicePackageDialogListener() {
             @Override
             public void addListener(String skuId, int num) {
 

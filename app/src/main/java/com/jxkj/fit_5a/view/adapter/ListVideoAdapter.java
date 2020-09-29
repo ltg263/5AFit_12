@@ -8,10 +8,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.conpoment.view.ChoicePackageDialog;
-import com.jxkj.fit_5a.conpoment.view.CommentPackageDialog;
+import com.jxkj.fit_5a.conpoment.view.DialogCommentPackage;
 import com.jxkj.fit_5a.conpoment.view.MyVideoPlayer;
-import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 
 import java.util.List;
 
@@ -45,8 +43,8 @@ public class ListVideoAdapter extends VideoBaseAdapter<String, ListVideoAdapter.
     }
 
     private void ShowChoicePackageDialog() {
-        CommentPackageDialog choicePackageDialog = new CommentPackageDialog((Activity) context);
-        choicePackageDialog.setOnCommentPackageDialogListener(new CommentPackageDialog.OnCommentPackageDialogListener() {
+        DialogCommentPackage choicePackageDialog = new DialogCommentPackage((Activity) context);
+        choicePackageDialog.setOnCommentPackageDialogListener(new DialogCommentPackage.OnCommentPackageDialogListener() {
             @Override
             public void addListener(String skuId, int num) {
 

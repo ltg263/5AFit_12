@@ -12,8 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
-import com.jxkj.fit_5a.conpoment.view.CommentPackageDialog;
-import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
+import com.jxkj.fit_5a.conpoment.view.DialogCommentPackage;
 import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 import com.jxkj.fit_5a.view.adapter.AssociationListAdapter;
 
@@ -80,8 +79,8 @@ public class AssociationActivity extends BaseActivity {
 
     }
     private void ShowCommentPackageDialog() {
-        CommentPackageDialog choicePackageDialog = new CommentPackageDialog(this);
-        choicePackageDialog.setOnCommentPackageDialogListener(new CommentPackageDialog.OnCommentPackageDialogListener() {
+        DialogCommentPackage choicePackageDialog = new DialogCommentPackage(this);
+        choicePackageDialog.setOnCommentPackageDialogListener(new DialogCommentPackage.OnCommentPackageDialogListener() {
             @Override
             public void addListener(String skuId, int num) {
 

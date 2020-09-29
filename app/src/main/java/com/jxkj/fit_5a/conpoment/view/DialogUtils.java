@@ -183,6 +183,42 @@ public class DialogUtils {
         dialog.show();
     }
     /**
+     * 退出房间
+     * @param context
+     */
+    public static void showDialogOutRoom(Activity context,final DialogLyInterface dialogLyInterface) {
+
+        final Dialog dialog = new Dialog(context, R.style.Dialog_Fullscreen);
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_out_room, null);
+
+        RelativeLayout rl_parent = view.findViewById(R.id.rl_parent);
+        Bitmap bitmap=screenShotWithoutStatusBar(context);
+        rl_parent.setBackground(new BitmapDrawable(context.getResources(),blurBitmap(context,bitmap,25)));
+
+        TextView tv_name = view.findViewById(R.id.tv_name);
+        TextView tv_state =  view.findViewById(R.id.tv_state);
+        TextView tv_ok =  view.findViewById(R.id.tv_ok);
+        ImageView iv_close = view.findViewById(R.id.iv_close);
+        iv_close.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        tv_ok.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialogLyInterface.btnConfirm();
+                dialog.dismiss();
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.setContentView(view);
+        dialog.show();
+    }
+    /**
      * 创建圈子权限
      * @param context
      * @param title
