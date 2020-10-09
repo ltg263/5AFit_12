@@ -15,12 +15,14 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -30,6 +32,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 
 public class DialogUtils {
 
@@ -51,6 +54,52 @@ public class DialogUtils {
                 .setPositiveButton("确定",null)
                 .create();
 
+    }
+    /**
+     * 描述: 自定义ShowUnifiedDialog
+     * 统一 确认取消的Dialog
+     */
+    public static void showEditTextDialog(final Context context, int type,String title, String content, final EditTextDialogInterface editTextDialogInterface) {
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_edit_text, null);// 获得dialog布局
+        final Dialog dialog = new Dialog(context, R.style.simpleDialog);
+        dialog.setContentView(view);
+        dialog.show();
+        TextView tvLogPrompt = view.findViewById(R.id.tv_log_prompt);
+        final EditText etLogContent = view.findViewById(R.id.et_log_content);
+        etLogContent.setMaxLines(10);
+        if(StringUtil.isNotBlank(content)){
+            etLogContent.setHint(content);
+        }
+        if(type==1){
+            etLogContent.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
+        if(type==2){
+            etLogContent.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        }
+        TextView tvLogConfirm = view.findViewById(R.id.tv_log_confirm);
+        TextView tvLogCancel = view.findViewById(R.id.tv_log_cancel);
+
+        tvLogPrompt.setText(title);
+        // 确定
+        tvLogConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                String season = etLogContent.getText().toString().trim();
+                editTextDialogInterface.btnConfirm(season);
+                dialog.dismiss();
+            }
+
+        });
+        // 取消
+        tvLogCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+            }
+        });
+    }
+    public interface EditTextDialogInterface{
+        void btnConfirm(String string);
     }
     @SuppressLint("ClickableViewAccessibility")
     public static void showDialogStartYd(Activity context, final DialogInterfaceS dialogInterface) {

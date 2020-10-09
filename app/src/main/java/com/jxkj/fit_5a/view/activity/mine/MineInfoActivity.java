@@ -19,6 +19,7 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.view.AddressPickTask;
+import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.RoundImageView;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -107,8 +108,14 @@ public class MineInfoActivity extends BaseActivity {
                 MatisseUtils.gotoSelectPhoto(this, 1, true);
                 break;
             case R.id.ll_info_1:
+                DialogUtils.showEditTextDialog(this, 0,"修改昵称","输入昵称", season -> {
+                    mTvInfo1.setText(season);
+                });
                 break;
             case R.id.ll_info_2:
+                DialogUtils.showEditTextDialog(this, 0,"设置签名","输入你的签名", season -> {
+                    mTvInfo1.setText(season);
+                });
                 break;
             case R.id.ll_info_3:
                 onAddressPicker();
@@ -117,14 +124,29 @@ public class MineInfoActivity extends BaseActivity {
                 MatisseUtils.gotoSelectPhotoBl(this, 1, true);
                 break;
             case R.id.ll_info_5:
+                DialogUtils.showEditTextDialog(this, 1,"绑定手机号","输入您的手机号", season -> {
+                    mTvInfo5.setText(season);
+                });
                 break;
             case R.id.ll_info_6:
+                DialogUtils.showEditTextDialog(this, 0,"绑定微信","输入您的微信", season -> {
+                    mTvInfo6.setText(season);
+                });
                 break;
             case R.id.ll_info_7:
+                DialogUtils.showEditTextDialog(this, 1,"绑定QQ","输入您的QQ", season -> {
+                    mTvInfo7.setText(season);
+                });
                 break;
             case R.id.ll_info_8:
+                DialogUtils.showEditTextDialog(this, 0,"绑定微博","输入您的微博", season -> {
+                    mTvInfo8.setText(season);
+                });
                 break;
             case R.id.ll_info_9:
+                DialogUtils.showEditTextDialog(this, 0,"绑定iconsole","输入您的iconsole", season -> {
+                    mTvInfo9.setText(season);
+                });
                 break;
             case R.id.tv_go_find:
                 break;
