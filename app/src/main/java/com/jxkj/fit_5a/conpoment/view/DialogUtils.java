@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -246,6 +247,41 @@ public class DialogUtils {
             }
         });
         tv_ok.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialogLyInterface.btnConfirm();
+                dialog.dismiss();
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.setContentView(view);
+        dialog.show();
+    }
+    /**
+     * 当前的奖杯
+     * @param context
+     * @param state
+     * @param dialogLyInterface
+     */
+    public static void showDialogClass(Activity context,int state, final DialogLyInterface dialogLyInterface) {
+
+        final Dialog dialog = new Dialog(context, R.style.Dialog_Fullscreen);
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_class, null);
+        RelativeLayout rl_parent = view.findViewById(R.id.rl_parent);
+        Bitmap bitmap=screenShotWithoutStatusBar(context);
+        rl_parent.setBackground(new BitmapDrawable(context.getResources(),blurBitmap(context,bitmap,25)));
+
+        ImageView iv = view.findViewById(R.id.iv_1);
+        Button bntOk =  view.findViewById(R.id.tv_ok);
+        iv.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        bntOk.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

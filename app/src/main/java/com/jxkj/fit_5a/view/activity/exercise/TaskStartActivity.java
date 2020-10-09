@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.view.activity.exercise.landscape.MotorPatternActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,7 +41,7 @@ public class TaskStartActivity extends BaseActivity {
             case R.id.rl_sbgl:
                 break;
             case R.id.btn_start:
-
+                MotorPatternActivity.startIntentActivity(this);
                 break;
             case R.id.ll_kcxz:
                 startActivity(new Intent(this, CourseSelectionActivity.class));

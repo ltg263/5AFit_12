@@ -15,6 +15,7 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.StepArcView;
+import com.jxkj.fit_5a.view.activity.exercise.landscape.MotorPatternActivity;
 import com.jxkj.fit_5a.view.adapter.RatePatternAdapter;
 
 import java.util.ArrayList;
@@ -87,6 +88,8 @@ public class RatePatternActivity extends BaseActivity {
                     public void btnType(int pos) {
                         if (pos == 2) {
                             startActivity(new Intent(RatePatternActivity.this, TaskFinishActivity.class));
+                        }else{
+                            MotorPatternActivity.startIntentActivity(RatePatternActivity.this);
                         }
                     }
                 });

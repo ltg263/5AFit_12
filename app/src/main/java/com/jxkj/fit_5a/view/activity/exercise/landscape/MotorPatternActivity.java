@@ -1,6 +1,8 @@
 package com.jxkj.fit_5a.view.activity.exercise.landscape;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -87,5 +89,9 @@ public class MotorPatternActivity extends Activity {
                 CreateRoomActivity.intentStartActivity(this);
                 break;
         }
+    }
+
+    public static void startIntentActivity(Context mContext){
+        mContext.startActivity(new Intent(mContext,MotorPatternActivity.class));
     }
 }

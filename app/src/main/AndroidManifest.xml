@@ -64,20 +64,20 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon,allowBackup">
         <!--        SplashScreenActivity-->
-
         <activity
-            android:name=".view.activity.exercise.landscape.MotorPatternActivity"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
+            android:name=".MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--        <activity-->
-        <!--            android:name=".MainActivity"-->
-        <!--            android:launchMode="singleTask" />-->
+        <activity
+            android:name=".view.activity.exercise.landscape.MotorPatternActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
         <activity
             android:name=".view.activity.exercise.landscape.ClassicExerciseActivity"
             android:launchMode="singleTask"
