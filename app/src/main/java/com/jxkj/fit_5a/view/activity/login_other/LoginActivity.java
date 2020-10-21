@@ -1,13 +1,27 @@
 package com.jxkj.fit_5a.view.activity.login_other;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,7 +61,7 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.tv_login_yzm, R.id.tv_login_wjmm, R.id.tv_go_login, R.id.ll_go_zc,R.id.tv_go_yzm})
+    @OnClick({R.id.tv_login_yzm, R.id.tv_login_wjmm, R.id.iv_login_wx,R.id.tv_go_login, R.id.ll_go_zc,R.id.tv_go_yzm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_login_yzm:
@@ -65,6 +79,9 @@ public class LoginActivity extends BaseActivity {
                     mTvLoginWjmm.setVisibility(View.VISIBLE);
                 }
                 break;
+            case R.id.iv_login_wx:
+                getPlatformInfo();
+                break;
             case R.id.tv_go_yzm:
 
                 break;
@@ -78,5 +95,84 @@ public class LoginActivity extends BaseActivity {
                 startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
                 break;
         }
+    }
+    private void getPlatformInfo() {
+        UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                //6.0以上动态获取权限
+                if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                    //申请权限，REQUEST_TAKE_PHOTO_PERMISSION是自定义的常量
+                    ActivityCompat.requestPermissions(LoginActivity.this,new String[]{Manifest.permission.READ_PHONE_STATE},1);
+                    return;
+                }
+                TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                String registrationId = "";
+                if(tm.getDeviceId()!=null){
+                    registrationId = tm.getDeviceId();
+                }
+//                TextUtil.logOut("--:"+registrationId);
+                Log.w("--:","-->>:"+registrationId);
+//                HttpRequestUtils.getVerifyAppEmpower(getActivity(),
+//                        map.get("accessToken"), map.get("openid"), registrationId, null,
+//                        new HttpRequestUtils.LoginInterface() {
+//                            @Override
+//                            public void succeed(LoginBean path) {
+//                                if(StringUtil.isBlank(path.getHashMap().getUserNo())){
+//                                    IntentUtils.getInstence().intent(getActivity(), BindingPhoneNumberActivity.class);
+//                                    return;
+//                                }
+//                                getData();
+//                            }
+//                        });
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                dismiss();
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media, int i) {
+                dismiss();
+            }
+        });
+    }
+    private void quitLogin() {
+        UMShareAPI.get(this).deleteOauth(this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+//                GlideCircleTransform.glideCircleImg(R.drawable.ic_icon_img, mCivHead);
+//                mTvName.setText("");
+//                mTvId.setText("请先登录");
+//                mTvConcernNumber.setText("0");
+//                mTvDynamicNumber.setText("0");
+//                mTvEtcNumber.setText("0");
+//                mTvJfNumber.setText("0");
+//                mTvYeNumber.setText("0");
+//                tv_jkhb.setVisibility(View.GONE);
+                SharedUtils.singleton().clear();
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                dismiss();
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media, int i) {
+                dismiss();
+            }
+        });
     }
 }
