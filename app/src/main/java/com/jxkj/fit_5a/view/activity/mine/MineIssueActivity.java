@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.HelpListData;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.view.adapter.MineIssueAdapter;
 
 import java.util.ArrayList;
@@ -17,6 +20,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MineIssueActivity extends BaseActivity {
     @BindView(R.id.iv_back)
@@ -25,6 +32,7 @@ public class MineIssueActivity extends BaseActivity {
     TextView mTvTitle;
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
+    private MineIssueAdapter mMineIssueAdapter;
 
     @Override
     protected int getContentView() {
@@ -35,14 +43,9 @@ public class MineIssueActivity extends BaseActivity {
     protected void initViews() {
         mTvTitle.setText("常见问题");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
+        getInterestList();
 
-
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        MineIssueAdapter mMineIssueAdapter = new MineIssueAdapter(list);
+        mMineIssueAdapter = new MineIssueAdapter(null);
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mMineIssueAdapter);
@@ -65,5 +68,36 @@ public class MineIssueActivity extends BaseActivity {
             case R.id.ll_home_search:
                 break;
         }
+    }
+
+
+    private void getInterestList() {
+        RetrofitUtil.getInstance().apiService()
+                .getHelpList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<HelpListData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<HelpListData> result) {
+                        if(isDataInfoSucceed(result)){
+                            mMineIssueAdapter.setNewData(result.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.view.adapter.ImgAdapter;
 
 import java.util.ArrayList;
@@ -18,6 +20,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class InterestActivity extends BaseActivity {
     @BindView(R.id.tv_skip)
@@ -36,8 +42,38 @@ public class InterestActivity extends BaseActivity {
     @Override
     protected void initViews() {
         initRvUi();
+        getInterestList();
     }
 
+    private void getInterestList() {
+        RetrofitUtil.getInstance().apiService()
+                .getInterestList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(isDataInfoSucceed(result)){
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
     private void initRvUi() {
 
         List<String> list = new ArrayList<>();
@@ -66,10 +102,12 @@ public class InterestActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_skip:
+
             case R.id.tv_go_xyb:
                 startActivity(new Intent(this, MainActivity.class));
                 break;
             case R.id.tv_refresh:
+                getInterestList();
                 break;
         }
     }

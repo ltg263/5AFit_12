@@ -84,7 +84,7 @@ public class QcIssueFragment extends BaseFragment {
         list.add("");
         list.add("");
         list.add("");
-        MineIssueQcTopAdapter mMineIssueQcTopAdapter = new MineIssueQcTopAdapter(list);
+        MineIssueQcTopAdapter mMineIssueQcTopAdapter = new MineIssueQcTopAdapter(null);
         mRvListTop.setLayoutManager(new GridLayoutManager(getActivity(),4));
         mRvListTop.setHasFixedSize(true);
         mRvListTop.setAdapter(mMineIssueQcTopAdapter);
@@ -96,7 +96,7 @@ public class QcIssueFragment extends BaseFragment {
             }
         });
 
-        MineIssueAdapter mMineIssueAdapter = new MineIssueAdapter(list);
+        MineIssueAdapter mMineIssueAdapter = new MineIssueAdapter(null);
         mRvList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mMineIssueAdapter);

@@ -185,20 +185,20 @@ public class OrderListFragment extends BaseFragment {
                     @Override
                     public void onNext(Result<OrderInfoData> result) {
 //                        ifNotLoginTurnToLogin(result.getCode());
-                        if (result.getStatus()==0) {
-                            if(result.getData().getList().size()>0){
-                                lv_not.setVisibility(View.GONE);
-                                refreshLayout.setVisibility(View.VISIBLE);
-                            }
-                            orderDataList.addAll(result.getData().getList());
-                            orderListAdapter.notifyDataSetChanged();
-                            refreshLayout.finishRefresh();
-                            refreshLayout.finishLoadMore();
-                            totalPage = StringUtil.getTotalPage(result.getData().getTotalCount(), ConstValues.PAGE_SIZE);
-                            if(totalPage <= page){
-                                refreshLayout.finishLoadMoreWithNoMoreData();
-                            }
-                        }
+//                        if (result.getStatus()==0) {
+//                            if(result.getData().getList().size()>0){
+//                                lv_not.setVisibility(View.GONE);
+//                                refreshLayout.setVisibility(View.VISIBLE);
+//                            }
+//                            orderDataList.addAll(result.getData().getList());
+//                            orderListAdapter.notifyDataSetChanged();
+//                            refreshLayout.finishRefresh();
+//                            refreshLayout.finishLoadMore();
+//                            totalPage = StringUtil.getTotalPage(result.getData().getTotalCount(), ConstValues.PAGE_SIZE);
+//                            if(totalPage <= page){
+//                                refreshLayout.finishLoadMoreWithNoMoreData();
+//                            }
+//                        }
 
                     }
 

@@ -259,4 +259,8 @@ dependencies {
     implementation 'com.wx.wheelview:wheelview:1.3.3'//api:https://github.com/venshine/WheelView
 
     implementation project(':blurringview')
+    implementation project(':bthelper')
+
+    implementation 'com.github.1993hzw:Androids:1.3'
+//    implementation 'com.changyow:consolelib:1.1'
 }

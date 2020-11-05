@@ -13,6 +13,7 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.view.LoadDialog;
@@ -110,6 +111,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void dismiss() {
         if (dialog != null)
             dialog.dismiss();
+    }
+
+    public boolean isDataInfoSucceed(Result result){
+        if(result.getCode()==0){
+            return true;
+        }
+        ToastUtils.showShort(result.getMesg());
+        return false;
     }
 
 }

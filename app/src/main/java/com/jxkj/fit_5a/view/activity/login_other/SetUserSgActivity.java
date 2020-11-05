@@ -62,7 +62,6 @@ public class SetUserSgActivity extends BaseActivity {
             case R.id.tv_go_xyb:
                 // 日期格式为yyyy-MM-dd
                 startActivity(new Intent(SetUserSgActivity.this,WelcomeLoginActivity.class));
-
                 break;
         }
     }

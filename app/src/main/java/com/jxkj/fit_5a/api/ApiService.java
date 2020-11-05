@@ -2,13 +2,19 @@ package com.jxkj.fit_5a.api;
 
 
 import com.jxkj.fit_5a.base.AddressData;
+import com.jxkj.fit_5a.base.HelpListData;
 import com.jxkj.fit_5a.base.OrderInfoData;
 import com.jxkj.fit_5a.base.Result;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -17,8 +23,39 @@ public interface ApiService {
      *
      * @return
      */
-    @GET("api/v1/user/getSecuritytoken")
-    Observable<Result> getSecuritytoken();
+    @GET("api/v1/user/task/list")
+    Observable<Result> getUserTaskList();
+
+    /**
+     * 获取短信验证码
+     * @return type:类型0注册1修改密码2登录
+     */
+    @GET("api/v1/user/verify/getVerifyCode")
+    Observable<Result> getVerifyCode(@Query("mobile") String mobile,@Query("type") int type);
+
+    /**
+     * 注册
+     * @return type:类型0注册1修改密码2登录
+     */
+    @POST("api/v1/user/verify/register")
+    Observable<Result> userVerifyRegister(@Query("clientType") int clientType,
+                                          @Query("phone") String phone,@Query("password") String password,
+                                          @Query("verify") String verify);
+
+    /**
+     * 注册成功后————兴趣列表
+     * @return
+     */
+    @GET("api/v1/interest/query")
+    Observable<Result> getInterestList();
+
+
+    /**
+     * 帮助列表
+     * @return
+     */
+    @GET("api/v1/help/query")
+    Observable<Result<HelpListData>> getHelpList();
 
     /**
      * 订单列表

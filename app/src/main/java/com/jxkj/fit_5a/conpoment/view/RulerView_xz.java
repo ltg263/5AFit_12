@@ -200,9 +200,9 @@ public class RulerView_xz extends View {
                 mLinePaint.setAlpha(alpha);
             }
             canvas.drawLine(left, 0, left, height, mLinePaint);
-
+            //40-40+160=160
             if (i % 10 == 0) {
-                value = String.valueOf((int) (mMinValue + i * mPerValue / 10));
+                value = String.valueOf((int) (mMinValue-(mMinValue + i * mPerValue / 10)+mMaxValue));
                 if (mAlphaEnable) {
                     mTextPaint.setAlpha(alpha);
                 }
@@ -281,6 +281,7 @@ public class RulerView_xz extends View {
         mLastX = 0;
         mMove = 0;
 
+
         mSelectorValue = mMinValue + Math.round(Math.abs(mOffset) * 1.0f / mLineSpaceWidth) * mPerValue / 10.0f;
         mOffset = (mMinValue - mSelectorValue) * 10.0f / mPerValue * mLineSpaceWidth;
 
@@ -315,6 +316,7 @@ public class RulerView_xz extends View {
 
     private void notifyValueChange() {
         if (null != mListener) {
+            mSelectorValue = mMinValue-mSelectorValue+mMaxValue;
             mListener.onValueChange(mSelectorValue);
         }
     }

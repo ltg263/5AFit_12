@@ -94,7 +94,7 @@ public class SharedUtils {
 	}
 	public static String getToken(){
 //		return singleton().get(ConstValues.TOKEN,"");
-		return "03b4c813-638c-4c6c-ae36-39dc9f5eefec_1";
+		return "{id:1}";
 	}
 	public static int getUserId(){
 		return singleton().get(ConstValues.USERID,0);

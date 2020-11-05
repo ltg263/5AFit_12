@@ -169,17 +169,17 @@ public class AddressActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result<String> result) {
-                        if (result.getStatus() == 0) {
-                            if (result.getData() != null) {
-                                addressDataList.clear();
-//                                if(result.getData().getList()!=null){
-//                                    lv_not.setVisibility(View.GONE);
-//                                    rvList.setVisibility(View.VISIBLE);
-//                                    addressDataList.addAll(result.getData().getList());
-//                                    mAddressAdapter.notifyDataSetChanged();
-//                                }
-                            }
-                        }
+//                        if (result.getStatus() == 0) {
+//                            if (result.getData() != null) {
+//                                addressDataList.clear();
+////                                if(result.getData().getList()!=null){
+////                                    lv_not.setVisibility(View.GONE);
+////                                    rvList.setVisibility(View.VISIBLE);
+////                                    addressDataList.addAll(result.getData().getList());
+////                                    mAddressAdapter.notifyDataSetChanged();
+////                                }
+//                            }
+//                        }
 
 
                     }
@@ -210,9 +210,9 @@ public class AddressActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result result) {
-                        if (result.getStatus() == 0) {
-                            getUserAddress();
-                        }
+//                        if (result.getStatus() == 0) {
+//                            getUserAddress();
+//                        }
                     }
 
                     @Override
@@ -245,11 +245,11 @@ public class AddressActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result result) {
-                        if (result.getStatus() == 0) {
-                            getUserAddress();
-                        } else {
-                            ToastUtils.showShort(result.getError());
-                        }
+//                        if (result.getStatus() == 0) {
+//                            getUserAddress();
+//                        } else {
+//                            ToastUtils.showShort(result.getError());
+//                        }
                     }
 
                     @Override

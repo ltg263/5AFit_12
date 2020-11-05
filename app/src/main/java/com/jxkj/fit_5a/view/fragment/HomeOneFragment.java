@@ -23,7 +23,9 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.FileUtils;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.exercise.RateControlActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
@@ -38,6 +40,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class HomeOneFragment extends BaseFragment {
     @BindView(R.id.tv_left_text)
@@ -217,9 +223,41 @@ public class HomeOneFragment extends BaseFragment {
 
                 break;
             case R.id.on_rv_qd:
-                startActivity(new Intent(getActivity(), TaskSignActivity.class));
+                getUserAddress();
+//                startActivity(new Intent(getActivity(), TaskSignActivity.class));
                 break;
         }
+    }
+
+    /**
+     * 测试
+     */
+    private void getUserAddress() {
+        RetrofitUtil.getInstance().apiService()
+                .getInterestList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }
 

@@ -175,4 +175,8 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
+
+    private void guitLogin(){
+
+    }
 }

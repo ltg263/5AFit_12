@@ -1,9 +1,12 @@
 package com.jxkj.fit_5a.api;
 
 
+import android.util.Log;
+
 import com.blankj.utilcode.util.LogUtils;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Headers;
@@ -52,8 +55,8 @@ public class MyInterceptor implements Interceptor {
         //获得返回的数据
         Buffer buffer = source.buffer();
         //使用前clone()下，避免直接消耗
-//        syso("response:" + buffer.clone().readString(Charset.forName("UTF-8")));
-//        Log.d(TAG,"api url = "+ request.url() +" http response = "+ buffer.clone().readString(Charset.forName("UTF-8")));
+        syso("response:" + buffer.clone().readString(Charset.forName("UTF-8")));
+        Log.d(TAG,"api url = "+ request.url() +" http response = "+ buffer.clone().readString(Charset.forName("UTF-8")));
         return response;
     }
 

@@ -1,30 +1,24 @@
 package com.jxkj.fit_5a.base;
 
-import com.jxkj.fit_5a.conpoment.utils.StringUtil;
-
 public class Result<T> {
-    private String error;
-
-    public String getError() {
-        if(StringUtil.isNotBlank(error)){
-            return error;
-        }
-        return "\"status\":"+status;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    private int status;
+    private String mesg;
+    private int code;
     private T data;
 
-    public int getStatus() {
-        return status;
+    public String getMesg() {
+        return mesg;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setMesg(String mesg) {
+        this.mesg = mesg;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public T getData() {

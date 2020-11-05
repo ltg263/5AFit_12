@@ -226,10 +226,10 @@ public class AddressEditActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result result) {
-                        if(result.getStatus()==0){
-                            ToastUtils.showShort("添加成功");
-                            finish();
-                        }
+//                        if(result.getCode()==0){
+//                            ToastUtils.showShort("添加成功");
+//                            finish();
+//                        }
                     }
 
                     @Override
@@ -259,10 +259,10 @@ public class AddressEditActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result result) {
-                        if(result.getStatus()==0){
-                            ToastUtils.showShort("修改成功");
-                            finish();
-                        }
+//                        if(result.getStatus()==0){
+//                            ToastUtils.showShort("修改成功");
+//                            finish();
+//                        }
                     }
 
                     @Override
