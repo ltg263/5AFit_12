@@ -14,6 +14,7 @@ import com.jxkj.fit_5a.base.InterestLists;
 import com.jxkj.fit_5a.base.OrderInfoData;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.SignLogData;
 
 import java.util.Map;
 
@@ -201,4 +202,13 @@ public interface ApiService {
 
 
 
+    /**
+     * 设置默认地址
+     *
+     * @return
+     */
+
+    @GET("api/v1/user/sign/log/list")
+    Observable<Result<SignLogData>> getUserSignLog(@Query("beginCreateTime") String beginCreateTime,
+                                                   @Query("endCreateTime") String endCreateTime);
 }

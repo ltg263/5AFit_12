@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.home;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,7 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.GiftLogListData;
+import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.SignLogData;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.view.adapter.HomeSignHdrwAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeSignRcrwAdapter;
@@ -19,10 +24,15 @@ import com.jxkj.fit_5a.view.adapter.HomeSignRlAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeSignTopAdapter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class TaskSignActivity extends BaseActivity {
     @BindView(R.id.tv_jifen_num)
@@ -50,25 +60,71 @@ public class TaskSignActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        getUserSignLog();
+
         initRv();
 
     }
+    int year;
+    int month;
+    private void getUserSignLog() {
+        Calendar cal = Calendar.getInstance();
+        year = cal.get(Calendar.YEAR);
+        month = cal.get(Calendar.MONTH) + 1;
+        //2020-11-01 01:00:00
+        String beginCreateTime = year+"-"+month+"-01 00:00:00";
+        String endCreateTime = year+"-"+month+"-"+StringUtil.getCurrentMonthDay()+" 00:00:00";
+        RetrofitUtil.getInstance().apiService()
+                .getUserSignLog(beginCreateTime,endCreateTime)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<SignLogData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-    private void initRv() {
-        List<String> list = new ArrayList<>();
-        List<String> listRl = new ArrayList<>();
-        for(int i = 0;i<7;i++){
-            list.add("");
-        }
+                    }
 
+                    @Override
+                    public void onNext(Result<SignLogData> result) {
+                        if(isDataInfoSucceed(result)){
+                            initTop(result.getData().getList());
+                        }
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void initTop(List<SignLogData.ListBean> listData) {
+        List<SignLogData.ListBean> listRl = new ArrayList<>();
         int currentMaxDays = StringUtil.getCurrentMonthDay();//当月天数
         int pos = StringUtil.getPos();//星期几开始
         for(int i=0;i<pos;i++){
-            listRl.add("");
+            listRl.add(null);
         }
         for(int i=0;i<currentMaxDays;i++){
-            listRl.add(""+(i+1));
+            SignLogData.ListBean listBean = new SignLogData.ListBean();
+            for (int j= 0;j<listData.size();j++){
+                String str = (i+1)+"";
+                if((i+1)<10){
+                    str = "0"+(i+1);
+                }
+                if((listData.get(j).getSignDate()+"").equals(String.valueOf(year)+String.valueOf(month)+str)){
+                    listBean = listData.get(j);
+                    listBean.setSig(true);
+                }
+                listBean.setSj(""+(i+1));
+            }
+
+            listRl.add(listBean);
         }
         HomeSignRlAdapter mHomeSignRlAdapter = new HomeSignRlAdapter(listRl);
         mRvRlList.setLayoutManager(new GridLayoutManager(this,7));
@@ -82,7 +138,10 @@ public class TaskSignActivity extends BaseActivity {
             }
         });
 
-
+        List<String> list = new ArrayList<>();
+        for(int i = 0;i<7;i++){
+            list.add("");
+        }
         HomeSignTopAdapter mHomeSignTopAdapter = new HomeSignTopAdapter(list);
         mRvTopList.setLayoutManager(new GridLayoutManager(this,7));
         mRvTopList.setHasFixedSize(true);
@@ -94,6 +153,49 @@ public class TaskSignActivity extends BaseActivity {
 //                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
             }
         });
+    }
+
+    private void initRv() {
+        List<String> list = new ArrayList<>();
+        List<String> listRl = new ArrayList<>();
+        for(int i = 0;i<7;i++){
+            list.add("");
+        }
+
+
+//        int currentMaxDays = StringUtil.getCurrentMonthDay();//当月天数
+//        int pos = StringUtil.getPos();//星期几开始
+//        for(int i=0;i<pos;i++){
+//            listRl.add("");
+//        }
+//        for(int i=0;i<currentMaxDays;i++){
+//            listRl.add(""+(i+1));
+//        }
+//        HomeSignRlAdapter mHomeSignRlAdapter = new HomeSignRlAdapter(listRl);
+//        mRvRlList.setLayoutManager(new GridLayoutManager(this,7));
+//        mRvRlList.setHasFixedSize(true);
+//        mRvRlList.setAdapter(mHomeSignRlAdapter);
+//
+//        mHomeSignRlAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+//            @Override
+//            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+////                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
+//            }
+//        });
+//
+//
+//        HomeSignTopAdapter mHomeSignTopAdapter = new HomeSignTopAdapter(list);
+//        mRvTopList.setLayoutManager(new GridLayoutManager(this,7));
+//        mRvTopList.setHasFixedSize(true);
+//        mRvTopList.setAdapter(mHomeSignTopAdapter);
+//
+//        mHomeSignTopAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+//            @Override
+//            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+////                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
+//            }
+//        });
+
         HomeSignRcrwAdapter mHomeSignRcrwAdapter = new HomeSignRcrwAdapter(list);
         mRvRcrwList.setLayoutManager(new LinearLayoutManager(this));
         mRvRcrwList.setHasFixedSize(true);
