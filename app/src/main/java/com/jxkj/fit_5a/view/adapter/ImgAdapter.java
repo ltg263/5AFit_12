@@ -6,6 +6,8 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.base.InterestLists;
+import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 
 import java.util.List;
 
@@ -13,14 +15,21 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/5/2914:03
  */
-public class ImgAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    public ImgAdapter(@Nullable List<String> data) {
+public class ImgAdapter extends BaseQuickAdapter<InterestLists.ListBean, BaseViewHolder> {
+    public ImgAdapter(@Nullable List<InterestLists.ListBean> data) {
         super(R.layout.item_img, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, String item) {
+    protected void convert(@NonNull BaseViewHolder helper, InterestLists.ListBean item) {
+        GlideImageUtils.setGlideImage(mContext,item.getImgUrl(),helper.getView(R.id.iv_img));
+        helper.setVisible(R.id.iv_select,false).setBackgroundColor(R.id.rl,
+                mContext.getResources().getColor(R.color.transparent));
 
+        if(item.isSelect()){
+            helper.setVisible(R.id.iv_select,true);
+            helper.setVisible(R.id.iv_select,true).setBackgroundRes(R.id.rl,R.drawable.bj_circle_line_theme);
+        }
     }
 
 }

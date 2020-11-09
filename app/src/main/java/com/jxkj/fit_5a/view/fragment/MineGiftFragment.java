@@ -10,7 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
+import com.jxkj.fit_5a.base.DeviceTypeData;
+import com.jxkj.fit_5a.base.GiftListData;
+import com.jxkj.fit_5a.base.GiftLogListData;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.view.adapter.UserLwMineAdapter;
 import com.jxkj.fit_5a.view.adapter.UserLwShouAdapter;
 import com.jxkj.fit_5a.view.adapter.UserLwSongAdapter;
@@ -20,6 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MineGiftFragment extends BaseFragment {
     @BindView(R.id.rv_list)
@@ -50,35 +59,97 @@ public class MineGiftFragment extends BaseFragment {
 
     }
 
+    UserLwShouAdapter mUserLwShouAdapter;
+    UserLwSongAdapter mUserLwSongAdapter;
+    UserLwMineAdapter mUserLwMineAdapter;
     private void initRv(int type) {
-        List<String> list = new ArrayList<>();
-        for(int i = 0;i<10;i++){
-            list.add("");
-        }
-
-        BaseQuickAdapter mBaseQuickAdapter;
         if(type==0){
-            mBaseQuickAdapter = new UserLwShouAdapter(list);
+            mUserLwShouAdapter = new UserLwShouAdapter(null);
             mRvList.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+            mRvList.setHasFixedSize(true);
+            mRvList.setAdapter(mUserLwShouAdapter);
+            getUserGiftLogList(false);
         }else if(type ==1){
-            mBaseQuickAdapter = new UserLwSongAdapter(list);
+            mUserLwSongAdapter = new UserLwSongAdapter(null);
             mRvList.setLayoutManager(new LinearLayoutManager(getActivity()));
+            mRvList.setHasFixedSize(true);
+            mRvList.setAdapter(mUserLwSongAdapter);
+            getUserGiftLogList(true);
         }else{
-            mBaseQuickAdapter = new UserLwMineAdapter(list);
+            mUserLwMineAdapter = new UserLwMineAdapter(null);
             mRvList.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+            mRvList.setHasFixedSize(true);
+            mRvList.setAdapter(mUserLwMineAdapter);
+            getUserGiftList();
         }
-        mRvList.setHasFixedSize(true);
-        mRvList.setAdapter(mBaseQuickAdapter);
-
-        mBaseQuickAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-            }
-        });
     }
 
     @Override
     public void initImmersionBar() {
 
     }
+
+    private void getUserGiftList() {
+        RetrofitUtil.getInstance().apiService()
+                .getUserGiftList(true)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<GiftListData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<GiftListData> result) {
+                        if(isDataInfoSucceed(result)){
+                            mUserLwMineAdapter.setNewData(result.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+    private void getUserGiftLogList(boolean flag) {
+        RetrofitUtil.getInstance().apiService()
+                .getUserGiftLogList(flag)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<GiftLogListData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<GiftLogListData> result) {
+                        if(isDataInfoSucceed(result)){
+                            if(flag){
+                                mUserLwSongAdapter.setNewData(result.getData().getList());
+                            }else{
+                                mUserLwShouAdapter.setNewData(result.getData().getList());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
 }

@@ -14,9 +14,13 @@ import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -25,6 +29,10 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class LoginActivity extends BaseActivity {
 
@@ -89,12 +97,54 @@ public class LoginActivity extends BaseActivity {
                 startActivity(new Intent(LoginActivity.this,FindPasswordActivity.class));
                 break;
             case R.id.tv_go_login:
-                startActivity(new Intent(LoginActivity.this,WelcomeLoginActivity.class));
+                userVerifyLogin();
+
+//                startActivity(new Intent(LoginActivity.this,WelcomeLoginActivity.class));
                 break;
             case R.id.ll_go_zc:
                 startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
                 break;
         }
+    }
+
+
+    private void userVerifyLogin() {
+        String sjh = mEtInputSjh.getText().toString();
+        String yzm = mEtInputYzm.getText().toString();
+        String mm = mEtInputMm.getText().toString();
+        if(StringUtil.isBlank(sjh) ||StringUtil.isBlank(yzm) ||StringUtil.isBlank(mm)){
+            ToastUtils.showShort("填写不完整");
+            return;
+        }
+        show();
+        RetrofitUtil.getInstance().apiService()
+                .userVerifyLogin(3,sjh,mm,yzm)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        dismiss();
+                        if(isDataInfoSucceed(result)){
+                            startActivity(new Intent(LoginActivity.this, WelcomeLoginActivity.class));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
     private void getPlatformInfo() {
         UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {

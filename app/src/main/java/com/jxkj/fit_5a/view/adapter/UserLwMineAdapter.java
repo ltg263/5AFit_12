@@ -6,6 +6,8 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.base.GiftListData;
+import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 
 import java.util.List;
 
@@ -13,14 +15,15 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/5/2914:03
  */
-public class UserLwMineAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    public UserLwMineAdapter(@Nullable List<String> data) {
+public class UserLwMineAdapter extends BaseQuickAdapter<GiftListData.ListBean, BaseViewHolder> {
+    public UserLwMineAdapter(@Nullable List<GiftListData.ListBean> data) {
         super(R.layout.item_user_lw_mine, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, String item) {
-
+    protected void convert(@NonNull BaseViewHolder helper, GiftListData.ListBean item) {
+        GlideImageUtils.setGlideImage(mContext,item.getImgUrl(),helper.getView(R.id.iv_img));
+        helper.setText(R.id.tv_user,item.getName());
     }
 
 }

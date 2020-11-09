@@ -223,42 +223,12 @@ public class HomeOneFragment extends BaseFragment {
 
                 break;
             case R.id.on_rv_qd:
-                getUserAddress();
-//                startActivity(new Intent(getActivity(), TaskSignActivity.class));
+                startActivity(new Intent(getActivity(), TaskSignActivity.class));
                 break;
         }
     }
 
-    /**
-     * 测试
-     */
-    private void getUserAddress() {
-        RetrofitUtil.getInstance().apiService()
-                .getInterestList()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
 
-                    }
-
-                    @Override
-                    public void onNext(Result result) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
 }
 
 

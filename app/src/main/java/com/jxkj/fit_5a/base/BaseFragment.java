@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.gyf.immersionbar.ImmersionBar;
 import com.gyf.immersionbar.components.SimpleImmersionFragment;
@@ -86,6 +87,15 @@ public abstract class BaseFragment extends SimpleImmersionFragment {
     public void dismiss() {
         if (dialog != null)
             dialog.dismiss();
+    }
+
+
+    public boolean isDataInfoSucceed(Result result){
+        if(result.getCode()==0){
+            return true;
+        }
+        ToastUtils.showShort(result.getMesg());
+        return false;
     }
 
 }

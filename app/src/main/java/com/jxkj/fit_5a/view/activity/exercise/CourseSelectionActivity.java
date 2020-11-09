@@ -1,13 +1,17 @@
 package com.jxkj.fit_5a.view.activity.exercise;
 
+import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.tabs.TabLayout;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.DeviceCourseTypeData;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.MagicIndicatorUtils;
 import com.jxkj.fit_5a.conpoment.view.AutoHeightViewPager;
 import com.jxkj.fit_5a.view.fragment.CourseSelectionFragment;
@@ -18,6 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class CourseSelectionActivity extends BaseActivity {
     @BindView(R.id.viewpager)
@@ -25,6 +33,7 @@ public class CourseSelectionActivity extends BaseActivity {
 
     @BindView(R.id.magic_indicator)
     MagicIndicator mMagicIndicator;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_course_selection;
@@ -32,31 +41,55 @@ public class CourseSelectionActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        List<String> list =new ArrayList<>();
-        list.add("基础");
-        list.add("中强度");
-        list.add("高强度间歇");
-        list.add("耐久力");
-        list.add("爆发力");
-        list.add("爆发力1");
-        list.add("爆发力2");
-
-        initTabs(list);
+        queryDeviceCourseTypeList();
 
     }
 
+    private void queryDeviceCourseTypeList() {
+        RetrofitUtil.getInstance().apiService()
+                .queryDeviceCourseTypeList(null)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<DeviceCourseTypeData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<DeviceCourseTypeData> result) {
+                        if(isDataInfoSucceed(result)){
+                            initTabs(result.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
     List<Fragment> fragments = new ArrayList<>();
-    private List<Fragment> getFragments(List<String> size) {
-        for (int i = 0; i < size.size(); i++) {
+    private List<Fragment> getFragments(List<DeviceCourseTypeData.ListBean> lists) {
+        for (int i = 0; i < lists.size(); i++) {
             CourseSelectionFragment fragment = new CourseSelectionFragment();
+            Bundle mBundle = new Bundle();
+            mBundle.putString("type",lists.get(i).getId()+"");
+            fragment.setArguments(mBundle);
             fragments.add(fragment);
         }
         return fragments;
     }
-    private void initTabs(List<String> lists) {
+    private void initTabs(List<DeviceCourseTypeData.ListBean> lists) {
         List<String> titles = new ArrayList<>();
         for(int i=0;i<lists.size();i++){
-            titles.add(lists.get(i));
+            titles.add(lists.get(i).getName());
         }
         final List<Fragment> mFragments = getFragments(lists);
         mViewpager.setOffscreenPageLimit(titles.size());
@@ -97,7 +130,7 @@ public class CourseSelectionActivity extends BaseActivity {
             }
         });
         mViewpager.setCurrentItem(0);
-        MagicIndicatorUtils.initMagicIndicator_1(this, lists, mMagicIndicator, mViewpager);
+        MagicIndicatorUtils.initMagicIndicator_1(this, titles, mMagicIndicator, mViewpager);
     }
 
 }

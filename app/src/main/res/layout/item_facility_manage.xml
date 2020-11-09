@@ -12,8 +12,9 @@
         android:padding="@dimen/dp_10">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iv_img"
+            android:layout_width="@dimen/dimen_45dp"
+            android:layout_height="@dimen/dimen_45dp"
             android:layout_margin="@dimen/dp_10"
             android:src="@mipmap/ic_2" />
 
@@ -24,6 +25,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
@@ -35,6 +37,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_sub_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
@@ -49,13 +52,23 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/iv_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginHorizontal="@dimen/dimen_15dp"
+            android:src="@drawable/icon_san_xiaodian" />
+
+        <ImageView
+            android:id="@+id/iv_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_15dp"
-            android:src="@drawable/icon_san_xiaodian" />
+            android:src="@drawable/icon_jiantou_you_99" />
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_ljzt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/common_margin_5"

@@ -1,6 +1,6 @@
 package com.jxkj.fit_5a.view.activity.login_other;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,14 +10,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
-import com.jxkj.fit_5a.view.adapter.FacilityManageAdapter;
+import com.jxkj.fit_5a.base.DeviceTypeData;
+import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.view.adapter.FacilityAddSbAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class FacilityAddSbActivity extends BaseActivity {
     @BindView(R.id.iv_back)
@@ -26,7 +33,7 @@ public class FacilityAddSbActivity extends BaseActivity {
     TextView mTvTitle;
     @BindView(R.id.rv_all_list)
     RecyclerView mRvAllList;
-    private FacilityManageAdapter mFacilityManageAdapter;
+    private FacilityAddSbAdapter mFacilityAddSbAdapter;
 
     @Override
     protected int getContentView() {
@@ -37,28 +44,56 @@ public class FacilityAddSbActivity extends BaseActivity {
     protected void initViews() {
         mTvTitle.setText("新增设备");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
-        initRvUi();
+        getUserAddress();
     }
 
-    private void initRvUi() {
+    private void getUserAddress() {
+        RetrofitUtil.getInstance().apiService()
+                .queryDeviceTypeLists()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<DeviceTypeData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
+                    }
 
-        mFacilityManageAdapter = new FacilityManageAdapter(list);
+                    @Override
+                    public void onNext(Result<DeviceTypeData> result) {
+                        if(isDataInfoSucceed(result)){
+                            initRvUi(result.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+    private void initRvUi(List<DeviceTypeData.ListBean> list) {
+
+        mFacilityAddSbAdapter = new FacilityAddSbAdapter(list);
 
         mRvAllList.setLayoutManager(new LinearLayoutManager(this));
         mRvAllList.setHasFixedSize(true);
-        mRvAllList.setAdapter(mFacilityManageAdapter);
+        mRvAllList.setAdapter(mFacilityAddSbAdapter);
 
-        mFacilityManageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mFacilityAddSbAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(FacilityAddSbActivity.this, FacilityAddPpActivity.class));
+
+                list.get(position).getName();
+                list.get(position).getId();
+                Bundle mBundle = new Bundle();
+                mBundle.putString("name",list.get(position).getName());
+                mBundle.putString("id",list.get(position).getId()+"");
+                IntentUtils.getInstence().intent(FacilityAddSbActivity.this, FacilityAddPpActivity.class,"bundle",mBundle);
             }
         });
     }

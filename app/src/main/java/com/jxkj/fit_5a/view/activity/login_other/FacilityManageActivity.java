@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.DeviceTypeData;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.view.adapter.FacilityManageAdapter;
 
 import java.util.ArrayList;
@@ -20,6 +23,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class FacilityManageActivity extends BaseActivity {
     @BindView(R.id.iv_back)
@@ -57,7 +64,38 @@ public class FacilityManageActivity extends BaseActivity {
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         mIvRightimg.setImageDrawable(getResources().getDrawable(R.drawable.icon_add_right));
         mTvRighttext.setText("新增");
-        initRvUi();
+
+        queryUserDeviceList();
+    }
+
+    private void queryUserDeviceList() {
+        RetrofitUtil.getInstance().apiService()
+                .queryUserDeviceList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(isDataInfoSucceed(result)){
+                            initRvUi();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void initRvUi() {
@@ -91,6 +129,7 @@ public class FacilityManageActivity extends BaseActivity {
         }
     }
     public static void intentActivity(Context mContext){
+
         mContext.startActivity(new Intent(mContext,FacilityManageActivity.class));
     }
 }

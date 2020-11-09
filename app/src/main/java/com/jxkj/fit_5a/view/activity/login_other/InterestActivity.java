@@ -12,6 +12,7 @@ import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.InterestLists;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.view.adapter.ImgAdapter;
 
@@ -41,7 +42,6 @@ public class InterestActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        initRvUi();
         getInterestList();
     }
 
@@ -50,16 +50,16 @@ public class InterestActivity extends BaseActivity {
                 .getInterestList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result>() {
+                .subscribe(new Observer<Result<InterestLists>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result result) {
+                    public void onNext(Result<InterestLists> result) {
                         if(isDataInfoSucceed(result)){
-
+                            initRvUi(result.getData().getList());
                         }
                     }
 
@@ -74,27 +74,22 @@ public class InterestActivity extends BaseActivity {
                     }
                 });
     }
-    private void initRvUi() {
-
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-
+    private void initRvUi(List<InterestLists.ListBean> list) {
+        if(list.size()>0){
+            list.get(0).setSelect(true);
+        }
         mImgAdapter = new ImgAdapter(list);
+
 
         mRvAllList.setLayoutManager(new GridLayoutManager(this, 3));
         mRvAllList.setHasFixedSize(true);
         mRvAllList.setAdapter(mImgAdapter);
-
-        mImgAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
+        mImgAdapter.setOnItemClickListener((adapter, view, position) -> {
+            for(int i=0;i<mImgAdapter.getData().size();i++){
+                mImgAdapter.getData().get(i).setSelect(false);
             }
+            mImgAdapter.getData().get(position).setSelect(true);
+            mImgAdapter.notifyDataSetChanged();
         });
     }
 
@@ -102,7 +97,7 @@ public class InterestActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_skip:
-
+                startActivity(new Intent(this, MainActivity.class));
             case R.id.tv_go_xyb:
                 startActivity(new Intent(this, MainActivity.class));
                 break;

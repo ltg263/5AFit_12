@@ -12,7 +12,9 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeCounter;
+import com.jxkj.fit_5a.conpoment.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -64,8 +66,8 @@ public class RegisterActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_go_register:
-                startActivity(new Intent(RegisterActivity.this, SetUserXbActivity.class));
-//                userVerifyRegister();
+//
+                userVerifyRegister();
                 break;
             case R.id.ll_go_dl:
                 finish();
@@ -77,6 +79,11 @@ public class RegisterActivity extends BaseActivity {
         String sjh = mEtInputSjh.getText().toString();
         String yzm = mEtInputYzm.getText().toString();
         String mm = mEtInputMm.getText().toString();
+        if(StringUtil.isBlank(sjh) ||StringUtil.isBlank(yzm) ||StringUtil.isBlank(mm)){
+            ToastUtils.showShort("填写不完整");
+            return;
+        }
+        show();
         RetrofitUtil.getInstance().apiService()
                 .userVerifyRegister(3,sjh,mm,yzm)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -89,19 +96,21 @@ public class RegisterActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result result) {
+                        dismiss();
                         if(isDataInfoSucceed(result)){
-
+                            ToastUtils.showShort("注册成功");
+                            startActivity(new Intent(RegisterActivity.this, SetUserXbActivity.class));
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        dismiss();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        dismiss();
                     }
                 });
     }
