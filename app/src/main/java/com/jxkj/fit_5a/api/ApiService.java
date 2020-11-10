@@ -13,6 +13,7 @@ import com.jxkj.fit_5a.base.HelpListData;
 import com.jxkj.fit_5a.base.InterestLists;
 import com.jxkj.fit_5a.base.OrderInfoData;
 import com.jxkj.fit_5a.base.PostUser;
+import com.jxkj.fit_5a.base.PrizeListData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.SignLogData;
 
@@ -203,6 +204,14 @@ public interface ApiService {
 
 
     /**
+     * 礼券列表
+     *状态1待使用,2已使用,3已失效
+     * @return
+     */
+
+    @GET("api/v1/user/prize/list")
+    Observable<Result<PrizeListData>> getUserPrize(@Query("status") int status);
+    /**
      * 设置默认地址
      *
      * @return
@@ -211,4 +220,13 @@ public interface ApiService {
     @GET("api/v1/user/sign/log/list")
     Observable<Result<SignLogData>> getUserSignLog(@Query("beginCreateTime") String beginCreateTime,
                                                    @Query("endCreateTime") String endCreateTime);
+
+
+    /**
+     * 修改地址
+     *
+     * @return
+     */
+    @POST("api/v1/user/sign/add")
+    Observable<Result> addUserSign();
 }

@@ -1,6 +1,5 @@
 package com.jxkj.fit_5a.view.activity.home;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,11 +9,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
-import com.jxkj.fit_5a.base.GiftLogListData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.SignLogData;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
@@ -51,6 +50,8 @@ public class TaskSignActivity extends BaseActivity {
     RecyclerView mRvHdrwList;
     @BindView(R.id.ll_rl)
     LinearLayout mLlRl;
+    @BindView(R.id.tv_time)
+    TextView mTvTime;
     int type = 1;//周的形式
 
     @Override
@@ -71,6 +72,7 @@ public class TaskSignActivity extends BaseActivity {
         Calendar cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
         month = cal.get(Calendar.MONTH) + 1;
+        mTvTime.setText(year+"."+month);
         //2020-11-01 01:00:00
         String beginCreateTime = year+"-"+month+"-01 00:00:00";
         String endCreateTime = year+"-"+month+"-"+StringUtil.getCurrentMonthDay()+" 00:00:00";
@@ -157,44 +159,9 @@ public class TaskSignActivity extends BaseActivity {
 
     private void initRv() {
         List<String> list = new ArrayList<>();
-        List<String> listRl = new ArrayList<>();
         for(int i = 0;i<7;i++){
             list.add("");
         }
-
-
-//        int currentMaxDays = StringUtil.getCurrentMonthDay();//当月天数
-//        int pos = StringUtil.getPos();//星期几开始
-//        for(int i=0;i<pos;i++){
-//            listRl.add("");
-//        }
-//        for(int i=0;i<currentMaxDays;i++){
-//            listRl.add(""+(i+1));
-//        }
-//        HomeSignRlAdapter mHomeSignRlAdapter = new HomeSignRlAdapter(listRl);
-//        mRvRlList.setLayoutManager(new GridLayoutManager(this,7));
-//        mRvRlList.setHasFixedSize(true);
-//        mRvRlList.setAdapter(mHomeSignRlAdapter);
-//
-//        mHomeSignRlAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-//            @Override
-//            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-////                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
-//            }
-//        });
-//
-//
-//        HomeSignTopAdapter mHomeSignTopAdapter = new HomeSignTopAdapter(list);
-//        mRvTopList.setLayoutManager(new GridLayoutManager(this,7));
-//        mRvTopList.setHasFixedSize(true);
-//        mRvTopList.setAdapter(mHomeSignTopAdapter);
-//
-//        mHomeSignTopAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-//            @Override
-//            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-////                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
-//            }
-//        });
 
         HomeSignRcrwAdapter mHomeSignRcrwAdapter = new HomeSignRcrwAdapter(list);
         mRvRcrwList.setLayoutManager(new LinearLayoutManager(this));
@@ -244,7 +211,37 @@ public class TaskSignActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_go_sign:
+                addUserSign();
                 break;
         }
+    }
+    private void addUserSign() {
+        RetrofitUtil.getInstance().apiService()
+                .addUserSign()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(isDataInfoSucceed(result)){
+                            ToastUtils.showShort("签到成功");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showShort("系统异常"+e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }
