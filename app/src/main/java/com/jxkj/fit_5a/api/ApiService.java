@@ -1,6 +1,8 @@
 package com.jxkj.fit_5a.api;
 
 
+import android.service.autofill.UserData;
+
 import com.jxkj.fit_5a.base.AddressData;
 import com.jxkj.fit_5a.base.DeviceCourseData;
 import com.jxkj.fit_5a.base.DeviceCourseTypeData;
@@ -16,6 +18,8 @@ import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.PrizeListData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.SignLogData;
+import com.jxkj.fit_5a.base.UserDetailData;
+import com.jxkj.fit_5a.base.UserInfoData;
 
 import java.util.Map;
 
@@ -229,4 +233,24 @@ public interface ApiService {
      */
     @POST("api/v1/user/sign/add")
     Observable<Result> addUserSign();
+
+    /**
+     * 用户详情
+     * @return
+     */
+    @GET("api/v1/user/detail")
+    Observable<Result<UserDetailData>> getUserDetail();
+    /**
+     * 个人主页数据
+     * @return
+     */
+    @GET("api/v1/user/statistic/my")
+    Observable<Result<UserInfoData>> getUserStatistic();
+
+    /**
+     * 用户更新
+     * @return
+     */
+    @POST("api/v1/user/update")
+    Observable<Result> postUserUpdate(@Body PostUser.UserInfoUpdate userInfoUpdate);
 }

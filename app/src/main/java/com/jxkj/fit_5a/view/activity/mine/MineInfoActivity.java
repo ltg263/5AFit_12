@@ -16,7 +16,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.PostUser;
+import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.UserDetailData;
+import com.jxkj.fit_5a.base.UserInfoData;
+import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.view.AddressPickTask;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
@@ -33,10 +39,16 @@ import butterknife.OnClick;
 import cn.addapp.pickers.entity.City;
 import cn.addapp.pickers.entity.County;
 import cn.addapp.pickers.entity.Province;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MineInfoActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView mIvBack;
+    @BindView(R.id.iv_backImg)
+    ImageView mIvBackImg;
     @BindView(R.id.tv_info_1)
     TextView mTvInfo1;
     @BindView(R.id.ll_info_1)
@@ -93,10 +105,58 @@ public class MineInfoActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        String imgUrl = "https://profile.csdnimg.cn/3/2/C/3_zerokkqq";
-        Glide.with(this).load(imgUrl).into(mIvImg);
+        getUserDetail();
     }
 
+    private void getUserDetail() {
+        RetrofitUtil.getInstance().apiService()
+                .getUserDetail()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<UserDetailData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<UserDetailData> result) {
+                        if (isDataInfoSucceed(result)) {
+                            initUI(result.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showShort("系统异常" + e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void initUI(UserDetailData data) {
+        GlideImageUtils.setGlideImage(this,data.getBackImg(),mIvBackImg);
+        GlideImageUtils.setGlideImage(this,data.getAvatar(),mIvImg);
+        Glide.with(this)
+                .asBitmap()
+                .load(data.getBackImg())
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        Drawable drawable = new BitmapDrawable(resource);
+                        mRlActionbar.setBackground(drawable);
+                    }
+
+                });
+        mTvInfo1.setText(data.getNickName());
+        mTvInfo2.setText(data.getExplain());
+        mTvInfo3.setText(data.getRegion());
+
+    }
 
     @OnClick({R.id.iv_back, R.id.ll_info_1, R.id.ll_info_2, R.id.ll_info_3, R.id.ll_info_4, R.id.rl, R.id.ll_info_5, R.id.ll_info_6, R.id.ll_info_7, R.id.ll_info_8, R.id.ll_info_9, R.id.tv_go_find})
     public void onViewClicked(View view) {
@@ -149,8 +209,44 @@ public class MineInfoActivity extends BaseActivity {
                 });
                 break;
             case R.id.tv_go_find:
+                postUserUpdate();
                 break;
         }
+    }
+    private void postUserUpdate() {
+
+        PostUser.UserInfoUpdate userInfoUpdate = new PostUser.UserInfoUpdate();
+        userInfoUpdate.setAvatar("https://avatar.csdnimg.cn/C/5/9/2_ltg263.jpg");
+        userInfoUpdate.setBackImg("https://img-bss.csdnimg.cn/1603968192474.jpeg");
+        userInfoUpdate.setNickName(mTvInfo1.getText().toString());
+        userInfoUpdate.setExplain(mTvInfo2.getText().toString());
+        userInfoUpdate.setRegion(mTvInfo3.getText().toString());
+        RetrofitUtil.getInstance().apiService()
+                .postUserUpdate(userInfoUpdate)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if (isDataInfoSucceed(result)) {
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showShort("系统异常" + e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     public void onAddressPicker() {
@@ -168,7 +264,6 @@ public class MineInfoActivity extends BaseActivity {
             public void onAddressPicked(Province province, City city, County county) {
                 if (county == null) {
                     mTvInfo3.setText(province.getAreaName() + "," + city.getAreaName());
-
                 } else {
                     mTvInfo3.setText(province.getAreaName() + "," + city.getAreaName() + "," + county.getAreaName());
                 }
@@ -199,12 +294,10 @@ public class MineInfoActivity extends BaseActivity {
                                         Drawable drawable = new BitmapDrawable(resource);
                                         mRlActionbar.setBackground(drawable);
                                     }
-
                                 });
                     }
                     break;
             }
         }
     }
-
 }

@@ -19,6 +19,7 @@
             android:src="@mipmap/ic_mine_top" />
 
         <ImageView
+            android:id="@+id/iv_backImg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignTop="@id/iv"
@@ -96,22 +97,23 @@
                     android:background="@mipmap/ic_ming_ka">
 
                     <TextView
-                        android:id="@+id/tv_kthy"
+                        android:id="@+id/tv_level"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/dimen_25dp"
                         android:layout_marginTop="@dimen/dimen_30dp"
-                        android:text="已开通会员"
+                        android:text="未开通会员"
                         android:textColor="#E1AF96"
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
+                        android:id="@+id/tv_level_sy"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/tv_kthy"
+                        android:layout_below="@id/tv_level"
                         android:layout_marginStart="@dimen/dimen_25dp"
                         android:layout_marginTop="@dimen/dimen_5dp"
-                        android:text="还有 78 天到期"
+                        android:text=""
                         android:textColor="#DBC3AB"
                         android:textSize="12sp" />
 
@@ -119,14 +121,14 @@
                         android:id="@+id/on_bnt_zjxf"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/tv_kthy"
+                        android:layout_below="@id/tv_level"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="-10dp"
                         android:layout_marginEnd="@dimen/dp_10"
                         android:background="@drawable/btn_shape_bj_ljqf"
                         android:paddingHorizontal="@dimen/dimen_15dp"
                         android:paddingVertical="@dimen/dimen_3dp"
-                        android:text="立即续费"
+                        android:text="立即开通"
                         android:textColor="#121325"
                         android:textSize="@dimen/sp_14" />
                 </RelativeLayout>
@@ -141,6 +143,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_nickName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -151,6 +154,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_explain"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -175,6 +179,7 @@
                             android:padding="@dimen/dimen_15dp">
 
                             <TextView
+                                android:id="@+id/tv_balance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="3800"
@@ -202,6 +207,7 @@
                             android:padding="@dimen/dimen_15dp">
 
                             <TextView
+                                android:id="@+id/tv_integral"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="3800"
@@ -229,6 +235,7 @@
                             android:padding="@dimen/dimen_15dp">
 
                             <TextView
+                                android:id="@+id/tv_couponCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="3800"
@@ -256,6 +263,7 @@
                             android:padding="@dimen/dimen_15dp">
 
                             <TextView
+                                android:id="@+id/tv_giftCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="3800"
@@ -300,7 +308,7 @@
 
 
                     <com.jxkj.fit_5a.conpoment.view.RoundImageView
-                        android:id="@+id/iv_img"
+                        android:id="@+id/iv_avatar"
                         android:layout_width="65dp"
                         android:layout_height="65dp"
                         android:layout_margin="@dimen/dimen_5dp"

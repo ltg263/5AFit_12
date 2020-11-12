@@ -93,8 +93,8 @@ public class SharedUtils {
 		edit.commit();
 	}
 	public static String getToken(){
-//		return singleton().get(ConstValues.TOKEN,"");{id:1}
-		return "";
+//		return singleton().get(ConstValues.TOKEN,"");
+		return "{id:1}";
 	}
 	public static int getUserId(){
 		return singleton().get(ConstValues.USERID,0);
