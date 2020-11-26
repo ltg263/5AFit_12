@@ -43,6 +43,8 @@ public class MineCircleActivity extends BaseActivity {
     TextView tv_jiaru;
     @BindView(R.id.blurring_view)
     BlurringView mBlurringView;
+    @BindView(R.id.rl_11)
+    RelativeLayout rl11;
 
     @Override
     protected int getContentView() {
@@ -52,8 +54,8 @@ public class MineCircleActivity extends BaseActivity {
     @Override
     protected void initViews() {
         if (getIntent().getStringExtra("type").equals("未加入")) {
-            mBlurringView.setVisibility(View.VISIBLE);
             tv_jiaru.setVisibility(View.VISIBLE);
+            rl11.setVisibility(View.VISIBLE);
         }
         List<String> list = new ArrayList<>();
         list.add("-1");
@@ -75,6 +77,12 @@ public class MineCircleActivity extends BaseActivity {
             }
         });
         mBlurringView.setBlurredView(mRvList);
+        rl11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @OnClick({R.id.iv_back, R.id.tv_share, R.id.tv_add_dt, R.id.tv_jiaru, R.id.rl1, R.id.rl2})
@@ -88,7 +96,7 @@ public class MineCircleActivity extends BaseActivity {
             case R.id.tv_jiaru:
                 ToastUtils.showShort("加入成功");
                 tv_jiaru.setVisibility(View.GONE);
-                mBlurringView.setVisibility(View.GONE);
+                rl11.setVisibility(View.GONE);
                 break;
             case R.id.tv_add_dt:
                 startActivity(new Intent(this, CircleAddActivity.class));

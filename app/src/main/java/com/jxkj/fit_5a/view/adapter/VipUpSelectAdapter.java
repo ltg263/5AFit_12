@@ -12,6 +12,11 @@ import java.util.List;
 /**
  * author : LiuJie
  * date   : 2020/5/2914:03
+ * 7
+ * 6
+ * 6
+ * 6
+ * 6
  */
 public class VipUpSelectAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     public VipUpSelectAdapter(@Nullable List<String> data) {

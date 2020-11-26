@@ -29,6 +29,7 @@ public class MineSetActivity extends BaseActivity {
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
     }
 
+
     @OnClick({R.id.ll_back, R.id.ll1, R.id.ll2,R.id.tv_tui})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -45,3 +46,4 @@ public class MineSetActivity extends BaseActivity {
         }
     }
 }
+

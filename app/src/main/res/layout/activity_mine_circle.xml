@@ -77,7 +77,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/dimen_250dp"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/dimen_20dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -278,15 +278,6 @@
             android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <com.jxkj.fit_5a.conpoment.view.BlurringView
-            android:id="@+id/blurring_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            app:blurRadius="16"
-            app:downsampleFactor="16"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:overlayColor="#26FFFFFF" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
@@ -300,19 +291,42 @@
         android:layout_marginBottom="@dimen/dimen_150dp"
         android:src="@drawable/ic_add_dt" />
 
-    <TextView
-        android:id="@+id/tv_jiaru"
+    <RelativeLayout
+        android:id="@+id/rl_11"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginHorizontal="@dimen/dimen_30dp"
-        android:layout_marginBottom="@dimen/dimen_50dp"
-        android:background="@drawable/btn_shape_bj_theme_25"
-        android:gravity="center"
-        android:paddingTop="@dimen/dp_10"
-        android:paddingBottom="@dimen/dp_10"
-        android:text="加入圈子"
-        android:textColor="@color/color_ffffff"
-        android:textSize="16sp" />
+        android:layout_height="match_parent"
+        android:fadeScrollbars="true"
+        android:layout_marginTop="@dimen/dimen_75dp">
+
+
+        <com.jxkj.fit_5a.conpoment.view.BlurringView
+            android:id="@+id/blurring_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dimen_250dp"
+            app:blurRadius="16"
+            app:downsampleFactor="16"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:overlayColor="#ccFFFFFF" />
+
+        <TextView
+            android:id="@+id/tv_jiaru"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="@dimen/dimen_30dp"
+            android:layout_marginBottom="@dimen/dimen_50dp"
+            android:background="@drawable/btn_shape_bj_theme_25"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="加入圈子"
+            android:textColor="@color/color_ffffff"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
+
+
 </RelativeLayout>
 
