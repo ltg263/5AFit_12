@@ -1,8 +1,6 @@
 package com.jxkj.fit_5a.api;
 
 
-import android.service.autofill.UserData;
-
 import com.jxkj.fit_5a.base.AddressData;
 import com.jxkj.fit_5a.base.DeviceCourseData;
 import com.jxkj.fit_5a.base.DeviceCourseTypeData;
@@ -18,18 +16,15 @@ import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.PrizeListData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.SignLogData;
+import com.jxkj.fit_5a.base.TaskListBase;
 import com.jxkj.fit_5a.base.UserDetailData;
 import com.jxkj.fit_5a.base.UserInfoData;
-
-import java.util.Map;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 
 import io.reactivex.Observable;
-import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -37,9 +32,75 @@ public interface ApiService {
     /**
      * 任务列表
      * @return
+     * 	任务类型1:圈子任务2:日常任务3签到任务4活动任务
      */
-    @GET("api/v1/user/task/list")
-    Observable<Result> getUserTaskList();
+    @GET(ConstValues.PORT_1 + "api/v1/user/task/list")
+    Observable<Result<TaskListBase>> getUserTaskList(@Query("type") int type);
+
+    /**
+     * 用户详情
+     * @return
+     */
+    @GET(ConstValues.PORT_1+"api/v1/user/detail")
+    Observable<Result<UserDetailData>> getUserDetail();
+    /**
+     * 个人主页数据
+     * @return
+     */
+    @GET(ConstValues.PORT_1+"api/v1/user/statistic/my")
+    Observable<Result<UserInfoData>> getUserStatistic();
+
+    /**
+     * 用户更新
+     * @return
+     */
+    @POST(ConstValues.PORT_1+"api/v1/user/update")
+    Observable<Result> postUserUpdate(@Body PostUser.UserInfoUpdate userInfoUpdate);
+
+
+    /**
+     * 签到
+     *
+     * @return
+     */
+    @POST(ConstValues.PORT_1+"api/v1/user/sign/add")
+    Observable<Result> addUserSign();
+    /**
+     * 签到记录
+     *
+     * @return
+     */
+
+    @GET(ConstValues.PORT_1+"api/v1/user/sign/log/list")
+    Observable<Result<SignLogData>> getUserSignLog(@Query("beginCreateTime") String beginCreateTime,
+                                                   @Query("endCreateTime") String endCreateTime);
+    /**
+     * 礼物背包
+     * flag:true只显示余额false只显示收到的礼物余额
+     * @return
+     */
+
+    @GET(ConstValues.PORT_1+"api/v1/user/gift/list")
+    Observable<Result<GiftListData>> getUserGiftList(@Query("flag") boolean flag);
+
+
+    /**
+     * 礼物赠送记录
+     * flag:true只显示余额false只显示收到的礼物余额
+     * @return
+     */
+
+    @GET(ConstValues.PORT_1+"api/v1/user/gift/log/list")
+    Observable<Result<GiftLogListData>> getUserGiftLogList(@Query("giveFlag") boolean flag);
+
+    /**
+     * 礼券列表
+     *状态1待使用,2已使用,3已失效
+     * @return
+     */
+
+    @GET(ConstValues.PORT_1+"api/v1/user/prize/list")
+    Observable<Result<PrizeListData>> getUserPrize(@Query("status") int status);
 
 
     /**
@@ -47,7 +108,7 @@ public interface ApiService {
      *
      * @return
      */
-    @GET("api/v1/device/type/query")
+    @GET(ConstValues.PORT_2+"api/v1/device/type/query")
     Observable<Result<DeviceTypeData>> queryDeviceTypeLists();
 
     /**
@@ -85,26 +146,46 @@ public interface ApiService {
      * 获取短信验证码
      * @return type:类型0注册1修改密码2登录
      */
-    @GET("api/v1/user/verify/getVerifyCode")
+    @GET(ConstValues.PORT_5+"api/v1/user/verify/getVerifyCode")
     Observable<Result> getVerifyCode(@Query("mobile") String mobile,@Query("type") int type);
 
     /**
      * 注册
      * @return type:类型0注册1修改密码2登录
      */
-    @POST("api/v1/user/verify/register")
+    @POST(ConstValues.PORT_5+"api/v1/user/verify/register")
     Observable<Result> userVerifyRegister(@Query("clientType") int clientType,
                                           @Query("phone") String phone,@Query("password") String password,
                                           @Query("verify") String verify);
 
     /**
-     * 注册
+     * 登录
+     * @return clientType:客户端类型1web2IOS3安卓4微信
+     */
+    @POST(ConstValues.PORT_5+"api/v1/user/verify/login")
+    Observable<Result> userVerifyLogin(@Query("clientType") int clientType,
+                                       @Query("phone") String phone,@Query("password") String password,
+                                       @Query("verify") String verify);
+
+
+    /**
+     * 登录
      * @return type:类型0注册1修改密码2登录
      */
-    @POST("api/v1/user/verify/login")
-    Observable<Result> userVerifyLogin(@Query("clientType") int clientType,
-                                          @Query("phone") String phone,@Query("password") String password,
+    @POST(ConstValues.PORT_5+"api/v1/user/verify/forgetPassword")
+    Observable<Result> userForgetPassword(@Query("password") String password,
+                                          @Query("phone") String phone,
                                           @Query("verify") String verify);
+
+    /**
+     * 账号绑定
+     * @return clientType:客户端1web2ios3安卓4微信】
+     * 登录方式1手机号码2微信3QQ4新浪5iconsole
+     */
+    @POST(ConstValues.PORT_5+"api/v1/user/bind/third/bind")
+    Observable<Result> userThirdBind(@Query("clientType") int clientType,@Query("loginType") int loginType,@Query("phone") String phone,
+                                     @Query("verify") String verify,@Query("gender") String gender,@Query("nickName") String nickName,
+                                     @Query("portraitUri") String portraitUri);
 
     /**
      * 注册成功后————兴趣列表
@@ -187,70 +268,8 @@ public interface ApiService {
     @POST("user/api/v1/user/address/setDefault")
     Observable<Result> getSetDefault(@Query("id") String id);
 
-    /**
-     * 礼物背包
-     * flag:true只显示余额false只显示收到的礼物余额
-     * @return
-     */
-
-    @GET("api/v1/user/gift/list")
-    Observable<Result<GiftListData>> getUserGiftList(@Query("flag") boolean flag);
-
-    /**
-     * 礼物赠送记录
-     * flag:true只显示余额false只显示收到的礼物余额
-     * @return
-     */
-
-    @GET("api/v1/user/gift/log/list")
-    Observable<Result<GiftLogListData>> getUserGiftLogList(@Query("giveFlag") boolean flag);
 
 
 
-    /**
-     * 礼券列表
-     *状态1待使用,2已使用,3已失效
-     * @return
-     */
 
-    @GET("api/v1/user/prize/list")
-    Observable<Result<PrizeListData>> getUserPrize(@Query("status") int status);
-    /**
-     * 设置默认地址
-     *
-     * @return
-     */
-
-    @GET("api/v1/user/sign/log/list")
-    Observable<Result<SignLogData>> getUserSignLog(@Query("beginCreateTime") String beginCreateTime,
-                                                   @Query("endCreateTime") String endCreateTime);
-
-
-    /**
-     * 修改地址
-     *
-     * @return
-     */
-    @POST("api/v1/user/sign/add")
-    Observable<Result> addUserSign();
-
-    /**
-     * 用户详情
-     * @return
-     */
-    @GET("api/v1/user/detail")
-    Observable<Result<UserDetailData>> getUserDetail();
-    /**
-     * 个人主页数据
-     * @return
-     */
-    @GET("api/v1/user/statistic/my")
-    Observable<Result<UserInfoData>> getUserStatistic();
-
-    /**
-     * 用户更新
-     * @return
-     */
-    @POST("api/v1/user/update")
-    Observable<Result> postUserUpdate(@Body PostUser.UserInfoUpdate userInfoUpdate);
 }

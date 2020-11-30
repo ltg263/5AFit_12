@@ -16,6 +16,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.SignLogData;
+import com.jxkj.fit_5a.base.TaskListBase;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.view.adapter.HomeSignHdrwAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeSignRcrwAdapter;
@@ -62,10 +63,41 @@ public class TaskSignActivity extends BaseActivity {
     @Override
     protected void initViews() {
         getUserSignLog();
-
+        getUserTaskList();
         initRv();
 
     }
+
+    private void getUserTaskList() {
+        RetrofitUtil.getInstance().apiService()
+                .getUserTaskList(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<TaskListBase>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<TaskListBase> result) {
+                        if(isDataInfoSucceed(result)){
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
     int year;
     int month;
     private void getUserSignLog() {

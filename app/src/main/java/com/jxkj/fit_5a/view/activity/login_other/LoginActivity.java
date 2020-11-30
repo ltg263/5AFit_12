@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.utils.TimeCounter;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -57,16 +59,20 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.ll3)
     LinearLayout mLl3;
     int loginType = 1;//密码登录
+    private TimeCounter mTimeCounter;
 
     @Override
     protected int getContentView() {
         isShowTitle();
         return R.layout.activity_login;
-    }
+}
 
     @Override
     protected void initViews() {
-
+        mTvLoginYzm.setText("验证码登录");
+        mLl2.setVisibility(View.VISIBLE);
+        mLl3.setVisibility(View.INVISIBLE);
+        mTvLoginWjmm.setVisibility(View.VISIBLE);
     }
 
     @OnClick({R.id.tv_login_yzm, R.id.tv_login_wjmm, R.id.iv_login_wx,R.id.tv_go_login, R.id.ll_go_zc,R.id.tv_go_yzm})
@@ -91,7 +97,14 @@ public class LoginActivity extends BaseActivity {
                 getPlatformInfo();
                 break;
             case R.id.tv_go_yzm:
-
+                String sjh = mEtInputSjh.getText().toString();
+                if(!TextUtils.isEmpty(sjh)&&sjh.length()==11){
+                    mTimeCounter = new TimeCounter(60 * 1000, 1000, mTvGoYzm);
+                    mTimeCounter.start();
+                    goGetYzm(sjh);
+                }else{
+                    ToastUtils.showShort("请输入正确的手机号");
+                }
                 break;
             case R.id.tv_login_wjmm:
                 startActivity(new Intent(LoginActivity.this,FindPasswordActivity.class));
@@ -112,9 +125,24 @@ public class LoginActivity extends BaseActivity {
         String sjh = mEtInputSjh.getText().toString();
         String yzm = mEtInputYzm.getText().toString();
         String mm = mEtInputMm.getText().toString();
-        if(StringUtil.isBlank(sjh) ||StringUtil.isBlank(yzm) ||StringUtil.isBlank(mm)){
+
+        if(StringUtil.isBlank(sjh)){
             ToastUtils.showShort("填写不完整");
             return;
+        }
+        if(loginType == 1) {
+            yzm = null;
+            if(StringUtil.isBlank(mm)){
+                ToastUtils.showShort("填写不完整");
+                return;
+            }
+        }
+        if(loginType == 2){
+            mm = null;
+            if(StringUtil.isBlank(yzm)){
+                ToastUtils.showShort("填写不完整");
+                return;
+            }
         }
         show();
         RetrofitUtil.getInstance().apiService()
@@ -228,5 +256,54 @@ public class LoginActivity extends BaseActivity {
 
     private void guitLogin(){
 
+    }
+
+
+    private void goGetYzm(String sjh) {
+        RetrofitUtil.getInstance().apiService()
+                .getVerifyCode(sjh,0)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(isDataInfoSucceed(result)){
+                            ToastUtils.showShort("发送成功");
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mTimeCounter!=null){
+            mTimeCounter.cancel();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mTimeCounter!=null){
+            mTimeCounter.cancel();
+        }
     }
 }

@@ -170,6 +170,7 @@ public class MineInfoActivity extends BaseActivity {
             case R.id.ll_info_1:
                 DialogUtils.showEditTextDialog(this, 0,"修改昵称","输入昵称", season -> {
                     mTvInfo1.setText(season);
+
                 });
                 break;
             case R.id.ll_info_2:
@@ -186,6 +187,8 @@ public class MineInfoActivity extends BaseActivity {
             case R.id.ll_info_5:
                 DialogUtils.showEditTextDialog(this, 1,"绑定手机号","输入您的手机号", season -> {
                     mTvInfo5.setText(season);
+                    userThirdBind(season);
+
                 });
                 break;
             case R.id.ll_info_6:
@@ -213,6 +216,7 @@ public class MineInfoActivity extends BaseActivity {
                 break;
         }
     }
+
     private void postUserUpdate() {
 
         PostUser.UserInfoUpdate userInfoUpdate = new PostUser.UserInfoUpdate();
@@ -223,6 +227,34 @@ public class MineInfoActivity extends BaseActivity {
         userInfoUpdate.setRegion(mTvInfo3.getText().toString());
         RetrofitUtil.getInstance().apiService()
                 .postUserUpdate(userInfoUpdate)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if (isDataInfoSucceed(result)) {
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showShort("系统异常" + e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+    private void userThirdBind(String str) {
+        RetrofitUtil.getInstance().apiService()
+                .userThirdBind(3,1,str,null,"",null,null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {

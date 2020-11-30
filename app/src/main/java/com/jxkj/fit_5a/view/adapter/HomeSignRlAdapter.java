@@ -36,7 +36,7 @@ public class HomeSignRlAdapter extends BaseQuickAdapter<SignLogData.ListBean, Ba
                 .setVisible(R.id.tv_rq,true).setVisible(R.id.view_dot,false)
                 .setTextColor(R.id.tv_rq,mContext.getResources().getColor(R.color.color_333333));
 
-        if(StringUtil.getDay(new Date())==Integer.valueOf(item.getSj())){//当前日期选中
+        if(StringUtil.isNotBlank(item.getSj()) && StringUtil.getDay(new Date())==Integer.valueOf(item.getSj())){//当前日期选中
             helper.setVisible(R.id.view,true).setTextColor(R.id.tv_rq,mContext.getResources().getColor(R.color.color_ffffff));
         }
 
