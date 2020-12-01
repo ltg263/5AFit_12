@@ -63,14 +63,14 @@ public class TaskSignActivity extends BaseActivity {
     @Override
     protected void initViews() {
         getUserSignLog();
-        getUserTaskList();
-        initRv();
+        getUserTaskList(2);
+        getUserTaskList(4);
 
     }
 
-    private void getUserTaskList() {
+    private void getUserTaskList(int type) {
         RetrofitUtil.getInstance().apiService()
-                .getUserTaskList(1)
+                .getUserTaskList(type)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<TaskListBase>>() {
@@ -82,7 +82,30 @@ public class TaskSignActivity extends BaseActivity {
                     @Override
                     public void onNext(Result<TaskListBase> result) {
                         if(isDataInfoSucceed(result)){
+                            if(type == 2){
+                                HomeSignRcrwAdapter mHomeSignRcrwAdapter = new HomeSignRcrwAdapter(result.getData().getList());
+                                mRvRcrwList.setLayoutManager(new LinearLayoutManager(TaskSignActivity.this));
+                                mRvRcrwList.setHasFixedSize(true);
+                                mRvRcrwList.setAdapter(mHomeSignRcrwAdapter);
 
+                                mHomeSignRcrwAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                                    @Override
+                                    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+                                    }
+                                });
+                            }else{
+                                HomeSignHdrwAdapter mHomeSignHdrwAdapter = new HomeSignHdrwAdapter(result.getData().getList());
+                                mRvHdrwList.setLayoutManager(new LinearLayoutManager(TaskSignActivity.this));
+                                mRvHdrwList.setHasFixedSize(true);
+                                mRvHdrwList.setAdapter(mHomeSignHdrwAdapter);
+
+                                mHomeSignHdrwAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                                    @Override
+                                    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                                    }
+                                });
+                            }
                         }
                     }
 
@@ -189,36 +212,6 @@ public class TaskSignActivity extends BaseActivity {
         });
     }
 
-    private void initRv() {
-        List<String> list = new ArrayList<>();
-        for(int i = 0;i<7;i++){
-            list.add("");
-        }
-
-        HomeSignRcrwAdapter mHomeSignRcrwAdapter = new HomeSignRcrwAdapter(list);
-        mRvRcrwList.setLayoutManager(new LinearLayoutManager(this));
-        mRvRcrwList.setHasFixedSize(true);
-        mRvRcrwList.setAdapter(mHomeSignRcrwAdapter);
-
-        mHomeSignRcrwAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
-            }
-        });
-
-        HomeSignHdrwAdapter mHomeSignHdrwAdapter = new HomeSignHdrwAdapter(list);
-        mRvHdrwList.setLayoutManager(new LinearLayoutManager(this));
-        mRvHdrwList.setHasFixedSize(true);
-        mRvHdrwList.setAdapter(mHomeSignHdrwAdapter);
-
-        mHomeSignHdrwAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
-            }
-        });
-    }
 
 
     @OnClick({R.id.iv_back, R.id.iv_show_type, R.id.tv_go_sign})
