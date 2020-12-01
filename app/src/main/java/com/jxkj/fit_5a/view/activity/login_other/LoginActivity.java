@@ -20,6 +20,7 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeCounter;
@@ -196,18 +197,18 @@ public class LoginActivity extends BaseActivity {
                 }
 //                TextUtil.logOut("--:"+registrationId);
                 Log.w("--:","-->>:"+registrationId);
-//                HttpRequestUtils.getVerifyAppEmpower(getActivity(),
-//                        map.get("accessToken"), map.get("openid"), registrationId, null,
-//                        new HttpRequestUtils.LoginInterface() {
-//                            @Override
-//                            public void succeed(LoginBean path) {
+                HttpRequestUtils.getVerifyAppEmpower(LoginActivity.this,
+                        map.get("accessToken"), map.get("openid"), registrationId, null,
+                        new HttpRequestUtils.LoginInterface() {
+                            @Override
+                            public void succeed(String path) {
 //                                if(StringUtil.isBlank(path.getHashMap().getUserNo())){
 //                                    IntentUtils.getInstence().intent(getActivity(), BindingPhoneNumberActivity.class);
 //                                    return;
 //                                }
 //                                getData();
-//                            }
-//                        });
+                            }
+                        });
             }
 
             @Override

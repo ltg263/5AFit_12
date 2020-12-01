@@ -40,7 +40,8 @@ public class RetrofitUtil {
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
                 Request.Builder builder = request.newBuilder();
-                Request build = builder.addHeader("x-client-token-user", SharedUtils.getToken()).build();
+                //x-client-token-user
+                Request build = builder.build();
                 return chain.proceed(build);
             }
         });

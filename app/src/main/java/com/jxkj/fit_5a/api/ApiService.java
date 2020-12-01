@@ -23,6 +23,8 @@ import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -96,7 +98,7 @@ public interface ApiService {
     /**
      * 礼券列表
      *状态1待使用,2已使用,3已失效
-     * @return
+     * @return bugei
      */
 
     @GET(ConstValues.PORT_1+"api/v1/user/prize/list")
@@ -157,7 +159,17 @@ public interface ApiService {
     Observable<Result> userVerifyRegister(@Query("clientType") int clientType,
                                           @Query("phone") String phone,@Query("password") String password,
                                           @Query("verify") String verify);
-
+    /**
+     * app授权登录
+     * @return
+     */
+    @POST("api/v1/user/verify/appEmpower")
+    @FormUrlEncoded
+    Observable<Result> verifyAppEmpower(@Field("accessToken") String accessToken,
+                                                   @Field("openId") String openId,
+                                                   @Field("clientType") int clientType,
+                                                   @Field("registrationId") String registrationId,
+                                                   @Field("inviteCode") String inviteCode);
     /**
      * 登录
      * @return clientType:客户端类型1web2IOS3安卓4微信
@@ -176,6 +188,17 @@ public interface ApiService {
     Observable<Result> userForgetPassword(@Query("password") String password,
                                           @Query("phone") String phone,
                                           @Query("verify") String verify);
+
+
+    /**
+     * 修改密码，只有绑定手机之后才能使用
+     * @return type:类型0注册1修改密码2登录
+     */
+    @POST(ConstValues.PORT_5+"api/v1/user/bind/third/changePassword")
+    Observable<Result> userChangePassword(@Query("oldPassword") String oldPassword,
+                                          @Query("password") String password);
+
+
 
     /**
      * 账号绑定
