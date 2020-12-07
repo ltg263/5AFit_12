@@ -68,9 +68,9 @@ public class TaskSignActivity extends BaseActivity {
 
     }
 
-    private void getUserTaskList(int type) {
+    private void getUserTaskList(int i) {
         RetrofitUtil.getInstance().apiService()
-                .getUserTaskList(type)
+                .getUserTaskList(i)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<TaskListBase>>() {
@@ -82,7 +82,7 @@ public class TaskSignActivity extends BaseActivity {
                     @Override
                     public void onNext(Result<TaskListBase> result) {
                         if(isDataInfoSucceed(result)){
-                            if(type == 2){
+                            if(i == 2){
                                 HomeSignRcrwAdapter mHomeSignRcrwAdapter = new HomeSignRcrwAdapter(result.getData().getList());
                                 mRvRcrwList.setLayoutManager(new LinearLayoutManager(TaskSignActivity.this));
                                 mRvRcrwList.setHasFixedSize(true);

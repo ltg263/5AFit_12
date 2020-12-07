@@ -101,6 +101,7 @@
                     android:textSize="14sp" />
 
                 <ImageView
+                    android:id="@+id/iv_wx"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dimen_5dp"
@@ -126,6 +127,7 @@
                     android:textSize="14sp" />
 
                 <ImageView
+                    android:id="@+id/iv_zfb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dimen_5dp"
@@ -207,6 +209,7 @@
             android:textSize="10sp" />
 
         <TextView
+            android:id="@+id/tv_pay"
             android:layout_width="@dimen/dimen_100dp"
             android:layout_height="@dimen/dimen_50dp"
             android:layout_alignParentEnd="true"

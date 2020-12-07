@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class MineJDczSelectAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     public MineJDczSelectAdapter(@Nullable List<String> data) {
-        super(R.layout.item_view_up_select, data);
+        super(R.layout.item_view_jdcs_select, data);
     }
 
     @Override

@@ -51,6 +51,7 @@ public class ConstValues {
     public static final String PORT_2 = "http://192.168.2.21:9502/";//系统相关设置 sysconfig
     public static final String PORT_5 = "http://192.168.2.21:9505/";//第三方登录 third
     public static final String PORT_8 = "http://192.168.2.21:9508/";//支付相关 pay
+    public static final String PORT_9 = "http://192.168.2.175:9505/";//积分商城
 
 
 //    public static final String PORT_1 = "user/";//用户 user

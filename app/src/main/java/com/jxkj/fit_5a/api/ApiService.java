@@ -20,6 +20,7 @@ import com.jxkj.fit_5a.base.TaskListBase;
 import com.jxkj.fit_5a.base.UserDetailData;
 import com.jxkj.fit_5a.base.UserInfoData;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.entity.SpecListBaen;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -38,6 +39,14 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_1 + "api/v1/user/task/list")
     Observable<Result<TaskListBase>> getUserTaskList(@Query("type") int type);
+    /**
+     * 任务进度更新
+     * userTaskId 用户任务id(仅圈子任务时使用)
+     *
+     */
+    @POST(ConstValues.PORT_1 + "api/v1/user/task/update/speed")
+    Observable<Result>updateUserTask(@Query("paramId") int paramId,@Query("value") String value,
+                                     @Query("userTaskId") String userTaskId);
 
     /**
      * 用户详情
@@ -67,6 +76,24 @@ public interface ApiService {
      */
     @POST(ConstValues.PORT_1+"api/v1/user/sign/add")
     Observable<Result> addUserSign();
+
+
+    /**
+     * 会员规格列表
+     * @return
+     */
+    @GET(ConstValues.PORT_1+"api/v1/level/spec/list")
+    Observable<Result<SpecListBaen>> getSpecList(@Query("levelId") String levelId);
+
+    /**
+     * 创建会员升级订单
+     * @return
+     */
+    @POST(ConstValues.PORT_1+"api/v1/user/order/level/create")
+    Observable<Result> postCreateLevel(@Query("levelSpecId") String levelSpecId,@Query("hasAuto") boolean hasAuto);
+
+
+
     /**
      * 签到记录
      *

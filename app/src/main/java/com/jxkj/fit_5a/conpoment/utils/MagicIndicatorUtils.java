@@ -136,7 +136,7 @@ public class MagicIndicatorUtils {
      */
     public static void initMagicIndicator_3(Context mContext,int circleCount,MagicIndicator mMagicIndicator, ViewPager mViewPager) {
         MagicIndicatorScaleCircleNavigator scaleCircleNavigator = new MagicIndicatorScaleCircleNavigator(mContext);
-        scaleCircleNavigator.setCircleCount(3);
+        scaleCircleNavigator.setCircleCount(circleCount);
         scaleCircleNavigator.setNormalCircleColor(Color.parseColor("#CCCCCC"));
         scaleCircleNavigator.setSelectedCircleColor(Color.parseColor("#000000"));
         scaleCircleNavigator.setCircleClickListener(new MagicIndicatorScaleCircleNavigator.OnCircleClickListener() {

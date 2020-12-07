@@ -84,7 +84,7 @@
                     android:layout_below="@id/tv_jifen_num"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="5dp"
-                    android:text="剩余卡路里积分"
+                    android:text="卡路里积分"
                     android:textColor="@color/color_ffffff"
                     android:textSize="14sp" />
 
@@ -114,7 +114,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_15dp"
-                        android:text="888"
+                        android:text="每日签到"
                         android:textColor="@color/color_000000"
                         android:textSize="@dimen/sp_14" />
 
@@ -144,13 +144,13 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_rwzx_1" />
+                        android:src="@drawable/icon_rwzx_2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_15dp"
-                        android:text="888"
+                        android:text="分享3次"
                         android:textColor="@color/color_000000"
                         android:textSize="@dimen/sp_14" />
 
@@ -161,7 +161,7 @@
                         android:background="@drawable/bj_shape_line_theme_25"
                         android:paddingHorizontal="@dimen/dp_10"
                         android:paddingVertical="@dimen/dimen_3dp"
-                        android:text="去签到"
+                        android:text="去分享"
                         android:textColor="@color/color_000000"
                         android:textSize="10sp" />
 
@@ -180,13 +180,13 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_rwzx_1" />
+                        android:src="@drawable/icon_rwzx_3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_15dp"
-                        android:text="888"
+                        android:text="持续更新"
                         android:textColor="@color/color_000000"
                         android:textSize="@dimen/sp_14" />
 
@@ -197,7 +197,7 @@
                         android:background="@drawable/bj_shape_line_theme_25"
                         android:paddingHorizontal="@dimen/dp_10"
                         android:paddingVertical="@dimen/dimen_3dp"
-                        android:text="去签到"
+                        android:text="去更新"
                         android:textColor="@color/color_000000"
                         android:textSize="10sp" />
 
