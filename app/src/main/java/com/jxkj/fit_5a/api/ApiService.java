@@ -21,6 +21,7 @@ import com.jxkj.fit_5a.base.UserDetailData;
 import com.jxkj.fit_5a.base.UserInfoData;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.entity.LoginInfo;
+import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
 
@@ -137,7 +138,14 @@ public interface ApiService {
      */
 
     @GET(ConstValues.PORT_1+"api/v1/user/prize/list")
-    Observable<Result<PrizeListData>> getUserPrize(@Query("status") int status);
+    Observable<Result<PrizeListData>> getUserPrizeList(@Query("status") int status);
+
+    /**
+     * 勋章列表
+     */
+
+    @GET(ConstValues.PORT_1+"api/v1/user/medal/list")
+    Observable<MedalListData> getUserMedalList();
 
 
     /**

@@ -101,7 +101,7 @@ public class MineYhqFragment extends BaseFragment {
             type =3;
         }
         RetrofitUtil.getInstance().apiService()
-                .getUserPrize(type)
+                .getUserPrizeList(type)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<PrizeListData>>() {

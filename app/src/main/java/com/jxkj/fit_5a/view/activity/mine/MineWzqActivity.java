@@ -1,19 +1,22 @@
 package com.jxkj.fit_5a.view.activity.mine;
 
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.view.adapter.MineWzqAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MineWzqActivity extends BaseActivity {
     @BindView(R.id.iv_back)
@@ -29,19 +32,48 @@ public class MineWzqActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        mIvBack.setOnClickListener(v -> finish());
-        initRv();
-    }
-
-    private void initRv() {
-        List<String> list  = new ArrayList<>();
-        for(int i = 0;i<11;i++){
-            list.add("");
-        }
 
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
-        mMineWzqAdapter = new MineWzqAdapter(list);
+        mMineWzqAdapter = new MineWzqAdapter(null);
         mRvList.setAdapter(mMineWzqAdapter);
+        mIvBack.setOnClickListener(v -> finish());
+        getUserPrize();
+    }
+    public boolean isDataInfoSucceed(MedalListData result){
+        if(result.getCode()==0){
+            return true;
+        }
+        ToastUtils.showShort(result.getMesg());
+        return false;
+    }
+    private void getUserPrize() {
+        RetrofitUtil.getInstance().apiService()
+                .getUserMedalList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<MedalListData>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(MedalListData result) {
+                        if(isDataInfoSucceed(result)){
+                            mMineWzqAdapter.setNewData(result.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }
