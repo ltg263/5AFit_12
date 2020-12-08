@@ -9,7 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.entity.CircleTaskData;
+import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.view.adapter.HomeTwoTaskSelect;
 
 import java.util.ArrayList;
@@ -17,10 +21,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class TaskSelectionActivity extends BaseActivity {
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
+    private HomeTwoTaskSelect mHomeTwoTaskSelect;
 
 
     @Override
@@ -30,29 +39,23 @@ public class TaskSelectionActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-
-        HomeTwoTaskSelect mHomeTwoTaskSelect = new HomeTwoTaskSelect(list);
+        mHomeTwoTaskSelect = new HomeTwoTaskSelect(null);
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mHomeTwoTaskSelect);
         mHomeTwoTaskSelect.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                List<String> data = mHomeTwoTaskSelect.getData();
+                List<CircleTaskData.ListBean> data = mHomeTwoTaskSelect.getData();
                 for (int i = 0; i < data.size(); i++) {
-                    data.set(i, "");
+                    data.get(i).setSelect(false);
                 }
-                data.set(position, "-1");
+                data.get(position).setSelect(true);
                 mHomeTwoTaskSelect.notifyDataSetChanged();
             }
         });
+
+        getCircleTaskList();
     }
 
     @OnClick({R.id.iv_back, R.id.tv_tiao_guo, R.id.tv_ok})
@@ -66,5 +69,35 @@ public class TaskSelectionActivity extends BaseActivity {
                 startActivity(new Intent(this, TaskStartActivity.class));
                 break;
         }
+    }
+
+    private void getCircleTaskList() {
+        RetrofitUtil.getInstance().apiService()
+                .getCircleTaskList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<CircleTaskData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<CircleTaskData> result) {
+                        if(isDataInfoSucceed(result)){
+                            mHomeTwoTaskSelect.setNewData(result.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

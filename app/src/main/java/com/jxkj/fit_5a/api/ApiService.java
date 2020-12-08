@@ -20,6 +20,7 @@ import com.jxkj.fit_5a.base.TaskListBase;
 import com.jxkj.fit_5a.base.UserDetailData;
 import com.jxkj.fit_5a.base.UserInfoData;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.entity.CircleTaskData;
 import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.entity.SpecListBaen;
@@ -146,6 +147,12 @@ public interface ApiService {
 
     @GET(ConstValues.PORT_1+"api/v1/user/medal/list")
     Observable<MedalListData> getUserMedalList();
+
+    /**
+     * 圈子任务列表
+     */
+    @GET(ConstValues.PORT_1+"api/v1/user/circle/task/list")
+    Observable<Result<CircleTaskData>> getCircleTaskList();
 
 
     /**
