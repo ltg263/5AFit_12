@@ -20,10 +20,12 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeCounter;
+import com.jxkj.fit_5a.entity.LoginInfo;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -150,16 +152,18 @@ public class LoginActivity extends BaseActivity {
                 .userVerifyLogin(3,sjh,mm,yzm)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result>() {
+                .subscribe(new Observer<Result<LoginInfo>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result result) {
+                    public void onNext(Result<LoginInfo> result) {
                         dismiss();
                         if(isDataInfoSucceed(result)){
+                            SharedUtils.singleton().put(ConstValues.TOKEN,"Bearer "+result.getData().getTokenId());
+                            saveUserInfo(result.getData());
                             startActivity(new Intent(LoginActivity.this, WelcomeLoginActivity.class));
                         }
                     }
@@ -175,6 +179,15 @@ public class LoginActivity extends BaseActivity {
                     }
                 });
     }
+
+
+    public static void saveUserInfo(LoginInfo data) {
+        SharedUtils.singleton().put(ConstValues.USER_PHONE,data.getUserPermissionBaseDTO().getUserNo());
+        SharedUtils.singleton().put(ConstValues.USERID,data.getUserPermissionBaseDTO().getId());
+        SharedUtils.singleton().put(ConstValues.USER_NAME,data.getUserPermissionBaseDTO().getNickName());
+        SharedUtils.singleton().put(ConstValues.AVATAR,data.getUserPermissionBaseDTO().getAvatar());
+    }
+
     private void getPlatformInfo() {
         UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
             @Override

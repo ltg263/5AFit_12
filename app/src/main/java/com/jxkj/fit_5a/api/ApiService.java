@@ -20,6 +20,7 @@ import com.jxkj.fit_5a.base.TaskListBase;
 import com.jxkj.fit_5a.base.UserDetailData;
 import com.jxkj.fit_5a.base.UserInfoData;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 
 import io.reactivex.Observable;
@@ -96,7 +97,6 @@ public interface ApiService {
 
     /**
      * 签到记录
-     *
      * @return
      */
 
@@ -202,9 +202,9 @@ public interface ApiService {
      * @return clientType:客户端类型1web2IOS3安卓4微信
      */
     @POST(ConstValues.PORT_5+"api/v1/user/verify/login")
-    Observable<Result> userVerifyLogin(@Query("clientType") int clientType,
-                                       @Query("phone") String phone,@Query("password") String password,
-                                       @Query("verify") String verify);
+    Observable<Result<LoginInfo>> userVerifyLogin(@Query("clientType") int clientType,
+                                                  @Query("phone") String phone, @Query("password") String password,
+                                                  @Query("verify") String verify);
 
 
     /**
