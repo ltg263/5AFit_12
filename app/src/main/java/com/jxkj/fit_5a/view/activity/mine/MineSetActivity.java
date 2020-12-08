@@ -6,7 +6,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
 
 import butterknife.BindView;
@@ -41,7 +44,16 @@ public class MineSetActivity extends BaseActivity {
             case R.id.ll2:
                 break;
             case R.id.tv_tui:
-                startActivity(new Intent(this, LoginActivity.class));
+
+                DialogUtils.showDialogHint(this, "您确定要退出吗？", false, new DialogUtils.ErrorDialogInterface() {
+                    @Override
+                    public void btnConfirm() {
+                        startActivity(new Intent(MineSetActivity.this, LoginActivity.class));
+                        MainApplication.getContext().AppExit();
+                        SharedUtils.singleton().clear();
+                        finish();
+                    }
+                });
                 break;
         }
     }

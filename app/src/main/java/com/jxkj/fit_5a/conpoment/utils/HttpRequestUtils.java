@@ -4,11 +4,21 @@ import android.content.Context;
 
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.entity.SubmitFilesBean;
+
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class HttpRequestUtils {
 
@@ -49,5 +59,59 @@ public class HttpRequestUtils {
     public interface LoginInterface {
         void succeed(String path);
 //        void failure();
+    }
+
+    public static void uploadFiles(String filePath,UploadFileInterface fileInterface) {
+        if(StringUtil.isBlank(filePath)){
+            fileInterface.succeed("-1");
+            return;
+        }
+        File file = new File(filePath);
+        Map<String, RequestBody> map = new HashMap<>();
+//        map.put("dirtype", toRequestBody("3"));//头像：3，申诉 ：2 ，收款码：1
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        // MultipartBody.Part  和后端约定好Key，这里的name是用file
+        MultipartBody.Part body = null;
+        try {
+            body = MultipartBody.Part.createFormData("file",  URLEncoder.encode(file.getName(), "UTF-8"), requestFile);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        RetrofitUtil.getInstance().apiService()
+                .submitFiles(body, map)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<SubmitFilesBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Result<SubmitFilesBean> result) {
+                        if (result.getCode()==0  && result.getData()!=null
+                                && StringUtil.isNotBlank(result.getData().getUrl())) {
+                            fileInterface.succeed(result.getData().getUrl());
+                        }else{
+                            fileInterface.failure();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        fileInterface.failure();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
+    }
+
+    public interface UploadFileInterface{
+        void succeed(String path);
+        void failure();
     }
 }

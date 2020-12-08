@@ -60,6 +60,8 @@ public class ConstValues {
     public static final String PORT_5 = "third/";//第三方登录 third
     public static final String PORT_8 = "pay/";//支付相关 pay
 
+    public static final String POPT_LS = "";//没有
+
 
 
 //api/v1/user/getQrCode?url=pages/start/start&scene=page-authorize,code-17774004352

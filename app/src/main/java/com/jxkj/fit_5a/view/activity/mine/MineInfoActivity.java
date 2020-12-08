@@ -23,6 +23,8 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.UserDetailData;
 import com.jxkj.fit_5a.base.UserInfoData;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.view.AddressPickTask;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
@@ -139,8 +141,10 @@ public class MineInfoActivity extends BaseActivity {
     }
 
     private void initUI(UserDetailData data) {
-        GlideImageUtils.setGlideImage(this,data.getBackImg(),mIvBackImg);
-        GlideImageUtils.setGlideImage(this,data.getAvatar(),mIvImg);
+        avatar = data.getAvatar();
+        backImg = data.getBackImg();
+        GlideImageUtils.setGlideImage(this,backImg,mIvBackImg);
+        GlideImageUtils.setGlideImage(this,avatar,mIvImg);
         Glide.with(this)
                 .asBitmap()
                 .load(data.getBackImg())
@@ -175,7 +179,7 @@ public class MineInfoActivity extends BaseActivity {
                 break;
             case R.id.ll_info_2:
                 DialogUtils.showEditTextDialog(this, 0,"设置签名","输入你的签名", season -> {
-                    mTvInfo1.setText(season);
+                    mTvInfo2.setText(season);
                 });
                 break;
             case R.id.ll_info_3:
@@ -217,11 +221,12 @@ public class MineInfoActivity extends BaseActivity {
         }
     }
 
+    String avatar = null;
+    String backImg = null;
     private void postUserUpdate() {
-
         PostUser.UserInfoUpdate userInfoUpdate = new PostUser.UserInfoUpdate();
-        userInfoUpdate.setAvatar("https://avatar.csdnimg.cn/C/5/9/2_ltg263.jpg");
-        userInfoUpdate.setBackImg("https://img-bss.csdnimg.cn/1603968192474.jpeg");
+        userInfoUpdate.setAvatar(avatar);
+        userInfoUpdate.setBackImg(backImg);
         userInfoUpdate.setNickName(mTvInfo1.getText().toString());
         userInfoUpdate.setExplain(mTvInfo2.getText().toString());
         userInfoUpdate.setRegion(mTvInfo3.getText().toString());
@@ -238,6 +243,8 @@ public class MineInfoActivity extends BaseActivity {
                     @Override
                     public void onNext(Result result) {
                         if (isDataInfoSucceed(result)) {
+                            MineInfoActivity.this.finish();
+                            ToastUtils.showShort("保存成功");
                         }
                     }
 
@@ -312,24 +319,46 @@ public class MineInfoActivity extends BaseActivity {
                 case PictureConfig.CHOOSE_REQUEST:
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
                     if (selectList.size() > 0) {
-                        Glide.with(this).load(selectList.get(0).getCompressPath()).into(mIvImg);
+                        postImg(selectList.get(0).getCompressPath(),0);
                     }
                     break;
                 case PictureConfig.REQUEST_CAMERA:
                     List<LocalMedia> selectListbj = PictureSelector.obtainMultipleResult(data);
                     if (selectListbj.size() > 0) {
-                        Glide.with(this).load(selectListbj.get(0).getCompressPath()).into(mIv);
-                        Glide.with(this).asBitmap().load(selectListbj.get(0).getCompressPath())
-                                .into(new SimpleTarget<Bitmap>() {
-                                    @Override
-                                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                        Drawable drawable = new BitmapDrawable(resource);
-                                        mRlActionbar.setBackground(drawable);
-                                    }
-                                });
+                        postImg(selectListbj.get(0).getCompressPath(),1);
                     }
                     break;
             }
         }
+    }
+
+    private void postImg(final String listPath,int type) {
+        show();
+        HttpRequestUtils.uploadFiles(listPath, new HttpRequestUtils.UploadFileInterface() {
+            @Override
+            public void succeed(String path) {
+                dismiss();
+                if(type ==0){
+                    avatar = path;
+                    GlideImageUtils.setGlideImage(MineInfoActivity.this,avatar,mIvImg);
+                }
+                if(type ==1){
+                    backImg = path;
+                    Glide.with(MineInfoActivity.this).asBitmap().load(backImg)
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                    Drawable drawable = new BitmapDrawable(resource);
+                                    mRlActionbar.setBackground(drawable);
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void failure() {
+                dismiss();
+            }
+        });
     }
 }

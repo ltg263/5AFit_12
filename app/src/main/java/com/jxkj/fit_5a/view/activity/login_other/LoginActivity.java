@@ -68,7 +68,7 @@ public class LoginActivity extends BaseActivity {
     protected int getContentView() {
         isShowTitle();
         return R.layout.activity_login;
-}
+    }
 
     @Override
     protected void initViews() {
