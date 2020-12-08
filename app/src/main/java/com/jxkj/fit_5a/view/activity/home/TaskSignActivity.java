@@ -167,6 +167,7 @@ public class TaskSignActivity extends BaseActivity {
         for(int i=0;i<pos;i++){
             listRl.add(null);
         }
+        mTvGoSign.setText("签到领积分");
         for(int i=0;i<currentMaxDays;i++){
             SignLogData.ListBean listBean = new SignLogData.ListBean();
             for (int j= 0;j<listData.size();j++){
@@ -178,6 +179,10 @@ public class TaskSignActivity extends BaseActivity {
                     listBean = listData.get(j);
                     listBean.setSig(true);
                 }
+                if((listData.get(j).getSignDate()+"").equals(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyyMMdd"))){
+                    mTvGoSign.setText("已签到");
+                }
+
                 listBean.setSj(""+(i+1));
             }
 
@@ -236,7 +241,9 @@ public class TaskSignActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_go_sign:
-                addUserSign();
+                if(!mTvGoSign.getText().toString().equals("已签到")){
+                    addUserSign();
+                }
                 break;
         }
     }
