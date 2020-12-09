@@ -14,6 +14,7 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.entity.CircleTaskData;
 import com.jxkj.fit_5a.entity.MedalListData;
+import com.jxkj.fit_5a.view.activity.exercise.landscape.MotorPatternActivity;
 import com.jxkj.fit_5a.view.adapter.HomeTwoTaskSelect;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class TaskSelectionActivity extends BaseActivity {
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
     private HomeTwoTaskSelect mHomeTwoTaskSelect;
+    private String exercise_type;
 
 
     @Override
@@ -39,6 +41,7 @@ public class TaskSelectionActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        exercise_type = getIntent().getStringExtra("exercise_type");
         mHomeTwoTaskSelect = new HomeTwoTaskSelect(null);
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
@@ -66,7 +69,11 @@ public class TaskSelectionActivity extends BaseActivity {
                 break;
             case R.id.tv_tiao_guo:
             case R.id.tv_ok:
-                startActivity(new Intent(this, TaskStartActivity.class));
+                if(exercise_type.equals("在线运动")){
+                    MotorPatternActivity.startIntentActivity(this);
+                }else {
+                    startActivity(new Intent(this, TaskStartActivity.class));
+                }
                 break;
         }
     }

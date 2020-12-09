@@ -41,7 +41,7 @@ public class TaskStartActivity extends BaseActivity {
             case R.id.rl_sbgl:
                 break;
             case R.id.btn_start:
-                MotorPatternActivity.startIntentActivity(this);
+                startActivity(new Intent(this, CourseStartActivity.class));
                 break;
             case R.id.ll_kcxz:
                 startActivity(new Intent(this, CourseSelectionActivity.class));

@@ -9,7 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
+import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.view.activity.exercise.ExerciseRecordActivity;
 import com.jxkj.fit_5a.view.activity.exercise.TaskSelectionActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
@@ -25,6 +29,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class HomeTwoFragment extends BaseFragment {
 
@@ -49,18 +57,13 @@ public class HomeTwoFragment extends BaseFragment {
     @Override
     protected void initViews() {
         initRvUi();
-
     }
 
     private void initRvUi() {
 
         List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
+        list.add("在线运动");
+        list.add("经典运动");
 
         mHomeTwoTopAdapter = new HomeTwoTopAdapter(list);
         LinearLayoutManager ms = new LinearLayoutManager(getActivity());
@@ -72,7 +75,8 @@ public class HomeTwoFragment extends BaseFragment {
         mHomeTwoTopAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), TaskSelectionActivity.class));
+                IntentUtils.getInstence().
+                        intent(getActivity(), TaskSelectionActivity.class,"exercise_type",list.get(position));
             }
         });
         mHomeTwoBelowAdapter = new HomeTwoBelowAdapter(list);
