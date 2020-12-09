@@ -58,7 +58,8 @@ public class ConstValues {
 
     public static final String PORT_1 = "user/";//用户 user
     public static final String PORT_2 = "sysconfig/";//系统相关设置 sysconfig
-    public static final String PORT_3 = "shop/";//商城
+//    public static final String PORT_3 = "shop/";//商城
+    public static final String PORT_3 = "http://192.168.2.175:9503/";//商城
     public static final String PORT_4 = "sport/";//运动
     public static final String PORT_5 = "third/";//第三方登录 third
     public static final String PORT_8 = "pay/";//支付相关 pay

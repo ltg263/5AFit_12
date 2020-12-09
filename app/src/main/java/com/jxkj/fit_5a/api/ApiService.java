@@ -94,7 +94,7 @@ public interface ApiService {
      * 今日是否签到
      * @return
      */
-    @POST(ConstValues.PORT_1+"api/v1/user/sign/log/today/sign")
+    @GET(ConstValues.PORT_1+"api/v1/user/sign/log/today/sign")
     Observable<Result<Boolean>> addUserSignLog();
 
 
@@ -187,7 +187,7 @@ public interface ApiService {
     Observable<Result<AdListData>> getAdList();
 
     /**
-     *用户设备列表
+     *用户设备列表 未完善
      * deviceId 设备id
      * deviceNo	设备编号
      * @return
@@ -220,7 +220,7 @@ public interface ApiService {
 
     /**
      * 添加用户设备
-     *
+     * 未完善
      */
     @POST(ConstValues.PORT_2+"api/v1/user/device/add")
     Observable<Result> userDeviceAdd(@Body PostUser.DeviceFormDTO postUser);
@@ -275,6 +275,25 @@ public interface ApiService {
                                           @Query("phone") String phone,
                                           @Query("verify") String verify);
 
+    /**
+     * 修改密码，只有绑定手机之后才能使用
+     * @return type:类型0注册1修改密码2登录
+     */
+    @POST(ConstValues.PORT_5+"api/v1/user/bind/third/changePassword")
+    Observable<Result> userChangePassword(@Query("oldPassword") String oldPassword,
+                                          @Query("password") String password);
+
+    /**
+     * 账号绑定 未完善
+     * @return clientType:客户端1web2ios3安卓4微信】
+     * 登录方式1手机号码2微信3QQ4新浪5iconsole
+     */
+    @POST(ConstValues.PORT_5+"api/v1/user/bind/third/bind")
+    Observable<Result> userThirdBind(@Query("clientType") int clientType,@Query("loginType") int loginType,@Query("phone") String phone,
+                                     @Query("verify") String verify,@Query("gender") String gender,@Query("nickName") String nickName,
+
+
+                                     @Query("portraitUri") String portraitUri);
 
     /**
      * app授权登录
@@ -287,30 +306,15 @@ public interface ApiService {
                                                    @Field("clientType") int clientType,
                                                    @Field("registrationId") String registrationId,
                                                    @Field("inviteCode") String inviteCode);
-
+//
 
 
     /**
      * 修改密码，只有绑定手机之后才能使用
      * @return type:类型0注册1修改密码2登录
      */
-    @POST(ConstValues.PORT_5+"api/v1/user/bind/third/changePassword")
-    Observable<Result> userChangePassword(@Query("oldPassword") String oldPassword,
-                                          @Query("password") String password);
-
-
-
-    /**
-     * 账号绑定
-     * @return clientType:客户端1web2ios3安卓4微信】
-     * 登录方式1手机号码2微信3QQ4新浪5iconsole
-     */
-    @POST(ConstValues.PORT_5+"api/v1/user/bind/third/bind")
-    Observable<Result> userThirdBind(@Query("clientType") int clientType,@Query("loginType") int loginType,@Query("phone") String phone,
-                                     @Query("verify") String verify,@Query("gender") String gender,@Query("nickName") String nickName,
-                                     @Query("portraitUri") String portraitUri);
-
-
+    @GET(ConstValues.PORT_3+"api/v1/product/list")
+    Observable<Result> getProductList(@Query("hasHot") Boolean hasHot);
 
     /**
      * 上传文件
@@ -319,6 +323,7 @@ public interface ApiService {
     @Multipart
     @POST(ConstValues.POPT_LS + "region/api/v1/files")
     Observable<Result<SubmitFilesBean>> submitFiles(@Part MultipartBody.Part file, @PartMap Map<String, RequestBody> map);
+
 
 
     /**
@@ -332,10 +337,6 @@ public interface ApiService {
     Observable<Result<OrderInfoData>> getOrderAll(@Query("page") int page,
                                                       @Query("pageSize") int pageSize,
                                                       @Query("status") String status);
-
-
-
-
 
 
     /**

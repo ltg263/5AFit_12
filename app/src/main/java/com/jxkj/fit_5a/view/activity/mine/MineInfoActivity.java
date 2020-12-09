@@ -261,7 +261,7 @@ public class MineInfoActivity extends BaseActivity {
     }
     private void userThirdBind(String str) {
         RetrofitUtil.getInstance().apiService()
-                .userThirdBind(3,1,str,null,"",null,null)
+                .userThirdBind(3,1,str,"1234","",null,null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {

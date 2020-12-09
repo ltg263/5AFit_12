@@ -117,7 +117,6 @@ public class MineRwzxActivity extends BaseActivity {
                     @Override
                     public void onNext(Result<Boolean> result) {
                         if(isDataInfoSucceed(result)){
-                            ToastUtils.showShort("签到成功");
                             tv_state.setText("去签到");
                             if(result.getData()){
                                 tv_state.setText("已签到");

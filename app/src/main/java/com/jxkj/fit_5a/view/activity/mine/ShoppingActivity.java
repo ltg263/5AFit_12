@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,7 +14,10 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
+import com.jxkj.fit_5a.base.AddressData;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.MagicIndicatorUtils;
 import com.jxkj.fit_5a.conpoment.view.AutoHeightViewPager;
 import com.jxkj.fit_5a.view.fragment.ShoppingFragment;
@@ -26,6 +30,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class ShoppingActivity extends BaseActivity {
     @BindView(R.id.magic_indicator)
@@ -147,4 +155,5 @@ public class ShoppingActivity extends BaseActivity {
     public static void intentStartActivity(Context mContext){
         mContext.startActivity(new Intent(mContext, ShoppingActivity.class));
     }
+
 }

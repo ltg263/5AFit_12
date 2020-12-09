@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.fragment;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -8,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
+import com.jxkj.fit_5a.base.AddressData;
 import com.jxkj.fit_5a.base.BaseFragment;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
 import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
 import com.jxkj.fit_5a.view.adapter.ShoppingRmAdapter;
@@ -20,6 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class ShoppingFragment extends BaseFragment {
     @BindView(R.id.rv_list)
@@ -39,6 +47,8 @@ public class ShoppingFragment extends BaseFragment {
     protected void initViews() {
         initBannerOne();
         initRv();
+        getProductList(true);
+        getProductList(null);
     }
 
     private void initBannerOne() {
@@ -73,6 +83,33 @@ public class ShoppingFragment extends BaseFragment {
     }
 
 
+    private void getProductList(Boolean hasHot) {
+        RetrofitUtil.getInstance().apiService()
+                .getProductList(hasHot)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(isDataInfoSucceed(result)){
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
+    }
     private void initRv() {
         List<String> list = new ArrayList<>();
         list.add("");
@@ -87,7 +124,6 @@ public class ShoppingFragment extends BaseFragment {
         ms1.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRvList.setLayoutManager(ms1);
         mRvList.setHasFixedSize(true);
-        mRvList.setAdapter(mShoppingRmAdapter);
 
         mShoppingRmAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
