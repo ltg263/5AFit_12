@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/dimen_70dp"
+        android:layout_marginTop="@dimen/dimen_50dp"
         android:layout_marginEnd="@dimen/common_margin_26"
         android:src="@mipmap/icon_app_logo" />
 
