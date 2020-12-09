@@ -148,6 +148,7 @@ public class LoginActivity extends BaseActivity {
             }
         }
         show();
+        String finalMm = mm;
         RetrofitUtil.getInstance().apiService()
                 .userVerifyLogin(3,sjh,mm,yzm)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -163,6 +164,7 @@ public class LoginActivity extends BaseActivity {
                         dismiss();
                         if(isDataInfoSucceed(result)){
                             SharedUtils.singleton().put(ConstValues.TOKEN,"Bearer "+result.getData().getTokenId());
+                            SharedUtils.singleton().put(ConstValues.USER_PASSWORD, finalMm);
                             saveUserInfo(result.getData());
                             startActivity(new Intent(LoginActivity.this, WelcomeLoginActivity.class));
                         }
@@ -182,6 +184,7 @@ public class LoginActivity extends BaseActivity {
 
 
     public static void saveUserInfo(LoginInfo data) {
+        SharedUtils.singleton().put(ConstValues.ISLOGIN,true);
         SharedUtils.singleton().put(ConstValues.USER_PHONE,data.getUserPermissionBaseDTO().getUserNo());
         SharedUtils.singleton().put(ConstValues.USERID,data.getUserPermissionBaseDTO().getId());
         SharedUtils.singleton().put(ConstValues.USER_NAME,data.getUserPermissionBaseDTO().getNickName());

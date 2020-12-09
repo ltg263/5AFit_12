@@ -25,6 +25,7 @@ import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
+import com.jxkj.fit_5a.entity.UserInfoMyData;
 
 import java.util.Map;
 
@@ -49,7 +50,7 @@ public interface ApiService {
      * 	任务类型1:圈子任务2:日常任务3签到任务4活动任务
      */
     @GET(ConstValues.PORT_1 + "api/v1/user/task/list")
-    Observable<Result<TaskListBase>> getUserTaskList(@Query("type") int type);
+    Observable<Result<TaskListBase>> getUserTaskList(@Query("type") Integer type);
     /**
      * 任务进度更新
      * userTaskId 用户任务id(仅圈子任务时使用)
@@ -87,6 +88,13 @@ public interface ApiService {
      */
     @POST(ConstValues.PORT_1+"api/v1/user/sign/add")
     Observable<Result> addUserSign();
+
+    /**
+     * 今日是否签到
+     * @return
+     */
+    @POST(ConstValues.PORT_1+"api/v1/user/sign/log/today/sign")
+    Observable<Result<Boolean>> addUserSignLog();
 
 
     /**

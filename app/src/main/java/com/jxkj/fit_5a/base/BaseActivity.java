@@ -19,6 +19,8 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.LoadDialog;
 import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
 
@@ -126,8 +128,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public boolean isLogin(){
-        if (!SPUtils.getInstance().getBoolean(ConstValues.ISLOGIN)){
-            startActivity(new Intent(this, LoginActivity.class));
+        if (!SharedUtils.singleton().get(ConstValues.ISLOGIN,true)){
             return false;
         }
         return true;

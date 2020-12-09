@@ -1,10 +1,17 @@
 package com.jxkj.fit_5a.conpoment.utils;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
+import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
+import com.jxkj.fit_5a.view.activity.login_other.WelcomeLoginActivity;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -113,5 +120,37 @@ public class HttpRequestUtils {
     public interface UploadFileInterface{
         void succeed(String path);
         void failure();
+    }
+
+    public static void userVerifyLogin() {
+        RetrofitUtil.getInstance().apiService()
+                .userVerifyLogin(3,SharedUtils.singleton().get(ConstValues.USER_PHONE,""),
+                        SharedUtils.singleton().get(ConstValues.USER_PASSWORD,""),null)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<LoginInfo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<LoginInfo> result) {
+                        if(result.getCode()==0){
+                            SharedUtils.singleton().put(ConstValues.TOKEN,"Bearer "+result.getData().getTokenId());
+                            LoginActivity.saveUserInfo(result.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

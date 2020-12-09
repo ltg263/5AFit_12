@@ -22,6 +22,7 @@ public class ConstValues {
     public static final String TOKEN = "token";
     public static final String BALANCE = "balance";
     public static final String USER_PHONE = "user_phone";
+    public static final String USER_PASSWORD = "user_password";
     public static final String USER_NAME = "user_name";
     public static final String USER_CREATETIME = "user_createtime";
     public static final String USER_PORTRAIT = "user_portrait";
