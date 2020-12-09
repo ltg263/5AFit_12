@@ -40,6 +40,7 @@ public class MineSetActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.ll1:
+                startActivity(new Intent(this,ChangePasswordActivity.class));
                 break;
             case R.id.ll2:
                 break;

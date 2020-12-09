@@ -239,6 +239,7 @@ public interface ApiService {
     @GET(ConstValues.PORT_2+"api/v1/device/course/type/query")
     Observable<Result<DeviceCourseTypeData>> queryDeviceCourseTypeList(@Query("deviceId") String deviceId);
 
+
     /**
      * 获取短信验证码
      * @return type:类型0注册1修改密码2登录
@@ -254,17 +255,7 @@ public interface ApiService {
     Observable<Result> userVerifyRegister(@Query("clientType") int clientType,
                                           @Query("phone") String phone,@Query("password") String password,
                                           @Query("verify") String verify);
-    /**
-     * app授权登录
-     * @return
-     */
-    @POST("api/v1/user/verify/appEmpower")
-    @FormUrlEncoded
-    Observable<Result> verifyAppEmpower(@Field("accessToken") String accessToken,
-                                                   @Field("openId") String openId,
-                                                   @Field("clientType") int clientType,
-                                                   @Field("registrationId") String registrationId,
-                                                   @Field("inviteCode") String inviteCode);
+
     /**
      * 登录
      * @return clientType:客户端类型1web2IOS3安卓4微信
@@ -276,13 +267,27 @@ public interface ApiService {
 
 
     /**
-     * 登录
+     * 忘记密码
      * @return type:类型0注册1修改密码2登录
      */
     @POST(ConstValues.PORT_5+"api/v1/user/verify/forgetPassword")
     Observable<Result> userForgetPassword(@Query("password") String password,
                                           @Query("phone") String phone,
                                           @Query("verify") String verify);
+
+
+    /**
+     * app授权登录
+     * @return
+     */
+    @POST("api/v1/user/verify/appEmpower")
+    @FormUrlEncoded
+    Observable<Result> verifyAppEmpower(@Field("accessToken") String accessToken,
+                                                   @Field("openId") String openId,
+                                                   @Field("clientType") int clientType,
+                                                   @Field("registrationId") String registrationId,
+                                                   @Field("inviteCode") String inviteCode);
+
 
 
     /**

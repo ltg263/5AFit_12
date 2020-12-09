@@ -118,6 +118,11 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".view.activity.mine.ChangePasswordActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".view.activity.login_other.SetUserXbActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
