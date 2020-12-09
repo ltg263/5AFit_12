@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp_10"
             android:src="@drawable/icon_rwzx_4" />

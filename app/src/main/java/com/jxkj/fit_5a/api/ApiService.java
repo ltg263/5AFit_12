@@ -20,6 +20,7 @@ import com.jxkj.fit_5a.base.TaskListBase;
 import com.jxkj.fit_5a.base.UserDetailData;
 import com.jxkj.fit_5a.base.UserInfoData;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.entity.AdListData;
 import com.jxkj.fit_5a.entity.CircleTaskData;
 import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.MedalListData;
@@ -164,6 +165,37 @@ public interface ApiService {
 
 
     /**
+     * 注册成功后————兴趣列表
+     * @return
+     */
+    @GET(ConstValues.PORT_2 + "api/v1/interest/query")
+    Observable<Result<InterestLists>> getInterestList();
+
+
+    /**
+     * 帮助列表
+     * @return
+     */
+    @GET(ConstValues.PORT_2+"api/v1/help/query")
+    Observable<Result<HelpListData>> getHelpList();
+
+    /**
+     * 广告列表
+     * @return
+     */
+    @GET(ConstValues.PORT_2+"api/v1/ad/query")
+    Observable<Result<AdListData>> getAdList();
+
+    /**
+     *用户设备列表
+     * deviceId 设备id
+     * deviceNo	设备编号
+     * @return
+     */
+    @GET(ConstValues.PORT_2+"api/v1/user/device/query")
+    Observable<Result> queryUserDeviceList();
+
+    /**
      * 设备类型列表
      *
      * @return
@@ -172,35 +204,40 @@ public interface ApiService {
     Observable<Result<DeviceTypeData>> queryDeviceTypeLists();
 
     /**
+     * 设备品牌列表
+     * @return
+     */
+    @GET(ConstValues.PORT_2+"api/v1/device/brand/query")
+    Observable<Result<DeviceDrandData>> queryDeviceBrandLists();
+
+
+    /**
      *设备列表
      * @return
      */
-    @GET("api/v1/device/query")
+    @GET(ConstValues.PORT_2+"api/v1/device/query")
     Observable<Result<DeviceData>> queryDeviceLists(@Query("brand") String brand,@Query("type") String type);
 
     /**
-     * 设备品牌列表
-     *
-     * @return
-     */
-    @GET("api/v1/device/brand/query")
-    Observable<Result<DeviceDrandData>> queryDeviceBrandLists();
-
-    /**
      * 添加用户设备
-     * @return
+     *
      */
-    @POST("api/v1/user/device/add")
+    @POST(ConstValues.PORT_2+"api/v1/user/device/add")
     Observable<Result> userDeviceAdd(@Body PostUser.DeviceFormDTO postUser);
 
+
     /**
-     *用户设备列表
-     * deviceId 设备id
-     * deviceNo	设备编号
-     * @return
+     * 设备课程类型列表
      */
-    @GET("api/v1/user/device/query")
-    Observable<Result> queryUserDeviceList();
+    @GET(ConstValues.PORT_2+"api/v1/device/course/query")
+    Observable<Result<DeviceCourseData>> queryDeviceCourseList(@Query("level") String level, @Query("deviceId") String deviceId,
+                                                               @Query("type")String type);
+
+    /**
+     * 设备课程类型列表
+     */
+    @GET(ConstValues.PORT_2+"api/v1/device/course/type/query")
+    Observable<Result<DeviceCourseTypeData>> queryDeviceCourseTypeList(@Query("deviceId") String deviceId);
 
     /**
      * 获取短信验证码
@@ -278,20 +315,6 @@ public interface ApiService {
     @POST(ConstValues.POPT_LS + "region/api/v1/files")
     Observable<Result<SubmitFilesBean>> submitFiles(@Part MultipartBody.Part file, @PartMap Map<String, RequestBody> map);
 
-    /**
-     * 注册成功后————兴趣列表
-     * @return
-     */
-    @GET("api/v1/interest/query")
-    Observable<Result<InterestLists>> getInterestList();
-
-
-    /**
-     * 帮助列表
-     * @return
-     */
-    @GET("api/v1/help/query")
-    Observable<Result<HelpListData>> getHelpList();
 
     /**
      * 订单列表
@@ -304,19 +327,9 @@ public interface ApiService {
     Observable<Result<OrderInfoData>> getOrderAll(@Query("page") int page,
                                                       @Query("pageSize") int pageSize,
                                                       @Query("status") String status);
-    /**
-     * 设备课程类型列表
-     */
-    @GET("api/v1/device/course/type/query")
-    Observable<Result<DeviceCourseTypeData>> queryDeviceCourseTypeList(@Query("deviceId") String deviceId);
 
 
-    /**
-     * 设备课程类型列表
-     */
-    @GET("api/v1/device/course/query")
-    Observable<Result<DeviceCourseData>> queryDeviceCourseList(@Query("level") String level, @Query("deviceId") String deviceId,
-                                                               @Query("type")String type);
+
 
 
 

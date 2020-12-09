@@ -25,7 +25,10 @@ import com.github.mikephil.charting.utils.FileUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
+import com.jxkj.fit_5a.base.HelpListData;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.view.StringToUtil;
+import com.jxkj.fit_5a.entity.AdListData;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.exercise.RateControlActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
@@ -48,6 +51,8 @@ import io.reactivex.schedulers.Schedulers;
 public class HomeOneFragment extends BaseFragment {
     @BindView(R.id.tv_left_text)
     TextView mTvLeftText;
+    @BindView(R.id.tv_message_content)
+    TextView mTvMessageContent;
     @BindView(R.id.tv_right_text)
     TextView mTvRightText;
     @BindView(R.id.rl_actionbar)
@@ -86,8 +91,8 @@ public class HomeOneFragment extends BaseFragment {
     @Override
     protected void initViews() {
         initRvUi();
-
         initLC();
+        getAdList();
     }
 
     private void initLC() {
@@ -228,6 +233,36 @@ public class HomeOneFragment extends BaseFragment {
         }
     }
 
+    private void getAdList() {
+        RetrofitUtil.getInstance().apiService()
+                .getAdList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<AdListData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<AdListData> result) {
+                        if(isDataInfoSucceed(result)){
+                            mTvMessageContent.setText(
+                                    StringToUtil.getStringAll(result.getData().getList()));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 
 }
 

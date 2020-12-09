@@ -206,15 +206,20 @@
                     android:textSize="@dimen/dimen_30dp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="@dimen/dimen_150dp"
+                <com.jxkj.fit_5a.conpoment.view.MarqueeTextView
+                    android:id="@+id/tv_message_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="公告公告公告公告公告公告公告公告公告公告公告公告"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="有鸡可乘已更新！有鸡可乘APP更新啦，快来租鸡产蛋吧~"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp_14"/>
 
                 <TextView
                     android:layout_width="@dimen/dimen_20dp"
@@ -225,9 +230,8 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:drawableEnd="@drawable/icon_jiantou_you_99"
                     android:gravity="end"
                     android:paddingStart="@dimen/dimen_5dp"

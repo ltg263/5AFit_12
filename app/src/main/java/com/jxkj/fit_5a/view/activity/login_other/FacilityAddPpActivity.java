@@ -197,19 +197,17 @@ public class FacilityAddPpActivity extends BaseActivity {
         }
     }
 
-    AnimationDrawable animationDrawable;
     private void goConnect() {
         mIv.setVisibility(View.GONE);
         mTv.setVisibility(View.GONE);
         mIvD.setVisibility(View.VISIBLE);
-        animationDrawable = (AnimationDrawable) mIvD.getBackground();
-        animationDrawable.start();
 
         PostUser.DeviceFormDTO deviceFormDTO= new PostUser.DeviceFormDTO();
         deviceFormDTO.setDeviceId("1");
         deviceFormDTO.setDeviceNo("123456");
         deviceFormDTO.setId(null);
         deviceFormDTO.setUserId(null);
+        show();
         RetrofitUtil.getInstance().apiService()
                 .userDeviceAdd(deviceFormDTO)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -245,7 +243,7 @@ public class FacilityAddPpActivity extends BaseActivity {
         mIv.setVisibility(View.VISIBLE);
         mTv.setVisibility(View.VISIBLE);
         mIvD.setVisibility(View.GONE);
-        animationDrawable.stop();
+        dismiss();
         DialogUtils.showDialogLyState(FacilityAddPpActivity.this, "这是一个标题", 1, new DialogUtils.DialogLyInterface() {
             @Override
             public void btnConfirm() {
