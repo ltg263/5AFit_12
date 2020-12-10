@@ -27,6 +27,7 @@ import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
+import com.jxkj.fit_5a.entity.TemplateBean;
 import com.jxkj.fit_5a.entity.UserInfoMyData;
 
 import java.util.Map;
@@ -323,6 +324,13 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_4+"api/v1/sport/map/list")
     Observable<Result<MapListSposrt>> getSportMapList(@Query("page") int page, @Query("pageSize") int pageSize);
+
+
+    /**
+     * 文字模板列表
+     */
+    @GET(ConstValues.PORT_4+"api/v1/str/template/query")
+    Observable<Result<TemplateBean>> getTemplateList();
 
 
     /**

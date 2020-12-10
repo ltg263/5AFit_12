@@ -43,7 +43,7 @@ public class SetUserSgActivity extends BaseActivity {
          * @param maxValue   最小的数值
          * @param per   最小单位  如 1:表示 每2条刻度差为1.   0.1:表示 每2条刻度差为0.1 在demo中 身高mPerValue为1  体重mPerValue 为0.1
          */
-        mRulerWeight.setValue(60, 40, 300, 0.1f);
+        mRulerWeight.setValue(80, 40, 300, 0.1f);
 
         mRulerHeight.setOnValueChangeListener(value -> mTvSg.setText((int) value + "cm"));
         /**
