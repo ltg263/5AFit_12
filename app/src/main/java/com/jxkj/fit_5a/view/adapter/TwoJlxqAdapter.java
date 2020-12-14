@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.entity.SportLogBean;
 
 import java.util.List;
 
@@ -13,13 +14,13 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/5/2914:03
  */
-public class TwoJlxqAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    public TwoJlxqAdapter(@Nullable List<String> data) {
+public class TwoJlxqAdapter extends BaseQuickAdapter<SportLogBean.ListBean, BaseViewHolder> {
+    public TwoJlxqAdapter(@Nullable List<SportLogBean.ListBean> data) {
         super(R.layout.item_two_jlxq, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, String item) {
+    protected void convert(@NonNull BaseViewHolder helper, SportLogBean.ListBean item) {
 
     }
 

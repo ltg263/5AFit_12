@@ -27,6 +27,7 @@ import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.entity.SpecListBaen;
+import com.jxkj.fit_5a.entity.SportLogBean;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
 import com.jxkj.fit_5a.entity.TemplateBean;
 import com.jxkj.fit_5a.entity.UserInfoMyData;
@@ -345,6 +346,20 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_4+"api/v1/str/template/query")
     Observable<Result<TemplateBean>> getTemplateList();
+
+
+    /**
+     * 运动记录添加
+     */
+    @POST(ConstValues.PORT_4+"api/v1/user/sport/log/add")
+    Observable<Result> psotUserSportLog(@Body PostUser.SportLogInfo postUser);
+
+
+    /**
+     * 运动记录列表
+     */
+    @GET(ConstValues.PORT_4+"api/v1/user/sport/log/list")
+    Observable<Result<SportLogBean>> geSportLogList(@Query("page") int page, @Query("pageSize") int pageSize);
 
 
     /**

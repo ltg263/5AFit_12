@@ -2,6 +2,7 @@ package com.jxkj.fit_5a.view.activity.mine;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.view.adapter.MineJinDouAdapter;
 
 import java.util.ArrayList;
@@ -20,6 +23,8 @@ import butterknife.OnClick;
 public class MineJinDouActivity extends BaseActivity {
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
+    @BindView(R.id.tv_jifen_num)
+    TextView mTvJifenNum;
     private MineJinDouAdapter mMineJinDouAdapter;
 
     @Override
@@ -32,6 +37,7 @@ public class MineJinDouActivity extends BaseActivity {
         initRv();
     }
     private void initRv() {
+        mTvJifenNum.setText(SharedUtils.singleton().get(ConstValues.MY_BALANCE,""));
         List<String> list = new ArrayList<>();
         list.add("");
         list.add("");

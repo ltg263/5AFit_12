@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.view.adapter.MineJDczSelectAdapter;
 
 import java.util.ArrayList;
@@ -24,6 +26,8 @@ public class MineJinDouCzActivity extends BaseActivity {
     TextView mTvTitle;
     @BindView(R.id.tv_righttext)
     TextView mTvRighttext;
+    @BindView(R.id.tv_balance)
+    TextView mTvBalance;
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
 
@@ -41,6 +45,8 @@ public class MineJinDouCzActivity extends BaseActivity {
     }
 
     private void initRv() {
+        mTvBalance.setText(SharedUtils.singleton().get(ConstValues.MY_BALANCE,""));
+
         List<String> list = new ArrayList<>();
         for(int i = 0;i<3;i++){
             list.add("");

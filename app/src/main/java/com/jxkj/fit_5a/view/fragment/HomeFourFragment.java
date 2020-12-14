@@ -14,8 +14,10 @@ import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.UserDetailData;
 import com.jxkj.fit_5a.base.UserInfoData;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.RoundImageView;
 import com.jxkj.fit_5a.view.activity.mine.MineGiftActivity;
@@ -35,6 +37,8 @@ import com.jxkj.fit_5a.view.activity.mine.MineYhqActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingActivity;
 import com.jxkj.fit_5a.view.activity.mine.order.AddressActivity;
 import com.jxkj.fit_5a.view.activity.mine.order.OrderActivity;
+
+import java.sql.SQLData;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -234,6 +238,10 @@ public class HomeFourFragment extends BaseFragment {
                                 mTvCouponCount.setText(data.getCouponCount()+"");
                                 mTvGiftCount.setText(data.getGiftCount()+"");
                                 mTvIntegral.setText(data.getIntegral()+"");
+                                SharedUtils.singleton().put(ConstValues.MY_BALANCE,data.getBalance()+"");
+                                SharedUtils.singleton().put(ConstValues.MY_COUPON_COUNT,data.getCouponCount()+"");
+                                SharedUtils.singleton().put(ConstValues.MY_GIFTCOUNT,data.getGiftCount()+"");
+                                SharedUtils.singleton().put(ConstValues.MY_INTEGRAL,data.getIntegral()+"");
                             }
                         }
                     }

@@ -177,5 +177,201 @@ public class PostUser {
         }
     }
 
+    public static class SportLogInfo{
+
+
+        /**
+         * cal : {}
+         * datestr : 0
+         * deviceId : 0
+         * deviceImg :
+         * deviceName :
+         * deviceNo :
+         * deviceType : 0
+         * duration : 0
+         * heartRate : {}
+         * id :
+         * journey : {}
+         * logDetails :
+         * maxHeartRate : {}
+         * minHeartRate : {}
+         * pai : {}
+         * type : 0
+         * uploadTime :
+         */
+
+        private CalBean cal;
+        private int datestr;
+        private int deviceId;
+        private String deviceImg;
+        private String deviceName;
+        private String deviceNo;
+        private int deviceType;
+        private int duration;
+        private HeartRateBean heartRate;
+        private String id;
+        private JourneyBean journey;
+        private String logDetails;
+        private MaxHeartRateBean maxHeartRate;
+        private MinHeartRateBean minHeartRate;
+        private PaiBean pai;
+        private int type;
+        private String uploadTime;
+
+        public CalBean getCal() {
+            return cal;
+        }
+
+        public void setCal(CalBean cal) {
+            this.cal = cal;
+        }
+
+        public int getDatestr() {
+            return datestr;
+        }
+
+        public void setDatestr(int datestr) {
+            this.datestr = datestr;
+        }
+
+        public int getDeviceId() {
+            return deviceId;
+        }
+
+        public void setDeviceId(int deviceId) {
+            this.deviceId = deviceId;
+        }
+
+        public String getDeviceImg() {
+            return deviceImg;
+        }
+
+        public void setDeviceImg(String deviceImg) {
+            this.deviceImg = deviceImg;
+        }
+
+        public String getDeviceName() {
+            return deviceName;
+        }
+
+        public void setDeviceName(String deviceName) {
+            this.deviceName = deviceName;
+        }
+
+        public String getDeviceNo() {
+            return deviceNo;
+        }
+
+        public void setDeviceNo(String deviceNo) {
+            this.deviceNo = deviceNo;
+        }
+
+        public int getDeviceType() {
+            return deviceType;
+        }
+
+        public void setDeviceType(int deviceType) {
+            this.deviceType = deviceType;
+        }
+
+        public int getDuration() {
+            return duration;
+        }
+
+        public void setDuration(int duration) {
+            this.duration = duration;
+        }
+
+        public HeartRateBean getHeartRate() {
+            return heartRate;
+        }
+
+        public void setHeartRate(HeartRateBean heartRate) {
+            this.heartRate = heartRate;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public JourneyBean getJourney() {
+            return journey;
+        }
+
+        public void setJourney(JourneyBean journey) {
+            this.journey = journey;
+        }
+
+        public String getLogDetails() {
+            return logDetails;
+        }
+
+        public void setLogDetails(String logDetails) {
+            this.logDetails = logDetails;
+        }
+
+        public MaxHeartRateBean getMaxHeartRate() {
+            return maxHeartRate;
+        }
+
+        public void setMaxHeartRate(MaxHeartRateBean maxHeartRate) {
+            this.maxHeartRate = maxHeartRate;
+        }
+
+        public MinHeartRateBean getMinHeartRate() {
+            return minHeartRate;
+        }
+
+        public void setMinHeartRate(MinHeartRateBean minHeartRate) {
+            this.minHeartRate = minHeartRate;
+        }
+
+        public PaiBean getPai() {
+            return pai;
+        }
+
+        public void setPai(PaiBean pai) {
+            this.pai = pai;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public String getUploadTime() {
+            return uploadTime;
+        }
+
+        public void setUploadTime(String uploadTime) {
+            this.uploadTime = uploadTime;
+        }
+
+        public static class CalBean {
+        }
+
+        public static class HeartRateBean {
+        }
+
+        public static class JourneyBean {
+        }
+
+        public static class MaxHeartRateBean {
+        }
+
+        public static class MinHeartRateBean {
+        }
+
+        public static class PaiBean {
+        }
+    }
+
 
 }

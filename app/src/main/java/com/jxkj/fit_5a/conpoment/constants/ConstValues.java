@@ -20,7 +20,6 @@ public class ConstValues {
     public static final String ISLOGIN = "islogin";
     public static final String USERID = "user_id";
     public static final String TOKEN = "token";
-    public static final String BALANCE = "balance";
     public static final String USER_PHONE = "user_phone";
     public static final String USER_PASSWORD = "user_password";
     public static final String USER_NAME = "user_name";
@@ -35,6 +34,11 @@ public class ConstValues {
     public static final String INTEGRALJUMP = "integral_jump";
     public static final String OPENSTART = "openstart";
     public static final String AGREEMENT = "agreement";
+
+    public static final String MY_BALANCE = "balance";//金豆
+    public static final String MY_GIFTCOUNT = "giftCount";//礼物
+    public static final String MY_COUPON_COUNT = "couponCount";//券
+    public static final String MY_INTEGRAL = "integral";//积分
 
     /**
      * 服务器后台地址

@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.activity.mine;
 
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.view.adapter.ShoppingIntegralJlAdapter;
 import com.jxkj.fit_5a.view.adapter.ShoppingIntegralRmAdapter;
 
@@ -22,6 +25,8 @@ public class MineIntegralActivity extends BaseActivity {
     RecyclerView mRvRmdhList;
     @BindView(R.id.rv_lsjl_list)
     RecyclerView mRvLsjlList;
+    @BindView(R.id.tv_jifen_num)
+    TextView mTvJifenNum;
     private ShoppingIntegralRmAdapter mShoppingIntegralRmAdapter;
     private ShoppingIntegralJlAdapter mShoppingIntegralJlAdapter;
 
@@ -32,6 +37,7 @@ public class MineIntegralActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        mTvJifenNum.setText(SharedUtils.singleton().get(ConstValues.MY_INTEGRAL,""));
         initRv();
     }
     private void initRv() {
