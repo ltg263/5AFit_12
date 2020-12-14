@@ -13,11 +13,22 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
+import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils;
+import com.jxkj.fit_5a.entity.MapDetailsBean;
+import com.jxkj.fit_5a.entity.MapListSposrt;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class ClassicExerciseActivity extends Activity {
     @BindView(R.id.iv_1)
@@ -28,10 +39,13 @@ public class ClassicExerciseActivity extends Activity {
     ImageView mIv3;
     @BindView(R.id.iv_4)
     ImageView mIv4;
+    @BindView(R.id.iv)
+    ImageView mIv;
     @BindView(R.id.ll)
     LinearLayout mLl;
     boolean isSuo = false;
-
+    String mapId;
+    String boxId;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +55,23 @@ public class ClassicExerciseActivity extends Activity {
     }
     PopupWindowTopicUtils window;
     private void initViews() {
+        mapId = getIntent().getStringExtra("mapId");
+        getMapDetails();
 //        DialogUtils.showDialogClass(ClassicExerciseActivity.this, 1, new DialogUtils.DialogLyInterface() {
 //            @Override
 //            public void btnConfirm() {
 //
 //            }
 //        });
+        mIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(StringUtil.isNotBlank(boxId)) {
+                    getBoxReceive(boxId);
+                }
+            }
+        });
+
         mIv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,8 +124,76 @@ public class ClassicExerciseActivity extends Activity {
         });
     }
 
-    public static void intentStartActivity(Context mContext) {
-        mContext.startActivity(new Intent(mContext, ClassicExerciseActivity.class));
+    public static void intentStartActivity(Context mContext,String mapId) {
+        Intent intent = new Intent(mContext, ClassicExerciseActivity.class);
+        intent.putExtra("mapId",mapId);
+        mContext.startActivity(intent);
+    }
+
+
+    private void getBoxReceive(String boxId) {
+        RetrofitUtil.getInstance().apiService()
+                .getBoxReceive(boxId,mapId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
+    }
+
+
+    private void getMapDetails() {
+        RetrofitUtil.getInstance().apiService()
+                .getMapDetails(mapId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<MapDetailsBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<MapDetailsBean> result) {
+                        if(result.getCode()==0){
+                            List<MapDetailsBean.BoxsBean> boxs = result.getData().getBoxs();
+                            if(boxs!=null && boxs.size()>0){
+                                MapDetailsBean.BoxsBean.UserBoxLogBean userBoxLog = boxs.get(0).getUserBoxLog();
+                                if(userBoxLog!=null && StringUtil.isNotBlank(userBoxLog.getBoxId())){
+                                    boxId = userBoxLog.getBoxId();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
     }
 
 }

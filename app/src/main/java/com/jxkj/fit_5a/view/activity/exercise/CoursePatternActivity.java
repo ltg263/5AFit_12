@@ -58,7 +58,7 @@ public class CoursePatternActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_ok:
-                startActivity(new Intent(this, CourseStartActivity.class));
+//                startActivity(new Intent(this, CourseStartActivity.class));
                 break;
         }
     }

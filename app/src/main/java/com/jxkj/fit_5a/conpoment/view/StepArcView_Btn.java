@@ -46,7 +46,7 @@ public class StepArcView_Btn extends View {
     /**
      * 动画时长
      */
-    private int animationLength = 5000;
+    private int animationLength = 1000;
 
     public StepArcView_Btn(Context context) {
         super(context);

@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -133,9 +132,13 @@ public class RateControlActivity extends BaseActivity {
     }
 
     List<String> listTime = new ArrayList<>();
-    @OnClick({R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_ok,R.id.rl_1, R.id.rl_2})
+
+    @OnClick({R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_ok, R.id.rl_1, R.id.rl_2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.ll_back:
+                finish();
+                break;
             case R.id.tv_righttext:
             case R.id.iv_rightimg:
                 startActivity(new Intent(this, FacilityAddSbActivity.class));

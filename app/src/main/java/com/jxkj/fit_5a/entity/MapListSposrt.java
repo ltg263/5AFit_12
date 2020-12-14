@@ -48,7 +48,6 @@ public class MapListSposrt implements Parcelable {
         private String imgUrl;
         private int minLevel;
         private int distance;
-        private List<List<Integer>> info;
         private List<BoxsBean> boxs;
 
         public String getId() {
@@ -89,14 +88,6 @@ public class MapListSposrt implements Parcelable {
 
         public void setDistance(int distance) {
             this.distance = distance;
-        }
-
-        public List<List<Integer>> getInfo() {
-            return info;
-        }
-
-        public void setInfo(List<List<Integer>> info) {
-            this.info = info;
         }
 
         public List<BoxsBean> getBoxs() {
@@ -164,8 +155,7 @@ public class MapListSposrt implements Parcelable {
                 private String id;
                 private boolean hasDel;
                 private List<RewardListBean> rewardList;
-                private List<String> probArray;
-                private List<String> aliasArray;
+                private List<Integer> probArray;
 
                 public String getId() {
                     return id;
@@ -191,20 +181,12 @@ public class MapListSposrt implements Parcelable {
                     this.rewardList = rewardList;
                 }
 
-                public List<String> getProbArray() {
+                public List<Integer> getProbArray() {
                     return probArray;
                 }
 
-                public void setProbArray(List<String> probArray) {
+                public void setProbArray(List<Integer> probArray) {
                     this.probArray = probArray;
-                }
-
-                public List<String> getAliasArray() {
-                    return aliasArray;
-                }
-
-                public void setAliasArray(List<String> aliasArray) {
-                    this.aliasArray = aliasArray;
                 }
 
                 public static class RewardListBean implements Parcelable {
@@ -224,7 +206,7 @@ public class MapListSposrt implements Parcelable {
                     private String explain;
                     private int type;
                     private String detail;
-                    private String rate;
+                    private int rate;
 
                     public int getId() {
                         return id;
@@ -274,11 +256,11 @@ public class MapListSposrt implements Parcelable {
                         this.detail = detail;
                     }
 
-                    public String getRate() {
+                    public int getRate() {
                         return rate;
                     }
 
-                    public void setRate(String rate) {
+                    public void setRate(int rate) {
                         this.rate = rate;
                     }
 
@@ -295,7 +277,7 @@ public class MapListSposrt implements Parcelable {
                         dest.writeString(this.explain);
                         dest.writeInt(this.type);
                         dest.writeString(this.detail);
-                        dest.writeString(this.rate);
+                        dest.writeInt(this.rate);
                     }
 
                     public RewardListBean() {
@@ -308,10 +290,10 @@ public class MapListSposrt implements Parcelable {
                         this.explain = in.readString();
                         this.type = in.readInt();
                         this.detail = in.readString();
-                        this.rate = in.readString();
+                        this.rate = in.readInt();
                     }
 
-                    public static final Parcelable.Creator<RewardListBean> CREATOR = new Parcelable.Creator<RewardListBean>() {
+                    public static final Creator<RewardListBean> CREATOR = new Creator<RewardListBean>() {
                         @Override
                         public RewardListBean createFromParcel(Parcel source) {
                             return new RewardListBean(source);
@@ -333,9 +315,8 @@ public class MapListSposrt implements Parcelable {
                 public void writeToParcel(Parcel dest, int flags) {
                     dest.writeString(this.id);
                     dest.writeByte(this.hasDel ? (byte) 1 : (byte) 0);
-                    dest.writeTypedList(this.rewardList);
-                    dest.writeStringList(this.probArray);
-                    dest.writeStringList(this.aliasArray);
+                    dest.writeList(this.rewardList);
+                    dest.writeList(this.probArray);
                 }
 
                 public SportBoxBean() {
@@ -344,12 +325,13 @@ public class MapListSposrt implements Parcelable {
                 protected SportBoxBean(Parcel in) {
                     this.id = in.readString();
                     this.hasDel = in.readByte() != 0;
-                    this.rewardList = in.createTypedArrayList(RewardListBean.CREATOR);
-                    this.probArray = in.createStringArrayList();
-                    this.aliasArray = in.createStringArrayList();
+                    this.rewardList = new ArrayList<RewardListBean>();
+                    in.readList(this.rewardList, RewardListBean.class.getClassLoader());
+                    this.probArray = new ArrayList<Integer>();
+                    in.readList(this.probArray, Integer.class.getClassLoader());
                 }
 
-                public static final Parcelable.Creator<SportBoxBean> CREATOR = new Parcelable.Creator<SportBoxBean>() {
+                public static final Creator<SportBoxBean> CREATOR = new Creator<SportBoxBean>() {
                     @Override
                     public SportBoxBean createFromParcel(Parcel source) {
                         return new SportBoxBean(source);
@@ -382,11 +364,11 @@ public class MapListSposrt implements Parcelable {
                 this.distance = in.readInt();
                 this.sportBox = in.readParcelable(SportBoxBean.class.getClassLoader());
                 this.sportBoxId = in.readString();
-                this.latlng = new ArrayList<>();
+                this.latlng = new ArrayList<Integer>();
                 in.readList(this.latlng, Integer.class.getClassLoader());
             }
 
-            public static final Parcelable.Creator<BoxsBean> CREATOR = new Parcelable.Creator<BoxsBean>() {
+            public static final Creator<BoxsBean> CREATOR = new Creator<BoxsBean>() {
                 @Override
                 public BoxsBean createFromParcel(Parcel source) {
                     return new BoxsBean(source);
@@ -411,8 +393,7 @@ public class MapListSposrt implements Parcelable {
             dest.writeString(this.imgUrl);
             dest.writeInt(this.minLevel);
             dest.writeInt(this.distance);
-            dest.writeList(this.info);
-            dest.writeTypedList(this.boxs);
+            dest.writeList(this.boxs);
         }
 
         public ListBean() {
@@ -424,12 +405,11 @@ public class MapListSposrt implements Parcelable {
             this.imgUrl = in.readString();
             this.minLevel = in.readInt();
             this.distance = in.readInt();
-            this.info = new ArrayList<>();
-            in.readList(this.info, ArrayList.class.getClassLoader());
-            this.boxs = in.createTypedArrayList(BoxsBean.CREATOR);
+            this.boxs = new ArrayList<BoxsBean>();
+            in.readList(this.boxs, BoxsBean.class.getClassLoader());
         }
 
-        public static final Parcelable.Creator<ListBean> CREATOR = new Parcelable.Creator<ListBean>() {
+        public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
             @Override
             public ListBean createFromParcel(Parcel source) {
                 return new ListBean(source);
@@ -450,7 +430,7 @@ public class MapListSposrt implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.totalCount);
-        dest.writeTypedList(this.list);
+        dest.writeList(this.list);
     }
 
     public MapListSposrt() {
@@ -458,7 +438,8 @@ public class MapListSposrt implements Parcelable {
 
     protected MapListSposrt(Parcel in) {
         this.totalCount = in.readInt();
-        this.list = in.createTypedArrayList(ListBean.CREATOR);
+        this.list = new ArrayList<ListBean>();
+        in.readList(this.list, ListBean.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<MapListSposrt> CREATOR = new Parcelable.Creator<MapListSposrt>() {

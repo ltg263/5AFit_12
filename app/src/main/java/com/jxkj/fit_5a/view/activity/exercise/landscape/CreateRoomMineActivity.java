@@ -68,7 +68,7 @@ public class CreateRoomMineActivity extends Activity {
                 finish();
                 break;
             case R.id.tv_ok:
-                ClassicExerciseActivity.intentStartActivity(this);
+                ClassicExerciseActivity.intentStartActivity(this,"");
                 break;
 
         }

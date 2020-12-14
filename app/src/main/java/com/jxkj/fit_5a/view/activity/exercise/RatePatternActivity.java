@@ -89,7 +89,8 @@ public class RatePatternActivity extends BaseActivity {
                         if (pos == 2) {
                             startActivity(new Intent(RatePatternActivity.this, TaskFinishActivity.class));
                         }else{
-                            MotorPatternActivity.startIntentActivity(RatePatternActivity.this);
+//                            MotorPatternActivity.startIntentActivity(RatePatternActivity.this);
+                            finish();
                         }
                     }
                 });

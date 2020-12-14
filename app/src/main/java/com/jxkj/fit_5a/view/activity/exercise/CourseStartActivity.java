@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.activity.exercise;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
 import com.jxkj.fit_5a.entity.MapListSposrt;
+import com.jxkj.fit_5a.view.activity.exercise.landscape.ClassicExerciseActivity;
 import com.jxkj.fit_5a.view.fragment.SelectMapFragment;
 
 import java.util.ArrayList;
@@ -35,6 +37,8 @@ public class CourseStartActivity extends BaseActivity {
     TextView mTvTime;
     @BindView(R.id.tv_intension)
     TextView mTvIntension;
+
+    String mapId = "";
 
     List<String> listTime = new ArrayList<>();
     @Override
@@ -108,8 +112,26 @@ public class CourseStartActivity extends BaseActivity {
                 return "";
             }
         });
-
+        if(list.size()>0){
+            mapId = list.get(0).getId();
+        }
         mViewPager.setCurrentItem(0);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mapId = list.get(position).getId();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     List<Fragment> fragments = new ArrayList<>();
@@ -135,8 +157,11 @@ public class CourseStartActivity extends BaseActivity {
                 PickerViewUtils.selectorCustom(this, listTime, "运动强度", mTvTime);
                 break;
             case R.id.iv_out:
+                finish();
                 break;
             case R.id.iv_jr:
+                Log.w("--->>",""+mapId);
+                ClassicExerciseActivity.intentStartActivity(this,mapId);
                 break;
         }
     }

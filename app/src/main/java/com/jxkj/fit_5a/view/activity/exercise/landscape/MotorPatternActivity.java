@@ -95,7 +95,7 @@ public class MotorPatternActivity extends Activity {
         mLandscapeMotorPatternAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ClassicExerciseActivity.intentStartActivity(MotorPatternActivity.this);
+                ClassicExerciseActivity.intentStartActivity(MotorPatternActivity.this,"");
             }
         });
     }
