@@ -89,6 +89,7 @@ public class HttpRequestUtils {
                 .subscribe(new Observer<Result<SubmitFilesBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+
                     }
 
                     @Override
@@ -99,7 +100,6 @@ public class HttpRequestUtils {
                         }else{
                             fileInterface.failure();
                         }
-
                     }
 
                     @Override
@@ -151,7 +151,7 @@ public class HttpRequestUtils {
                 });
     }
 
-    private void goConnect() {
+    public static void psotUserSportLog() {
         PostUser.SportLogInfo sportLogInfo= new PostUser.SportLogInfo();
 //        sportLogInfo.setCal();
         RetrofitUtil.getInstance().apiService()
@@ -166,9 +166,7 @@ public class HttpRequestUtils {
 
                     @Override
                     public void onNext(Result result) {
-//                        if(isDataInfoSucceed(result)){
-//                            showDialogUi();
-//                        }
+
                     }
 
                     @Override

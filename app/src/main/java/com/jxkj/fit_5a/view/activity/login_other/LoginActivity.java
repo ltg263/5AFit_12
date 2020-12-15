@@ -25,6 +25,7 @@ import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeCounter;
+import com.jxkj.fit_5a.conpoment.utils.ToastUtil;
 import com.jxkj.fit_5a.entity.LoginInfo;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -292,7 +293,6 @@ public class LoginActivity extends BaseActivity {
                         if(isDataInfoSucceed(result)){
                             ToastUtils.showShort("发送成功");
                         }
-
                     }
 
                     @Override

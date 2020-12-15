@@ -14,6 +14,9 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.TaskListBase;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.jxkj.fit_5a.entity.WalletDetailsBean;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
 import com.jxkj.fit_5a.view.adapter.MineRwzxAdapter;
 
@@ -29,6 +32,8 @@ public class MineRwzxActivity extends BaseActivity {
     RecyclerView mRvList;
     @BindView(R.id.tv_state)
     TextView tv_state;
+    @BindView(R.id.tv_jifen_num)
+    TextView mTvJifenNum;
     private MineRwzxAdapter mMineRwzxAdapter;
 
     @Override
@@ -38,8 +43,10 @@ public class MineRwzxActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        addUserSignLog();
         initRv();
+//        getWalletDetails();
+        mTvJifenNum.setText(SharedUtils.singleton().get(ConstValues.MY_INTEGRAL,""));
+        addUserSignLog();
         getUserTaskList();
     }
     private void initRv() {
@@ -89,6 +96,35 @@ public class MineRwzxActivity extends BaseActivity {
                     public void onNext(Result<TaskListBase> result) {
                         if(isDataInfoSucceed(result)){
                             mMineRwzxAdapter.setNewData(result.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+    private void getWalletDetails() {
+        RetrofitUtil.getInstance().apiService()
+                .getWalletDetails(2)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<WalletDetailsBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<WalletDetailsBean> result) {
+                        if(isDataInfoSucceed(result)){
+                            mTvJifenNum.setText(result.getData().getBalance());
                         }
                     }
 

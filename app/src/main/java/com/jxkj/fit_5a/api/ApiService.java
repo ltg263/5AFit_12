@@ -31,6 +31,7 @@ import com.jxkj.fit_5a.entity.SportLogBean;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
 import com.jxkj.fit_5a.entity.TemplateBean;
 import com.jxkj.fit_5a.entity.UserInfoMyData;
+import com.jxkj.fit_5a.entity.WalletDetailsBean;
 
 import java.util.Map;
 
@@ -360,6 +361,13 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_4+"api/v1/user/sport/log/list")
     Observable<Result<SportLogBean>> geSportLogList(@Query("page") int page, @Query("pageSize") int pageSize);
+
+
+    /**
+     * 余额详情  	余额类型1金豆,2卡路里
+     */
+    @GET(ConstValues.PORT_8+"api/v1/user/wallet/details")
+    Observable<Result<WalletDetailsBean>> getWalletDetails(@Query("type") int type);
 
 
     /**
