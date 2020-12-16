@@ -177,10 +177,10 @@ public class ClassicExerciseActivity extends Activity {
                         if(result.getCode()==0){
                             List<MapDetailsBean.BoxsBean> boxs = result.getData().getBoxs();
                             if(boxs!=null && boxs.size()>0){
-                                MapDetailsBean.BoxsBean.UserBoxLogBean userBoxLog = boxs.get(0).getUserBoxLog();
-                                if(userBoxLog!=null && StringUtil.isNotBlank(userBoxLog.getBoxId())){
-                                    boxId = userBoxLog.getBoxId();
-                                }
+//                                MapDetailsBean.BoxsBean.UserBoxLogBean userBoxLog = boxs.get(0).getUserBoxLog();
+//                                if(userBoxLog!=null && StringUtil.isNotBlank(userBoxLog.getBoxId())){
+//                                    boxId = userBoxLog.getBoxId();
+//                                }
                             }
                         }
                     }

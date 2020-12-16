@@ -29,19 +29,16 @@ android {
         }
     }
     signingConfigs {
-        debug {
-            keyAlias 'rentalmall'            // 签名别名
-            keyPassword 'android'       // 别名对应的密码
-            storeFile file('F:/rentalmall.jks')  // 正式签名文件位置
-            storePassword 'android'     // 签名密码
-        }
         config {                       // 签名配置的名字，可以随意起，比如myconfig等
-            keyAlias 'rentalmall'            // 签名别名
-            keyPassword 'android'       // 别名对应的密码
-//            storeFile file('F:/rentalmall.jks')  // 正式签名文件位置
-            storeFile file('D:/qzj_workspace/RentalMall/jks/rentalmall.jks')  // 正式签名文件位置
-            storePassword 'android'     // 签名密码
+            keyAlias '5AFit_key'            // 签名别名
+            keyPassword '5afit123456'       // 别名对应的密码
+            storeFile file('D:/JianXuan/5AFit/app/5AFit.jks')  // 正式签名文件位置
+            storePassword '5afit123456'     // 签名密码
         }
+//        MD5:  24:39:44:D1:14:41:EC:75:28:94:B8:B1:C5:0E:4C:87
+//        SHA1: 35:B6:9E:7A:DE:89:54:B2:55:A7:42:23:E5:27:09:35:64:B5:66:69
+//        SHA256: 08:39:64:73:7B:11:B5:54:4B:7B:C4:AA:F5:D8:93:56:97:83:74:07:3C:92:A2:FC:B5:B3:26:DE:B9:C7:2C:C5
+
     }
     buildTypes {
         release {
@@ -198,9 +195,9 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.2.1'
 
     //地图sdk
-    implementation 'com.amap.api:3dmap:5.1.0'
-    implementation 'com.amap.api:location:3.3.0'
-    implementation 'com.amap.api:search:5.1.0'
+//    implementation 'com.amap.api:3dmap:5.1.0'
+//    implementation 'com.amap.api:location:3.3.0'
+//    implementation 'com.amap.api:search:5.1.0'
 
     //城市选择
     implementation 'com.zaaach:citypicker:2.0.2'
@@ -238,6 +235,7 @@ dependencies {
     implementation files('libs/umeng_social_net.jar')
     implementation files('libs/umeng_social_shareboard.jar')
     implementation files('libs/umeng_social_tool.jar')
+    implementation files('libs/AMap3DMap_7.7.0_AMapNavi_7.7.1_AMapSearch_7.7.0_AMapLocation_5.2.0_20201113.jar')
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
     implementation 'jp.wasabeef:blurry:3.0.0'
     implementation 'com.github.addappcn:android-pickers:1.0.3'

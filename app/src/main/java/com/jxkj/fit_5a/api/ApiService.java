@@ -331,12 +331,6 @@ public interface ApiService {
 
     /**
      * 地图详情
-     */
-    @GET(ConstValues.PORT_4+"api/v1/user/sport/map/details")
-    Observable<Result<MapDetails>> getSportMapDetails(@Query("id") String id);
-
-    /**
-     * 地图详情
      * @param id
      */
     @GET(ConstValues.PORT_4+"api/v1/user/sport/map/details")

@@ -10,7 +10,7 @@ import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.entity.MapDetails;
-import com.jxkj.fit_5a.entity.MapListSposrt;
+import com.jxkj.fit_5a.entity.MapDetailsBean;
 
 import butterknife.BindView;
 import io.reactivex.Observer;
@@ -47,17 +47,17 @@ public class SelectMapFragment extends BaseFragment {
 
     private void getSportMapDetails() {
         RetrofitUtil.getInstance().apiService()
-                .getSportMapDetails(id)
+                .getMapDetails(id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result<MapDetails>>() {
+                .subscribe(new Observer<Result<MapDetailsBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result<MapDetails> result) {
+                    public void onNext(Result<MapDetailsBean> result) {
                         if (isDataInfoSucceed(result)) {
                             mTvName.setText(result.getData().getName());
                             GlideImgLoader.loadImageViewRadius(getActivity(),result.getData().getImgUrl(),15,mIv);

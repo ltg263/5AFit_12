@@ -17,6 +17,7 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.view.activity.exercise.landscape.ClassicExerciseActivity;
+import com.jxkj.fit_5a.view.activity.exercise.landscape.MapExerciseActivity;
 import com.jxkj.fit_5a.view.fragment.SelectMapFragment;
 
 import java.util.ArrayList;
@@ -161,7 +162,7 @@ public class CourseStartActivity extends BaseActivity {
                 break;
             case R.id.iv_jr:
                 Log.w("--->>",""+mapId);
-                ClassicExerciseActivity.intentStartActivity(this,mapId);
+                MapExerciseActivity.intentStartActivity(this,mapId);
                 break;
         }
     }
