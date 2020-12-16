@@ -1,26 +1,23 @@
 package com.jxkj.fit_5a.entity;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MapListSposrt implements Parcelable {
+public class MapListSposrt {
 
     /**
-     * list : [{"id":"11","name":"测试","imgUrl":"1","minLevel":0,"distance":10,"info":[[1,1],[1,3]],"boxs":[{"distance":1,"latlng":[1,1],"sportBox":{"id":"0","rewardList":[{"id":0,"name":"","imgUrl":"","explain":"","type":0,"detail":"","rate":0}],"probArray":[1],"aliasArray":[],"hasDel":false},"sportBoxId":"0"}]}]
+     * list : [{"id":"11","name":"测试","imgUrl":"1","minLevel":0,"distance":10,"info":[[1,1],[1,3]],"boxs":[{"distance":1,"latlng":[1,1],"sportBox":{"id":"0","name":"","rewardList":[{"id":0,"name":"","imgUrl":"","explain":"","type":0,"detail":"","rate":0}],"probArray":[1],"aliasArray":[],"hasDel":false},"id":""}]},{"id":"12","name":"1221","imgUrl":"1","minLevel":1,"distance":10,"info":[[1,2],[12,12]],"boxs":[{"distance":1,"latlng":[1,1],"sportBox":{"id":"1","name":"123","rewardList":[{"id":1,"name":"勋章奖励1","imgUrl":"11","explain":"1234","type":2,"detail":"3","rate":0.3}],"probArray":[1],"aliasArray":[null],"hasDel":false},"id":"1"}]},{"id":"13","name":"经典地图","imgUrl":"1","minLevel":1,"distance":10945,"info":[[116.385056,39.891994],[116.385415,39.895125],[116.382856,39.897203],[116.382529,39.900465],[116.378812,39.903036],[116.380244,39.905739],[116.38019,39.912066],[116.38901,39.920045],[116.403322,39.920255],[116.413622,39.917214],[116.420831,39.910486],[116.420059,39.906529],[116.417055,39.902836],[116.414565,39.899537],[116.410703,39.897555],[116.402292,39.892353],[116.389846,39.891365]],"boxs":[{"distance":100,"latlng":[116.38255801979953,39.900175511969294],"sportBox":{"id":"1","name":"123","rewardList":[{"id":1,"name":"勋章奖励1","imgUrl":"11","explain":"1234","type":2,"detail":"3","rate":0.3}],"probArray":[1],"aliasArray":[null],"hasDel":false},"id":"1"}]},{"id":"14","name":"经典地图","imgUrl":"123","minLevel":0,"distance":10945,"info":[[116.385056,39.891994],[116.385415,39.895125],[116.382856,39.897203],[116.382529,39.900465],[116.378812,39.903036],[116.380244,39.905739],[116.38019,39.912066],[116.38901,39.920045],[116.403322,39.920255],[116.413622,39.917214],[116.420831,39.910486],[116.420059,39.906529],[116.417055,39.902836],[116.414565,39.899537],[116.410703,39.897555],[116.402292,39.892353],[116.389846,39.891365]],"boxs":[{"distance":1000,"latlng":[116.38255801979953,39.900175511969294],"sportBox":{"id":"1","name":"123","rewardList":[{"id":1,"name":"勋章奖励1","imgUrl":"11","explain":"1234","type":2,"detail":"3","rate":0.3}],"probArray":[1],"aliasArray":[null],"hasDel":false},"id":"1"}]},{"id":"15","name":"经典地图","imgUrl":"123","minLevel":0,"distance":10945,"info":[[116.385056,39.891994],[116.385415,39.895125],[116.382856,39.897203],[116.382529,39.900465],[116.378812,39.903036],[116.380244,39.905739],[116.38019,39.912066],[116.38901,39.920045],[116.403322,39.920255],[116.413622,39.917214],[116.420831,39.910486],[116.420059,39.906529],[116.417055,39.902836],[116.414565,39.899537],[116.410703,39.897555],[116.402292,39.892353],[116.389846,39.891365]],"boxs":[{"distance":1000,"latlng":[116.38255801979953,39.900175511969294],"sportBox":{"id":"1","name":"123","rewardList":[{"id":1,"name":"勋章奖励1","imgUrl":"11","explain":"1234","type":2,"detail":"3","rate":0.3}],"probArray":[1],"aliasArray":[null],"hasDel":false},"id":"1"}]},{"id":"16","name":"经典地图","imgUrl":"123","minLevel":0,"distance":10945,"info":[[116.385056,39.891994],[116.385415,39.895125],[116.382856,39.897203],[116.382529,39.900465],[116.378812,39.903036],[116.380244,39.905739],[116.38019,39.912066],[116.38901,39.920045],[116.403322,39.920255],[116.413622,39.917214],[116.420831,39.910486],[116.420059,39.906529],[116.417055,39.902836],[116.414565,39.899537],[116.410703,39.897555],[116.402292,39.892353],[116.389846,39.891365]],"boxs":[{"distance":1000,"latlng":[116.38255801979953,39.900175511969294],"sportBox":{"id":"1","name":"123","rewardList":[{"id":1,"name":"勋章奖励1","imgUrl":"11","explain":"1234","type":2,"detail":"3","rate":0.3}],"probArray":[1],"aliasArray":[null],"hasDel":false},"id":"1"}]}]
      * totalCount : 0
      */
 
-    private int totalCount;
+    private String totalCount;
     private List<ListBean> list;
 
-    public int getTotalCount() {
+    public String getTotalCount() {
         return totalCount;
     }
 
-    public void setTotalCount(int totalCount) {
+    public void setTotalCount(String totalCount) {
         this.totalCount = totalCount;
     }
 
@@ -32,7 +29,7 @@ public class MapListSposrt implements Parcelable {
         this.list = list;
     }
 
-    public static class ListBean implements Parcelable {
+    public static class ListBean {
         /**
          * id : 11
          * name : 测试
@@ -40,14 +37,15 @@ public class MapListSposrt implements Parcelable {
          * minLevel : 0
          * distance : 10
          * info : [[1,1],[1,3]]
-         * boxs : [{"distance":1,"latlng":[1,1],"sportBox":{"id":"0","rewardList":[{"id":0,"name":"","imgUrl":"","explain":"","type":0,"detail":"","rate":0}],"probArray":[1],"aliasArray":[],"hasDel":false},"sportBoxId":"0"}]
+         * boxs : [{"distance":1,"latlng":[1,1],"sportBox":{"id":"0","name":"","rewardList":[{"id":0,"name":"","imgUrl":"","explain":"","type":0,"detail":"","rate":0}],"probArray":[1],"aliasArray":[],"hasDel":false},"id":""}]
          */
 
         private String id;
         private String name;
         private String imgUrl;
-        private int minLevel;
-        private int distance;
+        private String minLevel;
+        private String distance;
+        private List<List<String>> info;
         private List<BoxsBean> boxs;
 
         public String getId() {
@@ -74,20 +72,28 @@ public class MapListSposrt implements Parcelable {
             this.imgUrl = imgUrl;
         }
 
-        public int getMinLevel() {
+        public String getMinLevel() {
             return minLevel;
         }
 
-        public void setMinLevel(int minLevel) {
+        public void setMinLevel(String minLevel) {
             this.minLevel = minLevel;
         }
 
-        public int getDistance() {
+        public String getDistance() {
             return distance;
         }
 
-        public void setDistance(int distance) {
+        public void setDistance(String distance) {
             this.distance = distance;
+        }
+
+        public List<List<String>> getInfo() {
+            return info;
+        }
+
+        public void setInfo(List<List<String>> info) {
+            this.info = info;
         }
 
         public List<BoxsBean> getBoxs() {
@@ -98,24 +104,24 @@ public class MapListSposrt implements Parcelable {
             this.boxs = boxs;
         }
 
-        public static class BoxsBean implements Parcelable {
+        public static class BoxsBean {
             /**
              * distance : 1
              * latlng : [1,1]
-             * sportBox : {"id":"0","rewardList":[{"id":0,"name":"","imgUrl":"","explain":"","type":0,"detail":"","rate":0}],"probArray":[1],"aliasArray":[],"hasDel":false}
-             * sportBoxId : 0
+             * sportBox : {"id":"0","name":"","rewardList":[{"id":0,"name":"","imgUrl":"","explain":"","type":0,"detail":"","rate":0}],"probArray":[1],"aliasArray":[],"hasDel":false}
+             * id :
              */
 
-            private int distance;
+            private String distance;
             private SportBoxBean sportBox;
-            private String sportBoxId;
-            private List<Integer> latlng;
+            private String id;
+            private List<String> latlng;
 
-            public int getDistance() {
+            public String getDistance() {
                 return distance;
             }
 
-            public void setDistance(int distance) {
+            public void setDistance(String distance) {
                 this.distance = distance;
             }
 
@@ -127,25 +133,26 @@ public class MapListSposrt implements Parcelable {
                 this.sportBox = sportBox;
             }
 
-            public String getSportBoxId() {
-                return sportBoxId;
+            public String getId() {
+                return id;
             }
 
-            public void setSportBoxId(String sportBoxId) {
-                this.sportBoxId = sportBoxId;
+            public void setId(String id) {
+                this.id = id;
             }
 
-            public List<Integer> getLatlng() {
+            public List<String> getLatlng() {
                 return latlng;
             }
 
-            public void setLatlng(List<Integer> latlng) {
+            public void setLatlng(List<String> latlng) {
                 this.latlng = latlng;
             }
 
-            public static class SportBoxBean implements Parcelable {
+            public static class SportBoxBean {
                 /**
                  * id : 0
+                 * name :
                  * rewardList : [{"id":0,"name":"","imgUrl":"","explain":"","type":0,"detail":"","rate":0}]
                  * probArray : [1]
                  * aliasArray : []
@@ -153,9 +160,11 @@ public class MapListSposrt implements Parcelable {
                  */
 
                 private String id;
+                private String name;
                 private boolean hasDel;
                 private List<RewardListBean> rewardList;
-                private List<Integer> probArray;
+                private List<String> probArray;
+                private List<?> aliasArray;
 
                 public String getId() {
                     return id;
@@ -163,6 +172,14 @@ public class MapListSposrt implements Parcelable {
 
                 public void setId(String id) {
                     this.id = id;
+                }
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
                 }
 
                 public boolean isHasDel() {
@@ -181,15 +198,23 @@ public class MapListSposrt implements Parcelable {
                     this.rewardList = rewardList;
                 }
 
-                public List<Integer> getProbArray() {
+                public List<String> getProbArray() {
                     return probArray;
                 }
 
-                public void setProbArray(List<Integer> probArray) {
+                public void setProbArray(List<String> probArray) {
                     this.probArray = probArray;
                 }
 
-                public static class RewardListBean implements Parcelable {
+                public List<?> getAliasArray() {
+                    return aliasArray;
+                }
+
+                public void setAliasArray(List<?> aliasArray) {
+                    this.aliasArray = aliasArray;
+                }
+
+                public static class RewardListBean {
                     /**
                      * id : 0
                      * name :
@@ -200,19 +225,19 @@ public class MapListSposrt implements Parcelable {
                      * rate : 0
                      */
 
-                    private int id;
+                    private String id;
                     private String name;
                     private String imgUrl;
                     private String explain;
-                    private int type;
+                    private String type;
                     private String detail;
-                    private int rate;
+                    private String rate;
 
-                    public int getId() {
+                    public String getId() {
                         return id;
                     }
 
-                    public void setId(int id) {
+                    public void setId(String id) {
                         this.id = id;
                     }
 
@@ -240,11 +265,11 @@ public class MapListSposrt implements Parcelable {
                         this.explain = explain;
                     }
 
-                    public int getType() {
+                    public String getType() {
                         return type;
                     }
 
-                    public void setType(int type) {
+                    public void setType(String type) {
                         this.type = type;
                     }
 
@@ -256,201 +281,15 @@ public class MapListSposrt implements Parcelable {
                         this.detail = detail;
                     }
 
-                    public int getRate() {
+                    public String getRate() {
                         return rate;
                     }
 
-                    public void setRate(int rate) {
+                    public void setRate(String rate) {
                         this.rate = rate;
                     }
-
-                    @Override
-                    public int describeContents() {
-                        return 0;
-                    }
-
-                    @Override
-                    public void writeToParcel(Parcel dest, int flags) {
-                        dest.writeInt(this.id);
-                        dest.writeString(this.name);
-                        dest.writeString(this.imgUrl);
-                        dest.writeString(this.explain);
-                        dest.writeInt(this.type);
-                        dest.writeString(this.detail);
-                        dest.writeInt(this.rate);
-                    }
-
-                    public RewardListBean() {
-                    }
-
-                    protected RewardListBean(Parcel in) {
-                        this.id = in.readInt();
-                        this.name = in.readString();
-                        this.imgUrl = in.readString();
-                        this.explain = in.readString();
-                        this.type = in.readInt();
-                        this.detail = in.readString();
-                        this.rate = in.readInt();
-                    }
-
-                    public static final Creator<RewardListBean> CREATOR = new Creator<RewardListBean>() {
-                        @Override
-                        public RewardListBean createFromParcel(Parcel source) {
-                            return new RewardListBean(source);
-                        }
-
-                        @Override
-                        public RewardListBean[] newArray(int size) {
-                            return new RewardListBean[size];
-                        }
-                    };
                 }
-
-                @Override
-                public int describeContents() {
-                    return 0;
-                }
-
-                @Override
-                public void writeToParcel(Parcel dest, int flags) {
-                    dest.writeString(this.id);
-                    dest.writeByte(this.hasDel ? (byte) 1 : (byte) 0);
-                    dest.writeList(this.rewardList);
-                    dest.writeList(this.probArray);
-                }
-
-                public SportBoxBean() {
-                }
-
-                protected SportBoxBean(Parcel in) {
-                    this.id = in.readString();
-                    this.hasDel = in.readByte() != 0;
-                    this.rewardList = new ArrayList<RewardListBean>();
-                    in.readList(this.rewardList, RewardListBean.class.getClassLoader());
-                    this.probArray = new ArrayList<Integer>();
-                    in.readList(this.probArray, Integer.class.getClassLoader());
-                }
-
-                public static final Creator<SportBoxBean> CREATOR = new Creator<SportBoxBean>() {
-                    @Override
-                    public SportBoxBean createFromParcel(Parcel source) {
-                        return new SportBoxBean(source);
-                    }
-
-                    @Override
-                    public SportBoxBean[] newArray(int size) {
-                        return new SportBoxBean[size];
-                    }
-                };
             }
-
-            @Override
-            public int describeContents() {
-                return 0;
-            }
-
-            @Override
-            public void writeToParcel(Parcel dest, int flags) {
-                dest.writeInt(this.distance);
-                dest.writeParcelable(this.sportBox, flags);
-                dest.writeString(this.sportBoxId);
-                dest.writeList(this.latlng);
-            }
-
-            public BoxsBean() {
-            }
-
-            protected BoxsBean(Parcel in) {
-                this.distance = in.readInt();
-                this.sportBox = in.readParcelable(SportBoxBean.class.getClassLoader());
-                this.sportBoxId = in.readString();
-                this.latlng = new ArrayList<Integer>();
-                in.readList(this.latlng, Integer.class.getClassLoader());
-            }
-
-            public static final Creator<BoxsBean> CREATOR = new Creator<BoxsBean>() {
-                @Override
-                public BoxsBean createFromParcel(Parcel source) {
-                    return new BoxsBean(source);
-                }
-
-                @Override
-                public BoxsBean[] newArray(int size) {
-                    return new BoxsBean[size];
-                }
-            };
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.id);
-            dest.writeString(this.name);
-            dest.writeString(this.imgUrl);
-            dest.writeInt(this.minLevel);
-            dest.writeInt(this.distance);
-            dest.writeList(this.boxs);
-        }
-
-        public ListBean() {
-        }
-
-        protected ListBean(Parcel in) {
-            this.id = in.readString();
-            this.name = in.readString();
-            this.imgUrl = in.readString();
-            this.minLevel = in.readInt();
-            this.distance = in.readInt();
-            this.boxs = new ArrayList<BoxsBean>();
-            in.readList(this.boxs, BoxsBean.class.getClassLoader());
-        }
-
-        public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
-            @Override
-            public ListBean createFromParcel(Parcel source) {
-                return new ListBean(source);
-            }
-
-            @Override
-            public ListBean[] newArray(int size) {
-                return new ListBean[size];
-            }
-        };
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.totalCount);
-        dest.writeList(this.list);
-    }
-
-    public MapListSposrt() {
-    }
-
-    protected MapListSposrt(Parcel in) {
-        this.totalCount = in.readInt();
-        this.list = new ArrayList<ListBean>();
-        in.readList(this.list, ListBean.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<MapListSposrt> CREATOR = new Parcelable.Creator<MapListSposrt>() {
-        @Override
-        public MapListSposrt createFromParcel(Parcel source) {
-            return new MapListSposrt(source);
-        }
-
-        @Override
-        public MapListSposrt[] newArray(int size) {
-            return new MapListSposrt[size];
-        }
-    };
 }

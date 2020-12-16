@@ -1,8 +1,5 @@
 package com.jxkj.fit_5a.view.adapter;
 
-import android.util.Log;
-import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -65,5 +62,4 @@ public class TaskFinishPjAdapter extends BaseQuickAdapter<String, BaseViewHolder
     public void setSelectPos(int pos){
         this.pos = pos;
     }
-
 }

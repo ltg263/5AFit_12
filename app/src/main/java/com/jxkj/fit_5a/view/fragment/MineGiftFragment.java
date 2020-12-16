@@ -47,8 +47,6 @@ public class MineGiftFragment extends BaseFragment {
     protected void initViews() {
         mRefreshLayout.setEnableRefresh(false);
         mRefreshLayout.setEnableRefresh(false);
-        mRefreshLayout.setVisibility(View.VISIBLE);
-        mLvNot.setVisibility(View.GONE);
 
         Bundle bundle = getArguments();
         int type=0;
@@ -103,7 +101,11 @@ public class MineGiftFragment extends BaseFragment {
                     @Override
                     public void onNext(Result<GiftListData> result) {
                         if(isDataInfoSucceed(result)){
-                            mUserLwMineAdapter.setNewData(result.getData().getList());
+                            if(result.getData().getList().size()>0){
+                                mRefreshLayout.setVisibility(View.VISIBLE);
+                                mLvNot.setVisibility(View.GONE);
+                                mUserLwMineAdapter.setNewData(result.getData().getList());
+                            }
                         }
                     }
 
@@ -132,10 +134,14 @@ public class MineGiftFragment extends BaseFragment {
                     @Override
                     public void onNext(Result<GiftLogListData> result) {
                         if(isDataInfoSucceed(result)){
-                            if(flag){
-                                mUserLwSongAdapter.setNewData(result.getData().getList());
-                            }else{
-                                mUserLwShouAdapter.setNewData(result.getData().getList());
+                            if(result.getData().getList().size()>0) {
+                                mRefreshLayout.setVisibility(View.VISIBLE);
+                                mLvNot.setVisibility(View.GONE);
+                                if (flag) {
+                                    mUserLwSongAdapter.setNewData(result.getData().getList());
+                                } else {
+                                    mUserLwShouAdapter.setNewData(result.getData().getList());
+                                }
                             }
                         }
                     }

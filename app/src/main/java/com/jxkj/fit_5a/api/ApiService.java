@@ -23,6 +23,7 @@ import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.entity.AdListData;
 import com.jxkj.fit_5a.entity.CircleTaskData;
 import com.jxkj.fit_5a.entity.LoginInfo;
+import com.jxkj.fit_5a.entity.MapDetails;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
@@ -327,6 +328,12 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_4+"api/v1/sport/map/list")
     Observable<Result<MapListSposrt>> getSportMapList(@Query("page") int page, @Query("pageSize") int pageSize);
+
+    /**
+     * 地图详情
+     */
+    @GET(ConstValues.PORT_4+"api/v1/user/sport/map/details")
+    Observable<Result<MapDetails>> getSportMapDetails(@Query("id") String id);
 
     /**
      * 地图详情

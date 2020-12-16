@@ -140,7 +140,7 @@ public class CourseStartActivity extends BaseActivity {
         for (int i = 0; i < list.size(); i++) {
             SelectMapFragment fragment = new SelectMapFragment();
             Bundle bundle = new Bundle();
-            bundle.putParcelable("ListBean", list.get(i));
+            bundle.putString("id", list.get(i).getId());
             fragment.setArguments(bundle);
             fragments.add(fragment);
         }
