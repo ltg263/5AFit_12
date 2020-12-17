@@ -19,7 +19,7 @@ public class MapDetailsBean {
     private String name;
     private String imgUrl;
     private int minLevel;
-    private int distance;
+    private Double distance;
     private List<List<Double>> info;
     private List<BoxsBean> boxs;
 
@@ -55,11 +55,11 @@ public class MapDetailsBean {
         this.minLevel = minLevel;
     }
 
-    public int getDistance() {
+    public Double getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 
@@ -89,18 +89,18 @@ public class MapDetailsBean {
          * userBoxLog : null
          */
 
-        private String id;
+        private int id;
         private int distance;
         private boolean having;
         private Object userBoxLog;
         private List<RewardListBean> rewardList;
         private List<Double> latlng;
 
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
 

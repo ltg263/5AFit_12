@@ -3,18 +3,17 @@ package com.jxkj.fit_5a.view.activity.exercise.landscape;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
-import android.view.MotionEvent;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -23,13 +22,10 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.CameraPosition;
-import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
+import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.PolygonOptions;
-import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
 import com.amap.api.maps.utils.SpatialRelationUtil;
 import com.amap.api.maps.utils.overlay.SmoothMoveMarker;
@@ -38,7 +34,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
-import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils_Map;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 
 import java.util.ArrayList;
@@ -46,12 +42,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
 
 public class MapExerciseActivity extends Activity {
     @BindView(R.id.iv_1)
@@ -66,12 +61,24 @@ public class MapExerciseActivity extends Activity {
     ImageView mIv;
     @BindView(R.id.ll)
     LinearLayout mLl;
+    @BindView(R.id.tv_distance)
+    TextView mTvDistance;
+    @BindView(R.id.tv_time)
+    TextView mTvTime;
     boolean isSuo = false;
     String mapId;
     String boxId;
     private MapView mMapView;
 
     AMap aMap;
+    private SmoothMoveMarker smoothMarker;
+
+    public static void intentStartActivity(Context mContext, String mapId) {
+        Intent intent = new Intent(mContext, MapExerciseActivity.class);
+        intent.putExtra("mapId", mapId);
+        mContext.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,91 +95,93 @@ public class MapExerciseActivity extends Activity {
         UiSettings mUiSettings = aMap.getUiSettings();
         mUiSettings.setZoomControlsEnabled(false);
         mUiSettings.setAllGesturesEnabled(false);
+
+        aMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Log.i("lgq","dianjiddd===="+marker.getPeriod());//获取markerID
+
+                getBoxReceive(marker.getPeriod()+"");
+                return true;
+            }
+        });
     }
 
 
+    PopupWindowTopicUtils_Map window;
 
-    PopupWindowTopicUtils window;
     private void initViews() {
         mapId = getIntent().getStringExtra("mapId");
         getMapDetails();
+
+        if(window==null){
+            window = new PopupWindowTopicUtils_Map(MapExerciseActivity.this, type -> {
+                if(smoothMarker==null){
+                    return;
+                }
+                if(type ==0){
+                    smoothMarker.startSmoothMove();
+                }else if(type==1){
+                    smoothMarker.stopMove();
+                }else if(type==2){
+                    mTvTime.setVisibility(View.VISIBLE);
+                }
+
+            });
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        }
 //        DialogUtils.showDialogClass(ClassicExerciseActivity.this, 1, new DialogUtils.DialogLyInterface() {
 //            @Override
 //            public void btnConfirm() {
 //
 //            }
 //        });
-        mIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(StringUtil.isNotBlank(boxId)) {
-                    getBoxReceive(boxId);
-                }
-            }
-        });
+    }
 
-        mIv1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mIv3.getVisibility() == View.VISIBLE){
+
+    @OnClick({R.id.iv_1, R.id.iv_2, R.id.iv_3, R.id.iv_4, R.id.iv})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_1:
+                if (mIv3.getVisibility() == View.VISIBLE) {
                     mIv3.setVisibility(View.GONE);
                     mIv4.setVisibility(View.GONE);
-                }else{
+                } else {
                     mIv3.setVisibility(View.VISIBLE);
                     mIv4.setVisibility(View.VISIBLE);
                 }
-            }
-        });
-        mIv2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isSuo){
+                break;
+            case R.id.iv_2:
+                if (isSuo) {
                     isSuo = false;
                     mIv2.setImageDrawable(MapExerciseActivity.this.getResources().getDrawable(R.mipmap.ic_hp_yd_9));
-                    if(window!=null && window.isShowing()){
-                        return;
-                    }
-                    window = new PopupWindowTopicUtils(MapExerciseActivity.this, (topicId, str) -> {
-                    });
-                    window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                     window.showAtLocation(mLl, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置
-                }else{
+                    mTvTime.setVisibility(View.GONE);
+                } else {
                     isSuo = true;
+                    mTvTime.setVisibility(View.VISIBLE);
                     mIv2.setImageDrawable(MapExerciseActivity.this.getResources().getDrawable(R.mipmap.ic_hp_yd_99));
-                    if(window!=null && window.isShowing()){
+                    if (window != null && window.isShowing()) {
                         window.dismiss();
                     }
                 }
-            }
-        });
-        mIv3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+                break;
+            case R.id.iv_3:
 
-        mIv4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogUtils.showDialogOutRoom(MapExerciseActivity.this, new DialogUtils.DialogLyInterface() {
-                    @Override
-                    public void btnConfirm() {
-                    }
-                });
-            }
-        });
+                break;
+            case R.id.iv_4:
+                outRoom();
+                break;
+            case R.id.iv:
+                if (StringUtil.isNotBlank(boxId)) {
+                }
+                break;
+        }
     }
-
-    public static void intentStartActivity(Context mContext,String mapId) {
-        Intent intent = new Intent(mContext, MapExerciseActivity.class);
-        intent.putExtra("mapId",mapId);
-        mContext.startActivity(intent);
-    }
-
 
     private void getBoxReceive(String boxId) {
         RetrofitUtil.getInstance().apiService()
-                .getBoxReceive(boxId,mapId)
+                .getBoxReceive(boxId, mapId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {
@@ -183,7 +192,7 @@ public class MapExerciseActivity extends Activity {
 
                     @Override
                     public void onNext(Result result) {
-                        if(result.getCode()==0){
+                        if (result.getCode() == 0) {
 
                         }
                     }
@@ -213,9 +222,19 @@ public class MapExerciseActivity extends Activity {
 
                     @Override
                     public void onNext(Result<MapDetailsBean> result) {
-                        if(result.getCode()==0){
-                            List<MapDetailsBean.BoxsBean> boxs = result.getData().getBoxs();
-                            initUi(result.getData().getInfo());
+                        if (result.getCode() == 0 && result.getData() != null) {
+                            double distance = result.getData().getDistance();
+                            mTvDistance.setText(distance + "m");
+                            if (result.getData().getDistance() > 1000) {
+                                mTvDistance.setText(distance / 1000d + "km");
+                            }
+                            if (result.getData().getInfo() != null && result.getData().getInfo().size() > 0) {
+                                initUi(result.getData().getInfo());
+                            }
+                            if (result.getData().getBoxs() != null && result.getData().getBoxs().size() > 0) {
+                                setMapBoxs(result.getData().getBoxs());
+                            }
+
                         }
                     }
 
@@ -229,81 +248,109 @@ public class MapExerciseActivity extends Activity {
                 });
 
     }
-    List<LatLng> latLngs;
+
     private void initUi(List<List<Double>> info) {
-        latLngs = new ArrayList<>();
+        List<LatLng> latLngs = new ArrayList<>();
+        for (int i = 0; i < info.size(); i++) {
+            latLngs.add(new LatLng(info.get(i).get(1), info.get(i).get(0)));
+        }
+        latLngs.add(new LatLng(info.get(0).get(1), info.get(0).get(0)));
+//      绘制起点
+        MarkerOptions mMarkerOptions = new MarkerOptions().position(latLngs.get(0));
+        mMarkerOptions.icon(BitmapDescriptorFactory.
+                fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_d_red)));
+        aMap.addMarker(mMarkerOptions);
 
-        for(int i=0;i<info.size();i++){
-            latLngs.add(new LatLng(info.get(i).get(1),info.get(i).get(0)));
-        }
-        if(info.size()>0){
-            latLngs.add(new LatLng(info.get(0).get(1),info.get(0).get(0)));
-        }
+        //绘制图形
         aMap.addPolyline(new PolylineOptions().
-                addAll(latLngs).width(10).color(Color.argb(255, 203, 80, 1)));
-//        aMap.addMarker(new MarkerOptions()
-//                .position(new LatLng(info.get(0).get(1),info.get(0).get(0))).title("北京")
-//                .snippet("DefaultMarker"));
+                addAll(latLngs).width(10).color(getResources().getColor(R.color.color_text_theme)));
 
-        setHD();
+        //滑动 模仿跑步
+        setHD(latLngs);
 
-        CameraPosition cameraPosition = aMap.getCameraPosition();
-        Log.d(TAG, "onClick: large"+cameraPosition.target.latitude);
-        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cameraPosition.target,13));
-
-
+        //绘制适应大小
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();//存放所有点的经纬度
-        for(int i=0;i<latLngs.size();i++){
+        for (int i = 0; i < latLngs.size(); i++) {
             boundsBuilder.include(latLngs.get(i));//把所有点都include进去（LatLng类型）
         }
         aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 100));//第二个参数为四周留空宽度
+
+        window.showAtLocation(mLl, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置
+    }
+
+    private void setMapBoxs(List<MapDetailsBean.BoxsBean> boxs) {
+        for (int i = 0; i < boxs.size(); i++) {
+            MapDetailsBean.BoxsBean box = boxs.get(i);
+            LatLng latLng = new LatLng(box.getLatlng().get(1), box.getLatlng().get(0));
+            MarkerOptions mMarkerOptions = new MarkerOptions().position(latLng);
+            mMarkerOptions.icon(BitmapDescriptorFactory.
+                    fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_boxs)));
+            mMarkerOptions.period(boxs.get(i).getId());
+            aMap.addMarker(mMarkerOptions);
+        }
     }
 
 
-    private void setHD() {
+    private void setHD(List<LatLng> latLngs) {
         // 获取轨迹坐标点
         LatLngBounds bounds = new LatLngBounds(latLngs.get(0), latLngs.get(latLngs.size() - 2));
         aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
 
-        SmoothMoveMarker smoothMarker = new SmoothMoveMarker(aMap);
+        smoothMarker = new SmoothMoveMarker(aMap);
         // 设置滑动的图标
-        smoothMarker.setDescriptor(BitmapDescriptorFactory.fromResource(R.drawable.ic_dian_bai));
+        smoothMarker.setDescriptor(BitmapDescriptorFactory.fromResource(R.mipmap.ic_my_dw));
 
-        LatLng drivePoint = latLngs.get(0);
-        Pair<Integer, LatLng> pair = SpatialRelationUtil.calShortestDistancePoint(latLngs, drivePoint);
-        latLngs.set(pair.first, drivePoint);
+        Pair<Integer, LatLng> pair = SpatialRelationUtil.calShortestDistancePoint(latLngs, latLngs.get(0));
+        latLngs.set(pair.first, latLngs.get(0));
         List<LatLng> subList = latLngs.subList(pair.first, latLngs.size());
 
         // 设置滑动的轨迹左边点
         smoothMarker.setPoints(subList);
         // 设置滑动的总时间
-        smoothMarker.setTotalDuration(40);
-        // 开始滑动
-        smoothMarker.startSmoothMove();
+        smoothMarker.setTotalDuration(400);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
         mMapView.onDestroy();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
         mMapView.onResume();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         //在activity执行onPause时执行mMapView.onPause ()，暂停地图的绘制
         mMapView.onPause();
     }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
         mMapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        outRoom();
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void outRoom() {
+        DialogUtils.showDialogOutRoom(MapExerciseActivity.this, new DialogUtils.DialogLyInterface() {
+            @Override
+            public void btnConfirm() {
+                finish();
+            }
+        });
     }
 
 }

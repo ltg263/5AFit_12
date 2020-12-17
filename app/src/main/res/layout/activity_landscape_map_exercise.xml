@@ -10,6 +10,7 @@
         android:layout_height="match_parent" />
 
     <TextView
+        android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -21,7 +22,8 @@
         android:text="00:30:00"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/rl"
@@ -49,6 +51,7 @@
             android:layout_margin="@dimen/common_margin_6" />
 
         <TextView
+            android:id="@+id/tv_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@id/lsv"
@@ -119,7 +122,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/rl"
         android:layout_centerHorizontal="true"
-        android:paddingStart="@dimen/dimen_120dp">
+        android:paddingStart="@dimen/dimen_120dp"
+        android:visibility="gone">
 
 
         <TextView
