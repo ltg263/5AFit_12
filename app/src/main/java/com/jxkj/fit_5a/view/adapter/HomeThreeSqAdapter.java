@@ -30,14 +30,12 @@ public class HomeThreeSqAdapter extends BaseQuickAdapter<QueryPopularBean.DataBe
     protected void convert(@NonNull BaseViewHolder helper, QueryPopularBean.DataBean item) {
         ViewGroup.LayoutParams layoutParams = helper.itemView.getLayoutParams();
         layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        if(item.equals("-2")){
-            Glide.with(mContext).load(R.mipmap.ic_13).into((ImageView) helper.getView(R.id.iv_icon));
-        }else{
-            Glide.with(mContext).load(R.mipmap.ic_12).into((ImageView) helper.getView(R.id.iv_icon));
-        }
+        String[] strArr = item.getMedia().split(",");
+        GlideImageUtils.setGlideImage(mContext,strArr[0],helper.getView(R.id.iv_icon));
+
         helper.setText(R.id.tv_title,item.getSimpleContent()).setText(R.id.tv_name,item.getUser().getNickName())
         .setText(R.id.tv_num,item.getLikeCount()+"");
-        GlideImageUtils.setGlideImage(mContext,item.getUser().getAvatar(),helper.getView(R.id.iv_head_img));
+        GlideImgLoader.loadImageViewRadius(mContext,item.getUser().getAvatar(),helper.getView(R.id.iv_head_img));
 
     }
 
