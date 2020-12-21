@@ -112,7 +112,7 @@ public class UserHomeActivity extends BaseActivity {
         //解决item跳动
 //        manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         mRvDtListSp.setLayoutManager(manager);
-        HomeThreeSqAdapter mHomeThreeSqAdapter = new HomeThreeSqAdapter(list);
+        HomeThreeSqAdapter mHomeThreeSqAdapter = new HomeThreeSqAdapter(null);
         mRvDtListSp.setHasFixedSize(true);
         mRvDtListSp.setAdapter(mHomeThreeSqAdapter);
         mHomeThreeSqAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

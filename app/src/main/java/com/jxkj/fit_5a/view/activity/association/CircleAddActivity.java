@@ -1,7 +1,9 @@
 package com.jxkj.fit_5a.view.activity.association;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -10,10 +12,14 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
 import com.jxkj.fit_5a.view.adapter.SpPhotoAdapter;
@@ -25,7 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class CircleAddActivity extends BaseActivity {
     @BindView(R.id.iv_back)
@@ -44,6 +55,14 @@ public class CircleAddActivity extends BaseActivity {
     RelativeLayout mRlActionbar;
     @BindView(R.id.rv_list_zp)
     RecyclerView mRvListZp;
+    @BindView(R.id.tv_lefttext)
+    TextView mTvLefttext;
+    @BindView(R.id.iv_rightimg_two)
+    ImageView mIvRightimgTwo;
+    @BindView(R.id.et_content)
+    EditText mEtContent;
+    @BindView(R.id.tv_position)
+    TextView mTvPosition;
     private SpPhotoAdapter mSpPhotoAdapter;
 
     @Override
@@ -60,6 +79,7 @@ public class CircleAddActivity extends BaseActivity {
         mIvRightimg.setImageDrawable(getResources().getDrawable(R.drawable.icon_fabu));
         initRvXq();
     }
+
     private void initRvXq() {
         mRvListZp.setLayoutManager(new GridLayoutManager(this, 4));
         mRvListZp.setHasFixedSize(true);
@@ -74,7 +94,7 @@ public class CircleAddActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (mSpPhotoAdapter.getData().get(position).getPath().equals("-1")) {
-                    MatisseUtils.gotoSelectPhoto(CircleAddActivity.this, 10 - mSpPhotoAdapter.getData().size(),false);
+                    MatisseUtils.gotoSelectPhoto(CircleAddActivity.this, 10 - mSpPhotoAdapter.getData().size(), false);
                 }
             }
         });
@@ -92,6 +112,7 @@ public class CircleAddActivity extends BaseActivity {
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -111,7 +132,8 @@ public class CircleAddActivity extends BaseActivity {
 
 
     private List<String> mFeedTypeList = new ArrayList<>();
-    @OnClick({R.id.ll_back, R.id.tv_righttext, R.id.iv_rightimg,R.id.tv_gk})
+
+    @OnClick({R.id.ll_back, R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_gk})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
@@ -128,7 +150,7 @@ public class CircleAddActivity extends BaseActivity {
                 PickerViewUtils.selectorCustom(this, mFeedTypeList, "", mTvGk);
                 break;
             case R.id.iv_rightimg:
-                DialogUtils.showDialogCgCircle(this,  "创建圈子权限", 1, new DialogUtils.DialogLyInterface() {
+                DialogUtils.showDialogCgCircle(this, "创建圈子权限", 1, new DialogUtils.DialogLyInterface() {
                     @Override
                     public void btnConfirm() {
 

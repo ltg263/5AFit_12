@@ -497,4 +497,7 @@ public class PostUser {
     }
 
 
+    public class PublishMoment {
+
+    }
 }

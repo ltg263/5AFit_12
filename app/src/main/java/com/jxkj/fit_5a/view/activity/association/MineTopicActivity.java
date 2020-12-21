@@ -66,7 +66,7 @@ public class MineTopicActivity extends BaseActivity {
         //解决item跳动
 //        manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         mRvListSp.setLayoutManager(manager);
-        HomeThreeSqAdapter mHomeThreeSqAdapter = new HomeThreeSqAdapter(list);
+        HomeThreeSqAdapter mHomeThreeSqAdapter = new HomeThreeSqAdapter(null);
         mRvListSp.setHasFixedSize(true);
         mRvListSp.setAdapter(mHomeThreeSqAdapter);
 

@@ -20,6 +20,7 @@
         android:padding="@dimen/dp_10" />
 
     <EditText
+        android:id="@+id/et_content"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_150dp"
         android:layout_margin="@dimen/dimen_20dp"
@@ -33,6 +34,7 @@
 
 
     <TextView
+        android:id="@+id/tv_position"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/icon_dw1"

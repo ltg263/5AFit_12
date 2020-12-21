@@ -10,7 +10,11 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
+import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.entity.QueryPopularBean;
+import com.jxkj.fit_5a.entity.TopicAllBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.association.AssociationAddActivity;
 import com.jxkj.fit_5a.view.activity.association.InterestAllActivity;
@@ -28,6 +32,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class HomeThreeFragment extends BaseFragment {
 
@@ -40,6 +48,7 @@ public class HomeThreeFragment extends BaseFragment {
     RecyclerView mRvSqList;
     private HomeThreeTopAdapter mHomeThreeTopAdapter;
     private HomeThreeRmhtAdapter mHomeThreeRmhtAdapter;
+    private HomeThreeSqAdapter mHomeThreeSqAdapter;
 
     @Override
     protected int getContentView() {
@@ -49,7 +58,7 @@ public class HomeThreeFragment extends BaseFragment {
     @Override
     protected void initViews() {
         initRvUi();
-
+        getMomentQueryPopular();
     }
 
     private void initRvUi() {
@@ -100,7 +109,7 @@ public class HomeThreeFragment extends BaseFragment {
         //解决item跳动
 //        manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         mRvSqList.setLayoutManager(manager);
-        HomeThreeSqAdapter mHomeThreeSqAdapter = new HomeThreeSqAdapter(list);
+        mHomeThreeSqAdapter = new HomeThreeSqAdapter(null);
         mRvSqList.setHasFixedSize(true);
         mRvSqList.setAdapter(mHomeThreeSqAdapter);
 
@@ -138,6 +147,34 @@ public class HomeThreeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), AssociationAddActivity.class));
                 break;
         }
+    }
+
+    private void getMomentQueryPopular(){
+        RetrofitUtil.getInstance().apiService()
+                .getMomentQueryPopular()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<QueryPopularBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(QueryPopularBean result) {
+                        if (result.getCode()==0) {
+                            mHomeThreeSqAdapter.setNewData(result.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 }
 

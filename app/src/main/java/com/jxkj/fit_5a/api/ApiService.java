@@ -28,11 +28,13 @@ import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
+import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 import com.jxkj.fit_5a.entity.SportLogBean;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
 import com.jxkj.fit_5a.entity.TaskCircleQueryBean;
 import com.jxkj.fit_5a.entity.TemplateBean;
+import com.jxkj.fit_5a.entity.TopicAllBean;
 import com.jxkj.fit_5a.entity.WalletDetailsBean;
 
 import java.util.Map;
@@ -396,7 +398,6 @@ public interface ApiService {
     @POST(ConstValues.PORT_21+"api/v1/circle/create")
     Observable<Result> getCircleCreate(@Body PostUser.CreateCircle postUser);
 
-
     /**
      * 获取圈子详情
      * @param id
@@ -429,6 +430,30 @@ public interface ApiService {
     Observable<Result<TaskCircleQueryBean>> getTaskCircleQuery(@Query("deviceType") int deviceType);
 
 
+
+    /**
+     * 创建圈子
+     */
+    @GET(ConstValues.PORT_21+"api/v1/topic/all")
+    Observable<Result<TopicAllBean>> getTopicAll();
+
+
+
+    /**
+     * 用户发布动态
+     * @return
+     */
+    @POST(ConstValues.PORT_21+"api/v1/moment/publish")
+    Observable<Result> postPublishMoment(@Query("content") String content,@Query("contentType") String contentType,
+                                         @Query("shareType") String shareType,@Query("media") String media,
+                                         @Query("position") String position,@Query("location") String location,
+                                         @Query("topics") String topics);
+
+    /**
+     * 获取热门(推荐)动态信息
+     */
+    @GET(ConstValues.PORT_21+"api/v1/moment/query_popular")
+    Observable<QueryPopularBean> getMomentQueryPopular();
 
     /**
      * 订单列表
