@@ -21,17 +21,18 @@ import com.jxkj.fit_5a.base.UserDetailData;
 import com.jxkj.fit_5a.base.UserInfoData;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.entity.AdListData;
+import com.jxkj.fit_5a.entity.CircleDetailsBean;
+import com.jxkj.fit_5a.entity.CircleQueryBean;
 import com.jxkj.fit_5a.entity.CircleTaskData;
 import com.jxkj.fit_5a.entity.LoginInfo;
-import com.jxkj.fit_5a.entity.MapDetails;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 import com.jxkj.fit_5a.entity.SportLogBean;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
+import com.jxkj.fit_5a.entity.TaskCircleQueryBean;
 import com.jxkj.fit_5a.entity.TemplateBean;
-import com.jxkj.fit_5a.entity.UserInfoMyData;
 import com.jxkj.fit_5a.entity.WalletDetailsBean;
 
 import java.util.Map;
@@ -378,6 +379,54 @@ public interface ApiService {
     @Multipart
     @POST(ConstValues.POPT_LS + "region/api/v1/files")
     Observable<Result<SubmitFilesBean>> submitFiles(@Part MultipartBody.Part file, @PartMap Map<String, RequestBody> map);
+
+
+    /**
+     * 创建圈子
+     * @param deviceType
+     * @return 2226.21
+     */
+    @GET(ConstValues.PORT_21+"api/v1/circle/query")
+    Observable<Result<CircleQueryBean>> getCircleQuery(@Query("deviceType") int deviceType);
+
+    /**
+     * 创建圈子
+     * @return
+     */
+    @POST(ConstValues.PORT_21+"api/v1/circle/create")
+    Observable<Result> getCircleCreate(@Body PostUser.CreateCircle postUser);
+
+
+    /**
+     * 获取圈子详情
+     * @param id
+     * @return
+     */
+    @GET(ConstValues.PORT_21+"api/v1/circle/details")
+    Observable<Result<CircleDetailsBean>> getCircleDetails(@Query("id") int id);
+
+    /**
+     * 用户加入圈子
+     * @param circleId
+     * @return
+     */
+    @POST(ConstValues.PORT_21+"api/v1/cricle/member/join")
+    Observable<Result> getCircleJoin(@Query("circleId") int circleId);
+
+    /**
+     * 用户退出圈子
+     * @param circleId
+     * @return
+     */
+    @POST(ConstValues.PORT_21+"api/v1/cricle/member/quit")
+    Observable<Result> getCircleQuit(@Query("circleId") int circleId);
+
+    /**
+     * 获取圈子预设任务列表
+     * @return
+     */
+    @GET(ConstValues.PORT_21+"api/v1/circle/task/query")
+    Observable<Result<TaskCircleQueryBean>> getTaskCircleQuery(@Query("deviceType") int deviceType);
 
 
 

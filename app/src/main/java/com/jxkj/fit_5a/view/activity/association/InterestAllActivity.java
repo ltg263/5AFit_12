@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.activity.association;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,7 +12,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.DeviceTypeData;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.view.AutoHeightViewPager;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.view.fragment.InterestAllFragment;
@@ -21,6 +25,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class InterestAllActivity extends BaseActivity {
     @BindView(R.id.viewpager)
@@ -37,35 +45,64 @@ public class InterestAllActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        List<String> list = new ArrayList<>();
+        queryDeviceTypeLists();
+    }
 
-        list.add("健身运动1");
-        list.add("健身运动2");
-        list.add("健身运动3");
-        list.add("健身运动4");
-        list.add("健身运动5");
-        list.add("健身运动6");
-        list.add("健身运动7");
+    private void queryDeviceTypeLists() {
+        RetrofitUtil.getInstance().apiService()
+                .queryDeviceTypeLists()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<DeviceTypeData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-        initTabs(list);
+                    }
+
+                    @Override
+                    public void onNext(Result<DeviceTypeData> result) {
+                        if(isDataInfoSucceed(result)){
+                            initTabs(result.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     List<Fragment> fragments = new ArrayList<>();
-    private List<Fragment> getFragments(List<String> size) {
-        for (int i = 0; i < size.size(); i++) {
+    private List<Fragment> getFragments(List<DeviceTypeData.ListBean> lists) {
+        InterestAllFragment fragment0 = new InterestAllFragment();
+        Bundle bundle0 = new Bundle();
+        bundle0.putInt("id",0);
+        fragment0.setArguments(bundle0);
+        fragments.add(fragment0);
+
+        for (int i = 0; i < lists.size(); i++) {
             InterestAllFragment fragment = new InterestAllFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("id",lists.get(i).getId());
+            fragment.setArguments(bundle);
             fragments.add(fragment);
         }
         return fragments;
     }
-    private void initTabs(List<String> lists) {
+    private void initTabs(List<DeviceTypeData.ListBean> lists) {
         List<String> titles = new ArrayList<>();
+        titles.add("全部");
         for(int i=0;i<lists.size();i++){
-            titles.add(lists.get(i));
+            titles.add(lists.get(i).getName());
         }
         final List<Fragment> mFragments = getFragments(lists);
         mViewpager.setOffscreenPageLimit(titles.size());
-
 
         mViewpager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -84,6 +121,7 @@ public class InterestAllActivity extends BaseActivity {
                 return titles.get(position);
             }
         });
+
         mViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -128,5 +166,7 @@ public class InterestAllActivity extends BaseActivity {
                 break;
         }
     }
+
+
 
 }

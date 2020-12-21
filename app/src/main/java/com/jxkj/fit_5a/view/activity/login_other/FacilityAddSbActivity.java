@@ -44,10 +44,10 @@ public class FacilityAddSbActivity extends BaseActivity {
     protected void initViews() {
         mTvTitle.setText("新增设备");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
-        getUserAddress();
+        queryDeviceTypeLists();
     }
 
-    private void getUserAddress() {
+    private void queryDeviceTypeLists() {
         RetrofitUtil.getInstance().apiService()
                 .queryDeviceTypeLists()
                 .observeOn(AndroidSchedulers.mainThread())

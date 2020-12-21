@@ -3,6 +3,129 @@ package com.jxkj.fit_5a.base;
 public class PostUser {
 
 
+    public static class CreateCircle{
+
+        /**
+         * bgImg :
+         * deviceType : 0
+         * explain :
+         * imgUrl :
+         * interestId : 0
+         * name :
+         * taskCircleFormDTO : {"circleTargetId":0,"cycle":0,"explain":"","imgUrl":""}
+         */
+
+        private String bgImg;
+        private int deviceType;
+        private String explain;
+        private String imgUrl;
+        private int interestId;
+        private String name;
+        private TaskCircleFormDTOBean taskCircleFormDTO;
+
+        public String getBgImg() {
+            return bgImg;
+        }
+
+        public void setBgImg(String bgImg) {
+            this.bgImg = bgImg;
+        }
+
+        public int getDeviceType() {
+            return deviceType;
+        }
+
+        public void setDeviceType(int deviceType) {
+            this.deviceType = deviceType;
+        }
+
+        public String getExplain() {
+            return explain;
+        }
+
+        public void setExplain(String explain) {
+            this.explain = explain;
+        }
+
+        public String getImgUrl() {
+            return imgUrl;
+        }
+
+        public void setImgUrl(String imgUrl) {
+            this.imgUrl = imgUrl;
+        }
+
+        public int getInterestId() {
+            return interestId;
+        }
+
+        public void setInterestId(int interestId) {
+            this.interestId = interestId;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public TaskCircleFormDTOBean getTaskCircleFormDTO() {
+            return taskCircleFormDTO;
+        }
+
+        public void setTaskCircleFormDTO(TaskCircleFormDTOBean taskCircleFormDTO) {
+            this.taskCircleFormDTO = taskCircleFormDTO;
+        }
+
+        public static class TaskCircleFormDTOBean {
+            /**
+             * circleTargetId : 0
+             * cycle : 0
+             * explain :
+             * imgUrl :
+             */
+
+            private int circleTargetId;
+            private int cycle;
+            private String explain;
+            private String imgUrl;
+
+            public int getCircleTargetId() {
+                return circleTargetId;
+            }
+
+            public void setCircleTargetId(int circleTargetId) {
+                this.circleTargetId = circleTargetId;
+            }
+
+            public int getCycle() {
+                return cycle;
+            }
+
+            public void setCycle(int cycle) {
+                this.cycle = cycle;
+            }
+
+            public String getExplain() {
+                return explain;
+            }
+
+            public void setExplain(String explain) {
+                this.explain = explain;
+            }
+
+            public String getImgUrl() {
+                return imgUrl;
+            }
+
+            public void setImgUrl(String imgUrl) {
+                this.imgUrl = imgUrl;
+            }
+        }
+    }
+
     public static class DeviceFormDTO{
         /**
          * deviceId : 0
