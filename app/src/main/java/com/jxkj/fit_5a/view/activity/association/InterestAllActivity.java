@@ -80,12 +80,6 @@ public class InterestAllActivity extends BaseActivity {
 
     List<Fragment> fragments = new ArrayList<>();
     private List<Fragment> getFragments(List<DeviceTypeData.ListBean> lists) {
-        InterestAllFragment fragment0 = new InterestAllFragment();
-        Bundle bundle0 = new Bundle();
-        bundle0.putInt("id",0);
-        fragment0.setArguments(bundle0);
-        fragments.add(fragment0);
-
         for (int i = 0; i < lists.size(); i++) {
             InterestAllFragment fragment = new InterestAllFragment();
             Bundle bundle = new Bundle();
@@ -93,14 +87,19 @@ public class InterestAllActivity extends BaseActivity {
             fragment.setArguments(bundle);
             fragments.add(fragment);
         }
+        InterestAllFragment fragment0 = new InterestAllFragment();
+        Bundle bundle0 = new Bundle();
+        bundle0.putInt("id",0);
+        fragment0.setArguments(bundle0);
+        fragments.add(fragment0);
         return fragments;
     }
     private void initTabs(List<DeviceTypeData.ListBean> lists) {
         List<String> titles = new ArrayList<>();
-        titles.add("全部");
         for(int i=0;i<lists.size();i++){
             titles.add(lists.get(i).getName());
         }
+        titles.add("无设备");
         final List<Fragment> mFragments = getFragments(lists);
         mViewpager.setOffscreenPageLimit(titles.size());
 
