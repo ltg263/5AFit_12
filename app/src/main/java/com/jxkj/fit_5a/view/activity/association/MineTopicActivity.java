@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.activity.association;
 
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.View;
 import android.widget.TextView;
@@ -79,13 +80,16 @@ public class MineTopicActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_back, R.id.tv_share,  R.id.rl1, R.id.rl2})
+    @OnClick({R.id.iv_back, R.id.tv_share,  R.id.rl1, R.id.rl2,R.id.tv_add_dt})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.tv_share:
+                break;
+            case R.id.tv_add_dt:
+                TopicAddActivity.startActivity(this,0);
                 break;
             case R.id.rl1:
                 initView(mTv1,mView1);

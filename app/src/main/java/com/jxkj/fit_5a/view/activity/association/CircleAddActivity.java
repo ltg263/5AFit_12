@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.association;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
+import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.SpPhotoAdapter;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -64,7 +66,9 @@ public class CircleAddActivity extends BaseActivity {
     @BindView(R.id.tv_position)
     TextView mTvPosition;
     private SpPhotoAdapter mSpPhotoAdapter;
+    private int id;
 
+    private int shareType = 1;
     @Override
     protected int getContentView() {
         return R.layout.activity_topic_add;
@@ -72,6 +76,7 @@ public class CircleAddActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        id = getIntent().getIntExtra("id",0);
         mTvTitle.setText("圈子动态");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         mTvRighttext.setText("发布");
@@ -147,7 +152,21 @@ public class CircleAddActivity extends BaseActivity {
                 mFeedTypeList.add("私密不可见");
                 mFeedTypeList.add("仅圈子可见");
                 mFeedTypeList.add("关注的人可见");
-                PickerViewUtils.selectorCustom(this, mFeedTypeList, "", mTvGk);
+                PickerViewUtils.selectorCustom(this, mFeedTypeList, "", new PickerViewUtils.ConditionInterfacd() {
+                    @Override
+                    public void setIndex(int pos) {
+                        mTvGk.setText(mFeedTypeList.get(pos));
+                        if(pos ==0){
+                            shareType = 1;
+                        }else if(pos ==1){
+                            shareType = 3;
+                        }else if(pos ==2){
+                            shareType = 2;
+                        }else if(pos ==3){
+                            shareType = 2;
+                        }
+                    }
+                });
                 break;
             case R.id.iv_rightimg:
                 DialogUtils.showDialogCgCircle(this, "创建圈子权限", 1, new DialogUtils.DialogLyInterface() {
@@ -158,6 +177,54 @@ public class CircleAddActivity extends BaseActivity {
                 });
                 break;
         }
+    }
+
+    public static void startActivity(Context mContext, int id) {
+        Intent intent = new Intent(mContext, CircleAddActivity.class);
+        intent.putExtra("id", id);
+        mContext.startActivity(intent);
+    }
+
+    private void postPublishMoment() {
+        String content = mEtContent.getText().toString();
+        mTvPosition.getText().toString();
+        if (StringUtil.isBlank(content)) {
+            ToastUtils.showShort("内容不能为空");
+        }
+
+        RetrofitUtil.getInstance().apiService()
+                .postPublishMomentCircle(id,content,"2",shareType+"",
+                        null,"https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png,https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png",null,null)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if (isDataInfoSucceed(result)) {
+                            DialogUtils.showDialogCgCircle(CircleAddActivity.this, "发布成功", 1,
+                                    new DialogUtils.DialogLyInterface() {
+                                        @Override
+                                        public void btnConfirm() {
+                                            CircleAddActivity.this.finish();
+                                        }
+                                    });
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
     }
 
 }

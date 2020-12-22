@@ -18,6 +18,7 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
@@ -135,7 +136,7 @@ public class AssociationAddActivity extends BaseActivity {
 
     private List<String> mFeedTypeList = new ArrayList<>();
 
-    @OnClick({R.id.ll_back, R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_gk})
+    @OnClick({R.id.ll_back, R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_gk,R.id.tv_position})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
@@ -143,6 +144,9 @@ public class AssociationAddActivity extends BaseActivity {
             case R.id.iv_rightimg:
             case R.id.tv_righttext:
                 postPublishMoment();
+                break;
+            case R.id.tv_position:
+                IntentUtils.getInstence().intent(this, AddressByMapActivity.class);
                 break;
             case R.id.tv_gk:
                 mFeedTypeList.clear();

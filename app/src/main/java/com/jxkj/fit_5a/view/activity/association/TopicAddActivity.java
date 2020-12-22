@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.association;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
@@ -137,5 +138,12 @@ public class TopicAddActivity extends BaseActivity {
                 break;
         }
     }
+
+    public static void startActivity(Context mContext, int id) {
+        Intent intent = new Intent(mContext, TopicAddActivity.class);
+        intent.putExtra("id", id);
+        mContext.startActivity(intent);
+    }
+
 
 }

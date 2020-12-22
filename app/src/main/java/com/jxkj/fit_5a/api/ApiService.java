@@ -453,7 +453,7 @@ public interface ApiService {
 
 
     /**
-     * 用户发布动态
+     * 用户发布动态--社区
      * @return
      */
     @POST(ConstValues.PORT_21+"api/v1/moment/publish")
@@ -461,6 +461,16 @@ public interface ApiService {
                                          @Query("shareType") String shareType,@Query("media") String media,
                                          @Query("position") String position,@Query("location") String location,
                                          @Query("topics") String topics);
+
+    /**
+     * 用户发布动态--圈子
+     * @return
+     */
+    @POST(ConstValues.PORT_21+"api/v1/circle/moment/publish")
+    Observable<Result> postPublishMomentCircle(@Query("circleId") int circleId,@Query("content") String content,
+                                         @Query("contentType") String contentType,@Query("shareType") String shareType,
+                                         @Query("location") String location,@Query("media") String media,
+                                         @Query("position") String position,@Query("topics") String topics);
 
     /**
      * 获取热门(推荐)动态信息

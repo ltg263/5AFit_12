@@ -143,7 +143,7 @@ public class MineCircleActivity extends BaseActivity {
                 getCircleJoin(id);
                 break;
             case R.id.tv_add_dt:
-                startActivity(new Intent(this, CircleAddActivity.class));
+                CircleAddActivity.startActivity(this,id);
                 break;
             case R.id.rl1:
                 initView(mTv1, mView1);
