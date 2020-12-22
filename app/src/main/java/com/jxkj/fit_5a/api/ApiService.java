@@ -23,6 +23,7 @@ import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.entity.AdListData;
 import com.jxkj.fit_5a.entity.CircleDetailsBean;
 import com.jxkj.fit_5a.entity.CircleQueryBean;
+import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.CircleTaskData;
 import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
@@ -467,6 +468,12 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_21+"api/v1/moment/query_popular")
     Observable<QueryPopularBean> getMomentQueryPopular();
+
+    /**
+     * 获取已经加入的圈子列表
+     */
+    @GET(ConstValues.PORT_21+"api/v1/circle/query_joined")
+    Observable<Result<CircleQueryJoinedBean>> getCircleQueryJoined(@Query("page") int page,@Query("pageSize") int pageSize);
 
     /**
      * 订单列表

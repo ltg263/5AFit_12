@@ -13,6 +13,8 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.TopicAllBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
@@ -49,7 +51,7 @@ public class HomeThreeFragment extends BaseFragment {
     private HomeThreeTopAdapter mHomeThreeTopAdapter;
     private HomeThreeRmhtAdapter mHomeThreeRmhtAdapter;
     private HomeThreeSqAdapter mHomeThreeSqAdapter;
-
+    int page,pageSize;
     @Override
     protected int getContentView() {
         return R.layout.fragment_home_three;
@@ -58,6 +60,9 @@ public class HomeThreeFragment extends BaseFragment {
     @Override
     protected void initViews() {
         initRvUi();
+        page = 1;
+        pageSize = 3;
+        getCircleQueryJoined();
         getMomentQueryPopular();
     }
 
@@ -71,9 +76,7 @@ public class HomeThreeFragment extends BaseFragment {
         list.add("");
         list.add("-1");
 
-        mHomeThreeTopAdapter = new HomeThreeTopAdapter(list);
-//        LinearLayoutManager ms = new LinearLayoutManager(getActivity());
-//        ms.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mHomeThreeTopAdapter = new HomeThreeTopAdapter(null);
         mRvTopList.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         mRvTopList.setHasFixedSize(true);
         mRvTopList.setAdapter(mHomeThreeTopAdapter);
@@ -81,15 +84,19 @@ public class HomeThreeFragment extends BaseFragment {
         mHomeThreeTopAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if(mHomeThreeTopAdapter.getData().get(position).equals("-1")){
+                if(mHomeThreeTopAdapter.getData().get(position)==null){
                     startActivity(new Intent(getActivity(), InterestAllActivity.class));
                 }else{
                     Intent mIntent = new Intent(getActivity(), MineCircleActivity.class);
-                    mIntent.putExtra("type","已加入");
+                    mIntent.putExtra("id",mHomeThreeTopAdapter.getData().get(position).getId());
                     startActivity(mIntent);
                 }
             }
         });
+
+        List<CircleQueryJoinedBean.ListBean> data = new ArrayList<>();
+        data.add(null);
+        mHomeThreeTopAdapter.setNewData(data);
 
         mHomeThreeRmhtAdapter = new HomeThreeRmhtAdapter(list);
         mRvRmhtList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -116,7 +123,7 @@ public class HomeThreeFragment extends BaseFragment {
         mHomeThreeSqAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if(mHomeThreeSqAdapter.getData().get(position).equals("-2")){
+                if(mHomeThreeSqAdapter.getData().get(position).getContentType()==3){
                     startActivity(new Intent(getActivity(), VideoActivity.class));
                 }else{
                     startActivity(new Intent(getActivity(), AssociationActivity.class));
@@ -139,6 +146,7 @@ public class HomeThreeFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_refresh:
+                getCircleQueryJoined();
                 break;
             case R.id.tv_topic_all:
                 startActivity(new Intent(getActivity(), TopicAllActivity.class));
@@ -147,6 +155,42 @@ public class HomeThreeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), AssociationAddActivity.class));
                 break;
         }
+    }
+
+    private int totalPage;
+    private void getCircleQueryJoined(){
+        RetrofitUtil.getInstance().apiService()
+                .getCircleQueryJoined(page,pageSize)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<CircleQueryJoinedBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<CircleQueryJoinedBean> result) {
+                        if (result.getCode()==0) {
+                            List<CircleQueryJoinedBean.ListBean> data = result.getData().getList();
+                            data.add(null);
+                            mHomeThreeTopAdapter.setNewData(data);
+                            totalPage = StringUtil.getTotalPage(result.getData().getTotal(), pageSize);
+                            page++;
+                            if(totalPage <= page){
+                                page = 1;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
     private void getMomentQueryPopular(){
