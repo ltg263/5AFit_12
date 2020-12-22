@@ -13,7 +13,9 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.entity.CircleTaskData;
 import com.jxkj.fit_5a.entity.MapListSposrt;
+import com.jxkj.fit_5a.entity.RankStatsData;
 import com.jxkj.fit_5a.view.activity.exercise.ExerciseRecordActivity;
 import com.jxkj.fit_5a.view.activity.exercise.TaskSelectionActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
@@ -79,7 +81,7 @@ public class HomeTwoFragment extends BaseFragment {
                         intent(getActivity(), TaskSelectionActivity.class,"exercise_type",list.get(position));
             }
         });
-        mHomeTwoBelowAdapter = new HomeTwoBelowAdapter(list);
+        mHomeTwoBelowAdapter = new HomeTwoBelowAdapter(null);
         mRvTwoList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvTwoList.setHasFixedSize(true);
         mRvTwoList.setAdapter(mHomeTwoBelowAdapter);
@@ -87,9 +89,11 @@ public class HomeTwoFragment extends BaseFragment {
         mHomeTwoBelowAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-
+                getStatsZan(mHomeTwoBelowAdapter.getData().get(position).getId()
+                        ,!mHomeTwoBelowAdapter.getData().get(position).isHasZan());
             }
         });
+        getRankStatsList(1);
     }
 
     @Override
@@ -110,10 +114,13 @@ public class HomeTwoFragment extends BaseFragment {
                 FacilityManageActivity.intentActivity(getActivity());
                 break;
             case R.id.tv_two_ri:
+                getRankStatsList(3);
                 break;
             case R.id.tv_two_zhou:
+                getRankStatsList(2);
                 break;
             case R.id.tv_two_yue:
+                getRankStatsList(1);
                 break;
             case R.id.tv_go_find:
                 startActivity(new Intent(getActivity(), TaskSelectionActivity.class));
@@ -123,6 +130,81 @@ public class HomeTwoFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), ExerciseRecordActivity.class));
                 break;
         }
+    }
+    int typeD = 0;
+
+    private void getRankStatsList(int type) {
+        RetrofitUtil.getInstance().apiService()
+                .getRankStatsList(type)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<RankStatsData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<RankStatsData> result) {
+                        if(isDataInfoSucceed(result)){
+                            typeD = type;
+                            mHomeTwoBelowAdapter.setNewData(result.getData().getList());
+                            mTvTwoYue.setBackgroundColor(getResources().getColor(R.color.color_ffffff));
+                            mTvTwoZhou.setBackgroundColor(getResources().getColor(R.color.color_ffffff));
+                            mTvTwoRi.setBackgroundColor(getResources().getColor(R.color.color_ffffff));
+                            if(type==1){
+                                mTvTwoYue.setBackground(getResources().getDrawable(R.drawable.btn_shape_bj_theme_2));
+                            }
+                            if(type==2){
+                                mTvTwoZhou.setBackground(getResources().getDrawable(R.drawable.btn_shape_bj_theme_2));
+                            }
+                            if(type==3){
+                                mTvTwoRi.setBackground(getResources().getDrawable(R.drawable.btn_shape_bj_theme_2));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    private void getStatsZan(int id,boolean hasZan) {
+        RetrofitUtil.getInstance().apiService()
+                .getStatsZan(id,hasZan)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(isDataInfoSucceed(result)){
+                            getRankStatsList(typeD);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }
 

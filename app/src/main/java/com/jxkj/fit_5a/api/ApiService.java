@@ -29,6 +29,7 @@ import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
+import com.jxkj.fit_5a.entity.RankStatsData;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 import com.jxkj.fit_5a.entity.SportLogBean;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
@@ -171,6 +172,18 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_1+"api/v1/user/circle/task/list")
     Observable<Result<CircleTaskData>> getCircleTaskList();
+
+    /**
+     * 排行榜排名
+     */
+    @GET(ConstValues.PORT_1+"api/v1/rank/stats/rank")
+    Observable<Result<RankStatsData>> getRankStatsList(@Query("type") int type);
+
+    /**
+     * 排行榜点赞
+     */
+    @GET(ConstValues.PORT_1+"api/v1/user/stats/zan")
+    Observable<Result> getStatsZan(@Query("calStatsId") int calStatsId, @Query("hasZan") boolean hasZan);
 
 
     /**
