@@ -333,8 +333,7 @@ public interface ApiService {
 
 
     /**
-     * 修改密码，只有绑定手机之后才能使用
-     * @return type:类型0注册1修改密码2登录
+     * 商品分类列表
      */
     @GET(ConstValues.PORT_3+"api/v1/product/list")
     Observable<Result> getProductList(@Query("hasHot") Boolean hasHot);
@@ -467,7 +466,13 @@ public interface ApiService {
      * 获取热门(推荐)动态信息
      */
     @GET(ConstValues.PORT_21+"api/v1/moment/query_popular")
-    Observable<QueryPopularBean> getMomentQueryPopular();
+    Observable<QueryPopularBean> getMomentQueryPopular();//首页1
+
+    /**
+     * 获取热门(推荐)动态信息
+     */
+    @GET(ConstValues.PORT_21+"api/v1/circle/moment/query_popular")
+    Observable<QueryPopularBean> getCircleQueryPopular();//首页3
 
     /**
      * 获取已经加入的圈子列表

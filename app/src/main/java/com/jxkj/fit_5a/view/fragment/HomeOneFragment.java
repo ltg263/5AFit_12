@@ -29,6 +29,7 @@ import com.jxkj.fit_5a.base.HelpListData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.view.StringToUtil;
 import com.jxkj.fit_5a.entity.AdListData;
+import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.exercise.RateControlActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
@@ -93,6 +94,7 @@ public class HomeOneFragment extends BaseFragment {
         initRvUi();
         initLC();
         getAdList();
+        getMomentQueryPopular();
     }
 
     private void initLC() {
@@ -179,7 +181,7 @@ public class HomeOneFragment extends BaseFragment {
             }
         });
 
-        mHomeDynamicAdapter = new HomeDynamicAdapter(list);
+        mHomeDynamicAdapter = new HomeDynamicAdapter(null);
         mRvDtrmList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvDtrmList.setHasFixedSize(true);
         mRvDtrmList.setAdapter(mHomeDynamicAdapter);
@@ -264,6 +266,33 @@ public class HomeOneFragment extends BaseFragment {
                 });
     }
 
+    private void getMomentQueryPopular(){
+        RetrofitUtil.getInstance().apiService()
+                .getMomentQueryPopular()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<QueryPopularBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(QueryPopularBean result) {
+                        if (result.getCode()==0) {
+                            mHomeDynamicAdapter.setNewData(result.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
 }
 
 
