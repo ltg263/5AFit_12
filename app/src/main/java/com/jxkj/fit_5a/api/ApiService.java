@@ -484,6 +484,13 @@ public interface ApiService {
     @GET(ConstValues.PORT_21+"api/v1/circle/moment/query_popular")
     Observable<QueryPopularBean> getCircleQueryPopular();//首页3
 
+
+    /**
+     * 根据内容搜索发布的动态信息==圈子
+     */
+    @GET(ConstValues.PORT_21+"api/v1/circle/moment/query_by_keyword")
+    Observable<QueryPopularBean> getQueryByKeyword(@Query("keyword")String keyword);//首页3
+
     /**
      * 获取已经加入的圈子列表
      */

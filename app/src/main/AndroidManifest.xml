@@ -92,6 +92,12 @@
         <activity
             android:name=".view.map.LocationSelectActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.search.SearchGoodsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.search.SearchGoodsResultActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.map.SearchAddressActivity"

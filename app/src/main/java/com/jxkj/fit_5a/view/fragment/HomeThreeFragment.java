@@ -13,6 +13,7 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
@@ -26,6 +27,7 @@ import com.jxkj.fit_5a.view.activity.association.VideoActivity;
 import com.jxkj.fit_5a.view.adapter.HomeThreeRmhtAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeTopAdapter;
+import com.jxkj.fit_5a.view.search.SearchGoodsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,9 +142,12 @@ public class HomeThreeFragment extends BaseFragment {
         return homeFragment;
     }
 
-    @OnClick({R.id.tv_refresh, R.id.tv_topic_all,R.id.tv_right_text})
+    @OnClick({R.id.tv_refresh, R.id.tv_topic_all,R.id.tv_right_text,R.id.tv_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tv_search:
+                IntentUtils.getInstence().intent(getActivity(), SearchGoodsActivity.class);
+                break;
             case R.id.tv_refresh:
                 getCircleQueryJoined();
                 break;
