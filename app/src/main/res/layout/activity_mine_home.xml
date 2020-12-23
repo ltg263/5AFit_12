@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/color_ffffff"
     android:orientation="vertical">
 
@@ -82,9 +83,10 @@
                 android:layout_marginTop="@dimen/dimen_75dp"
                 android:background="@drawable/ic_shade_img">
 
-                <ImageView
+                <com.jxkj.fit_5a.conpoment.view.RoundImageView
                     android:id="@+id/iv_head"
                     android:layout_width="@dimen/dimen_60dp"
+                    app:type="circle"
                     android:layout_height="@dimen/dimen_60dp"
                     android:layout_margin="@dimen/dimen_15dp"
                     android:src="@mipmap/ic_6" />
@@ -117,6 +119,7 @@
                     android:textSize="10sp" />
 
                 <TextView
+                    android:id="@+id/tv_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_name"
@@ -148,6 +151,7 @@
                         android:padding="12dp">
 
                         <TextView
+                            android:id="@+id/tv_gz"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="15"
@@ -174,6 +178,7 @@
                         android:padding="12dp">
 
                         <TextView
+                            android:id="@+id/tv_fs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="15"
@@ -200,6 +205,7 @@
                         android:padding="12dp">
 
                         <TextView
+                            android:id="@+id/tv_sc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="15"
@@ -226,6 +232,7 @@
                         android:padding="12dp">
 
                         <TextView
+                            android:id="@+id/tv_lw"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="15"

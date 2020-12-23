@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.view.activity.association;
 
 
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.View;
 import android.widget.ImageView;

@@ -37,6 +37,7 @@ import com.jxkj.fit_5a.entity.SubmitFilesBean;
 import com.jxkj.fit_5a.entity.TaskCircleQueryBean;
 import com.jxkj.fit_5a.entity.TemplateBean;
 import com.jxkj.fit_5a.entity.TopicAllBean;
+import com.jxkj.fit_5a.entity.UserOwnInfo;
 import com.jxkj.fit_5a.entity.WalletDetailsBean;
 
 import java.util.Map;
@@ -58,38 +59,42 @@ public interface ApiService {
 
     /**
      * 任务列表
-     * @return
-     * 	任务类型1:圈子任务2:日常任务3签到任务4活动任务
+     *
+     * @return 任务类型1:圈子任务2:日常任务3签到任务4活动任务
      */
     @GET(ConstValues.PORT_1 + "api/v1/user/task/list")
     Observable<Result<TaskListBase>> getUserTaskList(@Query("type") Integer type);
+
     /**
      * 任务进度更新
      * userTaskId 用户任务id(仅圈子任务时使用)
-     *
      */
     @POST(ConstValues.PORT_1 + "api/v1/user/task/update/speed")
-    Observable<Result>updateUserTask(@Query("paramId") int paramId,@Query("value") String value,
-                                     @Query("userTaskId") String userTaskId);
+    Observable<Result> updateUserTask(@Query("paramId") int paramId, @Query("value") String value,
+                                      @Query("userTaskId") String userTaskId);
 
     /**
      * 用户详情
+     *
      * @return
      */
-    @GET(ConstValues.PORT_1+"api/v1/user/detail")
+    @GET(ConstValues.PORT_1 + "api/v1/user/detail")
     Observable<Result<UserDetailData>> getUserDetail();
+
     /**
      * 个人主页数据
+     *
      * @return
      */
-    @GET(ConstValues.PORT_1+"api/v1/user/statistic/my")
+    @GET(ConstValues.PORT_1 + "api/v1/user/statistic/my")
     Observable<Result<UserInfoData>> getUserStatistic();
 
     /**
      * 用户更新
+     *
      * @return
      */
-    @POST(ConstValues.PORT_1+"api/v1/user/update")
+    @POST(ConstValues.PORT_1 + "api/v1/user/update")
     Observable<Result> postUserUpdate(@Body PostUser.UserInfoUpdate userInfoUpdate);
 
 
@@ -98,97 +103,105 @@ public interface ApiService {
      *
      * @return
      */
-    @POST(ConstValues.PORT_1+"api/v1/user/sign/add")
+    @POST(ConstValues.PORT_1 + "api/v1/user/sign/add")
     Observable<Result> addUserSign();
 
     /**
      * 今日是否签到
+     *
      * @return
      */
-    @GET(ConstValues.PORT_1+"api/v1/user/sign/log/today/sign")
+    @GET(ConstValues.PORT_1 + "api/v1/user/sign/log/today/sign")
     Observable<Result<Boolean>> addUserSignLog();
 
 
     /**
      * 会员规格列表
+     *
      * @return
      */
-    @GET(ConstValues.PORT_1+"api/v1/level/spec/list")
+    @GET(ConstValues.PORT_1 + "api/v1/level/spec/list")
     Observable<Result<SpecListBaen>> getSpecList(@Query("levelId") String levelId);
 
     /**
      * 创建会员升级订单
+     *
      * @return
      */
-    @POST(ConstValues.PORT_1+"api/v1/user/order/level/create")
-    Observable<Result> postCreateLevel(@Query("levelSpecId") String levelSpecId,@Query("hasAuto") boolean hasAuto);
-
+    @POST(ConstValues.PORT_1 + "api/v1/user/order/level/create")
+    Observable<Result> postCreateLevel(@Query("levelSpecId") String levelSpecId, @Query("hasAuto") boolean hasAuto);
 
 
     /**
      * 签到记录
+     *
      * @return
      */
 
-    @GET(ConstValues.PORT_1+"api/v1/user/sign/log/list")
+    @GET(ConstValues.PORT_1 + "api/v1/user/sign/log/list")
     Observable<Result<SignLogData>> getUserSignLog(@Query("beginCreateTime") String beginCreateTime,
                                                    @Query("endCreateTime") String endCreateTime);
+
     /**
      * 礼物背包
      * flag:true只显示余额false只显示收到的礼物余额
+     *
      * @return
      */
 
-    @GET(ConstValues.PORT_1+"api/v1/user/gift/list")
+    @GET(ConstValues.PORT_1 + "api/v1/user/gift/list")
     Observable<Result<GiftListData>> getUserGiftList(@Query("flag") boolean flag);
 
 
     /**
      * 礼物赠送记录
      * flag:true只显示余额false只显示收到的礼物余额
+     *
      * @return
      */
 
-    @GET(ConstValues.PORT_1+"api/v1/user/gift/log/list")
+    @GET(ConstValues.PORT_1 + "api/v1/user/gift/log/list")
     Observable<Result<GiftLogListData>> getUserGiftLogList(@Query("giveFlag") boolean flag);
 
     /**
      * 礼券列表
-     *状态1待使用,2已使用,3已失效
+     * 状态1待使用,2已使用,3已失效
+     *
      * @return bugei
      */
 
-    @GET(ConstValues.PORT_1+"api/v1/user/prize/list")
+    @GET(ConstValues.PORT_1 + "api/v1/user/prize/list")
     Observable<Result<PrizeListData>> getUserPrizeList(@Query("status") int status);
 
     /**
      * 勋章列表
      */
 
-    @GET(ConstValues.PORT_1+"api/v1/user/medal/list")
+    @GET(ConstValues.PORT_1 + "api/v1/user/medal/list")
     Observable<MedalListData> getUserMedalList();
 
     /**
      * 圈子任务列表
      */
-    @GET(ConstValues.PORT_1+"api/v1/user/circle/task/list")
+    @GET(ConstValues.PORT_1 + "api/v1/user/circle/task/list")
     Observable<Result<CircleTaskData>> getCircleTaskList();
 
     /**
      * 排行榜排名
      */
-    @GET(ConstValues.PORT_1+"api/v1/rank/stats/rank")
+    @GET(ConstValues.PORT_1 + "api/v1/rank/stats/rank")
     Observable<Result<RankStatsData>> getRankStatsList(@Query("type") int type);
 
     /**
      * 排行榜点赞
      */
-    @GET(ConstValues.PORT_1+"api/v1/user/stats/zan")
+    @GET(ConstValues.PORT_1 + "api/v1/user/stats/zan")
     Observable<Result> getStatsZan(@Query("calStatsId") int calStatsId, @Query("hasZan") boolean hasZan);
 
 
     /**
      * 注册成功后————兴趣列表
+     *
      * @return
      */
     @GET(ConstValues.PORT_2 + "api/v1/interest/query")
@@ -197,25 +210,28 @@ public interface ApiService {
 
     /**
      * 帮助列表
+     *
      * @return
      */
-    @GET(ConstValues.PORT_2+"api/v1/help/query")
+    @GET(ConstValues.PORT_2 + "api/v1/help/query")
     Observable<Result<HelpListData>> getHelpList();
 
     /**
      * 广告列表
+     *
      * @return
      */
-    @GET(ConstValues.PORT_2+"api/v1/ad/query")
+    @GET(ConstValues.PORT_2 + "api/v1/ad/query")
     Observable<Result<AdListData>> getAdList();
 
     /**
-     *用户设备列表 未完善
+     * 用户设备列表 未完善
      * deviceId 设备id
      * deviceNo	设备编号
+     *
      * @return
      */
-    @GET(ConstValues.PORT_2+"api/v1/user/device/query")
+    @GET(ConstValues.PORT_2 + "api/v1/user/device/query")
     Observable<Result> queryUserDeviceList();
 
     /**
@@ -223,67 +239,72 @@ public interface ApiService {
      *
      * @return
      */
-    @GET(ConstValues.PORT_2+"api/v1/device/type/query")
+    @GET(ConstValues.PORT_2 + "api/v1/device/type/query")
     Observable<Result<DeviceTypeData>> queryDeviceTypeLists();
 
     /**
      * 设备品牌列表
+     *
      * @return
      */
-    @GET(ConstValues.PORT_2+"api/v1/device/brand/query")
+    @GET(ConstValues.PORT_2 + "api/v1/device/brand/query")
     Observable<Result<DeviceDrandData>> queryDeviceBrandLists();
 
 
     /**
-     *设备列表
+     * 设备列表
+     *
      * @return
      */
-    @GET(ConstValues.PORT_2+"api/v1/device/query")
-    Observable<Result<DeviceData>> queryDeviceLists(@Query("brand") String brand,@Query("type") String type);
+    @GET(ConstValues.PORT_2 + "api/v1/device/query")
+    Observable<Result<DeviceData>> queryDeviceLists(@Query("brand") String brand, @Query("type") String type);
 
     /**
      * 添加用户设备
      * 未完善
      */
-    @POST(ConstValues.PORT_2+"api/v1/user/device/add")
+    @POST(ConstValues.PORT_2 + "api/v1/user/device/add")
     Observable<Result> userDeviceAdd(@Body PostUser.DeviceFormDTO postUser);
 
 
     /**
      * 设备课程类型列表
      */
-    @GET(ConstValues.PORT_2+"api/v1/device/course/query")
+    @GET(ConstValues.PORT_2 + "api/v1/device/course/query")
     Observable<Result<DeviceCourseData>> queryDeviceCourseList(@Query("level") String level, @Query("deviceId") String deviceId,
-                                                               @Query("type")String type);
+                                                               @Query("type") String type);
 
     /**
      * 设备课程类型列表
      */
-    @GET(ConstValues.PORT_2+"api/v1/device/course/type/query")
+    @GET(ConstValues.PORT_2 + "api/v1/device/course/type/query")
     Observable<Result<DeviceCourseTypeData>> queryDeviceCourseTypeList(@Query("deviceId") String deviceId);
 
 
     /**
      * 获取短信验证码
+     *
      * @return type:类型0注册1修改密码2登录
      */
-    @GET(ConstValues.PORT_5+"api/v1/user/verify/getVerifyCode")
-    Observable<Result> getVerifyCode(@Query("mobile") String mobile,@Query("type") int type);
+    @GET(ConstValues.PORT_5 + "api/v1/user/verify/getVerifyCode")
+    Observable<Result> getVerifyCode(@Query("mobile") String mobile, @Query("type") int type);
 
     /**
      * 注册
+     *
      * @return type:类型0注册1修改密码2登录
      */
-    @POST(ConstValues.PORT_5+"api/v1/user/verify/register")
+    @POST(ConstValues.PORT_5 + "api/v1/user/verify/register")
     Observable<Result> userVerifyRegister(@Query("clientType") int clientType,
-                                          @Query("phone") String phone,@Query("password") String password,
+                                          @Query("phone") String phone, @Query("password") String password,
                                           @Query("verify") String verify);
 
     /**
      * 登录
+     *
      * @return clientType:客户端类型1web2IOS3安卓4微信
      */
-    @POST(ConstValues.PORT_5+"api/v1/user/verify/login")
+    @POST(ConstValues.PORT_5 + "api/v1/user/verify/login")
     Observable<Result<LoginInfo>> userVerifyLogin(@Query("clientType") int clientType,
                                                   @Query("phone") String phone, @Query("password") String password,
                                                   @Query("verify") String verify);
@@ -291,104 +312,111 @@ public interface ApiService {
 
     /**
      * 忘记密码
+     *
      * @return type:类型0注册1修改密码2登录
      */
-    @POST(ConstValues.PORT_5+"api/v1/user/verify/forgetPassword")
+    @POST(ConstValues.PORT_5 + "api/v1/user/verify/forgetPassword")
     Observable<Result> userForgetPassword(@Query("password") String password,
                                           @Query("phone") String phone,
                                           @Query("verify") String verify);
 
     /**
      * 修改密码，只有绑定手机之后才能使用
+     *
      * @return type:类型0注册1修改密码2登录
      */
-    @POST(ConstValues.PORT_5+"api/v1/user/bind/third/changePassword")
+    @POST(ConstValues.PORT_5 + "api/v1/user/bind/third/changePassword")
     Observable<Result> userChangePassword(@Query("oldPassword") String oldPassword,
                                           @Query("password") String password);
 
     /**
      * 账号绑定 未完善
+     *
      * @return clientType:客户端1web2ios3安卓4微信】
      * 登录方式1手机号码2微信3QQ4新浪5iconsole
      */
-    @POST(ConstValues.PORT_5+"api/v1/user/bind/third/bind")
-    Observable<Result> userThirdBind(@Query("clientType") int clientType,@Query("loginType") int loginType,@Query("phone") String phone,
-                                     @Query("verify") String verify,@Query("gender") String gender,@Query("nickName") String nickName,
+    @POST(ConstValues.PORT_5 + "api/v1/user/bind/third/bind")
+    Observable<Result> userThirdBind(@Query("clientType") int clientType, @Query("loginType") int loginType, @Query("phone") String phone,
+                                     @Query("verify") String verify, @Query("gender") String gender, @Query("nickName") String nickName,
 
 
                                      @Query("portraitUri") String portraitUri);
 
     /**
      * app授权登录
+     *
      * @return
      */
     @POST("api/v1/user/verify/appEmpower")
     @FormUrlEncoded
     Observable<Result> verifyAppEmpower(@Field("accessToken") String accessToken,
-                                                   @Field("openId") String openId,
-                                                   @Field("clientType") int clientType,
-                                                   @Field("registrationId") String registrationId,
-                                                   @Field("inviteCode") String inviteCode);
+                                        @Field("openId") String openId,
+                                        @Field("clientType") int clientType,
+                                        @Field("registrationId") String registrationId,
+                                        @Field("inviteCode") String inviteCode);
 //
 
 
     /**
      * 商品分类列表
      */
-    @GET(ConstValues.PORT_3+"api/v1/product/list")
+    @GET(ConstValues.PORT_3 + "api/v1/product/list")
     Observable<Result> getProductList(@Query("hasHot") Boolean hasHot);
 
     /**
      * 地图列表
-     *
      */
-    @GET(ConstValues.PORT_4+"api/v1/sport/map/list")
+    @GET(ConstValues.PORT_4 + "api/v1/sport/map/list")
     Observable<Result<MapListSposrt>> getSportMapList(@Query("page") int page, @Query("pageSize") int pageSize);
 
     /**
      * 地图详情
+     *
      * @param id
      */
-    @GET(ConstValues.PORT_4+"api/v1/user/sport/map/details")
+    @GET(ConstValues.PORT_4 + "api/v1/user/sport/map/details")
     Observable<Result<MapDetailsBean>> getMapDetails(@Query("id") String id);
+
     /**
      * 宝箱领取
+     *
      * @param
      */
-    @GET(ConstValues.PORT_4+"api/v1/user/box/receive")
-    Observable<Result> getBoxReceive(@Query("boxId") String boxId,@Query("mapId") String mapId);
+    @GET(ConstValues.PORT_4 + "api/v1/user/box/receive")
+    Observable<Result> getBoxReceive(@Query("boxId") String boxId, @Query("mapId") String mapId);
 
 
     /**
      * 文字模板列表
      */
-    @GET(ConstValues.PORT_4+"api/v1/str/template/query")
+    @GET(ConstValues.PORT_4 + "api/v1/str/template/query")
     Observable<Result<TemplateBean>> getTemplateList();
 
 
     /**
      * 运动记录添加
      */
-    @POST(ConstValues.PORT_4+"api/v1/user/sport/log/add")
+    @POST(ConstValues.PORT_4 + "api/v1/user/sport/log/add")
     Observable<Result> psotUserSportLog(@Body PostUser.SportLogInfo postUser);
 
 
     /**
      * 运动记录列表
      */
-    @GET(ConstValues.PORT_4+"api/v1/user/sport/log/list")
+    @GET(ConstValues.PORT_4 + "api/v1/user/sport/log/list")
     Observable<Result<SportLogBean>> geSportLogList(@Query("page") int page, @Query("pageSize") int pageSize);
 
 
     /**
      * 余额详情  	余额类型1金豆,2卡路里
      */
-    @GET(ConstValues.PORT_8+"api/v1/user/wallet/details")
+    @GET(ConstValues.PORT_8 + "api/v1/user/wallet/details")
     Observable<Result<WalletDetailsBean>> getWalletDetails(@Query("type") int type);
 
 
     /**
      * 上传文件
+     *
      * @return
      */
     @Multipart
@@ -398,107 +426,131 @@ public interface ApiService {
 
     /**
      * 创建圈子
+     *
      * @param deviceType
      * @return 2226.21
      */
-    @GET(ConstValues.PORT_21+"api/v1/circle/query")
+    @GET(ConstValues.PORT_21 + "api/v1/circle/query")
     Observable<Result<CircleQueryBean>> getCircleQuery(@Query("deviceType") int deviceType);
 
     /**
      * 创建圈子
+     *
      * @return
      */
-    @POST(ConstValues.PORT_21+"api/v1/circle/create")
+    @POST(ConstValues.PORT_21 + "api/v1/circle/create")
     Observable<Result> getCircleCreate(@Body PostUser.CreateCircle postUser);
 
     /**
      * 获取圈子详情
+     *
      * @param id
      * @return
      */
-    @GET(ConstValues.PORT_21+"api/v1/circle/details")
+    @GET(ConstValues.PORT_21 + "api/v1/circle/details")
     Observable<Result<CircleDetailsBean>> getCircleDetails(@Query("id") int id);
 
     /**
      * 用户加入圈子
+     *
      * @param circleId
      * @return
      */
-    @POST(ConstValues.PORT_21+"api/v1/cricle/member/join")
+    @POST(ConstValues.PORT_21 + "api/v1/cricle/member/join")
     Observable<Result> getCircleJoin(@Query("circleId") int circleId);
 
     /**
      * 用户退出圈子
+     *
      * @param circleId
      * @return
      */
-    @POST(ConstValues.PORT_21+"api/v1/cricle/member/quit")
+    @POST(ConstValues.PORT_21 + "api/v1/cricle/member/quit")
     Observable<Result> getCircleQuit(@Query("circleId") int circleId);
 
     /**
      * 获取圈子预设任务列表
+     *
      * @return
      */
-    @GET(ConstValues.PORT_21+"api/v1/circle/task/query")
+    @GET(ConstValues.PORT_21 + "api/v1/circle/task/query")
     Observable<Result<TaskCircleQueryBean>> getTaskCircleQuery(@Query("deviceType") int deviceType);
-
 
 
     /**
      * 创建圈子
      */
-    @GET(ConstValues.PORT_21+"api/v1/topic/all")
+    @GET(ConstValues.PORT_21 + "api/v1/topic/all")
     Observable<Result<TopicAllBean>> getTopicAll();
-
 
 
     /**
      * 用户发布动态--社区
+     *
      * @return
      */
-    @POST(ConstValues.PORT_21+"api/v1/moment/publish")
-    Observable<Result> postPublishMoment(@Query("content") String content,@Query("contentType") String contentType,
-                                         @Query("shareType") String shareType,@Query("media") String media,
-                                         @Query("position") String position,@Query("location") String location,
+    @POST(ConstValues.PORT_21 + "api/v1/moment/publish")
+    Observable<Result> postPublishMoment(@Query("content") String content, @Query("contentType") String contentType,
+                                         @Query("shareType") String shareType, @Query("media") String media,
+                                         @Query("position") String position, @Query("location") String location,
                                          @Query("topics") String topics);
 
     /**
      * 用户发布动态--圈子
+     *
      * @return
      */
-    @POST(ConstValues.PORT_21+"api/v1/circle/moment/publish")
-    Observable<Result> postPublishMomentCircle(@Query("circleId") int circleId,@Query("content") String content,
-                                         @Query("contentType") String contentType,@Query("shareType") String shareType,
-                                         @Query("location") String location,@Query("media") String media,
-                                         @Query("position") String position,@Query("topics") String topics);
+    @POST(ConstValues.PORT_21 + "api/v1/circle/moment/publish")
+    Observable<Result> postPublishMomentCircle(@Query("circleId") int circleId, @Query("content") String content,
+                                               @Query("contentType") String contentType, @Query("shareType") String shareType,
+                                               @Query("location") String location, @Query("media") String media,
+                                               @Query("position") String position, @Query("topics") String topics);
 
     /**
      * 获取热门(推荐)动态信息
      */
-    @GET(ConstValues.PORT_21+"api/v1/moment/query_popular")
+    @GET(ConstValues.PORT_21 + "api/v1/moment/query_popular")
     Observable<QueryPopularBean> getMomentQueryPopular();//首页1
 
     /**
      * 获取热门(推荐)动态信息
      */
-    @GET(ConstValues.PORT_21+"api/v1/circle/moment/query_popular")
+    @GET(ConstValues.PORT_21 + "api/v1/circle/moment/query_popular")
     Observable<QueryPopularBean> getCircleQueryPopular();//首页3
 
 
     /**
      * 根据内容搜索发布的动态信息==圈子
      */
-    @GET(ConstValues.PORT_21+"api/v1/circle/moment/query_by_keyword")
-    Observable<QueryPopularBean> getQueryByKeyword(@Query("keyword")String keyword);//首页3
+    @GET(ConstValues.PORT_21 + "api/v1/circle/moment/query_by_keyword")
+    Observable<QueryPopularBean> getQueryByKeyword(@Query("keyword") String keyword);
+
+    /**
+     * 根据发布人获取动态信息
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/moment/query_by_publisher")
+    Observable<QueryPopularBean> getQueryByPublisher(@Query("momentLocalMinId") int momentLocalMinId
+            , @Query("publisherId") int publisherId
+            , @Query("contentType") int contentType);
+
 
     /**
      * 获取已经加入的圈子列表
      */
-    @GET(ConstValues.PORT_21+"api/v1/circle/query_joined")
-    Observable<Result<CircleQueryJoinedBean>> getCircleQueryJoined(@Query("page") int page,@Query("pageSize") int pageSize);
+    @GET(ConstValues.PORT_21 + "api/v1/circle/query_joined")
+    Observable<Result<CircleQueryJoinedBean>> getCircleQueryJoined(@Query("page") int page, @Query("pageSize") int pageSize);
+
+    /**
+     * 获取已经加入的圈子列表
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/user/profile/own")
+    Observable<Result<UserOwnInfo>> getUserProfileOwn();
+
+
 
     /**
      * 订单列表
+     *
      * @param page
      * @param pageSize
      * @param status
@@ -506,12 +558,13 @@ public interface ApiService {
      */
     @GET("order/api/v1/user/order/query")
     Observable<Result<OrderInfoData>> getOrderAll(@Query("page") int page,
-                                                      @Query("pageSize") int pageSize,
-                                                      @Query("status") String status);
+                                                  @Query("pageSize") int pageSize,
+                                                  @Query("status") String status);
 
 
     /**
      * 获取用户所有收货地址列表
+     *
      * @return
      */
     @GET("user/api/v1/user/address/query")
@@ -548,9 +601,6 @@ public interface ApiService {
 
     @POST("user/api/v1/user/address/setDefault")
     Observable<Result> getSetDefault(@Query("id") String id);
-
-
-
 
 
 }
