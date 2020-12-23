@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.view.activity.association;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,13 +17,13 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
-import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
 import com.jxkj.fit_5a.entity.TopicAllBean;
 import com.jxkj.fit_5a.view.adapter.SpPhotoAdapter;
+import com.jxkj.fit_5a.view.map.LocationSelectActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -33,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -115,7 +113,8 @@ public class AssociationAddActivity extends BaseActivity {
             }
         });
     }
-
+    String position = null;
+    String location = null;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -128,6 +127,14 @@ public class AssociationAddActivity extends BaseActivity {
                         mSpPhotoAdapter.remove(mSpPhotoAdapter.getData().size() - 1);
                     }
                     mSpPhotoAdapter.notifyDataSetChanged();
+                    break;
+                case 2:
+                    double latitude=data.getDoubleExtra("latitude",0.0);
+                    double longitude=data.getDoubleExtra("longitude",0.0);
+                    location = "["+longitude+","+latitude+"]";
+                    String position=data.getStringExtra("address");
+                    mTvPosition.setText(position);
+//                    mTvPosition.setText("详细地址："+address+"\n经度："+longitude+"\n纬度："+latitude);
                     break;
             }
         }
@@ -146,7 +153,8 @@ public class AssociationAddActivity extends BaseActivity {
                 postPublishMoment();
                 break;
             case R.id.tv_position:
-                IntentUtils.getInstence().intent(this, AddressByMapActivity.class);
+                Intent intent=new Intent(AssociationAddActivity.this, LocationSelectActivity.class);
+                startActivityForResult(intent,2);
                 break;
             case R.id.tv_gk:
                 mFeedTypeList.clear();
@@ -208,7 +216,9 @@ public class AssociationAddActivity extends BaseActivity {
             ToastUtils.showShort("内容不能为空");
         }
         RetrofitUtil.getInstance().apiService()
-                .postPublishMoment(content,"2",shareType+"","https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png,https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png",null,null,null)
+                .postPublishMoment(content,"2",shareType+"",
+                        "https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png,https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png",
+                        position,location,null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {

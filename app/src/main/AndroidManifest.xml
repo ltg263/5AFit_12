@@ -76,17 +76,27 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="56403f814c7de80adca0068a742cd113"/>
+            android:value="56403f814c7de80adca0068a742cd113" />
+        <service android:name="com.amap.api.location.APSService"></service>
 
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.exercise.landscape.MotorPatternActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+
+        <activity
+            android:name=".view.map.LocationSelectActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.map.SearchAddressActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".view.activity.exercise.landscape.ClassicExerciseActivity"
             android:launchMode="singleTask"

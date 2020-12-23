@@ -1,12 +1,17 @@
 package com.jxkj.fit_5a;
 
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -73,6 +78,8 @@ public class MainActivity extends BaseActivity {
 
         mFragments = mHomeOneFragment;
         fragmentManager.beginTransaction().replace(R.id.fl_content, mHomeOneFragment, "A").commitAllowingStateLoss();
+
+        openLocation();
     }
 
 
@@ -133,6 +140,26 @@ public class MainActivity extends BaseActivity {
                 fragmentTransaction.hide(mFragments).show(mCurrentFragment).commitAllowingStateLoss(); // 隐藏当前的fragment，显示下一个
             }
             mFragments = mCurrentFragment;
+        }
+    }
+
+    //判断GPS是否开启
+    public static boolean isGpsEnabled(Context context) {
+        LocationManager locationManager = (LocationManager) context
+                .getSystemService(Context.LOCATION_SERVICE);
+        // 判断GPS模块是否开启
+        return locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+
+    private void openLocation() {
+        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {//未开启定位权限
+            //开启定位权限,200是标识码
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+        } else {
+            //开始定位
+//            getCurrentLocationLatLng();
         }
     }
 
