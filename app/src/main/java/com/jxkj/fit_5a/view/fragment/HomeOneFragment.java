@@ -27,6 +27,8 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.HelpListData;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.view.StringToUtil;
 import com.jxkj.fit_5a.entity.AdListData;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
@@ -271,14 +273,14 @@ public class HomeOneFragment extends BaseFragment {
                 .getMomentQueryPopular()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<QueryPopularBean>() {
+                .subscribe(new Observer<ResultList<QueryPopularBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(QueryPopularBean result) {
+                    public void onNext(ResultList<QueryPopularBean> result) {
                         if (result.getCode()==0) {
                             mHomeDynamicAdapter.setNewData(result.getData());
                         }

@@ -21,7 +21,7 @@ public class UserScAdapter extends BaseQuickAdapter<FavoriteQueryList, BaseViewH
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, FavoriteQueryList item) {
-
+        helper.addOnClickListener(R.id.tv_xh);
     }
 
 }

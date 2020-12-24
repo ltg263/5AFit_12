@@ -15,7 +15,10 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.entity.FavoriteQueryList;
+import com.jxkj.fit_5a.entity.QueryPopularBean;
+import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.UserScAdapter;
 
 import butterknife.BindView;
@@ -35,7 +38,6 @@ public class UserScActivity extends BaseActivity {
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
     private UserScAdapter mUserScAdapter;
-
     @Override
     protected int getContentView() {
         return R.layout.activity_user_gz;
@@ -57,6 +59,22 @@ public class UserScActivity extends BaseActivity {
                 UserHomeActivity.startActivity(UserScActivity.this,mUserScAdapter.getData().get(position).getUserId()+"");
             }
         });
+
+        mUserScAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                FavoriteQueryList data = mUserScAdapter.getData().get(position);
+                show();
+                HttpRequestUtils.postFavorit("0", data.getMomentId() + "",
+                        data.getUserId() + "", new HttpRequestUtils.LoginInterface() {
+                            @Override
+                            public void succeed(String path) {
+                                dismiss();
+                            }
+                        });
+            }
+        });
+
         getFavoriteQueryOwn();
     }
 

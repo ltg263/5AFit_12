@@ -26,8 +26,10 @@ import com.jxkj.fit_5a.entity.CircleDetailsBean;
 import com.jxkj.fit_5a.entity.CircleQueryBean;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.CircleTaskData;
+import com.jxkj.fit_5a.entity.CommunityHomeInfoBean;
 import com.jxkj.fit_5a.entity.FavoriteQueryList;
 import com.jxkj.fit_5a.entity.FollowFansList;
+import com.jxkj.fit_5a.entity.HotTopicBean;
 import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
@@ -286,8 +288,8 @@ public interface ApiService {
 
     /**
      * 获取短信验证码
-     *
      * @return type:类型0注册1修改密码2登录
+     *
      */
     @GET(ConstValues.PORT_5 + "api/v1/user/verify/getVerifyCode")
     Observable<Result> getVerifyCode(@Query("mobile") String mobile, @Query("type") int type);
@@ -513,34 +515,28 @@ public interface ApiService {
      * 获取热门(推荐)动态信息
      */
     @GET(ConstValues.PORT_21 + "api/v1/moment/query_popular")
-    Observable<QueryPopularBean> getMomentQueryPopular();//首页1
-
-    /**
-     * 社群首页
-     */
-    @GET(ConstValues.PORT_21 + "api/v1/community/home/info")
-    Observable<QueryPopularBean> getCommunityHomeInfo();
-
-    /**
-     * 获取热门(推荐)动态信息
-     */
-    @GET(ConstValues.PORT_21 + "api/v1/circle/moment/query_popular")
-    Observable<QueryPopularBean> getCircleQueryPopular();//首页3
+    Observable<ResultList<QueryPopularBean>> getMomentQueryPopular();//首页1
 
 
     /**
      * 根据内容搜索发布的动态信息==圈子
      */
     @GET(ConstValues.PORT_21 + "api/v1/circle/moment/query_by_keyword")
-    Observable<QueryPopularBean> getQueryByKeyword(@Query("keyword") String keyword);
+    Observable<ResultList<QueryPopularBean>> getQueryByKeyword(@Query("keyword") String keyword);
 
     /**
      * 根据发布人获取动态信息
      */
     @GET(ConstValues.PORT_21 + "api/v1/moment/query_by_publisher")
-    Observable<QueryPopularBean> getQueryByPublisher(@Query("momentLocalMinId") int momentLocalMinId
+    Observable<ResultList<QueryPopularBean>> getQueryByPublisher(@Query("momentLocalMinId") int momentLocalMinId
             , @Query("publisherId") int publisherId
             , @Query("contentType") int contentType);
+
+    /**
+     * 社群首页
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/community/home/info")
+    Observable<Result<CommunityHomeInfoBean>> getCommunityHomeInfo();
 
 
     /**
@@ -599,7 +595,30 @@ public interface ApiService {
     @POST(ConstValues.PORT_21+"api/v1/favorite/query")
     Observable<ResultList<FavoriteQueryList>>getFavoriteQueryOwn(@Query("userId") String userId);
 
+    /**
+     * 收藏
+     * 	圈子id(如果收藏的不是圈子里的动态，传0)
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/favorite")
+    Observable<Result> postFavorit(@Query("circleId") String circleId,
+                                   @Query("momentId") String momentId,
+                                   @Query("momentPublisherId") String momentPublisherId);
 
+
+    /**
+     * 取消收藏
+     * 	圈子id(如果收藏的不是圈子里的动态，传0)
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/favorite/cancel")
+    Observable<Result> postFavoritCancel(@Query("circleId") String circleId,
+                                   @Query("momentId") String momentId);
+
+    /**
+     * 获取热门话题
+     * @return
+     */
+    @GET(ConstValues.PORT_21 +"api/v1/topic/hot")
+    Observable<ResultList<HotTopicBean>> getHotTopicList(@Query("page") int page,@Query("pageSize")int pageSize);
 
 
     /**

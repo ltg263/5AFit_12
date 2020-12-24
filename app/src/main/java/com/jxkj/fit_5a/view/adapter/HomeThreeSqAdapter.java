@@ -21,13 +21,13 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/5/2914:03
  */
-public class HomeThreeSqAdapter extends BaseQuickAdapter<QueryPopularBean.DataBean, BaseViewHolder> {
-    public HomeThreeSqAdapter(@Nullable List<QueryPopularBean.DataBean> data) {
+public class HomeThreeSqAdapter extends BaseQuickAdapter<QueryPopularBean, BaseViewHolder> {
+    public HomeThreeSqAdapter(@Nullable List<QueryPopularBean> data) {
         super(R.layout.item_home_three_sq, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, QueryPopularBean.DataBean item) {
+    protected void convert(@NonNull BaseViewHolder helper, QueryPopularBean item) {
         ViewGroup.LayoutParams layoutParams = helper.itemView.getLayoutParams();
         layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
         String[] strArr = item.getMedia().split(",");

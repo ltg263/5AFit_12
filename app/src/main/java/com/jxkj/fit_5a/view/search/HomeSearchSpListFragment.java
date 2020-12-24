@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
@@ -76,14 +77,14 @@ public class HomeSearchSpListFragment extends BaseFragment {
                 .getQueryByKeyword(search)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<QueryPopularBean>() {
+                .subscribe(new Observer<ResultList<QueryPopularBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(QueryPopularBean result) {
+                    public void onNext(ResultList<QueryPopularBean> result) {
 
                         if(result.getCode()==0 &&result.getData().size()>0){
                             lv_not.setVisibility(View.GONE);

@@ -253,7 +253,71 @@ public class HttpRequestUtils {
 
                     }
                 });
+    }
 
+    /**
+     * 去收藏
+     */
+    public static void postFavorit(String circleId,String momentId,String momentPublisherId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postFavorit(circleId,momentId,momentPublisherId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("0");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    /**
+     * 取消收藏
+     */
+    public static void postFavoritCancel(String circleId,String momentId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postFavoritCancel(circleId,momentId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("0");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

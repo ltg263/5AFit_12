@@ -13,10 +13,13 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
+import com.jxkj.fit_5a.entity.CommunityHomeInfoBean;
+import com.jxkj.fit_5a.entity.HotTopicBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.association.AssociationAddActivity;
@@ -64,16 +67,11 @@ public class HomeThreeFragment extends BaseFragment {
         page = 1;
         pageSize = 3;
         getCircleQueryJoined();
+        getHotTopicList();
         getMomentQueryPopular();
     }
 
     private void initRvUi() {
-
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-
         mHomeThreeTopAdapter = new HomeThreeTopAdapter(null);
         mRvTopList.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         mRvTopList.setHasFixedSize(true);
@@ -96,7 +94,7 @@ public class HomeThreeFragment extends BaseFragment {
         data.add(null);
         mHomeThreeTopAdapter.setNewData(data);
 
-        mHomeThreeRmhtAdapter = new HomeThreeRmhtAdapter(list);
+        mHomeThreeRmhtAdapter = new HomeThreeRmhtAdapter(null);
         mRvRmhtList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvRmhtList.setHasFixedSize(true);
         mRvRmhtList.setAdapter(mHomeThreeRmhtAdapter);
@@ -199,16 +197,44 @@ public class HomeThreeFragment extends BaseFragment {
                 .getCommunityHomeInfo()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<QueryPopularBean>() {
+                .subscribe(new Observer<Result<CommunityHomeInfoBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(QueryPopularBean result) {
+                    public void onNext(Result<CommunityHomeInfoBean> result) {
                         if (result.getCode()==0) {
-                            mHomeThreeSqAdapter.setNewData(result.getData());
+                            mHomeThreeSqAdapter.setNewData(result.getData().getHotMoments());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    private void getHotTopicList(){
+        RetrofitUtil.getInstance().apiService()
+                .getHotTopicList(1,3)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<HotTopicBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<HotTopicBean> result) {
+                        if (result.getCode()==0) {
+                            mHomeThreeRmhtAdapter.setNewData(result.getData());
                         }
                     }
 

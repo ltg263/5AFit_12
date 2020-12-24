@@ -21,13 +21,13 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/5/2914:03
  */
-public class HomeDynamicAdapter extends BaseQuickAdapter<QueryPopularBean.DataBean, BaseViewHolder> {
-    public HomeDynamicAdapter(@Nullable List<QueryPopularBean.DataBean> data) {
+public class HomeDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, BaseViewHolder> {
+    public HomeDynamicAdapter(@Nullable List<QueryPopularBean> data) {
         super(R.layout.item_home_dynamic, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, QueryPopularBean.DataBean item) {
+    protected void convert(@NonNull BaseViewHolder helper, QueryPopularBean item) {
 
         helper.setText(R.id.tv_name,item.getUser().getNickName())
                 .setText(R.id.tv_time, StringUtil.getTimeToYMD(item.getTimestamp(),"yyyy-MM-dd HH:mm:ss"))

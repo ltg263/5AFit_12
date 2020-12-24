@@ -18,6 +18,7 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.RoundImageView;
@@ -259,14 +260,14 @@ public class MineHomeActivity extends BaseActivity {
                 .getQueryByPublisher(0, SharedUtils.getUserId(), contentType)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<QueryPopularBean>() {
+                .subscribe(new Observer<ResultList<QueryPopularBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(QueryPopularBean result) {
+                    public void onNext(ResultList<QueryPopularBean> result) {
                         if (result.getCode() == 0) {
                             if (contentType == 2) {
                                 mHomeDynamicAdapter.setNewData(result.getData());
