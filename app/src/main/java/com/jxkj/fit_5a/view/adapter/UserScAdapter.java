@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.entity.FavoriteQueryList;
 
 import java.util.List;
 
@@ -13,13 +14,13 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/5/2914:03
  */
-public class UserScAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    public UserScAdapter(@Nullable List<String> data) {
+public class UserScAdapter extends BaseQuickAdapter<FavoriteQueryList, BaseViewHolder> {
+    public UserScAdapter(@Nullable List<FavoriteQueryList> data) {
         super(R.layout.item_user_sc, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, String item) {
+    protected void convert(@NonNull BaseViewHolder helper, FavoriteQueryList item) {
 
     }
 

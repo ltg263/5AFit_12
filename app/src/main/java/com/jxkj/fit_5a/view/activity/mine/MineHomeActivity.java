@@ -182,7 +182,7 @@ public class MineHomeActivity extends BaseActivity {
                 startActivity(new Intent(this, UserLwActivity.class));
                 break;
             case R.id.ll_sc_on:
-                startActivity(new Intent(this, UserScActivity.class));
+                UserScActivity.startActivity(this,SharedUtils.getUserId()+"");
                 break;
             case R.id.rl1:
                 initView(mTv1, mView1);

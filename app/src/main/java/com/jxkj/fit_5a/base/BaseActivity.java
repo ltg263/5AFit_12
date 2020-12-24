@@ -126,6 +126,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         ToastUtils.showShort(result.getMesg());
         return false;
     }
+    public boolean isDataInfoSucceed(ResultList result){
+        if(result.getCode()==0){
+            return true;
+        }
+        ToastUtils.showShort(result.getMesg());
+        return false;
+    }
 
     public boolean isLogin(){
         if (!SharedUtils.singleton().get(ConstValues.ISLOGIN,true)){

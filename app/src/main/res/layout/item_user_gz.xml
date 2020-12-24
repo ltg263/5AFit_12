@@ -62,8 +62,8 @@
 
         <ImageView
             android:id="@+id/iv_xb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/common_margin_15"
+            android:layout_height="@dimen/common_margin_15"
             android:layout_marginStart="@dimen/dp_10"
             android:src="@drawable/icon_xb_nan" />
 

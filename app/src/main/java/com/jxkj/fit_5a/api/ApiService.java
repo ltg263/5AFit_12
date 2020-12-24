@@ -15,6 +15,7 @@ import com.jxkj.fit_5a.base.OrderInfoData;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.PrizeListData;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.base.SignLogData;
 import com.jxkj.fit_5a.base.TaskListBase;
 import com.jxkj.fit_5a.base.UserDetailData;
@@ -25,6 +26,7 @@ import com.jxkj.fit_5a.entity.CircleDetailsBean;
 import com.jxkj.fit_5a.entity.CircleQueryBean;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.CircleTaskData;
+import com.jxkj.fit_5a.entity.FavoriteQueryList;
 import com.jxkj.fit_5a.entity.FollowFansList;
 import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
@@ -545,7 +547,7 @@ public interface ApiService {
      * 获取已经加入的圈子列表
      */
     @GET(ConstValues.PORT_21 + "api/v1/circle/query_joined")
-    Observable<Result<CircleQueryJoinedBean>> getCircleQueryJoined(@Query("page") int page, @Query("pageSize") int pageSize);
+    Observable<Result<CircleQueryJoinedBean>> getCircleQueryJoined(@Query("userId")String userId,@Query("page") int page, @Query("pageSize") int pageSize);
 
     /**
      * 获取用户自身资料信息
@@ -589,6 +591,16 @@ public interface ApiService {
      */
     @POST(ConstValues.PORT_21+"api/v1/follow/cancel")
     Observable<Result> postfollowCancel(@Query("followerId") String followerId);
+
+    /**
+     * 获取用户的收藏列表
+     * @return
+     */
+    @POST(ConstValues.PORT_21+"api/v1/favorite/query")
+    Observable<ResultList<FavoriteQueryList>>getFavoriteQueryOwn(@Query("userId") String userId);
+
+
+
 
     /**
      * 订单列表

@@ -23,6 +23,8 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.RoundImageView;
 import com.jxkj.fit_5a.entity.UserOwnInfo;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
@@ -91,8 +93,6 @@ public class UserHomeActivity extends BaseActivity {
     TextView mTvGzZt;
     @BindView(R.id.ll_gz)
     LinearLayout mLlGz;
-    @BindView(R.id.iv_img)
-    RoundImageView mIvImg;
     @BindView(R.id.rl)
     RelativeLayout mRl;
     @BindView(R.id.tv_dj)
@@ -186,7 +186,7 @@ public class UserHomeActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_back, R.id.rl1, R.id.rl2, R.id.ll_gz_on, R.id.ll_fs_on, R.id.ll_lw_on, R.id.ll_sc_on})
+    @OnClick({R.id.tv_gz_zt,R.id.iv_back, R.id.rl1, R.id.rl2, R.id.ll_gz_on, R.id.ll_fs_on, R.id.ll_lw_on, R.id.ll_sc_on})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -202,7 +202,32 @@ public class UserHomeActivity extends BaseActivity {
                 startActivity(new Intent(this, UserLwActivity.class));
                 break;
             case R.id.ll_sc_on:
-                startActivity(new Intent(this, UserScActivity.class));
+                UserScActivity.startActivity(this, userId);
+                break;
+            case R.id.tv_gz_zt:
+                if(mTvGzZt.getText().toString().equals("关注")){
+                    show();
+                    HttpRequestUtils.postfollow(userId, new HttpRequestUtils.LoginInterface() {
+                        @Override
+                        public void succeed(String path) {
+                            dismiss();
+                            if(path.equals("0")){
+                                mTvGzZt.setText("已关注");
+                            }
+                        }
+                    });
+                }else{
+                    show();
+                    HttpRequestUtils.postfollowCancel(userId, new HttpRequestUtils.LoginInterface() {
+                        @Override
+                        public void succeed(String path) {
+                            dismiss();
+                            if(path.equals("1")){
+                                mTvGzZt.setText("关注");
+                            }
+                        }
+                    });
+                }
                 break;
             case R.id.rl1:
                 initView(mTv1, mView1);
@@ -263,6 +288,10 @@ public class UserHomeActivity extends BaseActivity {
 
     private void initUi(UserOwnInfo data) {
         GlideImageUtils.setGlideImage(this, data.getAvatar(), mIvHead);
+        mTvGzZt.setText("关注");
+        if(data.getRelation().equals("1") || data.getRelation().equals("3")){
+            mTvGzZt.setText("已关注");
+        }
         mNickname.setText(data.getNickName());
         mTvState.setText("---");
         mTvGz.setText(data.getFollowCount());

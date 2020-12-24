@@ -68,7 +68,7 @@ public class UserGzActivity extends BaseActivity {
 
                 if(view.getId()==R.id.tv_wgz){
                     show();
-                    HttpRequestUtils.postfollow(data.getFansId() + "", new HttpRequestUtils.LoginInterface() {
+                    HttpRequestUtils.postfollow(data.getUser().getUserId() + "", new HttpRequestUtils.LoginInterface() {
                         @Override
                         public void succeed(String path) {
                             dismiss();
@@ -80,7 +80,7 @@ public class UserGzActivity extends BaseActivity {
                     });
                 }else if(view.getId()==R.id.tv_ygz){
                     show();
-                    HttpRequestUtils.postfollowCancel(data.getFansId() + "", new HttpRequestUtils.LoginInterface() {
+                    HttpRequestUtils.postfollowCancel(data.getUser().getUserId() + "", new HttpRequestUtils.LoginInterface() {
                         @Override
                         public void succeed(String path) {
                             dismiss();

@@ -49,7 +49,7 @@
                         android:layout_marginBottom="@dimen/dimen_50dp">
 
                         <ImageView
-                            android:id="@+id/iv_head"
+                            android:id="@+id/iv"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
                             android:layout_centerHorizontal="true"
@@ -60,7 +60,7 @@
                             android:id="@+id/nickname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/iv_head"
+                            android:layout_below="@id/iv"
                             android:layout_centerHorizontal="true"
                             android:layout_margin="5dp"
                             android:text="用户昵称"
@@ -168,14 +168,13 @@
                     android:background="@drawable/bj_circle_fff_10">
 
 
-                    <com.jxkj.fit_5a.conpoment.view.RoundImageView
-                        android:id="@+id/iv_img"
+                    <ImageView
+                        android:id="@+id/iv_head"
                         android:layout_width="65dp"
                         android:layout_height="65dp"
                         android:layout_margin="@dimen/dimen_3dp"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/ic_7"
-                        app:type="round" />
+                        android:src="@mipmap/ic_7" />
 
                 </RelativeLayout>
 

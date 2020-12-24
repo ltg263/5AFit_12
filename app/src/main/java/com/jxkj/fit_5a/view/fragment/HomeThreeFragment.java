@@ -14,6 +14,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
@@ -72,9 +73,6 @@ public class HomeThreeFragment extends BaseFragment {
         list.add("");
         list.add("");
         list.add("");
-        list.add("-2");
-        list.add("");
-        list.add("-1");
 
         mHomeThreeTopAdapter = new HomeThreeTopAdapter(null);
         mRvTopList.setLayoutManager(new GridLayoutManager(getActivity(), 4));
@@ -163,7 +161,7 @@ public class HomeThreeFragment extends BaseFragment {
     private int totalPage;
     private void getCircleQueryJoined(){
         RetrofitUtil.getInstance().apiService()
-                .getCircleQueryJoined(page,pageSize)
+                .getCircleQueryJoined(SharedUtils.getUserId()+"",page,pageSize)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<CircleQueryJoinedBean>>() {
