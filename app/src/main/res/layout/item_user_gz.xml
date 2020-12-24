@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen_15dp"
@@ -7,6 +8,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_wgz"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dimen_25dp"
         android:layout_alignParentEnd="true"
@@ -23,6 +25,7 @@
         android:visibility="invisible" />
 
     <TextView
+        android:id="@+id/tv_ygz"
         android:layout_width="@dimen/dimen_60dp"
         android:layout_height="@dimen/dimen_25dp"
         android:layout_alignParentEnd="true"
@@ -34,24 +37,38 @@
         android:textColor="@color/color_808080"
         android:textSize="10sp" />
 
-    <ImageView
+    <com.jxkj.fit_5a.conpoment.view.RoundImageView
         android:id="@+id/iv_head_img"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="@dimen/dp_10"
-        android:src="@mipmap/ic_6" />
+        android:src="@mipmap/ic_6"
+        app:type="circle" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/iv_head_img"
-        android:drawablePadding="@dimen/dp_10"
-        android:gravity="center"
-        android:drawableEnd="@drawable/icon_xb_nan"
         android:layout_toEndOf="@id/iv_head_img"
-        android:text="吴帅帅"
-        android:textColor="@color/color_333333"
-        android:textSize="15sp" />
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="无"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv_xb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:src="@drawable/icon_xb_nan" />
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/tv_time"

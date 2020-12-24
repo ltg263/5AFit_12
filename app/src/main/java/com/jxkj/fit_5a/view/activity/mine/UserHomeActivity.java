@@ -1,9 +1,9 @@
 package com.jxkj.fit_5a.view.activity.mine;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,29 +18,39 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.gyf.immersionbar.ImmersionBar;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.view.RoundImageView;
+import com.jxkj.fit_5a.entity.UserOwnInfo;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
 import com.jxkj.fit_5a.view.adapter.UserTopAdapter;
 import com.jxkj.fit_5a.view.adapter.UserTopXAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class UserHomeActivity extends BaseActivity {
 
-//    @BindView(R.id.iv_parallax)
+    //    @BindView(R.id.iv_parallax)
 //    ImageView mIvParallax;
     @BindView(R.id.iv_head)
     ImageView mIvHead;
     @BindView(R.id.nickname)
     TextView mNickname;
+    @BindView(R.id.tv_state)
+    TextView mTvState;
     @BindView(R.id.rl_allinfo)
     RelativeLayout mRlAllinfo;
     @BindView(R.id.iv_back)
@@ -75,6 +85,43 @@ public class UserHomeActivity extends BaseActivity {
     TextView mTv2;
     @BindView(R.id.view2)
     View mView2;
+    @BindView(R.id.iv_back1)
+    ImageView mIvBack1;
+    @BindView(R.id.tv_gz_zt)
+    TextView mTvGzZt;
+    @BindView(R.id.ll_gz)
+    LinearLayout mLlGz;
+    @BindView(R.id.iv_img)
+    RoundImageView mIvImg;
+    @BindView(R.id.rl)
+    RelativeLayout mRl;
+    @BindView(R.id.tv_dj)
+    TextView mTvDj;
+    @BindView(R.id.tv_gz)
+    TextView mTvGz;
+    @BindView(R.id.ll_gz_on)
+    LinearLayout mLlGzOn;
+    @BindView(R.id.tv_fs)
+    TextView mTvFs;
+    @BindView(R.id.ll_fs_on)
+    LinearLayout mLlFsOn;
+    @BindView(R.id.tv_sc)
+    TextView mTvSc;
+    @BindView(R.id.ll_sc_on)
+    LinearLayout mLlScOn;
+    @BindView(R.id.tv_lw)
+    TextView mTvLw;
+    @BindView(R.id.ll_lw_on)
+    LinearLayout mLlLwOn;
+    @BindView(R.id.view)
+    View mView;
+    @BindView(R.id.rl1)
+    RelativeLayout mRl1;
+    @BindView(R.id.rl2)
+    RelativeLayout mRl2;
+    @BindView(R.id.ll)
+    LinearLayout mLl;
+    String userId;
     @Override
     protected int getContentView() {
         return R.layout.activity_user_home;
@@ -83,15 +130,14 @@ public class UserHomeActivity extends BaseActivity {
     @Override
     protected void initViews() {
         initRv();
-
-
-
         initListener();
+        userId = getIntent().getStringExtra("userId");
+        getUserProfileOwn();
     }
 
     private void initRv() {
         List<String> list = new ArrayList<>();
-        for(int i= 0;i<10;i++){
+        for (int i = 0; i < 10; i++) {
             list.add("");
         }
         UserTopAdapter mUserTopAdapter = new UserTopAdapter(list);
@@ -127,49 +173,51 @@ public class UserHomeActivity extends BaseActivity {
         mRefreshLayout.setEnableLoadMore(false);
         mRefreshLayout.setEnableRefresh(false);
         mAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-//6
+            //6
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 mCollapsingToolbar.setBackgroundColor(getResources().getColor(R.color.color_ffffff));
                 float fraction = Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange();
                 mCollapsingToolbar.setAlpha(fraction);
                 mToolbar1.setAlpha(fraction);
-                mToolbar.setAlpha(1-fraction);
+                mToolbar.setAlpha(1 - fraction);
 
             }
         });
     }
-    @OnClick({R.id.iv_back,  R.id.rl1, R.id.rl2,R.id.ll_gz_on,R.id.ll_fs_on,R.id.ll_lw_on,R.id.ll_sc_on})
+
+    @OnClick({R.id.iv_back, R.id.rl1, R.id.rl2, R.id.ll_gz_on, R.id.ll_fs_on, R.id.ll_lw_on, R.id.ll_sc_on})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.ll_gz_on:
-                startActivity(new Intent(this,UserGzActivity.class));
+                UserGzActivity.startActivity(this, userId);
                 break;
             case R.id.ll_fs_on:
-                startActivity(new Intent(this,UserFsActivity.class));
+                UserFsActivity.startActivity(this, userId);
                 break;
             case R.id.ll_lw_on:
-                startActivity(new Intent(this,UserLwActivity.class));
+                startActivity(new Intent(this, UserLwActivity.class));
                 break;
             case R.id.ll_sc_on:
-                startActivity(new Intent(this,UserScActivity.class));
+                startActivity(new Intent(this, UserScActivity.class));
                 break;
             case R.id.rl1:
-                initView(mTv1,mView1);
+                initView(mTv1, mView1);
                 mRvDtList.setVisibility(View.VISIBLE);
                 mRvDtListSp.setVisibility(View.GONE);
                 break;
             case R.id.rl2:
-                initView(mTv2,mView2);
+                initView(mTv2, mView2);
                 mRvDtList.setVisibility(View.GONE);
                 mRvDtListSp.setVisibility(View.VISIBLE);
                 break;
         }
     }
-    private void initView(TextView tv, View v){
+
+    private void initView(TextView tv, View v) {
         mTv1.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         mTv2.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         mTv1.setTextColor(getResources().getColor(R.color.color_999999));
@@ -179,5 +227,57 @@ public class UserHomeActivity extends BaseActivity {
 
         tv.setTextColor(getResources().getColor(R.color.color_000000));
 //        tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+    }
+
+
+    private void getUserProfileOwn() {
+        RetrofitUtil.getInstance().apiService()
+                .getUserProfile(userId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<UserOwnInfo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<UserOwnInfo> userOwnInfoResult) {
+                        if (isDataInfoSucceed(userOwnInfoResult)) {
+                            initUi(userOwnInfoResult.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    private void initUi(UserOwnInfo data) {
+        GlideImageUtils.setGlideImage(this, data.getAvatar(), mIvHead);
+        mNickname.setText(data.getNickName());
+        mTvState.setText("---");
+        mTvGz.setText(data.getFollowCount());
+        mTvFs.setText(data.getFansCount());
+        mTvSc.setText(data.getFavoriteCount());
+        mTvLw.setText("---");
+//        if(data.getRelation()==4){
+//
+//        }
+
+    }
+
+    public static void startActivity(Context mContext, String userId) {
+        Intent intent = new Intent(mContext, UserHomeActivity.class);
+        intent.putExtra("userId", userId);
+        mContext.startActivity(intent);
     }
 }

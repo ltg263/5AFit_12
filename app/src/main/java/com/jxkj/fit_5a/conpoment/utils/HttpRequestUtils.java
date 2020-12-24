@@ -182,4 +182,78 @@ public class HttpRequestUtils {
 
 
     }
+
+    /**
+     * 去关注
+     * @param followerId
+     * @param mLoginInterface
+     */
+    public static void postfollow(String followerId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postfollow(followerId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("0");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
+    }
+
+    /**
+     * 取消去关注
+     * @param followerId
+     * @param mLoginInterface
+     */
+    public static void postfollowCancel(String followerId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postfollowCancel(followerId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("1");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
+    }
 }

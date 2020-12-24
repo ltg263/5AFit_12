@@ -1,6 +1,5 @@
 package com.jxkj.fit_5a.view.activity.mine;
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,7 +50,7 @@ public class UserScActivity extends BaseActivity {
         mUserScAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(UserScActivity.this, UserHomeActivity.class));
+                UserHomeActivity.startActivity(UserScActivity.this,"95");
             }
         });
     }

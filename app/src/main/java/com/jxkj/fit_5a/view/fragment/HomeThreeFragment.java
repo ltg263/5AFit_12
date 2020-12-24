@@ -198,7 +198,7 @@ public class HomeThreeFragment extends BaseFragment {
 
     private void getMomentQueryPopular(){
         RetrofitUtil.getInstance().apiService()
-                .getMomentQueryPopular()
+                .getCommunityHomeInfo()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<QueryPopularBean>() {

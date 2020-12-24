@@ -164,7 +164,7 @@ public class MineHomeActivity extends BaseActivity {
         getQueryByPublisher(2);
         getQueryByPublisher(3);
     }
-
+    String userId ;
 
     @OnClick({R.id.iv_back, R.id.rl1, R.id.rl2, R.id.ll_gz_on, R.id.ll_fs_on, R.id.ll_lw_on, R.id.ll_sc_on})
     public void onViewClicked(View view) {
@@ -173,10 +173,10 @@ public class MineHomeActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.ll_gz_on:
-                startActivity(new Intent(this, UserGzActivity.class));
+                UserGzActivity.startActivity(this,SharedUtils.getUserId()+"");
                 break;
             case R.id.ll_fs_on:
-                startActivity(new Intent(this, UserFsActivity.class));
+                UserFsActivity.startActivity(this,SharedUtils.getUserId()+"");
                 break;
             case R.id.ll_lw_on:
                 startActivity(new Intent(this, UserLwActivity.class));
@@ -213,6 +213,7 @@ public class MineHomeActivity extends BaseActivity {
         RetrofitUtil.getInstance().apiService()
                 .getUserProfileOwn()
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<UserOwnInfo>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -239,6 +240,7 @@ public class MineHomeActivity extends BaseActivity {
     }
 
     private void initUi(UserOwnInfo data) {
+        userId = data.getUserId();
         GlideImageUtils.setGlideImage(this,data.getAvatar(),mIvHead);
         mTvName.setText(data.getNickName());
         mTvState.setText("---");

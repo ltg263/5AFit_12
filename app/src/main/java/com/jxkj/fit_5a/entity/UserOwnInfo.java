@@ -3,141 +3,45 @@ package com.jxkj.fit_5a.entity;
 public class UserOwnInfo {
 
     /**
-     * avatar :
-     * commentLikeCount : 0
-     * createCricleCount : 0
-     * fansCount : 0
-     * favoriteCount : 0
-     * followCount : 0
-     * gender : 0
-     * joinCricleCount : 0
-     * lastUpdateMomentTimestamp : 0
-     * likeCount : 0
-     * momentCount : 0
-     * momentLikeCount : 0
-     * nickName :
+     * userId : 95
      * relation : 0
-     * userId : 0
+     * nickName : 请修改昵称_17212312311
+     * avatar : 13123
+     * gender : 0
+     * fansCount : 1
+     * followCount : 2
+     * likeCount : 1
+     * momentLikeCount : 1
+     * commentLikeCount : 0
+     * momentCount : 12
+     * favoriteCount : 2
+     * createCricleCount : 6
+     * joinCricleCount : 0
+     * lastUpdateMomentTimestamp : 1608695907027
      */
 
-    private String avatar;
-    private String commentLikeCount;
-    private String createCricleCount;
-    private String fansCount;
-    private String favoriteCount;
-    private String followCount;
-    private String gender;
-    private String joinCricleCount;
-    private String lastUpdateMomentTimestamp;
-    private String likeCount;
-    private String momentCount;
-    private String momentLikeCount;
-    private String nickName;
-    private String relation;
     private String userId;
+    private String relation;
+    private String nickName;
+    private String avatar;
+    private String gender;
+    private String fansCount;
+    private String followCount;
+    private String likeCount;
+    private String momentLikeCount;
+    private String commentLikeCount;
+    private String momentCount;
+    private String favoriteCount;
+    private String createCricleCount;
+    private String joinCricleCount;
+    private long lastUpdateMomentTimestamp;
 
-    public String getAvatar() {
-        return avatar;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getCommentLikeCount() {
-        return commentLikeCount;
-    }
-
-    public void setCommentLikeCount(String commentLikeCount) {
-        this.commentLikeCount = commentLikeCount;
-    }
-
-    public String getCreateCricleCount() {
-        return createCricleCount;
-    }
-
-    public void setCreateCricleCount(String createCricleCount) {
-        this.createCricleCount = createCricleCount;
-    }
-
-    public String getFansCount() {
-        return fansCount;
-    }
-
-    public void setFansCount(String fansCount) {
-        this.fansCount = fansCount;
-    }
-
-    public String getFavoriteCount() {
-        return favoriteCount;
-    }
-
-    public void setFavoriteCount(String favoriteCount) {
-        this.favoriteCount = favoriteCount;
-    }
-
-    public String getFollowCount() {
-        return followCount;
-    }
-
-    public void setFollowCount(String followCount) {
-        this.followCount = followCount;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getJoinCricleCount() {
-        return joinCricleCount;
-    }
-
-    public void setJoinCricleCount(String joinCricleCount) {
-        this.joinCricleCount = joinCricleCount;
-    }
-
-    public String getLastUpdateMomentTimestamp() {
-        return lastUpdateMomentTimestamp;
-    }
-
-    public void setLastUpdateMomentTimestamp(String lastUpdateMomentTimestamp) {
-        this.lastUpdateMomentTimestamp = lastUpdateMomentTimestamp;
-    }
-
-    public String getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(String likeCount) {
-        this.likeCount = likeCount;
-    }
-
-    public String getMomentCount() {
-        return momentCount;
-    }
-
-    public void setMomentCount(String momentCount) {
-        this.momentCount = momentCount;
-    }
-
-    public String getMomentLikeCount() {
-        return momentLikeCount;
-    }
-
-    public void setMomentLikeCount(String momentLikeCount) {
-        this.momentLikeCount = momentLikeCount;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getRelation() {
@@ -148,11 +52,107 @@ public class UserOwnInfo {
         this.relation = relation;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getFansCount() {
+        return fansCount;
+    }
+
+    public void setFansCount(String fansCount) {
+        this.fansCount = fansCount;
+    }
+
+    public String getFollowCount() {
+        return followCount;
+    }
+
+    public void setFollowCount(String followCount) {
+        this.followCount = followCount;
+    }
+
+    public String getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(String likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public String getMomentLikeCount() {
+        return momentLikeCount;
+    }
+
+    public void setMomentLikeCount(String momentLikeCount) {
+        this.momentLikeCount = momentLikeCount;
+    }
+
+    public String getCommentLikeCount() {
+        return commentLikeCount;
+    }
+
+    public void setCommentLikeCount(String commentLikeCount) {
+        this.commentLikeCount = commentLikeCount;
+    }
+
+    public String getMomentCount() {
+        return momentCount;
+    }
+
+    public void setMomentCount(String momentCount) {
+        this.momentCount = momentCount;
+    }
+
+    public String getFavoriteCount() {
+        return favoriteCount;
+    }
+
+    public void setFavoriteCount(String favoriteCount) {
+        this.favoriteCount = favoriteCount;
+    }
+
+    public String getCreateCricleCount() {
+        return createCricleCount;
+    }
+
+    public void setCreateCricleCount(String createCricleCount) {
+        this.createCricleCount = createCricleCount;
+    }
+
+    public String getJoinCricleCount() {
+        return joinCricleCount;
+    }
+
+    public void setJoinCricleCount(String joinCricleCount) {
+        this.joinCricleCount = joinCricleCount;
+    }
+
+    public long getLastUpdateMomentTimestamp() {
+        return lastUpdateMomentTimestamp;
+    }
+
+    public void setLastUpdateMomentTimestamp(long lastUpdateMomentTimestamp) {
+        this.lastUpdateMomentTimestamp = lastUpdateMomentTimestamp;
     }
 }

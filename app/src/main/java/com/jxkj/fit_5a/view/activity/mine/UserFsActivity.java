@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.mine;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,7 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
+import com.jxkj.fit_5a.entity.FollowFansList;
 import com.jxkj.fit_5a.view.adapter.UserGzAdapter;
 
 import java.util.ArrayList;
@@ -19,6 +25,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class UserFsActivity extends BaseActivity {
     @BindView(R.id.iv_back)
@@ -29,6 +39,8 @@ public class UserFsActivity extends BaseActivity {
     TextView mTvTitle;
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
+    String userId = "";
+    private UserGzAdapter mUserGzAdapter;
 
     @Override
     protected int getContentView() {
@@ -37,13 +49,10 @@ public class UserFsActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        userId = getIntent().getStringExtra("userId");
         mTvTitle.setText("Ta的粉丝");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
-        List<String> list = new ArrayList<>();
-        for(int i = 0;i<10;i++){
-            list.add("");
-        }
-        UserGzAdapter mUserGzAdapter = new UserGzAdapter(list);
+        mUserGzAdapter = new UserGzAdapter(null);
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mUserGzAdapter);
@@ -51,9 +60,10 @@ public class UserFsActivity extends BaseActivity {
         mUserGzAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(UserFsActivity.this, UserHomeActivity.class));
+                UserHomeActivity.startActivity(UserFsActivity.this,mUserGzAdapter.getData().get(position).getUser().getUserId()+"");
             }
         });
+        getFollowFansList();
     }
 
 
@@ -61,4 +71,46 @@ public class UserFsActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
+
+    private int totalPage;
+    int page = 1;
+    private void getFollowFansList(){
+        RetrofitUtil.getInstance().apiService()
+                .getFollowFansList(userId,0,10)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<FollowFansList>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(FollowFansList result) {
+                        if (result.getCode()==0) {
+                            List<FollowFansList.DataBean> data = result.getData();
+                            mUserGzAdapter.setNewData(data);
+//                            totalPage = StringUtil.getTotalPage(result.getData(), 10);
+                            page++;
+                            if(totalPage <= page){
+                                page = 1;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+    public static void startActivity(Context mContext, String userId) {
+        Intent intent = new Intent(mContext, UserFsActivity.class);
+        intent.putExtra("userId", userId);
+        mContext.startActivity(intent);
+    }
+
 }

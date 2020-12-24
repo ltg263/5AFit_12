@@ -14,6 +14,7 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.conpoment.view.DialogCommentPackage;
 import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
+import com.jxkj.fit_5a.view.activity.mine.UserScActivity;
 import com.jxkj.fit_5a.view.adapter.AssociationListAdapter;
 
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class AssociationActivity extends BaseActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
                     case R.id.iv_head_img:
-                        startActivity(new Intent(AssociationActivity.this, UserHomeActivity.class));
+                        UserHomeActivity.startActivity(AssociationActivity.this,"95");
                         break;
                     case R.id.tv_liuyan:
                     case R.id.rl_all_comment:

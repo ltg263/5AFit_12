@@ -4,6 +4,7 @@ package com.jxkj.fit_5a.api;
 import android.util.Log;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -55,8 +56,12 @@ public class MyInterceptor implements Interceptor {
         //获得返回的数据
         Buffer buffer = source.buffer();
         //使用前clone()下，避免直接消耗
-        syso("response:" + buffer.clone().readString(Charset.forName("UTF-8")));
-        Log.d(TAG,"api url = "+ request.url() +" http response = "+ buffer.clone().readString(Charset.forName("UTF-8")));
+        String result = buffer.clone().readString(Charset.forName("UTF-8"));
+        String resultLog = "api url = "+ request.url() +" http response = "+ result;
+        Log.d(TAG,resultLog);
+        if(!result.contains("\"code\":\"000000\",\"mesg\":\"处理成功\",\"sub_code\":\"000000\",\"sub_mesg\":\"处理成功\"")){
+            ToastUtils.showShort(resultLog);
+        }
         return response;
     }
 

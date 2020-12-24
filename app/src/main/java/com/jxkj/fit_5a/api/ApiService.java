@@ -25,6 +25,7 @@ import com.jxkj.fit_5a.entity.CircleDetailsBean;
 import com.jxkj.fit_5a.entity.CircleQueryBean;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.CircleTaskData;
+import com.jxkj.fit_5a.entity.FollowFansList;
 import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
@@ -513,6 +514,12 @@ public interface ApiService {
     Observable<QueryPopularBean> getMomentQueryPopular();//首页1
 
     /**
+     * 社群首页
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/community/home/info")
+    Observable<QueryPopularBean> getCommunityHomeInfo();
+
+    /**
      * 获取热门(推荐)动态信息
      */
     @GET(ConstValues.PORT_21 + "api/v1/circle/moment/query_popular")
@@ -541,12 +548,47 @@ public interface ApiService {
     Observable<Result<CircleQueryJoinedBean>> getCircleQueryJoined(@Query("page") int page, @Query("pageSize") int pageSize);
 
     /**
-     * 获取已经加入的圈子列表
+     * 获取用户自身资料信息
      */
     @GET(ConstValues.PORT_21 + "api/v1/user/profile/own")
     Observable<Result<UserOwnInfo>> getUserProfileOwn();
 
+    /**
+     * 获取用户资料信息
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/user/profile")
+    Observable<Result<UserOwnInfo>> getUserProfile(@Query("userId") String userId);
 
+    /**
+     * 获取用户的粉丝列表
+     * @return
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/follow/fans")
+    Observable<FollowFansList> getFollowFansList(@Query("userId") String userId,@Query("page") int page, @Query("pageSize") int pageSize);
+
+
+    /**
+     *获取用户的关注列表
+     * @return
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/follow/followers")
+    Observable<FollowFansList> getFollowFollowers(@Query("userId") String userId,@Query("page") int page, @Query("pageSize") int pageSize);
+
+    /**
+     * 关注用户
+     * @param followerId
+     * @return
+     */
+    @POST(ConstValues.PORT_21+"api/v1/follow")
+    Observable<Result> postfollow(@Query("followerId") String followerId);
+
+    /**
+     * 取消关注用户
+     * @param followerId
+     * @return
+     */
+    @POST(ConstValues.PORT_21+"api/v1/follow/cancel")
+    Observable<Result> postfollowCancel(@Query("followerId") String followerId);
 
     /**
      * 订单列表
