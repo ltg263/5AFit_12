@@ -67,7 +67,7 @@ public class HomeThreeFragment extends BaseFragment {
         page = 1;
         pageSize = 3;
         getCircleQueryJoined();
-        getHotTopicList();
+//        getHotTopicList();
         getMomentQueryPopular();
     }
 
@@ -206,6 +206,8 @@ public class HomeThreeFragment extends BaseFragment {
                     @Override
                     public void onNext(Result<CommunityHomeInfoBean> result) {
                         if (result.getCode()==0) {
+                            mHomeThreeTopAdapter.setNewData(result.getData().getHotCircles());
+                            mHomeThreeRmhtAdapter.setNewData(result.getData().getHotTopics());
                             mHomeThreeSqAdapter.setNewData(result.getData().getHotMoments());
                         }
                     }
@@ -222,7 +224,7 @@ public class HomeThreeFragment extends BaseFragment {
 
     private void getHotTopicList(){
         RetrofitUtil.getInstance().apiService()
-                .getHotTopicList(1,3)
+                .getHotTopicList(null,1,3)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultList<HotTopicBean>>() {

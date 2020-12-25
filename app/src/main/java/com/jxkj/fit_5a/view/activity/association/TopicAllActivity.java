@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.entity.HotTopicBean;
 import com.jxkj.fit_5a.view.adapter.TopicListAdapter;
 
 import java.util.ArrayList;
@@ -18,6 +21,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class TopicAllActivity extends BaseActivity {
     @BindView(R.id.tv1)
@@ -34,6 +41,7 @@ public class TopicAllActivity extends BaseActivity {
     View mView3;
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
+    private TopicListAdapter mTopicListAdapter;
 
     @Override
     protected int getContentView() {
@@ -42,12 +50,7 @@ public class TopicAllActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        TopicListAdapter mTopicListAdapter = new TopicListAdapter(list);
+        mTopicListAdapter = new TopicListAdapter(null);
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mTopicListAdapter);
@@ -58,6 +61,7 @@ public class TopicAllActivity extends BaseActivity {
                 startActivity(new Intent(TopicAllActivity.this, MineTopicActivity.class));
             }
         });
+        getAllTopic();
     }
 
 
@@ -70,12 +74,15 @@ public class TopicAllActivity extends BaseActivity {
             case R.id.tv_search_topic:
                 break;
             case R.id.rl1:
+                getAllTopic();
                 initView(mTv1,mView1);
                 break;
             case R.id.rl2:
+                getHotTopicList();
                 initView(mTv2,mView2);
                 break;
             case R.id.rl3:
+                getTopicParticipated();
                 initView(mTv3,mView3);
                 break;
         }
@@ -94,5 +101,90 @@ public class TopicAllActivity extends BaseActivity {
         tv.setTextColor(getResources().getColor(R.color.color_000000));
         tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         v.setVisibility(View.VISIBLE);
+    }
+
+
+    private void getAllTopic(){
+        RetrofitUtil.getInstance().apiService()
+                .getAllTopic(null,1,100)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<HotTopicBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<HotTopicBean> result) {
+                        if (result.getCode()==0) {
+                            mTopicListAdapter.setNewData(result.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    private void getHotTopicList(){
+        RetrofitUtil.getInstance().apiService()
+                .getHotTopicList(null,1,100)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<HotTopicBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<HotTopicBean> result) {
+                        if (result.getCode()==0) {
+                            mTopicListAdapter.setNewData(result.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    private void getTopicParticipated(){
+        RetrofitUtil.getInstance().apiService()
+                .getTopicParticipated(null,1,100)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<HotTopicBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<HotTopicBean> result) {
+                        if (result.getCode()==0) {
+                            mTopicListAdapter.setNewData(result.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 }

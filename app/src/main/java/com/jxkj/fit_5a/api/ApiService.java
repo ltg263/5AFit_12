@@ -618,7 +618,25 @@ public interface ApiService {
      * @return
      */
     @GET(ConstValues.PORT_21 +"api/v1/topic/hot")
-    Observable<ResultList<HotTopicBean>> getHotTopicList(@Query("page") int page,@Query("pageSize")int pageSize);
+    Observable<ResultList<HotTopicBean>> getHotTopicList(@Query("keyword") String keyword,@Query("page") int page,@Query("pageSize")int pageSize);
+
+    /**
+     * 获取自己参与过的话题
+     * @return
+     */
+    @GET(ConstValues.PORT_21+"api/v1/topic/participated")
+    Observable<ResultList<HotTopicBean>> getTopicParticipated(@Query("keyword") String keyword,@Query("page") int page,@Query("pageSize")int pageSize);
+
+
+    /**
+     * 获取所有话题
+     * @param keyword
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @GET(ConstValues.PORT_21+"api/v1/topic/all_topic")
+    Observable<ResultList<HotTopicBean>> getAllTopic(@Query("keyword") String keyword,@Query("page") int page,@Query("pageSize")int pageSize);
 
 
     /**
