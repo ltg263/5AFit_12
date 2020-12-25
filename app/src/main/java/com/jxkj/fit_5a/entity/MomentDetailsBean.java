@@ -51,6 +51,10 @@ public class MomentDetailsBean {
         return publisherId;
     }
 
+    public void setFavoriteCount(int favoriteCount) {
+        this.favoriteCount = favoriteCount;
+    }
+
     public int getFavoriteCount() {
         return favoriteCount;
     }

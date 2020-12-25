@@ -639,7 +639,22 @@ public interface ApiService {
      */
     @POST(ConstValues.PORT_21 + "api/v1/favorite/cancel")
     Observable<Result> postFavoritCancel(@Query("circleId") String circleId,
-                                   @Query("momentId") String momentId);
+                                         @Query("momentId") String momentId);
+
+    /**
+     * 用户点赞动态
+     */
+    @POST(ConstValues.PORT_21 + "api/v1/moment/like")
+    Observable<Result> postLike(@Query("momentId") String momentId,
+                                   @Query("momentPublisherId") String momentPublisherId);
+
+
+    /**
+     * 用户取消点赞动态
+     */
+    @POST(ConstValues.PORT_21 + "api/v1/moment/like/cancel")
+    Observable<Result> postLikeCancel(@Query("momentId") String momentId,
+                                         @Query("momentPublisherId") String momentPublisherId);
 
     /**
      * 获取热门话题

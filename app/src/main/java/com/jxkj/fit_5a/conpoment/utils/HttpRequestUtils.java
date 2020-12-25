@@ -203,6 +203,8 @@ public class HttpRequestUtils {
                     public void onNext(Result result) {
                         if(result.getCode()==0){
                             mLoginInterface.succeed("0");
+                        }else{
+                            mLoginInterface.succeed("-1");
                         }
                     }
 
@@ -240,6 +242,8 @@ public class HttpRequestUtils {
                     public void onNext(Result result) {
                         if(result.getCode()==0){
                             mLoginInterface.succeed("1");
+                        }else{
+                            mLoginInterface.succeed("-1");
                         }
                     }
 
@@ -273,6 +277,8 @@ public class HttpRequestUtils {
                     public void onNext(Result result) {
                         if(result.getCode()==0){
                             mLoginInterface.succeed("0");
+                        }else{
+                            mLoginInterface.succeed("-1");
                         }
                     }
 
@@ -306,6 +312,78 @@ public class HttpRequestUtils {
                     public void onNext(Result result) {
                         if(result.getCode()==0){
                             mLoginInterface.succeed("0");
+                        }else{
+                            mLoginInterface.succeed("-1");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    /**
+     * 去点赞
+     */
+    public static void postLike(String momentId,String momentPublisherId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postLike(momentId,momentPublisherId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("0");
+                        }else{
+                            mLoginInterface.succeed("-1");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    /**
+     * 取消点赞
+     */
+    public static void postLikeCancel(String momentId,String momentPublisherId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postLikeCancel(momentId,momentPublisherId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("0");
+                        }else{
+                            mLoginInterface.succeed("-1");
                         }
                     }
 

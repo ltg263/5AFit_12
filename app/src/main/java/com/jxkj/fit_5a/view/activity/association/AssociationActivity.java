@@ -81,7 +81,31 @@ public class AssociationActivity extends BaseActivity {
                         UserHomeActivity.startActivity(AssociationActivity.this,data.getPublisherId()+"");
                         break;
                     case R.id.ll_xihuan:
-
+                        if(data.isIsLike()){
+                            HttpRequestUtils.postLikeCancel(data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                                @Override
+                                public void succeed(String path) {
+                                    dismiss();
+                                    if(path.equals("0")){
+                                        data.setIsLike(false);
+                                        data.setLikeCount(data.getLikeCount()-1);
+                                        mAssociationListAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }else{
+                            HttpRequestUtils.postLike(data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                                @Override
+                                public void succeed(String path) {
+                                    dismiss();
+                                    if(path.equals("0")) {
+                                        data.setIsLike(true);
+                                        data.setLikeCount(data.getLikeCount() + 1);
+                                        mAssociationListAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }
                         break;
                     case R.id.tv_fenxiang:
 
@@ -92,9 +116,12 @@ public class AssociationActivity extends BaseActivity {
                             HttpRequestUtils.postFavoritCancel("0", data.getMomentId() + "", new HttpRequestUtils.LoginInterface() {
                                         @Override
                                         public void succeed(String path) {
-                                            data.setIsFavorite(false);
-                                            mAssociationListAdapter.notifyDataSetChanged();
                                             dismiss();
+                                            if(path.equals("0")){
+                                                data.setIsFavorite(false);
+                                                data.setFavoriteCount(data.getFavoriteCount()-1);
+                                                mAssociationListAdapter.notifyDataSetChanged();
+                                            }
                                         }
                                     });
                         }else {
@@ -102,9 +129,12 @@ public class AssociationActivity extends BaseActivity {
                                     data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
                                         @Override
                                         public void succeed(String path) {
-                                            data.setIsFavorite(true);
-                                            mAssociationListAdapter.notifyDataSetChanged();
                                             dismiss();
+                                            if(path.equals("0")) {
+                                                data.setIsFavorite(true);
+                                                data.setFavoriteCount(data.getFavoriteCount() + 1);
+                                                mAssociationListAdapter.notifyDataSetChanged();
+                                            }
                                         }
                                     });
                         }
