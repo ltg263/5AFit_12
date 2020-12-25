@@ -1,5 +1,7 @@
 package com.jxkj.fit_5a.view.adapter;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -7,9 +9,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
+import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.entity.MomentDetailsBean;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,25 +26,64 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/5/2914:03
  */
-public class AssociationListAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    public AssociationListAdapter(@Nullable List<String> data) {
+public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, BaseViewHolder> {
+    public AssociationListAdapter(@Nullable List<MomentDetailsBean> data) {
         super(R.layout.item_association_list, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, String item) {
+    protected void convert(@NonNull BaseViewHolder helper, MomentDetailsBean item) {
         helper.addOnClickListener(R.id.iv_head_img).addOnClickListener(R.id.rl_all_comment)
-            .addOnClickListener(R.id.tv_liuyan);
+                .addOnClickListener(R.id.ll_xihuan).addOnClickListener(R.id.ll_shoucang)
+                .addOnClickListener(R.id.tv_fenxiang).addOnClickListener(R.id.tv_ygz)
+                .addOnClickListener(R.id.tv_wgz).addOnClickListener(R.id.tv_liuyan);
+        helper.setText(R.id.tv_name,item.getUser().getNickName())
+                .setText(R.id.tv_time, StringUtil.getTimeToYMD(item.getTimestamp(),"yyyy-MM-dd HH:mm:ss"))
+                .setVisible(R.id.tv_topic,false)
+                .setText(R.id.banner_home_one,item.getContent()+"")
+                .setText(R.id.tv_shoucang,item.getFavoriteCount()+"")
+                .setText(R.id.tv_xihuan,item.getLikeCount()+"")
+                .setText(R.id.tv_liuyan,item.getCommentCount()+"")
+                .setText(R.id.tv_fenxiang,"0")
+                .setImageDrawable(R.id.iv_xihuan,mContext.getResources().getDrawable(R.drawable.icon_xin_99_d))
+                .setImageDrawable(R.id.iv_shoucang,mContext.getResources().getDrawable(R.drawable.icon_share_sc_d));
+        GlideImageUtils.setGlideImage(mContext,item.getUser().getAvatar(),helper.getView(R.id.iv_head_img));
+
+        if(item.isIsLike()){
+            helper.setImageDrawable(R.id.iv_xihuan,mContext.getResources().getDrawable(R.drawable.ic_celect_xh_yes));
+        }
+
+        if(item.isIsFavorite()){
+            helper.setImageDrawable(R.id.iv_shoucang,mContext.getResources().getDrawable(R.drawable.icon_share_sc_dx));
+        }
+        //(0:没有关系;1:已关注;2:粉丝;3:互为粉丝;4,本人)
+        if(item.getUser().getRelation()==1 || item.getUser().getRelation()==3){
+            helper.setVisible(R.id.tv_ygz,true).setVisible(R.id.tv_wgz,false);
+        }else if(item.getUser().getRelation()==4){
+            helper.setVisible(R.id.tv_ygz,false).setVisible(R.id.tv_wgz,false);
+        }else{
+            helper.setVisible(R.id.tv_ygz,false).setVisible(R.id.tv_wgz,true);
+        }
+        if(StringUtil.isNotBlank(item.getTopicArr())){
+            try {
+                JSONArray array = new JSONArray(item.getTopicArr());
+                helper.setVisible(R.id.tv_topic,true).setText(R.id.tv_topic,"来自话题："+array.getString(0));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         Banner mBanner =  helper.getView(R.id.banner);
-        initBannerOne(mBanner);
+        mBanner.setVisibility(View.GONE);
+        if(StringUtil.isNotBlank(item.getMedia())){
+            mBanner.setVisibility(View.VISIBLE);
+            initBannerOne(mBanner,item.getMedia().split(","));
+        }
     }
 
-    private void initBannerOne(Banner mBanner) {
-        ArrayList<String> list_title = new ArrayList<>();
+    private void initBannerOne(Banner mBanner, String[] split) {
         ArrayList<String> list_path = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            list_path.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1096319023,1267316854&fm=26&gp=0.jpg");
-//            list_title.add(lists.get(i).getTitle());
+        for (int i = 0; i < split.length; i++) {
+            list_path.add(split[i]);
         }
         mBanner.setOnBannerListener(new OnBannerListener() {
             @Override

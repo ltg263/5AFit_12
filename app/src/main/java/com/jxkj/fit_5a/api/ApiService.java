@@ -34,6 +34,7 @@ import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
+import com.jxkj.fit_5a.entity.MomentDetailsBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.RankStatsData;
 import com.jxkj.fit_5a.entity.SpecListBaen;
@@ -626,7 +627,7 @@ public interface ApiService {
      * 收藏
      * 	圈子id(如果收藏的不是圈子里的动态，传0)
      */
-    @GET(ConstValues.PORT_21 + "api/v1/favorite")
+    @POST(ConstValues.PORT_21 + "api/v1/favorite")
     Observable<Result> postFavorit(@Query("circleId") String circleId,
                                    @Query("momentId") String momentId,
                                    @Query("momentPublisherId") String momentPublisherId);
@@ -636,7 +637,7 @@ public interface ApiService {
      * 取消收藏
      * 	圈子id(如果收藏的不是圈子里的动态，传0)
      */
-    @GET(ConstValues.PORT_21 + "api/v1/favorite/cancel")
+    @POST(ConstValues.PORT_21 + "api/v1/favorite/cancel")
     Observable<Result> postFavoritCancel(@Query("circleId") String circleId,
                                    @Query("momentId") String momentId);
 
@@ -665,10 +666,27 @@ public interface ApiService {
     @GET(ConstValues.PORT_21+"api/v1/topic/all_topic")
     Observable<ResultList<HotTopicBean>> getAllTopic(@Query("keyword") String keyword,@Query("page") int page,@Query("pageSize")int pageSize);
 
+    /**
+     *获取动态信息--社群
+     * @param momentId
+     * @param publisherId
+     * @return
+     */
+    @GET(ConstValues.PORT_21+"api/v1/moment/details")
+    Observable<Result<MomentDetailsBean>> getMomentDetails(@Query("momentId") String momentId,@Query("publisherId") String publisherId);
+
+
+    /**
+     *获取动态信息--圈子
+     * @param momentId
+     * @param publisherId
+     * @return
+     */
+    @GET(ConstValues.PORT_21+"api/v1/circle/moment/details")
+    Observable<Result<MomentDetailsBean>> getMomentDetailsCircle(@Query("circleId") String circleId,@Query("momentId") String momentId,@Query("publisherId") String publisherId);
 
     /**
      * 订单列表
-     *
      * @param page
      * @param pageSize
      * @param status

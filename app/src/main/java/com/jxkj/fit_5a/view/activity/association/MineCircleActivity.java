@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.view.activity.association;
 
 
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,14 +21,10 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
-import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.BlurringView;
 import com.jxkj.fit_5a.entity.CircleDetailsBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.view.adapter.CircleDynamicAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -116,7 +111,10 @@ public class MineCircleActivity extends BaseActivity {
         mCircleDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                AssociationActivity.startActivity(MineCircleActivity.this,"");
+                AssociationActivity.startActivity(MineCircleActivity.this,
+                        id+"",
+                        mCircleDynamicAdapter.getData().get(position).getPublisherId(),
+                        mCircleDynamicAdapter.getData().get(position).getMomentId());
             }
         });
         mBlurringView.setBlurredView(mRvList);

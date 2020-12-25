@@ -132,7 +132,10 @@ public class MineHomeActivity extends BaseActivity {
         mCircleDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                AssociationActivity.startActivity(MineHomeActivity.this,"");
+
+                AssociationActivity.startActivity(MineHomeActivity.this,
+                        mCircleDynamicAdapter.getData().get(position).getPublisherId(),
+                        mCircleDynamicAdapter.getData().get(position).getMomentId());
             }
         });
 

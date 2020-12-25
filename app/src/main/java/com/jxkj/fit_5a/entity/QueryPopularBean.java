@@ -22,35 +22,35 @@ public class QueryPopularBean {
      * media :
      */
 
-    private int publisherId;
-    private long momentId;
+    private String publisherId;
+    private String momentId;
     private UserBean user;
     private boolean isLike;
-    private int likeCount;
-    private int commentCount;
+    private String likeCount;
+    private String commentCount;
     private String topicArr;
-    private int pageviews;
-    private int contentType;
+    private String pageviews;
+    private String contentType;
     private String simpleContent;
-    private int shareType;
+    private String shareType;
     private long timestamp;
     private String position;
     private String location;
     private String media;
 
-    public int getPublisherId() {
+    public String getPublisherId() {
         return publisherId;
     }
 
-    public void setPublisherId(int publisherId) {
+    public void setPublisherId(String publisherId) {
         this.publisherId = publisherId;
     }
 
-    public long getMomentId() {
+    public String getMomentId() {
         return momentId;
     }
 
-    public void setMomentId(long momentId) {
+    public void setMomentId(String momentId) {
         this.momentId = momentId;
     }
 
@@ -70,19 +70,19 @@ public class QueryPopularBean {
         this.isLike = isLike;
     }
 
-    public int getLikeCount() {
+    public String getLikeCount() {
         return likeCount;
     }
 
-    public void setLikeCount(int likeCount) {
+    public void setLikeCount(String likeCount) {
         this.likeCount = likeCount;
     }
 
-    public int getCommentCount() {
+    public String getCommentCount() {
         return commentCount;
     }
 
-    public void setCommentCount(int commentCount) {
+    public void setCommentCount(String commentCount) {
         this.commentCount = commentCount;
     }
 
@@ -94,19 +94,19 @@ public class QueryPopularBean {
         this.topicArr = topicArr;
     }
 
-    public int getPageviews() {
+    public String getPageviews() {
         return pageviews;
     }
 
-    public void setPageviews(int pageviews) {
+    public void setPageviews(String pageviews) {
         this.pageviews = pageviews;
     }
 
-    public int getContentType() {
+    public String getContentType() {
         return contentType;
     }
 
-    public void setContentType(int contentType) {
+    public void setContentType(String contentType) {
         this.contentType = contentType;
     }
 
@@ -118,11 +118,11 @@ public class QueryPopularBean {
         this.simpleContent = simpleContent;
     }
 
-    public int getShareType() {
+    public String getShareType() {
         return shareType;
     }
 
-    public void setShareType(int shareType) {
+    public void setShareType(String shareType) {
         this.shareType = shareType;
     }
 
@@ -167,17 +167,17 @@ public class QueryPopularBean {
          * gender : 0
          */
 
-        private int userId;
+        private String userId;
         private int relation;
         private String nickName;
         private String avatar;
-        private int gender;
+        private String gender;
 
-        public int getUserId() {
+        public String getUserId() {
             return userId;
         }
 
-        public void setUserId(int userId) {
+        public void setUserId(String userId) {
             this.userId = userId;
         }
 
@@ -205,11 +205,11 @@ public class QueryPopularBean {
             this.avatar = avatar;
         }
 
-        public int getGender() {
+        public String getGender() {
             return gender;
         }
 
-        public void setGender(int gender) {
+        public void setGender(String gender) {
             this.gender = gender;
         }
     }

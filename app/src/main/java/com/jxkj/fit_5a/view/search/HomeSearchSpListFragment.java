@@ -1,6 +1,5 @@
 package com.jxkj.fit_5a.view.search;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -61,7 +60,9 @@ public class HomeSearchSpListFragment extends BaseFragment {
         mHomeDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                AssociationActivity.startActivity(getActivity(),"");
+                AssociationActivity.startActivity(getActivity(),
+                        mHomeDynamicAdapter.getData().get(position).getPublisherId(),
+                        mHomeDynamicAdapter.getData().get(position).getMomentId());
             }
         });
         getData(search);

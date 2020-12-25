@@ -18,6 +18,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_wgz"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_25dp"
             android:layout_alignTop="@id/iv_head_img"
@@ -33,6 +34,7 @@
             android:textSize="10sp" />
 
         <TextView
+            android:id="@+id/tv_ygz"
             android:layout_width="@dimen/dimen_60dp"
             android:layout_height="@dimen/dimen_25dp"
             android:layout_alignTop="@id/iv_head_img"
@@ -45,14 +47,17 @@
             android:textSize="10sp"
             android:visibility="invisible" />
 
-        <ImageView
+        <com.jxkj.fit_5a.conpoment.view.RoundImageView
             android:id="@+id/iv_head_img"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_margin="@dimen/dp_10"
-            android:src="@mipmap/ic_6" />
+            android:src="@mipmap/ic_6"
+            app:radius="@dimen/dimen_30dp"
+            app:type="circle" />
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/iv_head_img"
@@ -80,6 +85,7 @@
             android:background="@color/color_999999"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:visibility="gone"
             app:indicator_drawable_selected="@mipmap/banner_selected"
             app:indicator_drawable_unselected="@mipmap/banner_unselected" />
 
@@ -385,7 +391,7 @@
                 android:drawablePadding="@dimen/dimen_5dp"
                 android:gravity="center_vertical"
                 android:padding="@dimen/dp_10"
-                android:text="1358"
+                android:text="0"
                 android:textColor="@color/color_999999" />
 
             <View
@@ -394,27 +400,53 @@
                 android:layout_weight="1" />
 
 
-            <TextView
-                android:id="@+id/tv_shoucang"
+            <LinearLayout
+                android:id="@+id/ll_shoucang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/icon_share_sc_d"
-                android:drawablePadding="@dimen/dimen_5dp"
-                android:gravity="center_vertical"
-                android:padding="@dimen/dp_10"
-                android:text="1358"
-                android:textColor="@color/color_999999" />
+                android:gravity="center"
+                android:padding="@dimen/dp_10">
 
-            <TextView
-                android:id="@+id/tv_xihuan"
+                <ImageView
+                    android:id="@+id/iv_shoucang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_share_sc_d" />
+
+                <TextView
+                    android:id="@+id/tv_shoucang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_5dp"
+                    android:gravity="center_vertical"
+                    android:text="0"
+                    android:textColor="@color/color_999999" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_xihuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/icon_xin_99_d"
-                android:drawablePadding="@dimen/dimen_5dp"
-                android:gravity="center_vertical"
-                android:padding="@dimen/dp_10"
-                android:text="1358"
-                android:textColor="@color/color_999999" />
+                android:gravity="center"
+                android:padding="@dimen/dp_10">
+
+                <ImageView
+                    android:id="@+id/iv_xihuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_xin_99_d" />
+
+                <TextView
+                    android:id="@+id/tv_xihuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_5dp"
+                    android:gravity="center_vertical"
+                    android:text="0"
+                    android:textColor="@color/color_999999" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_liuyan"
@@ -426,7 +458,7 @@
                 android:drawablePadding="@dimen/dimen_5dp"
                 android:gravity="center_vertical"
                 android:padding="@dimen/dp_10"
-                android:text="1358"
+                android:text="0"
                 android:textColor="@color/color_999999" />
 
         </LinearLayout>

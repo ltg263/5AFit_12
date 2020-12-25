@@ -172,7 +172,9 @@ public class UserHomeActivity extends BaseActivity {
         mCircleDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                AssociationActivity.startActivity(UserHomeActivity.this,"");
+                AssociationActivity.startActivity(UserHomeActivity.this,
+                        mCircleDynamicAdapter.getData().get(position).getPublisherId(),
+                        mCircleDynamicAdapter.getData().get(position).getMomentId());
             }
         });
 

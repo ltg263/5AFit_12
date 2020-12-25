@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.base;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.MotionEvent;
@@ -14,15 +13,12 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
-import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.LoadDialog;
-import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
 
 import butterknife.ButterKnife;
 
