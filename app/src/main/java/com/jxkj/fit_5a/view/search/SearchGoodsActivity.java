@@ -45,6 +45,7 @@ public class SearchGoodsActivity extends BaseActivity {
     @BindView(R.id.activity_search_goods_history_ll)
     LinearLayout mHistoryLl;
     private String searchStr = null;
+    private int searchType = 0;
     public static SearchGoodsActivity activity;
     @Override
     protected int getContentView() {
@@ -60,8 +61,15 @@ public class SearchGoodsActivity extends BaseActivity {
                     .SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
     }
+
     @Override
     protected void initViews() {
+        searchType = getIntent().getIntExtra("searchType",0);
+        if(searchType==1){
+            searchEt.setHint("搜索内容或圈子");
+        }else if(searchType == 2){
+            searchEt.setHint("搜索话题");
+        }
         activity = this;
         ImmersionBar.with(this).statusBarDarkFont(true).titleBar(R.id.rl_actionbar).fitsSystemWindows(true).init();
         setHistorySearchData();
@@ -72,9 +80,7 @@ public class SearchGoodsActivity extends BaseActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     if(searchEt.getText().toString().trim().length()>0){
                         searchStr = searchEt.getText().toString().trim();
-                        SearchHistorySpUtil.saveSearchHistory(SearchGoodsActivity.this,"goods","goodsName",searchEt.getText().toString().trim());
-                        IntentUtils.getInstence().intent(SearchGoodsActivity.this,SearchGoodsResultActivity.class,"search",searchEt.getText().toString().trim()+"");
-
+                        startSearchResultActivity(searchEt.getText().toString().trim());
                     }else {
                         Toast.makeText(SearchGoodsActivity.this,"请输入搜索内容",Toast.LENGTH_LONG).show();
                     }
@@ -107,8 +113,7 @@ public class SearchGoodsActivity extends BaseActivity {
                 public void onClick(View v) {
                     searchStr = name;
                     searchEt.setText(name);
-                    SearchHistorySpUtil.saveSearchHistory(SearchGoodsActivity.this,"goods","goodsName",searchEt.getText().toString().trim());
-                    IntentUtils.getInstence().intent(SearchGoodsActivity.this,SearchGoodsResultActivity.class,"search",searchEt.getText().toString().trim()+"");
+                    startSearchResultActivity(searchEt.getText().toString().trim());
 
                 }
             });
@@ -141,9 +146,7 @@ public class SearchGoodsActivity extends BaseActivity {
                 public void onClick(View v) {
                     searchStr = name;
                     searchEt.setText(name);
-                    SearchHistorySpUtil.saveSearchHistory(SearchGoodsActivity.this,"goods","goodsName",searchEt.getText().toString().trim());
-                    IntentUtils.getInstence().intent(SearchGoodsActivity.this,SearchGoodsResultActivity.class,"search",searchEt.getText().toString().trim()+"");
-
+                    startSearchResultActivity(searchEt.getText().toString().trim());
                 }
             });
             flowLayoutRm.addView(tv, layoutParams);
@@ -158,15 +161,23 @@ public class SearchGoodsActivity extends BaseActivity {
                 break;
             case R.id.activity_search_goods_search_tv:
                 if(searchEt.getText().toString().trim().length()>0){
-                    SearchHistorySpUtil.saveSearchHistory(SearchGoodsActivity.this,"goods","goodsName",searchEt.getText().toString().trim());
-                    IntentUtils.getInstence().intent(SearchGoodsActivity.this,SearchGoodsResultActivity.class,"search",searchEt.getText().toString().trim()+"");
-
+                    startSearchResultActivity(searchEt.getText().toString().trim());
                 }else {
                     Toast.makeText(SearchGoodsActivity.this,"请输入搜索内容",Toast.LENGTH_LONG).show();
 
                 }
                 break;
                 default:
+        }
+    }
+
+    private void startSearchResultActivity(String inputText){
+        SearchHistorySpUtil.saveSearchHistory(SearchGoodsActivity.this,"goods","goodsName",inputText);
+        if(searchType==1){
+            IntentUtils.getInstence().intent(SearchGoodsActivity.this, SearchResultGoodsActivity.class,"search",inputText);
+        }
+        if(searchType==2){
+            IntentUtils.getInstence().intent(SearchGoodsActivity.this, SearchResultTopicActivity.class,"search",inputText);
         }
     }
 

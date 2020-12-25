@@ -3,6 +3,7 @@ package com.jxkj.fit_5a.conpoment.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.Log;
 
 import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
@@ -93,6 +94,7 @@ public class SharedUtils {
 		edit.commit();
 	}
 	public static String getToken(){
+		Log.w("token","--->>:"+singleton().get(ConstValues.TOKEN,""));
 		return singleton().get(ConstValues.TOKEN,"");
 	}
 	public static int getUserId(){

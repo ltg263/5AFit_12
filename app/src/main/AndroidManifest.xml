@@ -96,7 +96,10 @@
             android:name=".view.search.SearchGoodsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.search.SearchGoodsResultActivity"
+            android:name=".view.search.SearchResultGoodsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.search.SearchResultTopicActivity"
             android:screenOrientation="portrait" />
 
         <activity

@@ -119,11 +119,11 @@ public class HomeThreeFragment extends BaseFragment {
         mHomeThreeSqAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if(mHomeThreeSqAdapter.getData().get(position).getContentType()==3){
-                    startActivity(new Intent(getActivity(), VideoActivity.class));
-                }else{
-                    startActivity(new Intent(getActivity(), AssociationActivity.class));
-                }
+                startActivity(new Intent(getActivity(), VideoActivity.class));
+//                if(mHomeThreeSqAdapter.getData().get(position).getContentType()==3){
+//                }else{
+//                    startActivity(new Intent(getActivity(), AssociationActivity.class));
+//                }
             }
         });
     }
@@ -142,7 +142,7 @@ public class HomeThreeFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_search:
-                IntentUtils.getInstence().intent(getActivity(), SearchGoodsActivity.class);
+                IntentUtils.getInstence().intent(getActivity(), SearchGoodsActivity.class,"searchType",1);
                 break;
             case R.id.tv_refresh:
                 getCircleQueryJoined();

@@ -13,8 +13,10 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.entity.HotTopicBean;
 import com.jxkj.fit_5a.view.adapter.TopicListAdapter;
+import com.jxkj.fit_5a.view.search.SearchGoodsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +74,7 @@ public class TopicAllActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_search_topic:
+                IntentUtils.getInstence().intent(this, SearchGoodsActivity.class,"searchType",2);
                 break;
             case R.id.rl1:
                 getAllTopic();

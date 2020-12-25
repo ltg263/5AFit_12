@@ -24,7 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SearchGoodsResultActivity extends BaseActivity {
+public class SearchResultGoodsActivity extends BaseActivity {
 
 
     @BindView(R.id.img_top_back)

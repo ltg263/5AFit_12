@@ -24,7 +24,7 @@ public class TopicListAdapter extends BaseQuickAdapter<HotTopicBean, BaseViewHol
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, HotTopicBean item) {
-        helper.setText(R.id.tv_1,item.getName()).setText(R.id.tv_2,item.getIntroduction());
+        helper.setText(R.id.tv1,item.getName()).setText(R.id.tv2,item.getIntroduction());
         GlideImgLoader.loadImageViewRadius(mContext,item.getImgUrl(),10,helper.getView(R.id.iv));
     }
 
