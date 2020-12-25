@@ -525,12 +525,32 @@ public interface ApiService {
     Observable<ResultList<QueryPopularBean>> getQueryByKeyword(@Query("keyword") String keyword);
 
     /**
+     * 获取自己发布的动态信息
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/moment/query_own")
+    Observable<ResultList<QueryPopularBean>> getQueryByPublisherOwn(@Query("momentLocalMinId") int momentLocalMinId
+            , @Query("contentType") int contentType);
+
+    /**
      * 根据发布人获取动态信息
      */
     @GET(ConstValues.PORT_21 + "api/v1/moment/query_by_publisher")
     Observable<ResultList<QueryPopularBean>> getQueryByPublisher(@Query("momentLocalMinId") int momentLocalMinId
-            , @Query("publisherId") int publisherId
+            , @Query("publisherId") String publisherId
             , @Query("contentType") int contentType);
+
+
+    /**
+     * 获取最近动态信息
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/circle/moment/query_lately")
+    Observable<ResultList<QueryPopularBean>> getQguery_lately(@Query("circleId") int circleId, @Query("contentType") int contentType);
+
+    /**
+     * 获取热门(推荐)动态信息
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/circle/moment/query_popular")
+    Observable<ResultList<QueryPopularBean>> getQuery_popular(@Query("circleId") int circleId, @Query("contentType") int contentType);
 
     /**
      * 社群首页
@@ -540,10 +560,17 @@ public interface ApiService {
 
 
     /**
-     * 获取已经加入的圈子列表
+     * 获取用户已经加入的圈子列表
      */
     @GET(ConstValues.PORT_21 + "api/v1/circle/query_joined")
     Observable<Result<CircleQueryJoinedBean>> getCircleQueryJoined(@Query("userId")String userId,@Query("page") int page, @Query("pageSize") int pageSize);
+
+
+    /**
+     * 获取自己已经加入的圈子列表
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/circle/query_own_joined")
+    Observable<Result<CircleQueryJoinedBean>> getCircleQueryJoinedOwn(@Query("page") int page, @Query("pageSize") int pageSize);
 
     /**
      * 获取用户自身资料信息

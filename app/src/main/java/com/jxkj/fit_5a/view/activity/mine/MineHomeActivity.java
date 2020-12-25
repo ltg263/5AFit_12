@@ -21,11 +21,15 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.RoundImageView;
+import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.UserOwnInfo;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
+import com.jxkj.fit_5a.view.activity.association.MineCircleActivity;
 import com.jxkj.fit_5a.view.activity.association.VideoActivity;
+import com.jxkj.fit_5a.view.adapter.CircleDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
 import com.jxkj.fit_5a.view.adapter.UserTopAdapter;
@@ -98,8 +102,9 @@ public class MineHomeActivity extends BaseActivity {
     RelativeLayout mRl2;
     @BindView(R.id.ll)
     LinearLayout mLl;
-    private HomeDynamicAdapter mHomeDynamicAdapter;
+    private CircleDynamicAdapter mCircleDynamicAdapter;
     private HomeThreeSqAdapter mHomeThreeSqAdapter;
+    private UserTopAdapter mUserTopAdapter;
 
     @Override
     protected int getContentView() {
@@ -112,33 +117,22 @@ public class MineHomeActivity extends BaseActivity {
     }
 
     private void initRv() {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add("");
-        }
-        UserTopAdapter mUserTopAdapter = new UserTopAdapter(list);
+        mUserTopAdapter = new UserTopAdapter(null);
         LinearLayoutManager ms = new LinearLayoutManager(this);
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRvQzList.setLayoutManager(ms);
         mRvQzList.setHasFixedSize(true);
         mRvQzList.setAdapter(mUserTopAdapter);
 
-
-        UserTopXAdapter mUserTopxAdapter = new UserTopXAdapter(list);
+        mCircleDynamicAdapter = new CircleDynamicAdapter(null);
         mRvDtList.setLayoutManager(new LinearLayoutManager(this));
         mRvDtList.setHasFixedSize(true);
-        mRvDtList.setAdapter(mUserTopxAdapter);
+        mRvDtList.setAdapter(mCircleDynamicAdapter);
 
-
-        mHomeDynamicAdapter = new HomeDynamicAdapter(null);
-        mRvDtList.setLayoutManager(new LinearLayoutManager(this));
-        mRvDtList.setHasFixedSize(true);
-        mRvDtList.setAdapter(mHomeDynamicAdapter);
-
-        mHomeDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mCircleDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(MineHomeActivity.this, AssociationActivity.class));
+                AssociationActivity.startActivity(MineHomeActivity.this,"");
             }
         });
 
@@ -154,14 +148,11 @@ public class MineHomeActivity extends BaseActivity {
         mHomeThreeSqAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mHomeThreeSqAdapter.getData().get(position).getContentType() == 3) {
-                    startActivity(new Intent(MineHomeActivity.this, VideoActivity.class));
-                } else {
-                    startActivity(new Intent(MineHomeActivity.this, AssociationActivity.class));
-                }
+                VideoActivity.startActivity(MineHomeActivity.this,"");
             }
         });
         getUserProfileOwn();
+        getCircleQueryJoined();
         getQueryByPublisher(2);
         getQueryByPublisher(3);
     }
@@ -244,20 +235,49 @@ public class MineHomeActivity extends BaseActivity {
         userId = data.getUserId();
         GlideImageUtils.setGlideImage(this,data.getAvatar(),mIvHead);
         mTvName.setText(data.getNickName());
-        mTvState.setText("---");
+        mTvState.setText(data.getExplain());
         mTvGz.setText(data.getFollowCount());
         mTvFs.setText(data.getFansCount());
         mTvSc.setText(data.getFavoriteCount());
-        mTvLw.setText("---");
+        mTvLw.setText(data.getGiftCount());
 //        if(data.getRelation()==4){
 //
 //        }
 
     }
 
+
+    private void getCircleQueryJoined(){
+        RetrofitUtil.getInstance().apiService()
+                .getCircleQueryJoinedOwn(1,100)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<CircleQueryJoinedBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<CircleQueryJoinedBean> result) {
+                        if (isDataInfoSucceed(result)) {
+                            mUserTopAdapter.setNewData(result.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
     private void getQueryByPublisher(int contentType) {
         RetrofitUtil.getInstance().apiService()
-                .getQueryByPublisher(0, SharedUtils.getUserId(), contentType)
+                .getQueryByPublisherOwn(0, contentType)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultList<QueryPopularBean>>() {
@@ -270,7 +290,7 @@ public class MineHomeActivity extends BaseActivity {
                     public void onNext(ResultList<QueryPopularBean> result) {
                         if (result.getCode() == 0) {
                             if (contentType == 2) {
-                                mHomeDynamicAdapter.setNewData(result.getData());
+                                mCircleDynamicAdapter.setNewData(result.getData());
                             }
                             if (contentType == 3) {
                                 mHomeThreeSqAdapter.setNewData(result.getData());

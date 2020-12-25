@@ -132,7 +132,7 @@ public class AssociationAddActivity extends BaseActivity {
                     double latitude=data.getDoubleExtra("latitude",0.0);
                     double longitude=data.getDoubleExtra("longitude",0.0);
                     location = "["+longitude+","+latitude+"]";
-                    String position=data.getStringExtra("address");
+                    position=data.getStringExtra("address");
                     mTvPosition.setText(position);
 //                    mTvPosition.setText("详细地址："+address+"\n经度："+longitude+"\n纬度："+latitude);
                     break;
@@ -215,6 +215,7 @@ public class AssociationAddActivity extends BaseActivity {
         if (StringUtil.isBlank(content)) {
             ToastUtils.showShort("内容不能为空");
         }
+        show();
         RetrofitUtil.getInstance().apiService()
                 .postPublishMoment(content,"2",shareType+"",
                         "https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png,https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png",
@@ -246,6 +247,7 @@ public class AssociationAddActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
+                        dismiss();
                     }
                 });
 

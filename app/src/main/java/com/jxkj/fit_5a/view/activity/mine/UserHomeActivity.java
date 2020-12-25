@@ -22,11 +22,18 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.RoundImageView;
+import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
+import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.UserOwnInfo;
+import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
+import com.jxkj.fit_5a.view.activity.association.MineCircleActivity;
+import com.jxkj.fit_5a.view.activity.association.VideoActivity;
+import com.jxkj.fit_5a.view.adapter.CircleDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
 import com.jxkj.fit_5a.view.adapter.UserTopAdapter;
 import com.jxkj.fit_5a.view.adapter.UserTopXAdapter;
@@ -122,6 +129,10 @@ public class UserHomeActivity extends BaseActivity {
     @BindView(R.id.ll)
     LinearLayout mLl;
     String userId;
+    CircleDynamicAdapter mCircleDynamicAdapter;
+    private HomeThreeSqAdapter mHomeThreeSqAdapter;
+    private UserTopAdapter mUserTopAdapter;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_user_home;
@@ -132,25 +143,38 @@ public class UserHomeActivity extends BaseActivity {
         initRv();
         initListener();
         userId = getIntent().getStringExtra("userId");
+        getCircleQueryJoined();
         getUserProfileOwn();
+        getQueryByPublisher(2);
+        getQueryByPublisher(3);
     }
 
     private void initRv() {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add("");
-        }
-        UserTopAdapter mUserTopAdapter = new UserTopAdapter(list);
+        mUserTopAdapter = new UserTopAdapter(null);
         LinearLayoutManager ms = new LinearLayoutManager(this);
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRvQzList.setLayoutManager(ms);
         mRvQzList.setHasFixedSize(true);
         mRvQzList.setAdapter(mUserTopAdapter);
+        mUserTopAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent mIntent = new Intent(UserHomeActivity.this, MineCircleActivity.class);
+                mIntent.putExtra("id",mUserTopAdapter.getData().get(position).getId());
+                startActivity(mIntent);
+            }
+        });
 
-        UserTopXAdapter mUserTopxAdapter = new UserTopXAdapter(list);
+        mCircleDynamicAdapter = new CircleDynamicAdapter(null);
         mRvDtList.setLayoutManager(new LinearLayoutManager(this));
         mRvDtList.setHasFixedSize(true);
-        mRvDtList.setAdapter(mUserTopxAdapter);
+        mRvDtList.setAdapter(mCircleDynamicAdapter);
+        mCircleDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                AssociationActivity.startActivity(UserHomeActivity.this,"");
+            }
+        });
 
 
         //生命为瀑布流的布局方式，3列，布局方向为垂直
@@ -158,13 +182,13 @@ public class UserHomeActivity extends BaseActivity {
         //解决item跳动
 //        manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         mRvDtListSp.setLayoutManager(manager);
-        HomeThreeSqAdapter mHomeThreeSqAdapter = new HomeThreeSqAdapter(null);
+        mHomeThreeSqAdapter = new HomeThreeSqAdapter(null);
         mRvDtListSp.setHasFixedSize(true);
         mRvDtListSp.setAdapter(mHomeThreeSqAdapter);
         mHomeThreeSqAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                VideoActivity.startActivity(UserHomeActivity.this,"");
             }
         });
     }
@@ -293,15 +317,76 @@ public class UserHomeActivity extends BaseActivity {
             mTvGzZt.setText("已关注");
         }
         mNickname.setText(data.getNickName());
-        mTvState.setText("---");
+        mTvState.setText(data.getExplain());
         mTvGz.setText(data.getFollowCount());
         mTvFs.setText(data.getFansCount());
         mTvSc.setText(data.getFavoriteCount());
-        mTvLw.setText("---");
+        mTvLw.setText(data.getGiftCount());
 //        if(data.getRelation()==4){
 //
 //        }
+    }
 
+
+    private void getCircleQueryJoined(){
+        RetrofitUtil.getInstance().apiService()
+                .getCircleQueryJoined(SharedUtils.getUserId()+"",1,100)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<CircleQueryJoinedBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<CircleQueryJoinedBean> result) {
+                        if (isDataInfoSucceed(result)) {
+                            mUserTopAdapter.setNewData(result.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    private void getQueryByPublisher(int contentType) {
+        RetrofitUtil.getInstance().apiService()
+                .getQueryByPublisher(0, userId,contentType)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<QueryPopularBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<QueryPopularBean> result) {
+                        if (result.getCode() == 0) {
+                            if (contentType == 2) {
+                                mCircleDynamicAdapter.setNewData(result.getData());
+                            }
+                            if (contentType == 3) {
+                                mHomeThreeSqAdapter.setNewData(result.getData());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
     public static void startActivity(Context mContext, String userId) {

@@ -25,6 +25,7 @@ import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.SpPhotoAdapter;
+import com.jxkj.fit_5a.view.map.LocationSelectActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -117,7 +118,8 @@ public class CircleAddActivity extends BaseActivity {
             }
         });
     }
-
+    String position = null;
+    String location = null;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -131,6 +133,14 @@ public class CircleAddActivity extends BaseActivity {
                     }
                     mSpPhotoAdapter.notifyDataSetChanged();
                     break;
+                case 2:
+                    double latitude=data.getDoubleExtra("latitude",0.0);
+                    double longitude=data.getDoubleExtra("longitude",0.0);
+                    location = "["+longitude+","+latitude+"]";
+                    position=data.getStringExtra("address");
+                    mTvPosition.setText(position);
+//                    mTvPosition.setText("详细地址："+address+"\n经度："+longitude+"\n纬度："+latitude);
+                    break;
             }
         }
     }
@@ -138,13 +148,17 @@ public class CircleAddActivity extends BaseActivity {
 
     private List<String> mFeedTypeList = new ArrayList<>();
 
-    @OnClick({R.id.ll_back, R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_gk})
+    @OnClick({R.id.ll_back, R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_gk,R.id.tv_position})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
                 break;
             case R.id.tv_righttext:
-
+                postPublishMoment();
+                break;
+            case R.id.tv_position:
+                Intent intent=new Intent(this, LocationSelectActivity.class);
+                startActivityForResult(intent,2);
                 break;
             case R.id.tv_gk:
                 mFeedTypeList.clear();
@@ -194,7 +208,8 @@ public class CircleAddActivity extends BaseActivity {
 
         RetrofitUtil.getInstance().apiService()
                 .postPublishMomentCircle(id,content,"2",shareType+"",
-                        null,"https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png,https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png",null,null)
+                        location,"https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png,https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png",
+                        position,null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {

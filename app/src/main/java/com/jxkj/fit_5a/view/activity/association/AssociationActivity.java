@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.association;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.conpoment.view.DialogCommentPackage;
+import com.jxkj.fit_5a.view.activity.mine.UserFsActivity;
 import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 import com.jxkj.fit_5a.view.activity.mine.UserScActivity;
 import com.jxkj.fit_5a.view.adapter.AssociationListAdapter;
@@ -68,7 +70,7 @@ public class AssociationActivity extends BaseActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
                     case R.id.iv_head_img:
-                        UserHomeActivity.startActivity(AssociationActivity.this,"95");
+                        UserHomeActivity.startActivity(AssociationActivity.this,"80");
                         break;
                     case R.id.tv_liuyan:
                     case R.id.rl_all_comment:
@@ -106,5 +108,11 @@ public class AssociationActivity extends BaseActivity {
                 startActivity(new Intent(this, AssociationAddActivity.class));
                 break;
         }
+    }
+
+    public static void startActivity(Context mContext, String userId) {
+        Intent intent = new Intent(mContext, AssociationActivity.class);
+        intent.putExtra("userId", userId);
+        mContext.startActivity(intent);
     }
 }

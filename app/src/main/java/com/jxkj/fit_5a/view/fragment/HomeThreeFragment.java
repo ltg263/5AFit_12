@@ -119,11 +119,11 @@ public class HomeThreeFragment extends BaseFragment {
         mHomeThreeSqAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), VideoActivity.class));
-//                if(mHomeThreeSqAdapter.getData().get(position).getContentType()==3){
-//                }else{
-//                    startActivity(new Intent(getActivity(), AssociationActivity.class));
-//                }
+                if(mHomeThreeSqAdapter.getData().get(position).getContentType()==3){
+                    VideoActivity.startActivity(getActivity(),"");
+                }else{
+                    AssociationActivity.startActivity(getActivity(),"");
+                }
             }
         });
     }

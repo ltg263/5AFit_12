@@ -50,7 +50,7 @@ public class MineTopicActivity extends BaseActivity {
         list.add("");
         list.add("");
 
-        CircleDynamicAdapter mCircleDynamicAdapter = new CircleDynamicAdapter(list);
+        CircleDynamicAdapter mCircleDynamicAdapter = new CircleDynamicAdapter(null);
         mRvListTp.setLayoutManager(new LinearLayoutManager(this));
         mRvListTp.setHasFixedSize(true);
         mRvListTp.setAdapter(mCircleDynamicAdapter);

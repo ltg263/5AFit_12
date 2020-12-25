@@ -1,5 +1,7 @@
 package com.jxkj.fit_5a.view.activity.association;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.view.View;
 
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.conpoment.view.MyVideoPlayer;
+import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 import com.jxkj.fit_5a.view.adapter.ListVideoAdapter;
 
 import java.util.ArrayList;
@@ -96,5 +99,11 @@ public class VideoActivity extends BaseActivity {
     public void onPause() {
         super.onPause();
         MyVideoPlayer.releaseAllVideos();
+    }
+
+    public static void startActivity(Context mContext, String userId) {
+        Intent intent = new Intent(mContext, VideoActivity.class);
+        intent.putExtra("userId", userId);
+        mContext.startActivity(intent);
     }
 }

@@ -191,7 +191,7 @@ public class HomeOneFragment extends BaseFragment {
         mHomeDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), AssociationActivity.class));
+                AssociationActivity.startActivity(getActivity(),"");
             }
         });
     }

@@ -51,7 +51,7 @@ public class UserLwActivity extends BaseActivity {
         mUserLwAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                UserHomeActivity.startActivity(UserLwActivity.this,"95");
+                UserHomeActivity.startActivity(UserLwActivity.this,"80");
             }
         });
     }

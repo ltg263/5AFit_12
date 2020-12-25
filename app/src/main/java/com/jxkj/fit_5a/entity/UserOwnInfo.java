@@ -23,6 +23,7 @@ public class UserOwnInfo {
     private String userId;
     private String relation;
     private String nickName;
+    private String explain;
     private String avatar;
     private String gender;
     private String fansCount;
@@ -32,9 +33,18 @@ public class UserOwnInfo {
     private String commentLikeCount;
     private String momentCount;
     private String favoriteCount;
+    private String giftCount;
     private String createCricleCount;
     private String joinCricleCount;
     private long lastUpdateMomentTimestamp;
+
+    public String getExplain() {
+        return explain;
+    }
+
+    public void setExplain(String explain) {
+        this.explain = explain;
+    }
 
     public String getUserId() {
         return userId;
@@ -54,6 +64,14 @@ public class UserOwnInfo {
 
     public String getNickName() {
         return nickName;
+    }
+
+    public String getGiftCount() {
+        return giftCount;
+    }
+
+    public void setGiftCount(String giftCount) {
+        this.giftCount = giftCount;
     }
 
     public void setNickName(String nickName) {

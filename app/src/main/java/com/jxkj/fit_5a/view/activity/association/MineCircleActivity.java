@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.activity.association;
 
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,9 +20,12 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.BlurringView;
 import com.jxkj.fit_5a.entity.CircleDetailsBean;
+import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.view.adapter.CircleDynamicAdapter;
 
 import java.util.ArrayList;
@@ -92,6 +96,7 @@ public class MineCircleActivity extends BaseActivity {
     @BindView(R.id.tv_add_dt)
     ImageView mTvAddDt;
     private int id;
+    private CircleDynamicAdapter mCircleDynamicAdapter;
 
     @Override
     protected int getContentView() {
@@ -102,23 +107,16 @@ public class MineCircleActivity extends BaseActivity {
     protected void initViews() {
         id = getIntent().getIntExtra("id", 0);
         getCircleDetails();
-        List<String> list = new ArrayList<>();
-        list.add("-1");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
 
-        CircleDynamicAdapter mCircleDynamicAdapter = new CircleDynamicAdapter(list);
+        mCircleDynamicAdapter = new CircleDynamicAdapter(null);
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mCircleDynamicAdapter);
 
-        mCircleDynamicAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mCircleDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                AssociationActivity.startActivity(MineCircleActivity.this,"");
             }
         });
         mBlurringView.setBlurredView(mRvList);
@@ -128,6 +126,7 @@ public class MineCircleActivity extends BaseActivity {
 
             }
         });
+        getQuery_popular();
     }
 
     @OnClick({R.id.iv_back, R.id.tv_share, R.id.tv_add_dt, R.id.tv_jiaru, R.id.rl1, R.id.rl2})
@@ -145,9 +144,11 @@ public class MineCircleActivity extends BaseActivity {
                 CircleAddActivity.startActivity(this,id);
                 break;
             case R.id.rl1:
+                getQuery_popular();
                 initView(mTv1, mView1);
                 break;
             case R.id.rl2:
+                getQguery_lately();
                 initView(mTv2, mView2);
                 break;
         }
@@ -237,6 +238,64 @@ public class MineCircleActivity extends BaseActivity {
                     }
                 });
 
+    }
+
+
+    private void getQuery_popular() {
+        RetrofitUtil.getInstance().apiService()
+                .getQuery_popular(id, 2)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<QueryPopularBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<QueryPopularBean> result) {
+                        if (isDataInfoSucceed(result)) {
+                            mCircleDynamicAdapter.setNewData(result.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+
+    private void getQguery_lately() {
+        RetrofitUtil.getInstance().apiService()
+                .getQguery_lately(id, 2)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<QueryPopularBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<QueryPopularBean> result) {
+                        if (isDataInfoSucceed(result)) {
+                            mCircleDynamicAdapter.setNewData(result.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
     private void getCircleQuit(int id) {
