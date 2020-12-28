@@ -8,9 +8,12 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -40,10 +43,12 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
         helper.setText(R.id.tv_name,item.getUser().getNickName())
                 .setText(R.id.tv_time, StringUtil.getTimeToYMD(item.getTimestamp(),"yyyy-MM-dd HH:mm:ss"))
                 .setVisible(R.id.tv_topic,false)
+                .setVisible(R.id.ll_pl,false)
                 .setText(R.id.banner_home_one,item.getContent()+"")
                 .setText(R.id.tv_shoucang,item.getFavoriteCount()+"")
                 .setText(R.id.tv_xihuan,item.getLikeCount()+"")
                 .setText(R.id.tv_liuyan,item.getCommentCount()+"")
+                .setText(R.id.tv_all,"全部评论("+item.getCommentCount()+")")
                 .setText(R.id.tv_fenxiang,"0")
                 .setImageDrawable(R.id.iv_xihuan,mContext.getResources().getDrawable(R.drawable.icon_xin_99_d))
                 .setImageDrawable(R.id.iv_shoucang,mContext.getResources().getDrawable(R.drawable.icon_share_sc_d));
@@ -77,6 +82,50 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
         if(StringUtil.isNotBlank(item.getMedia())){
             mBanner.setVisibility(View.VISIBLE);
             initBannerOne(mBanner,item.getMedia().split(","));
+        }
+
+        if(item.getCommentCount()>0){
+            HttpRequestUtils.getCommentMoment(item.getMomentId() + "", item.getPublisherId() + "",1,2,
+                    new HttpRequestUtils.ResultInterface() {
+                        @Override
+                        public void succeed(ResultList<CommentMomentBean> result) {
+                            if(result!=null&&result.getCode()==0&&result.getData().size()>0){
+                                helper.setGone(R.id.ll_pl,true).setGone(R.id.rl_pl_2,false)
+                                        .setImageDrawable(R.id.iv_xh,mContext.getResources().getDrawable(R.drawable.icon_xin_99_d))
+                                        .setImageDrawable(R.id.iv_xh2,mContext.getResources().getDrawable(R.drawable.icon_xin_99_d));
+                                List<CommentMomentBean> data = result.getData();
+                                for(int i=0;i<data.size();i++){
+                                    if(i==0){
+                                        GlideImageUtils.setGlideImage(mContext,data.get(0).getUser().getAvatar(),helper.getView(R.id.iv_head_1));
+                                        helper.setText(R.id.tv_name_1,data.get(0).getUser().getNickName()).setText(R.id.tv_pl_content_1,data.get(0).getContent())
+                                                .setText(R.id.tv_xh_s,data.get(0).getLikeCount()+"").setText(R.id.tv_pl_num_1,"评论("+data.get(0).getCommentCount()+")");
+
+                                        helper.setVisible(R.id.tv_pl_num_1,true).setVisible(R.id.view1,true);
+                                        if(data.get(0).getCommentCount()==0){
+                                            helper.setVisible(R.id.tv_pl_num_1,false).setVisible(R.id.view1,false);
+                                        }
+                                        if(item.isIsLike()){
+                                            helper.setImageDrawable(R.id.iv_xh,mContext.getResources().getDrawable(R.drawable.ic_celect_xh_yes));
+                                        }
+                                    }
+                                    if(i==1){
+                                        GlideImageUtils.setGlideImage(mContext,data.get(1).getUser().getAvatar(),helper.getView(R.id.iv_head_2));
+                                        helper.setText(R.id.tv_name_2,data.get(1).getUser().getNickName()).setText(R.id.tv_pl_content_2,data.get(1).getContent())
+                                                .setText(R.id.tv_xh_s2,data.get(1).getLikeCount()+"")
+                                                .setText(R.id.tv_pl_num_2,"评论("+data.get(1).getCommentCount()+")").setGone(R.id.rl_pl_2,true);
+
+                                        helper.setVisible(R.id.tv_pl_num_2,true).setVisible(R.id.view2,true);
+                                        if(data.get(1).getCommentCount()==0){
+                                            helper.setVisible(R.id.tv_pl_num_2,false).setVisible(R.id.view2,false);
+                                        }
+                                        if(item.isIsLike()){
+                                            helper.setImageDrawable(R.id.iv_xh2,mContext.getResources().getDrawable(R.drawable.ic_celect_xh_yes));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
         }
     }
 

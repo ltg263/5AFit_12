@@ -736,7 +736,8 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_21+"api/v1/moment/comment/query")
     Observable<ResultList<CommentMomentBean>> getCommentMoment(@Query("momentId") String momentId,
-                                                               @Query("momentPublisherId") String momentPublisherId);
+                                                               @Query("momentPublisherId") String momentPublisherId,
+                                                               @Query("page")int page, @Query("pageSize")int pageSize);
 
     /**
      * 获取评论下的评论信息(回复评论的评论)

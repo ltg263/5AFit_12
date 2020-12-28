@@ -183,7 +183,7 @@ public class AssociationActivity extends BaseActivity {
     }
     private void ShowCommentPackageDialog(MomentDetailsBean data) {
         DialogCommentPackage choicePackageDialog = new DialogCommentPackage(this);
-        HttpRequestUtils.getCommentMoment(data.getMomentId() + "", data.getPublisherId() + "",
+        HttpRequestUtils.getCommentMoment(data.getMomentId() + "", data.getPublisherId() + "",1,100,
                 new HttpRequestUtils.ResultInterface() {
             @Override
             public void succeed(ResultList<CommentMomentBean> result) {

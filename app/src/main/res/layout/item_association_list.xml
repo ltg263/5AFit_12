@@ -130,12 +130,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <com.jxkj.fit_5a.conpoment.view.RoundImageView
                     android:id="@+id/iv_head_1"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginEnd="@dimen/dimen_15dp"
-                    android:src="@mipmap/ic_6" />
+                    android:src="@mipmap/ic_6"
+                    app:type="circle" />
 
                 <TextView
                     android:id="@+id/tv_name_1"
@@ -166,12 +167,13 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_toEndOf="@id/iv_head_1">
 
-                    <ImageView
+                    <com.jxkj.fit_5a.conpoment.view.RoundImageView
                         android:id="@+id/iv_head_11"
                         android:layout_width="@dimen/dimen_25dp"
                         android:layout_height="@dimen/dimen_25dp"
                         android:layout_marginEnd="@dimen/dimen_15dp"
-                        android:src="@mipmap/ic_6" />
+                        android:src="@mipmap/ic_6"
+                        app:type="circle" />
 
                     <TextView
                         android:id="@+id/tv_name_11"
@@ -219,19 +221,21 @@
                     android:id="@+id/tv_xh_s"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/iv_xh"
                     android:layout_toStartOf="@id/iv_xh"
                     android:text="6"
                     android:textColor="@color/color_333333"
-                    android:textSize="12sp" />
+                    android:textSize="11sp" />
 
                 <ImageView
                     android:id="@+id/iv_xh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dimen_15dp"
+                    android:layout_height="@dimen/dimen_15dp"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="@dimen/dimen_5dp"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_select_xi_yes"
+                    android:padding="@dimen/dimen_3dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_celect_xh_yes"
                     android:text="6"
                     android:textColor="@color/color_333333"
                     android:textSize="12sp" />
@@ -244,12 +248,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10">
 
-                <ImageView
+                <com.jxkj.fit_5a.conpoment.view.RoundImageView
                     android:id="@+id/iv_head_2"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginEnd="@dimen/dimen_15dp"
-                    android:src="@mipmap/ic_6" />
+                    android:src="@mipmap/ic_6"
+                    app:type="circle" />
 
                 <TextView
                     android:id="@+id/tv_name_2"
@@ -280,12 +285,13 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_toEndOf="@id/iv_head_2">
 
-                    <ImageView
+                    <com.jxkj.fit_5a.conpoment.view.RoundImageView
                         android:id="@+id/iv_head_21"
                         android:layout_width="@dimen/dimen_25dp"
                         android:layout_height="@dimen/dimen_25dp"
                         android:layout_marginEnd="@dimen/dimen_15dp"
-                        android:src="@mipmap/ic_6" />
+                        android:src="@mipmap/ic_6"
+                        app:type="circle" />
 
                     <TextView
                         android:id="@+id/tv_name_21"
@@ -333,6 +339,7 @@
                     android:id="@+id/tv_xh_s2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/iv_xh2"
                     android:layout_toStartOf="@id/iv_xh2"
                     android:text="6"
                     android:textColor="@color/color_333333"
@@ -340,12 +347,13 @@
 
                 <ImageView
                     android:id="@+id/iv_xh2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dimen_15dp"
+                    android:layout_height="@dimen/dimen_15dp"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="@dimen/dimen_5dp"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_select_xi_yes"
+                    android:padding="@dimen/dimen_3dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_celect_xh_yes"
                     android:text="6"
                     android:textColor="@color/color_333333"
                     android:textSize="12sp" />
@@ -365,6 +373,7 @@
                     android:background="@color/line_color" />
 
                 <TextView
+                    android:id="@+id/tv_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"

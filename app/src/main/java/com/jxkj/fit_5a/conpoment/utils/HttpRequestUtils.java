@@ -513,9 +513,9 @@ public class HttpRequestUtils {
     /**
      * 获取动态下评论信息
      */
-    public static void getCommentMoment(String momentId,String momentPublisherId,ResultInterface mResultInterface) {
+    public static void getCommentMoment(String momentId,String momentPublisherId,int page,int pageSize,ResultInterface mResultInterface) {
         RetrofitUtil.getInstance().apiService()
-                .getCommentMoment(momentId,momentPublisherId)
+                .getCommentMoment(momentId,momentPublisherId,page,pageSize)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultList<CommentMomentBean>>() {

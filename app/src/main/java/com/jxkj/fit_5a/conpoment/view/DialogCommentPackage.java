@@ -63,7 +63,7 @@ public class DialogCommentPackage {
             }
         });
         mRvList.setLayoutManager(new LinearLayoutManager(mContext));
-        mMineCommentAdapter = new MineCommentAdapter(null);//item.getProducts()
+        mMineCommentAdapter = new MineCommentAdapter(null);
         mRvList.setAdapter(mMineCommentAdapter);
         mMineCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
