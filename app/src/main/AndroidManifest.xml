@@ -253,6 +253,8 @@
         <activity
             android:name=".view.activity.association.AssociationActivity"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.association.AssociationAddActivity"

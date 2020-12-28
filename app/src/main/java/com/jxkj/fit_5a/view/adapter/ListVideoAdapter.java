@@ -46,7 +46,7 @@ public class ListVideoAdapter extends VideoBaseAdapter<String, ListVideoAdapter.
         DialogCommentPackage choicePackageDialog = new DialogCommentPackage((Activity) context);
         choicePackageDialog.setOnCommentPackageDialogListener(new DialogCommentPackage.OnCommentPackageDialogListener() {
             @Override
-            public void addListener(String skuId, int num) {
+            public void addListener(String skuId, String num) {
 
             }
 

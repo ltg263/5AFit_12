@@ -26,6 +26,7 @@ import com.jxkj.fit_5a.entity.CircleDetailsBean;
 import com.jxkj.fit_5a.entity.CircleQueryBean;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.CircleTaskData;
+import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.CommunityHomeInfoBean;
 import com.jxkj.fit_5a.entity.FavoriteQueryList;
 import com.jxkj.fit_5a.entity.FollowFansList;
@@ -620,7 +621,7 @@ public interface ApiService {
      * 获取用户的收藏列表
      * @return
      */
-    @POST(ConstValues.PORT_21+"api/v1/favorite/query")
+    @GET(ConstValues.PORT_21+"api/v1/favorite/query")
     Observable<ResultList<FavoriteQueryList>>getFavoriteQueryOwn(@Query("userId") String userId);
 
     /**
@@ -655,6 +656,21 @@ public interface ApiService {
     @POST(ConstValues.PORT_21 + "api/v1/moment/like/cancel")
     Observable<Result> postLikeCancel(@Query("momentId") String momentId,
                                          @Query("momentPublisherId") String momentPublisherId);
+
+    /**
+     * 用户点赞动态评论
+     */
+    @POST(ConstValues.PORT_21 + "api/v1/moment/comment/like")
+    Observable<Result> postCommentLike(@Query("commentId") String commentId,
+                                   @Query("momentId") String momentId);
+
+
+    /**
+     * 用户取消点赞动态评论
+     */
+    @POST(ConstValues.PORT_21 + "api/v1/moment/comment/like/cancel")
+    Observable<Result> postCommentLikeCancel(@Query("commentId") String commentId,
+                                         @Query("momentId") String momentId);
 
     /**
      * 获取热门话题
@@ -699,6 +715,38 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_21+"api/v1/circle/moment/details")
     Observable<Result<MomentDetailsBean>> getMomentDetailsCircle(@Query("circleId") String circleId,@Query("momentId") String momentId,@Query("publisherId") String publisherId);
+
+    /**
+     * 用户发布动态评论
+     * @param content
+     * @param contentType
+     * @param momentId
+     * @param momentPublisherId
+     * @param replyCommentId
+     * @return
+     */
+    @POST(ConstValues.PORT_21+"api/v1/moment/comment/publish")
+    Observable<Result> postCommentMoment(@Query("content")String content,@Query("contentType")int contentType,
+                                         @Query("momentId") String momentId,@Query("momentPublisherId") String momentPublisherId,
+                                         @Query("replyCommentId") String replyCommentId);
+
+    /**
+     * 获取动态下评论信息
+     * @return
+     */
+    @GET(ConstValues.PORT_21+"api/v1/moment/comment/query")
+    Observable<ResultList<CommentMomentBean>> getCommentMoment(@Query("momentId") String momentId,
+                                                               @Query("momentPublisherId") String momentPublisherId);
+
+    /**
+     * 获取评论下的评论信息(回复评论的评论)
+     * @return
+     */
+    @GET(ConstValues.PORT_21+"api/v1/moment/comment/query_reply")
+    Observable<ResultList<CommentMomentBean>> getCommentQueryReply(@Query("commentId") String commentId,
+                                                                    @Query("momentId") String momentId,
+                                                                    @Query("momentPublisherId")String momentPublisherId,
+                                                                    @Query("page")int page, @Query("pageSize")int pageSize);
 
     /**
      * 订单列表

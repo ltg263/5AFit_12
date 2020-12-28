@@ -5,7 +5,9 @@ import android.content.Context;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
 import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
@@ -397,5 +399,183 @@ public class HttpRequestUtils {
 
                     }
                 });
+    }
+
+
+    /**
+     * 用户点赞动态评论
+     */
+    public static void postCommentLike(String commentId,String momentId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postCommentLike(commentId,momentId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("0");
+                        }else{
+                            mLoginInterface.succeed("-1");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    /**
+     * 用户取消点赞动态评论
+     */
+    public static void postCommentLikeCancel(String commentId,String momentId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postCommentLikeCancel(commentId,momentId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("0");
+                        }else{
+                            mLoginInterface.succeed("-1");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    /**
+     * 用户发布动态评论
+     */
+    public static void postCommentMoment(String content,String momentId,String momentPublisherId,
+                                         String replyCommentId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postCommentMoment(content,1,momentId,momentPublisherId,replyCommentId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("0");
+                        }else{
+                            mLoginInterface.succeed("-1");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    /**
+     * 获取动态下评论信息
+     */
+    public static void getCommentMoment(String momentId,String momentPublisherId,ResultInterface mResultInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .getCommentMoment(momentId,momentPublisherId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<CommentMomentBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<CommentMomentBean> result) {
+                        mResultInterface.succeed(result);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mResultInterface.succeed(null);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    /**
+     * 获取动态下评论信息
+     */
+    public static void getCommentQueryReply(String commentId,String momentId,String momentPublisherId,
+                                            int page,int pageSize,ResultInterface mResultInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .getCommentQueryReply(commentId,momentId,momentPublisherId,page,pageSize)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<CommentMomentBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<CommentMomentBean> result) {
+                        mResultInterface.succeed(result);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mResultInterface.succeed(null);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public interface ResultInterface {
+        void succeed(ResultList<CommentMomentBean> result);
+//        void failure();
     }
 }

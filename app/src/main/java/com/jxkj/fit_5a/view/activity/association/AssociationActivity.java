@@ -16,9 +16,11 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.OrderInfoData;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogCommentPackage;
+import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
 import com.jxkj.fit_5a.view.activity.mine.UserFsActivity;
 import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
@@ -167,7 +169,7 @@ public class AssociationActivity extends BaseActivity {
                         break;
                     case R.id.tv_liuyan:
                     case R.id.rl_all_comment:
-                        ShowCommentPackageDialog();
+                        ShowCommentPackageDialog(data);
                         break;
                 }
             }
@@ -179,12 +181,27 @@ public class AssociationActivity extends BaseActivity {
             getMomentDetailsCircle();
         }
     }
-    private void ShowCommentPackageDialog() {
+    private void ShowCommentPackageDialog(MomentDetailsBean data) {
         DialogCommentPackage choicePackageDialog = new DialogCommentPackage(this);
+        HttpRequestUtils.getCommentMoment(data.getMomentId() + "", data.getPublisherId() + "",
+                new HttpRequestUtils.ResultInterface() {
+            @Override
+            public void succeed(ResultList<CommentMomentBean> result) {
+                isDataInfoSucceed(result);
+                choicePackageDialog.setNewData(result.getData(),data.getCommentCount()+"");
+            }
+        });
         choicePackageDialog.setOnCommentPackageDialogListener(new DialogCommentPackage.OnCommentPackageDialogListener() {
             @Override
-            public void addListener(String skuId, int num) {
-
+            public void addListener(String context, String commentId) {
+                show();
+                HttpRequestUtils.postCommentMoment(context, data.getMomentId()+"", data.getPublisherId()+"",
+                        commentId, new HttpRequestUtils.LoginInterface() {
+                    @Override
+                    public void succeed(String path) {
+                        dismiss();
+                    }
+                });
             }
 
             @Override
