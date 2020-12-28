@@ -3,18 +3,26 @@ package com.jxkj.fit_5a.entity;
 public class FavoriteQueryList {
 
     /**
+     * userId : 80
      * circleId : 0
-     * moment : {"circleId":0,"commentCount":0,"contentType":0,"delete":true,"isLike":true,"likeCount":0,"location":"","media":"","momentId":0,"pageviews":0,"position":"","publisherId":0,"shareType":0,"simpleContent":"","timestamp":0,"topicArr":"","user":{"avatar":"","gender":0,"nickName":"","relation":0,"userId":0},"violation":true}
-     * momentId : 0
-     * momentPublisherId : 0
-     * userId : 0
+     * momentId : 1608694802238000
+     * momentPublisherId : 95
+     * moment : {"circleId":0,"publisherId":95,"momentId":1608694802238000,"user":{"userId":95,"relation":1,"nickName":"请修改昵称_17212312311","avatar":"13123","gender":0},"isLike":false,"likeCount":0,"commentCount":0,"topicArr":"[\"划船机\",\"如何减肥\"]","pageviews":4,"contentType":1,"simpleContent":"测试沈彪，你好啊","shareType":1,"timestamp":1608694803187,"position":"","location":"","media":"","delete":false,"violation":false}
      */
 
-    private int circleId;
-    private MomentBean moment;
-    private int momentId;
-    private int momentPublisherId;
     private int userId;
+    private int circleId;
+    private long momentId;
+    private int momentPublisherId;
+    private MomentBean moment;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public int getCircleId() {
         return circleId;
@@ -24,19 +32,11 @@ public class FavoriteQueryList {
         this.circleId = circleId;
     }
 
-    public MomentBean getMoment() {
-        return moment;
-    }
-
-    public void setMoment(MomentBean moment) {
-        this.moment = moment;
-    }
-
-    public int getMomentId() {
+    public long getMomentId() {
         return momentId;
     }
 
-    public void setMomentId(int momentId) {
+    public void setMomentId(long momentId) {
         this.momentId = momentId;
     }
 
@@ -48,53 +48,53 @@ public class FavoriteQueryList {
         this.momentPublisherId = momentPublisherId;
     }
 
-    public int getUserId() {
-        return userId;
+    public MomentBean getMoment() {
+        return moment;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setMoment(MomentBean moment) {
+        this.moment = moment;
     }
 
     public static class MomentBean {
         /**
          * circleId : 0
-         * commentCount : 0
-         * contentType : 0
-         * delete : true
-         * isLike : true
+         * publisherId : 95
+         * momentId : 1608694802238000
+         * user : {"userId":95,"relation":1,"nickName":"请修改昵称_17212312311","avatar":"13123","gender":0}
+         * isLike : false
          * likeCount : 0
+         * commentCount : 0
+         * topicArr : ["划船机","如何减肥"]
+         * pageviews : 4
+         * contentType : 1
+         * simpleContent : 测试沈彪，你好啊
+         * shareType : 1
+         * timestamp : 1608694803187
+         * position :
          * location :
          * media :
-         * momentId : 0
-         * pageviews : 0
-         * position :
-         * publisherId : 0
-         * shareType : 0
-         * simpleContent :
-         * timestamp : 0
-         * topicArr :
-         * user : {"avatar":"","gender":0,"nickName":"","relation":0,"userId":0}
-         * violation : true
+         * delete : false
+         * violation : false
          */
 
         private int circleId;
-        private int commentCount;
-        private int contentType;
-        private boolean delete;
+        private int publisherId;
+        private long momentId;
+        private UserBean user;
         private boolean isLike;
         private int likeCount;
+        private int commentCount;
+        private String topicArr;
+        private int pageviews;
+        private int contentType;
+        private String simpleContent;
+        private int shareType;
+        private long timestamp;
+        private String position;
         private String location;
         private String media;
-        private int momentId;
-        private int pageviews;
-        private String position;
-        private int publisherId;
-        private int shareType;
-        private String simpleContent;
-        private int timestamp;
-        private String topicArr;
-        private UserBean user;
+        private boolean delete;
         private boolean violation;
 
         public int getCircleId() {
@@ -105,28 +105,28 @@ public class FavoriteQueryList {
             this.circleId = circleId;
         }
 
-        public int getCommentCount() {
-            return commentCount;
+        public int getPublisherId() {
+            return publisherId;
         }
 
-        public void setCommentCount(int commentCount) {
-            this.commentCount = commentCount;
+        public void setPublisherId(int publisherId) {
+            this.publisherId = publisherId;
         }
 
-        public int getContentType() {
-            return contentType;
+        public long getMomentId() {
+            return momentId;
         }
 
-        public void setContentType(int contentType) {
-            this.contentType = contentType;
+        public void setMomentId(long momentId) {
+            this.momentId = momentId;
         }
 
-        public boolean isDelete() {
-            return delete;
+        public UserBean getUser() {
+            return user;
         }
 
-        public void setDelete(boolean delete) {
-            this.delete = delete;
+        public void setUser(UserBean user) {
+            this.user = user;
         }
 
         public boolean isIsLike() {
@@ -145,6 +145,70 @@ public class FavoriteQueryList {
             this.likeCount = likeCount;
         }
 
+        public int getCommentCount() {
+            return commentCount;
+        }
+
+        public void setCommentCount(int commentCount) {
+            this.commentCount = commentCount;
+        }
+
+        public String getTopicArr() {
+            return topicArr;
+        }
+
+        public void setTopicArr(String topicArr) {
+            this.topicArr = topicArr;
+        }
+
+        public int getPageviews() {
+            return pageviews;
+        }
+
+        public void setPageviews(int pageviews) {
+            this.pageviews = pageviews;
+        }
+
+        public int getContentType() {
+            return contentType;
+        }
+
+        public void setContentType(int contentType) {
+            this.contentType = contentType;
+        }
+
+        public String getSimpleContent() {
+            return simpleContent;
+        }
+
+        public void setSimpleContent(String simpleContent) {
+            this.simpleContent = simpleContent;
+        }
+
+        public int getShareType() {
+            return shareType;
+        }
+
+        public void setShareType(int shareType) {
+            this.shareType = shareType;
+        }
+
+        public long getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(long timestamp) {
+            this.timestamp = timestamp;
+        }
+
+        public String getPosition() {
+            return position;
+        }
+
+        public void setPosition(String position) {
+            this.position = position;
+        }
+
         public String getLocation() {
             return location;
         }
@@ -161,76 +225,12 @@ public class FavoriteQueryList {
             this.media = media;
         }
 
-        public int getMomentId() {
-            return momentId;
+        public boolean isDelete() {
+            return delete;
         }
 
-        public void setMomentId(int momentId) {
-            this.momentId = momentId;
-        }
-
-        public int getPageviews() {
-            return pageviews;
-        }
-
-        public void setPageviews(int pageviews) {
-            this.pageviews = pageviews;
-        }
-
-        public String getPosition() {
-            return position;
-        }
-
-        public void setPosition(String position) {
-            this.position = position;
-        }
-
-        public int getPublisherId() {
-            return publisherId;
-        }
-
-        public void setPublisherId(int publisherId) {
-            this.publisherId = publisherId;
-        }
-
-        public int getShareType() {
-            return shareType;
-        }
-
-        public void setShareType(int shareType) {
-            this.shareType = shareType;
-        }
-
-        public String getSimpleContent() {
-            return simpleContent;
-        }
-
-        public void setSimpleContent(String simpleContent) {
-            this.simpleContent = simpleContent;
-        }
-
-        public int getTimestamp() {
-            return timestamp;
-        }
-
-        public void setTimestamp(int timestamp) {
-            this.timestamp = timestamp;
-        }
-
-        public String getTopicArr() {
-            return topicArr;
-        }
-
-        public void setTopicArr(String topicArr) {
-            this.topicArr = topicArr;
-        }
-
-        public UserBean getUser() {
-            return user;
-        }
-
-        public void setUser(UserBean user) {
-            this.user = user;
+        public void setDelete(boolean delete) {
+            this.delete = delete;
         }
 
         public boolean isViolation() {
@@ -243,18 +243,42 @@ public class FavoriteQueryList {
 
         public static class UserBean {
             /**
-             * avatar :
+             * userId : 95
+             * relation : 1
+             * nickName : 请修改昵称_17212312311
+             * avatar : 13123
              * gender : 0
-             * nickName :
-             * relation : 0
-             * userId : 0
              */
 
+            private int userId;
+            private int relation;
+            private String nickName;
             private String avatar;
             private int gender;
-            private String nickName;
-            private int relation;
-            private int userId;
+
+            public int getUserId() {
+                return userId;
+            }
+
+            public void setUserId(int userId) {
+                this.userId = userId;
+            }
+
+            public int getRelation() {
+                return relation;
+            }
+
+            public void setRelation(int relation) {
+                this.relation = relation;
+            }
+
+            public String getNickName() {
+                return nickName;
+            }
+
+            public void setNickName(String nickName) {
+                this.nickName = nickName;
+            }
 
             public String getAvatar() {
                 return avatar;
@@ -270,30 +294,6 @@ public class FavoriteQueryList {
 
             public void setGender(int gender) {
                 this.gender = gender;
-            }
-
-            public String getNickName() {
-                return nickName;
-            }
-
-            public void setNickName(String nickName) {
-                this.nickName = nickName;
-            }
-
-            public int getRelation() {
-                return relation;
-            }
-
-            public void setRelation(int relation) {
-                this.relation = relation;
-            }
-
-            public int getUserId() {
-                return userId;
-            }
-
-            public void setUserId(int userId) {
-                this.userId = userId;
             }
         }
     }

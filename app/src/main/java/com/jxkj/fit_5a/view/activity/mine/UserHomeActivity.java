@@ -332,7 +332,7 @@ public class UserHomeActivity extends BaseActivity {
 
     private void getCircleQueryJoined(){
         RetrofitUtil.getInstance().apiService()
-                .getCircleQueryJoined(SharedUtils.getUserId()+"",1,100)
+                .getCircleQueryJoined(userId,1,100)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<CircleQueryJoinedBean>>() {

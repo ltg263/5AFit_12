@@ -66,7 +66,7 @@ public class HomeThreeFragment extends BaseFragment {
         initRvUi();
         page = 1;
         pageSize = 3;
-        getCircleQueryJoined();
+//        getCircleQueryJoined();
 //        getHotTopicList();
         getMomentQueryPopular();
     }
@@ -208,7 +208,9 @@ public class HomeThreeFragment extends BaseFragment {
                     @Override
                     public void onNext(Result<CommunityHomeInfoBean> result) {
                         if (result.getCode()==0) {
-                            mHomeThreeTopAdapter.setNewData(result.getData().getHotCircles());
+                            List<CircleQueryJoinedBean.ListBean> data = result.getData().getHotCircles();
+                            data.add(null);
+                            mHomeThreeTopAdapter.setNewData(data);
                             mHomeThreeRmhtAdapter.setNewData(result.getData().getHotTopics());
                             mHomeThreeSqAdapter.setNewData(result.getData().getHotMoments());
                         }

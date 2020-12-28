@@ -124,6 +124,15 @@ public class MineHomeActivity extends BaseActivity {
         mRvQzList.setHasFixedSize(true);
         mRvQzList.setAdapter(mUserTopAdapter);
 
+        mUserTopAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent mIntent = new Intent(MineHomeActivity.this, MineCircleActivity.class);
+                mIntent.putExtra("id",mUserTopAdapter.getData().get(position).getId());
+                startActivity(mIntent);
+            }
+        });
+
         mCircleDynamicAdapter = new CircleDynamicAdapter(null);
         mRvDtList.setLayoutManager(new LinearLayoutManager(this));
         mRvDtList.setHasFixedSize(true);

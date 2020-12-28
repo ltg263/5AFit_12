@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/dp_10"
     android:orientation="vertical">
 
@@ -11,8 +11,8 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="@dimen/dp_10"
-        app:type="round"
-        android:src="@mipmap/ic_6" />
+        android:src="@mipmap/ic_6"
+        app:type="round" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -45,32 +45,47 @@
         android:textColor="@color/color_808080"
         android:textSize="15sp" />
 
-    <TextView
-        android:id="@+id/tv_xh"
+    <LinearLayout
+        android:id="@+id/ll_xihuan"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_25dp"
-        android:layout_alignTop="@id/iv_head_img"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_liuyan"
+        android:layout_alignBottom="@id/tv_liuyan"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/dp_10"
         android:drawableStart="@drawable/ic_celect_xh_yes"
-        android:drawablePadding="@dimen/dimen_5dp"
-        android:gravity="center"
-        android:text="123"
-        android:textColor="@color/color_808080"
-        android:textSize="10sp" />
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_xihuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_xin_99_d" />
+
+        <TextView
+            android:id="@+id/tv_xihuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_5dp"
+            android:gravity="center_vertical"
+            android:text="0"
+            android:textColor="@color/color_808080"
+            android:textSize="10sp" />
+
+    </LinearLayout>
 
     <View
         android:id="@+id/view"
         android:layout_width="1dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_xh"
-        android:layout_alignBottom="@id/tv_xh"
+        android:layout_alignTop="@id/ll_xihuan"
+        android:layout_alignBottom="@id/ll_xihuan"
         android:layout_marginHorizontal="@dimen/dimen_20dp"
-        android:layout_toStartOf="@id/tv_xh"
+        android:layout_toStartOf="@id/ll_xihuan"
         android:background="@color/line_color" />
 
     <TextView
-        android:id="@+id/tv_ly"
+        android:id="@+id/tv_liuyan"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dimen_25dp"
         android:layout_alignTop="@id/iv_head_img"
@@ -92,44 +107,47 @@
         android:layout_marginTop="@dimen/dp_10"
         android:orientation="horizontal">
 
+        <com.jxkj.fit_5a.conpoment.view.SquareImageView
+            android:id="@+id/siv_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_5dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_7"
+            android:visibility="gone" />
+
+        <com.jxkj.fit_5a.conpoment.view.SquareImageView
+            android:id="@+id/siv_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_5dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_7"
+            android:visibility="gone" />
+
+        <com.jxkj.fit_5a.conpoment.view.SquareImageView
+            android:id="@+id/siv_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_5dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_7"
+            android:visibility="gone" />
+
         <ImageView
-            android:id="@+id/iv_img"
+            android:id="@+id/siv_4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_content"
+            android:layout_height="@dimen/dimen_220dp"
+            android:scaleType="center"
             android:src="@mipmap/ic_16" />
-
-        <com.jxkj.fit_5a.conpoment.view.SquareImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_5dp"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_7"
-            android:visibility="gone" />
-
-        <com.jxkj.fit_5a.conpoment.view.SquareImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_5dp"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_7"
-            android:visibility="gone" />
-
-        <com.jxkj.fit_5a.conpoment.view.SquareImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_5dp"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_7"
-            android:visibility="gone" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_browse_num"
+        android:id="@+id/tv_topic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/rv_img_list"
@@ -144,10 +162,10 @@
 
 
     <TextView
-        android:id="@+id/tv_liuyan"
+        android:id="@+id/tv_browse_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_browse_num"
+        android:layout_alignTop="@id/tv_topic"
         android:layout_alignParentEnd="true"
         android:drawableStart="@drawable/icon_yl"
         android:drawablePadding="@dimen/dimen_5dp"
@@ -160,7 +178,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/tv_liuyan"
+        android:layout_below="@id/tv_browse_num"
         android:layout_marginTop="@dimen/dimen_5dp"
         android:background="@color/line_color" />
 </RelativeLayout>

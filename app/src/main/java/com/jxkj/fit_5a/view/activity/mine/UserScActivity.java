@@ -56,7 +56,7 @@ public class UserScActivity extends BaseActivity {
         mUserScAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                UserHomeActivity.startActivity(UserScActivity.this,mUserScAdapter.getData().get(position).getUserId()+"");
+                UserHomeActivity.startActivity(UserScActivity.this,mUserScAdapter.getData().get(position).getMoment().getPublisherId()+"");
             }
         });
 
