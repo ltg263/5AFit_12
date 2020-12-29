@@ -331,6 +331,13 @@ public class HttpRequestUtils {
                 });
     }
 
+    public static void postLike1(String circleId,String momentId,String momentPublisherId,LoginInterface mLoginInterface) {
+        if(StringUtil.isBlank(circleId) || circleId.equals("0")){
+            postLike(momentId,momentPublisherId,mLoginInterface);
+        }else{
+            postLikeCircle(circleId,momentId,momentPublisherId,mLoginInterface);
+        }
+    }
     /**
      * 去点赞
      */
@@ -367,11 +374,89 @@ public class HttpRequestUtils {
     }
 
     /**
+     * 去点赞
+     */
+    public static void postLikeCircle(String circleId,String momentId,String momentPublisherId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postLikeCircle(circleId,momentId,momentPublisherId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("0");
+                        }else{
+                            mLoginInterface.succeed("-1");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    public static void postLikeCancel1(String circleId,String momentId,String momentPublisherId,LoginInterface mLoginInterface) {
+        if(StringUtil.isBlank(circleId) || circleId.equals("0")){
+            postLikeCancel(momentId,momentPublisherId,mLoginInterface);
+        }else{
+            postLikeCancelCircle(circleId,momentId,momentPublisherId,mLoginInterface);
+        }
+    }
+    /**
      * 取消点赞
      */
     public static void postLikeCancel(String momentId,String momentPublisherId,LoginInterface mLoginInterface) {
         RetrofitUtil.getInstance().apiService()
                 .postLikeCancel(momentId,momentPublisherId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("0");
+                        }else{
+                            mLoginInterface.succeed("-1");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    /**
+     * 取消点赞
+     */
+    public static void postLikeCancelCircle(String circleId,String momentId,String momentPublisherId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postLikeCancelCircle(circleId,momentId,momentPublisherId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {
@@ -437,6 +522,8 @@ public class HttpRequestUtils {
                 });
     }
 
+
+
     /**
      * 用户取消点赞动态评论
      */
@@ -476,6 +563,18 @@ public class HttpRequestUtils {
     /**
      * 用户发布动态评论
      */
+    public static void postCommentMoment1(String circleId,String content,String momentId,String momentPublisherId,
+                                         String replyCommentId,LoginInterface mLoginInterface) {
+        if(StringUtil.isBlank(circleId) || circleId.equals("0")){
+            postCommentMoment(content,momentId,momentPublisherId,replyCommentId,mLoginInterface);
+        }else{
+            postCommentMomentCircle(circleId,content,momentId,momentPublisherId,replyCommentId,mLoginInterface);
+        }
+    }
+
+    /**
+     * 用户发布动态评论
+     */
     public static void postCommentMoment(String content,String momentId,String momentPublisherId,
                                          String replyCommentId,LoginInterface mLoginInterface) {
         RetrofitUtil.getInstance().apiService()
@@ -511,6 +610,50 @@ public class HttpRequestUtils {
 
 
     /**
+     * 用户发布动态评论--圈子
+     */
+    public static void postCommentMomentCircle(String circleId,String content,String momentId,String momentPublisherId,
+                                         String replyCommentId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postCommentMomentCircle(circleId,content,1,momentId,momentPublisherId,replyCommentId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("0");
+                        }else{
+                            mLoginInterface.succeed("-1");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public static void getCommentMoment1(String circleId,String momentId,String momentPublisherId,int page,int pageSize,ResultInterface mResultInterface){
+        if(StringUtil.isBlank(circleId) || circleId.equals("0")){
+            getCommentMoment(momentId,momentPublisherId,page,pageSize,mResultInterface);
+        }else{
+            getCommentMomentCircle(circleId,momentId,momentPublisherId,page,pageSize,mResultInterface);
+        }
+    }
+
+    /**
      * 获取动态下评论信息
      */
     public static void getCommentMoment(String momentId,String momentPublisherId,int page,int pageSize,ResultInterface mResultInterface) {
@@ -543,12 +686,86 @@ public class HttpRequestUtils {
 
 
     /**
-     * 获取动态下评论信息
+     * 获取动态下评论信息--圈子
+     */
+    public static void getCommentMomentCircle(String circleId,String momentId,String momentPublisherId,int page,int pageSize,ResultInterface mResultInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .getCommentMomentCircle(circleId,momentId,momentPublisherId,page,pageSize)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<CommentMomentBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<CommentMomentBean> result) {
+                        mResultInterface.succeed(result);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mResultInterface.succeed(null);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    public static void getCommentQueryReply1(String circleId,String commentId,String momentId,String momentPublisherId,
+                                            int page,int pageSize,ResultInterface mResultInterface) {
+        if(StringUtil.isBlank(circleId) || circleId.equals("0")){
+            getCommentQueryReply(commentId,momentId,momentPublisherId,page,pageSize,mResultInterface);
+        }else{
+            getCommentQueryReplyCircle(circleId,commentId,momentId,momentPublisherId,page,pageSize,mResultInterface);
+        }
+
+    }
+
+    /**
+     * 获取评论下的评论信息(回复评论的评论)
      */
     public static void getCommentQueryReply(String commentId,String momentId,String momentPublisherId,
                                             int page,int pageSize,ResultInterface mResultInterface) {
         RetrofitUtil.getInstance().apiService()
                 .getCommentQueryReply(commentId,momentId,momentPublisherId,page,pageSize)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<CommentMomentBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<CommentMomentBean> result) {
+                        mResultInterface.succeed(result);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mResultInterface.succeed(null);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    /**
+     * 获取评论下的评论信息(回复评论的评论)--圈子
+     */
+    public static void getCommentQueryReplyCircle(String circleId,String commentId,String momentId,String momentPublisherId,
+                                            int page,int pageSize,ResultInterface mResultInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .getCommentQueryReplyCircle(circleId,commentId,momentId,momentPublisherId,page,pageSize)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultList<CommentMomentBean>>() {

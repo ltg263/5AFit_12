@@ -18,6 +18,7 @@ import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.entity.FavoriteQueryList;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
+import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.UserScAdapter;
 
@@ -56,7 +57,10 @@ public class UserScActivity extends BaseActivity {
         mUserScAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                UserHomeActivity.startActivity(UserScActivity.this,mUserScAdapter.getData().get(position).getMoment().getPublisherId()+"");
+
+                AssociationActivity.startActivity(UserScActivity.this,
+                        mUserScAdapter.getData().get(position).getMoment().getPublisherId()+"",
+                        mUserScAdapter.getData().get(position).getMoment().getMomentId()+"");
             }
         });
 

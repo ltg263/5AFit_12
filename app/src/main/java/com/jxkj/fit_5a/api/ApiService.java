@@ -649,12 +649,27 @@ public interface ApiService {
     Observable<Result> postLike(@Query("momentId") String momentId,
                                    @Query("momentPublisherId") String momentPublisherId);
 
+    /**
+     * 用户点赞动态--圈子
+     */
+    @POST(ConstValues.PORT_21 + "api/v1/circle/moment/like")
+    Observable<Result> postLikeCircle(@Query("circleId") String circleId,@Query("momentId") String momentId,
+                                   @Query("momentPublisherId") String momentPublisherId);
+
 
     /**
      * 用户取消点赞动态
      */
     @POST(ConstValues.PORT_21 + "api/v1/moment/like/cancel")
     Observable<Result> postLikeCancel(@Query("momentId") String momentId,
+                                         @Query("momentPublisherId") String momentPublisherId);
+
+
+    /**
+     * 用户取消点赞动态--圈子
+     */
+    @POST(ConstValues.PORT_21 + "api/v1/circle/moment/like/cancel")
+    Observable<Result> postLikeCancelCircle(@Query("circleId") String circleId,@Query("momentId") String momentId,
                                          @Query("momentPublisherId") String momentPublisherId);
 
     /**
@@ -731,6 +746,20 @@ public interface ApiService {
                                          @Query("replyCommentId") String replyCommentId);
 
     /**
+     * 用户发布动态评论--圈子
+     * @param content
+     * @param contentType
+     * @param momentId
+     * @param momentPublisherId
+     * @param replyCommentId
+     * @return
+     */
+    @POST(ConstValues.PORT_21+"api/v1/circle/moment/comment/publish")
+    Observable<Result> postCommentMomentCircle(@Query("circleId") String circleId,@Query("content")String content,@Query("contentType")int contentType,
+                                         @Query("momentId") String momentId,@Query("momentPublisherId") String momentPublisherId,
+                                         @Query("replyCommentId") String replyCommentId);
+
+    /**
      * 获取动态下评论信息
      * @return
      */
@@ -740,11 +769,31 @@ public interface ApiService {
                                                                @Query("page")int page, @Query("pageSize")int pageSize);
 
     /**
+     * 获取动态下评论信息--圈子
+     * @return
+     */
+    @GET(ConstValues.PORT_21+"api/v1/circle/moment/comment/query")
+    Observable<ResultList<CommentMomentBean>> getCommentMomentCircle(@Query("circleId") String circleId,@Query("momentId") String momentId,
+                                                               @Query("momentPublisherId") String momentPublisherId,
+                                                               @Query("page")int page, @Query("pageSize")int pageSize);
+
+    /**
      * 获取评论下的评论信息(回复评论的评论)
      * @return
      */
     @GET(ConstValues.PORT_21+"api/v1/moment/comment/query_reply")
     Observable<ResultList<CommentMomentBean>> getCommentQueryReply(@Query("commentId") String commentId,
+                                                                    @Query("momentId") String momentId,
+                                                                    @Query("momentPublisherId")String momentPublisherId,
+                                                                    @Query("page")int page, @Query("pageSize")int pageSize);
+
+    /**
+     * 获取评论下的评论信息(回复评论的评论)--圈子
+     * @return
+     */
+    @GET(ConstValues.PORT_21+"api/v1/circle/moment/comment/query_reply")
+    Observable<ResultList<CommentMomentBean>> getCommentQueryReplyCircle(@Query("circleId") String circleId,
+                                                                         @Query("commentId") String commentId,
                                                                     @Query("momentId") String momentId,
                                                                     @Query("momentPublisherId")String momentPublisherId,
                                                                     @Query("page")int page, @Query("pageSize")int pageSize);

@@ -23,6 +23,12 @@ import java.util.List;
  */
 public class MineCommentAdapter extends BaseQuickAdapter<CommentMomentBean, BaseViewHolder> {
 
+    String circleId;
+
+    public void setCircleId(String circleId) {
+        this.circleId = circleId;
+    }
+
     public MineCommentAdapter(@Nullable List<CommentMomentBean> data) {
         super(R.layout.item_mine_comment, data);
     }
@@ -51,7 +57,7 @@ public class MineCommentAdapter extends BaseQuickAdapter<CommentMomentBean, Base
             if(item.getCommentCount()>1){
                 helper.setGone(R.id.tv_num,true).setText(R.id.tv_num,"展开 "+item.getCommentCount()+" 条回复");
             }
-            HttpRequestUtils.getCommentQueryReply(item.getCommentId()+"", item.getMomentId()+"", item.getMomentPublisherId()+"", 1, 1, new HttpRequestUtils.ResultInterface() {
+            HttpRequestUtils.getCommentQueryReply1(circleId,item.getCommentId()+"", item.getMomentId()+"", item.getMomentPublisherId()+"", 1, 1, new HttpRequestUtils.ResultInterface() {
                 @Override
                 public void succeed(ResultList<CommentMomentBean> result) {
                     if(result!=null && result.getCode()==0 && result.getData().size()>0){
@@ -64,7 +70,7 @@ public class MineCommentAdapter extends BaseQuickAdapter<CommentMomentBean, Base
         helper.getView(R.id.tv_num).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HttpRequestUtils.getCommentQueryReply(item.getCommentId()+"", item.getMomentId()+"", item.getMomentPublisherId()+"", 1, 100, new HttpRequestUtils.ResultInterface() {
+                HttpRequestUtils.getCommentQueryReply1(circleId,item.getCommentId()+"", item.getMomentId()+"", item.getMomentPublisherId()+"", 1, 100, new HttpRequestUtils.ResultInterface() {
                     @Override
                     public void succeed(ResultList<CommentMomentBean> result) {
                         if(result!=null && result.getCode()==0){

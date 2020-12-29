@@ -12,7 +12,6 @@
         android:layout_height="@dimen/dimen_0.5dp"
         android:background="@color/line_color" />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list"
         android:layout_width="match_parent"

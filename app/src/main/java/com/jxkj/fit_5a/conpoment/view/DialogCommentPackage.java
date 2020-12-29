@@ -43,7 +43,11 @@ public class DialogCommentPackage {
     private RecyclerView mRvList;
     private MineCommentAdapter mMineCommentAdapter;
     private String commentId = null;
-    public DialogCommentPackage(Activity mContext) {
+    private String circleId;
+
+
+    public DialogCommentPackage(Activity mContext,String circleId) {
+        this.circleId = circleId;
         this.mContext = mContext;
         this.mInflater = LayoutInflater.from(mContext);
         this.contentView = this.mInflater.inflate(R.layout.dialog_comment_package_layout, null);
@@ -64,6 +68,7 @@ public class DialogCommentPackage {
         });
         mRvList.setLayoutManager(new LinearLayoutManager(mContext));
         mMineCommentAdapter = new MineCommentAdapter(null);
+        mMineCommentAdapter.setCircleId(circleId);
         mRvList.setAdapter(mMineCommentAdapter);
         mMineCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

@@ -30,8 +30,13 @@ import java.util.List;
  * date   : 2020/5/2914:03
  */
 public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, BaseViewHolder> {
+    String circleId = "";
     public AssociationListAdapter(@Nullable List<MomentDetailsBean> data) {
         super(R.layout.item_association_list, data);
+    }
+
+    public void setCircleId(String circleId) {
+        this.circleId = circleId;
     }
 
     @Override
@@ -85,7 +90,7 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
         }
 
         if(item.getCommentCount()>0){
-            HttpRequestUtils.getCommentMoment(item.getMomentId() + "", item.getPublisherId() + "",1,2,
+            HttpRequestUtils.getCommentMoment1(circleId,item.getMomentId() + "", item.getPublisherId() + "",1,2,
                     new HttpRequestUtils.ResultInterface() {
                         @Override
                         public void succeed(ResultList<CommentMomentBean> result) {
@@ -104,6 +109,21 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
                                         if(data.get(0).getCommentCount()==0){
                                             helper.setVisible(R.id.tv_pl_num_1,false).setVisible(R.id.view1,false);
                                         }
+                                        helper.setGone(R.id.rl_pl_11,false);
+                                        if(data.get(0).getCommentCount()>0){
+                                            HttpRequestUtils.getCommentQueryReply1(circleId,data.get(0).getCommentId()+"", data.get(0).getMomentId()+"",
+                                                    data.get(0).getMomentPublisherId()+"", 1, 1, new HttpRequestUtils.ResultInterface() {
+                                                @Override
+                                                public void succeed(ResultList<CommentMomentBean> result) {
+                                                    if(result!=null && result.getCode()==0 && result.getData().size()>0){
+                                                        helper.setGone(R.id.rl_pl_11,true);
+                                                        CommentMomentBean dataX = result.getData().get(0);
+                                                        GlideImageUtils.setGlideImage(mContext,dataX.getUser().getAvatar(),helper.getView(R.id.iv_head_11));
+                                                        helper.setText(R.id.tv_name_11,dataX.getUser().getNickName()).setText(R.id.tv_pl_content_11,dataX.getContent());
+                                                    }
+                                                }
+                                            });
+                                        }
                                         if(item.isIsLike()){
                                             helper.setImageDrawable(R.id.iv_xh,mContext.getResources().getDrawable(R.drawable.ic_celect_xh_yes));
                                         }
@@ -120,6 +140,22 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
                                         }
                                         if(item.isIsLike()){
                                             helper.setImageDrawable(R.id.iv_xh2,mContext.getResources().getDrawable(R.drawable.ic_celect_xh_yes));
+                                        }
+
+                                        helper.setGone(R.id.rl_pl_21,false);
+                                        if(data.get(1).getCommentCount()>0){
+                                            HttpRequestUtils.getCommentQueryReply1(circleId,data.get(1).getCommentId()+"", data.get(1).getMomentId()+"",
+                                                    data.get(1).getMomentPublisherId()+"", 1, 1, new HttpRequestUtils.ResultInterface() {
+                                                        @Override
+                                                        public void succeed(ResultList<CommentMomentBean> result) {
+                                                            if(result!=null && result.getCode()==0 && result.getData().size()>0){
+                                                                helper.setGone(R.id.rl_pl_21,true);
+                                                                CommentMomentBean dataX = result.getData().get(1);
+                                                                GlideImageUtils.setGlideImage(mContext,dataX.getUser().getAvatar(),helper.getView(R.id.iv_head_11));
+                                                                helper.setText(R.id.tv_name_11,dataX.getUser().getNickName()).setText(R.id.tv_pl_content_11,dataX.getContent());
+                                                            }
+                                                        }
+                                                    });
                                         }
                                     }
                                 }

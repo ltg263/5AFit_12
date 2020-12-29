@@ -51,6 +51,7 @@ public class AssociationActivity extends BaseActivity {
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
     int type;
+    String circleId = "0";
     private AssociationListAdapter mAssociationListAdapter;
 
     @Override
@@ -65,6 +66,16 @@ public class AssociationActivity extends BaseActivity {
         mTvRighttext.setText("动态");
         mTvRighttext.setTextColor(getResources().getColor(R.color.color_666666));
         mIvRightimg.setImageDrawable(getResources().getDrawable(R.drawable.ic_bianji));
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        type = getIntent().getIntExtra("type",0);
+        if(type==2){
+            circleId = getIntent().getStringExtra("circleId");
+        }
         initRv();
     }
 
@@ -73,7 +84,7 @@ public class AssociationActivity extends BaseActivity {
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mAssociationListAdapter);
-
+        mAssociationListAdapter.setCircleId(circleId);
         mAssociationListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -84,7 +95,7 @@ public class AssociationActivity extends BaseActivity {
                         break;
                     case R.id.ll_xihuan:
                         if(data.isIsLike()){
-                            HttpRequestUtils.postLikeCancel(data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                            HttpRequestUtils.postLikeCancel1(circleId,data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
                                 @Override
                                 public void succeed(String path) {
                                     dismiss();
@@ -96,7 +107,7 @@ public class AssociationActivity extends BaseActivity {
                                 }
                             });
                         }else{
-                            HttpRequestUtils.postLike(data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                            HttpRequestUtils.postLike1(circleId,data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
                                 @Override
                                 public void succeed(String path) {
                                     dismiss();
@@ -115,7 +126,7 @@ public class AssociationActivity extends BaseActivity {
                     case R.id.ll_shoucang:
                         show();
                         if(data.isIsFavorite()){
-                            HttpRequestUtils.postFavoritCancel("0", data.getMomentId() + "", new HttpRequestUtils.LoginInterface() {
+                            HttpRequestUtils.postFavoritCancel(circleId, data.getMomentId() + "", new HttpRequestUtils.LoginInterface() {
                                         @Override
                                         public void succeed(String path) {
                                             dismiss();
@@ -127,7 +138,7 @@ public class AssociationActivity extends BaseActivity {
                                         }
                                     });
                         }else {
-                            HttpRequestUtils.postFavorit("0", data.getMomentId() + "",
+                            HttpRequestUtils.postFavorit(circleId, data.getMomentId() + "",
                                     data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
                                         @Override
                                         public void succeed(String path) {
@@ -174,7 +185,6 @@ public class AssociationActivity extends BaseActivity {
                 }
             }
         });
-        type = getIntent().getIntExtra("type",0);
         if(type==1){
             getMomentDetails();
         }else if(type==2){
@@ -182,8 +192,8 @@ public class AssociationActivity extends BaseActivity {
         }
     }
     private void ShowCommentPackageDialog(MomentDetailsBean data) {
-        DialogCommentPackage choicePackageDialog = new DialogCommentPackage(this);
-        HttpRequestUtils.getCommentMoment(data.getMomentId() + "", data.getPublisherId() + "",1,100,
+        DialogCommentPackage choicePackageDialog = new DialogCommentPackage(this,circleId);
+        HttpRequestUtils.getCommentMoment1(circleId,data.getMomentId() + "", data.getPublisherId() + "",1,100,
                 new HttpRequestUtils.ResultInterface() {
             @Override
             public void succeed(ResultList<CommentMomentBean> result) {
@@ -195,7 +205,7 @@ public class AssociationActivity extends BaseActivity {
             @Override
             public void addListener(String context, String commentId) {
                 show();
-                HttpRequestUtils.postCommentMoment(context, data.getMomentId()+"", data.getPublisherId()+"",
+                HttpRequestUtils.postCommentMoment1(circleId,context, data.getMomentId()+"", data.getPublisherId()+"",
                         commentId, new HttpRequestUtils.LoginInterface() {
                     @Override
                     public void succeed(String path) {
