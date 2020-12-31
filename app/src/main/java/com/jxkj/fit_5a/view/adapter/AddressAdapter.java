@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.base.AddressData;
+import com.jxkj.fit_5a.entity.AddressData;
 import com.jxkj.fit_5a.view.activity.mine.order.AddressEditActivity;
 
 import java.util.List;
@@ -35,16 +35,12 @@ public class AddressAdapter extends BaseQuickAdapter<AddressData, BaseViewHolder
         TextView addressTv = helper.getView(R.id.tv_address);
         TextView editTv = helper.getView(R.id.tv_edit);
         TextView delTv = helper.getView(R.id.tv_del);
-        if(true){
-            return;
-        }
         nameTv.setText(item.getAcceptName());
         phoneTv.setText(item.getMobile());
-        addressTv.setText(item.getLocation());
-        if (item.isDefaultX()) {
+        addressTv.setText(item.getRegions()+item.getLocation());
+        defaultIv.setImageResource(R.drawable.wxz);
+        if (item.getIsDefult().equals("1")) {
             defaultIv.setImageResource(R.drawable.wxz_);
-        } else {
-            defaultIv.setImageResource(R.drawable.wxz);
         }
         editTv.setOnClickListener(new View.OnClickListener() {
             @Override

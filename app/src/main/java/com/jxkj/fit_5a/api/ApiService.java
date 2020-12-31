@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.api;
 
 
-import com.jxkj.fit_5a.base.AddressData;
 import com.jxkj.fit_5a.base.DeviceCourseData;
 import com.jxkj.fit_5a.base.DeviceCourseTypeData;
 import com.jxkj.fit_5a.base.DeviceData;
@@ -22,10 +21,13 @@ import com.jxkj.fit_5a.base.UserDetailData;
 import com.jxkj.fit_5a.base.UserInfoData;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.entity.AdListData;
+import com.jxkj.fit_5a.entity.AddressData;
+import com.jxkj.fit_5a.entity.AddressModel;
 import com.jxkj.fit_5a.entity.CircleDetailsBean;
 import com.jxkj.fit_5a.entity.CircleQueryBean;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.CircleTaskData;
+import com.jxkj.fit_5a.entity.CommentListBean;
 import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.CommunityHomeInfoBean;
 import com.jxkj.fit_5a.entity.FavoriteQueryList;
@@ -377,6 +379,57 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_3 + "api/v1/product/details")
     Observable<Result<ProductDetailsBean>> getProductDetails(@Query("id") String id);
+
+    /**
+     * 商品评论列表
+     */
+    @GET(ConstValues.PORT_3 + "api/v1/comment/list")
+    Observable<Result<CommentListBean>> getCommentList(@Query("productId") String productId);
+
+
+    /**
+     * 获取用户所有收货地址列表
+     *
+     * @return
+     */
+    @GET(ConstValues.PORT_3 + "api/v1/user/address/list")
+    Observable<Result<AddressModel>> getUserAddress(@Query("page") String page, @Query("pageSize") String pageSize);
+
+
+    /**
+     * 设置默认地址
+     *
+     * @return
+     */
+
+    @POST(ConstValues.PORT_3 + "api/v1/user/address/updateDefault")
+    Observable<Result> getSetDefault(@Query("id") String id);
+
+
+    /**
+     * 删除地址
+     */
+    @POST(ConstValues.PORT_3 + "api/v1/user/address/delete")
+    Observable<Result> getDeleteAddress(@Query("id") String id);
+
+
+    /**
+     * 新增地址
+     *
+     * @return
+     */
+    @POST(ConstValues.PORT_3 + "api/v1/user/address/save")
+    Observable<Result> getAddAddress(@Body AddressData data);
+
+
+
+    /**
+     * 修改地址
+     *
+     * @return
+     */
+    @POST(ConstValues.PORT_3 +"api/v1/user/address/update")
+    Observable<Result> getUpdateAddress(@Body AddressData data);
 
 
     /**
@@ -825,45 +878,7 @@ public interface ApiService {
                                                   @Query("status") String status);
 
 
-    /**
-     * 获取用户所有收货地址列表
-     *
-     * @return
-     */
-    @GET("user/api/v1/user/address/query")
-    Observable<Result<String>> getUserAddress(@Query("page") String page, @Query("pageSize") String pageSize);
 
-    /**
-     * 新增地址
-     *
-     * @return
-     */
-    @POST("user/api/v1/user/address/add")
-    Observable<Result> getAddAddress(@Body AddressData data);
-
-    /**
-     * 删除地址
-     */
-    @POST("user/api/v1/user/address/delete")
-    Observable<Result> getDeleteAddress(@Query("id") String id);
-
-
-    /**
-     * 修改地址
-     *
-     * @return
-     */
-    @POST("user/api/v1/user/address/update")
-    Observable<Result> getUpdateAddress(@Body AddressData data);
-
-    /**
-     * 设置默认地址
-     *
-     * @return
-     */
-
-    @POST("user/api/v1/user/address/setDefault")
-    Observable<Result> getSetDefault(@Query("id") String id);
 
 
 }

@@ -18,9 +18,10 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
-import com.jxkj.fit_5a.base.AddressData;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.entity.AddressData;
+import com.jxkj.fit_5a.entity.AddressModel;
 import com.jxkj.fit_5a.view.adapter.AddressAdapter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -73,38 +74,35 @@ public class AddressActivity extends BaseActivity {
 
     private void initTitle() {
         ivBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
-        tvTitle.setText("地址管理");
+        tvTitle.setText("收货地址");
     }
 
-    public static void startActivity(Context mContext, int type) {
+    public static void startActivity(Context  mContext, int type) {
         Intent intent = new Intent(mContext, AddressActivity.class);
-        intent.putExtra("type", type);//1回调，
+        intent.putExtra("type",type);//1回调，
         intent.putExtra("source", 1);
-        ((Activity) mContext).startActivityForResult(intent, 20);
+        ((Activity)mContext).startActivityForResult(intent, 20);
     }
 
     private void initRv() {
         rvList.setLayoutManager(new LinearLayoutManager(AddressActivity.this));
         rvList.setHasFixedSize(true);
-        lv_not.setVisibility(View.GONE);
-        rvList.setVisibility(View.VISIBLE);
-        addressDataList.add(null);
         mAddressAdapter = new AddressAdapter(addressDataList);
         rvList.setAdapter(mAddressAdapter);
         mAddressAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Log.w("---,", "source:" + source);
+                Log.w("---,","source:"+source);
                 if (source == 0) {
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("address", addressDataList.get(position));
-                    AddressEditActivity.startActivity(view.getContext(), bundle);
+                    bundle.putSerializable("address",addressDataList.get(position));
+                    AddressEditActivity.startActivity(view.getContext(),bundle);
                 } else {
-                    if (type == 1) {
+                    if(type==1){
                         EventBus.getDefault().post(addressDataList.get(position));
                         finish();
                     }
-                    if (type == 2) {
+                    if(type==2){
                         //Activity返回时传递数据，也是通过意图对象
                         Intent data = new Intent();
                         //把要传递的数据封装至意图对象中
@@ -122,12 +120,12 @@ public class AddressActivity extends BaseActivity {
         mAddressAdapter.setOnDeleteClickListener(new AddressAdapter.OnDeleteClickLister() {
             @Override
             public void onDeleteClick(int position) {
-//                getDeleteAddress(addressDataList.get(position).getId()+"");
+                getDeleteAddress(addressDataList.get(position).getId()+"");
             }
 
             @Override
             public void onDefaultClick(int position) {
-//                getSetDefault(addressDataList.get(position).getId()+"");
+                getSetDefault(addressDataList.get(position).getId()+"");
             }
         });
 
@@ -140,7 +138,7 @@ public class AddressActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_save:
-                AddressEditActivity.startActivity(view.getContext(), null);
+                AddressEditActivity.startActivity(view.getContext(),null);
                 break;
             default:
         }
@@ -154,32 +152,29 @@ public class AddressActivity extends BaseActivity {
     }
 
     private void getUserAddress() {
-        if (true) {
-            return;
-        }
         RetrofitUtil.getInstance().apiService()
                 .getUserAddress("1", "100")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result<String>>() {
+                .subscribe(new Observer<Result<AddressModel>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result<String> result) {
-//                        if (result.getStatus() == 0) {
-//                            if (result.getData() != null) {
-//                                addressDataList.clear();
-////                                if(result.getData().getList()!=null){
-////                                    lv_not.setVisibility(View.GONE);
-////                                    rvList.setVisibility(View.VISIBLE);
-////                                    addressDataList.addAll(result.getData().getList());
-////                                    mAddressAdapter.notifyDataSetChanged();
-////                                }
-//                            }
-//                        }
+                    public void onNext(Result<AddressModel> result) {
+                        if(isDataInfoSucceed(result)){
+                            if(result.getData()!=null){
+                                addressDataList.clear();
+                                if(result.getData().getList()!=null){
+                                    lv_not.setVisibility(View.GONE);
+                                    rvList.setVisibility(View.VISIBLE);
+                                    addressDataList.addAll(result.getData().getList());
+                                    mAddressAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
 
 
                     }
@@ -210,14 +205,14 @@ public class AddressActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result result) {
-//                        if (result.getStatus() == 0) {
-//                            getUserAddress();
-//                        }
+                        if(isDataInfoSucceed(result)){
+                            getUserAddress();
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-//                        dismiss();
+                        dismiss();
                     }
 
                     @Override
@@ -228,7 +223,6 @@ public class AddressActivity extends BaseActivity {
 
 
     }
-
     /**
      * 删除地址
      */
@@ -245,11 +239,11 @@ public class AddressActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result result) {
-//                        if (result.getStatus() == 0) {
-//                            getUserAddress();
-//                        } else {
-//                            ToastUtils.showShort(result.getError());
-//                        }
+                        if(isDataInfoSucceed(result)){
+                            getUserAddress();
+                        }else{
+                            ToastUtils.showShort(result.getMesg());
+                        }
                     }
 
                     @Override

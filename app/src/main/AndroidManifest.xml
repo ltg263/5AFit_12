@@ -313,6 +313,11 @@
             android:name=".view.activity.mine.MineRegardsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.activity.mine.CommentListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineMessageHdActivity"
             android:launchMode="singleTask"

@@ -19,12 +19,14 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogChoicePackage;
 import com.jxkj.fit_5a.conpoment.view.JudgeNestedScrollView;
 import com.jxkj.fit_5a.conpoment.view.SquareBannerLayout;
 import com.jxkj.fit_5a.entity.ProductDetailsBean;
 import com.jxkj.fit_5a.entity.ProductListBean;
+import com.jxkj.fit_5a.view.activity.mine.order.AddressActivity;
 import com.jxkj.fit_5a.view.activity.mine.order.OrderAffirmActivity;
 import com.jxkj.fit_5a.view.adapter.ShoppingPingJiaAdapter;
 import com.youth.banner.BannerConfig;
@@ -56,8 +58,6 @@ public class ShoppingDetailsActivity extends BaseActivity {
     SquareBannerLayout mBanner;
     @BindView(R.id.jnsw)
     JudgeNestedScrollView jnsw;
-    @BindView(R.id.ll_all_evalute)
-    LinearLayout llAllEvalute;
     @BindView(R.id.rl_pin_lun)
     RecyclerView mRlPinLun;
     @BindView(R.id.tv_name)
@@ -118,7 +118,7 @@ public class ShoppingDetailsActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.ll_back,R.id.ll_gg,R.id.tv_address,R.id.tv_ok})
+    @OnClick({R.id.ll_back,R.id.ll_gg,R.id.tv_address,R.id.ll_all_evalute,R.id.tv_ok})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
@@ -128,6 +128,10 @@ public class ShoppingDetailsActivity extends BaseActivity {
                 ShowChoicePackageDialog();
                 break;
             case R.id.tv_address:
+                AddressActivity.startActivity(ShoppingDetailsActivity.this,2);
+                break;
+            case R.id.ll_all_evalute:
+                IntentUtils.getInstence().intent(this, CommentListActivity.class,"id",id);
                 break;
             case R.id.tv_ok:
                 startActivity(new Intent(this, OrderAffirmActivity.class));

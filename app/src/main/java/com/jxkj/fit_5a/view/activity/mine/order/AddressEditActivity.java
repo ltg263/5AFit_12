@@ -13,11 +13,11 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
-import com.jxkj.fit_5a.base.AddressData;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.view.AddressPickTask;
+import com.jxkj.fit_5a.entity.AddressData;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -74,15 +74,16 @@ public class AddressEditActivity extends BaseActivity {
             addressData = (AddressData) getIntent().getBundleExtra("address").getSerializable("address");
             etName.setText(addressData.getAcceptName());
             etPhone.setText("" + addressData.getMobile());
-            String newDz = "";
-            String xxdz = "";
-
-            tvAddressKtwz.setText(addressData.getPlace());
+//            tvAddressKtwz.setText(addressData.getPlace());
             tvAddress.setText("" + addressData.getRegions());
-            etDetailaddress.setText(xxdz);
+            etDetailaddress.setText(addressData.getLocation());
+            if(addressData.getIsDefult().equals("1")){
+                iv_szmr.setImageDrawable(getResources().getDrawable(R.drawable.wxz_));
+            }
         } else {
             flag = 1;
             addressData = new AddressData();
+            addressData.setIsDefult("0");
             tvTitle.setText("添加新地址");
         }
     }
@@ -93,8 +94,7 @@ public class AddressEditActivity extends BaseActivity {
         finish();
     }
     public static void startActivity(Context mContext, Bundle mBundle) {
-//        IntentUtils.getInstence().intent(mContext,AddressEditActivity.class,"address",mBundle);
-        IntentUtils.getInstence().intent(mContext,AddressEditActivity.class);
+        IntentUtils.getInstence().intent(mContext,AddressEditActivity.class,"address",mBundle);
     }
     public void onAddressPicker() {
         AddressPickTask task = new AddressPickTask(this);
@@ -143,10 +143,12 @@ public class AddressEditActivity extends BaseActivity {
 //                IntentUtils.getInstence().intent(this, AddressByMapActivity.class);
                 break;
             case R.id.iv_szmr:
-                if(iv_szmr.isSelected()){
-                    iv_szmr.setSelected(false);
+                if(addressData.getIsDefult().equals("1")){
+                    addressData.setIsDefult("0");
+                    iv_szmr.setImageDrawable(getResources().getDrawable(R.drawable.wxz));
                 }else{
-                    iv_szmr.setSelected(true);
+                    addressData.setIsDefult("1");
+                    iv_szmr.setImageDrawable(getResources().getDrawable(R.drawable.wxz_));
                 }
                 break;
             case R.id.btn_save:
@@ -156,13 +158,13 @@ public class AddressEditActivity extends BaseActivity {
                     return;
                 }
                 addressData.setAcceptName(consigneeName);
-                String ktwz = tvAddressKtwz.getText().toString();
-                if (ktwz == null || placeId == 0) {
-                    ToastUtils.showShort(  "请选择开通位置");
-                    return;
-                }
-                addressData.setPlaceId(placeId);
-                addressData.setPlace(ktwz);
+//                String ktwz = tvAddressKtwz.getText().toString();
+//                if (ktwz == null || placeId == 0) {
+//                    ToastUtils.showShort(  "请选择开通位置");
+//                    return;
+//                }
+//                addressData.setPlaceId(placeId);
+//                addressData.setPlace(ktwz);
                 String phone = etPhone.getText().toString();
                 if (phone == null) {
                     ToastUtils.showShort(  "请填写收货人手机号");
@@ -226,10 +228,10 @@ public class AddressEditActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result result) {
-//                        if(result.getCode()==0){
-//                            ToastUtils.showShort("添加成功");
-//                            finish();
-//                        }
+                        if(isDataInfoSucceed(result)){
+                            ToastUtils.showShort("添加成功");
+                            finish();
+                        }
                     }
 
                     @Override
@@ -239,7 +241,7 @@ public class AddressEditActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
-//                        dismiss();
+                        dismiss();
                     }
                 });
 
@@ -259,10 +261,10 @@ public class AddressEditActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result result) {
-//                        if(result.getStatus()==0){
-//                            ToastUtils.showShort("修改成功");
-//                            finish();
-//                        }
+                        if(isDataInfoSucceed(result)){
+                            ToastUtils.showShort("修改成功");
+                            finish();
+                        }
                     }
 
                     @Override
@@ -272,7 +274,7 @@ public class AddressEditActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
-//                        dismiss();
+                        dismiss();
                     }
                 });
     }

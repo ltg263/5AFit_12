@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.entity.CommentListBean;
 import com.jxkj.fit_5a.entity.ProductDetailsBean;
 
 import java.util.List;
@@ -15,13 +16,13 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/5/2914:03
  */
-public class ShoppingPingJiaAdapter extends BaseQuickAdapter<ProductDetailsBean.CommentListBean, BaseViewHolder> {
-    public ShoppingPingJiaAdapter(@Nullable List<ProductDetailsBean.CommentListBean> data) {
+public class ShoppingPingJiaAdapter extends BaseQuickAdapter<CommentListBean.ListBean, BaseViewHolder> {
+    public ShoppingPingJiaAdapter(@Nullable List<CommentListBean.ListBean> data) {
         super(R.layout.item_shopping_pinjia, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, ProductDetailsBean.CommentListBean item) {
+    protected void convert(@NonNull BaseViewHolder helper, CommentListBean.ListBean item) {
         GlideImageUtils.setGlideImage(mContext,item.getAvatar(),helper.getView(R.id.iv_head_img));
         helper.setText(R.id.tv_nickName,item.getNickName())
                 .setText(R.id.tv_content,item.getDetail()).setGone(R.id.rv_img_list,false);
