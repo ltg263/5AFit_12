@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.activity.association;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.View;
@@ -12,7 +13,12 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
+import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.view.adapter.CircleDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
 
@@ -21,6 +27,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MineTopicActivity extends BaseActivity {
     @BindView(R.id.rv_list_sp)
@@ -35,6 +45,10 @@ public class MineTopicActivity extends BaseActivity {
     TextView mTv2;
     @BindView(R.id.view2)
     View mView2;
+    String id = "";
+    private CircleDynamicAdapter mCircleDynamicAdapter;
+    private HomeThreeSqAdapter mHomeThreeSqAdapter;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_mine_topic;
@@ -42,6 +56,7 @@ public class MineTopicActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        id = getIntent().getStringExtra("id");
         List<String> list = new ArrayList<>();
         list.add("-1");
         list.add("");
@@ -50,7 +65,7 @@ public class MineTopicActivity extends BaseActivity {
         list.add("");
         list.add("");
 
-        CircleDynamicAdapter mCircleDynamicAdapter = new CircleDynamicAdapter(null);
+        mCircleDynamicAdapter = new CircleDynamicAdapter(null);
         mRvListTp.setLayoutManager(new LinearLayoutManager(this));
         mRvListTp.setHasFixedSize(true);
         mRvListTp.setAdapter(mCircleDynamicAdapter);
@@ -67,7 +82,7 @@ public class MineTopicActivity extends BaseActivity {
         //解决item跳动
 //        manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         mRvListSp.setLayoutManager(manager);
-        HomeThreeSqAdapter mHomeThreeSqAdapter = new HomeThreeSqAdapter(null);
+        mHomeThreeSqAdapter = new HomeThreeSqAdapter(null);
         mRvListSp.setHasFixedSize(true);
         mRvListSp.setAdapter(mHomeThreeSqAdapter);
 
@@ -77,6 +92,9 @@ public class MineTopicActivity extends BaseActivity {
 
             }
         });
+
+        getQueryByPublisher(2);
+        getQueryByPublisher(3);
     }
 
 
@@ -115,4 +133,73 @@ public class MineTopicActivity extends BaseActivity {
         tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         v.setVisibility(View.VISIBLE);
     }
+
+
+//    private void getCircleQueryJoined(){
+//        RetrofitUtil.getInstance().apiService()
+//                .getCircleQueryJoined(userId,1,100)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(new Observer<Result<CircleQueryJoinedBean>>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(Result<CircleQueryJoinedBean> result) {
+//                        if (isDataInfoSucceed(result)) {
+//                            mUserTopAdapter.setNewData(result.getData().getList());
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                    }
+//                });
+//    }
+
+    private void getQueryByPublisher(int contentType) {
+        RetrofitUtil.getInstance().apiService()
+                .getQguery_lately_topic(id,contentType)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<QueryPopularBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<QueryPopularBean> result) {
+                        if (result.getCode() == 0) {
+                            if (contentType == 2) {
+                                mCircleDynamicAdapter.setNewData(result.getData());
+                            }
+                            if (contentType == 3) {
+                                mHomeThreeSqAdapter.setNewData(result.getData());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public static void startActivity(Context mContext, String id) {
+        Intent intent = new Intent(mContext, MineTopicActivity.class);
+        intent.putExtra("id", id);
+        mContext.startActivity(intent);
+    }
+
 }

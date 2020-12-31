@@ -59,7 +59,7 @@ public class SearchResultTopicActivity extends BaseActivity {
         mTopicListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(SearchResultTopicActivity.this, MineTopicActivity.class));
+                MineTopicActivity.startActivity(SearchResultTopicActivity.this,"");
             }
         });
         getAllTopic();

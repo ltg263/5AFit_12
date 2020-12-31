@@ -547,6 +547,11 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_21 + "api/v1/circle/moment/query_lately")
     Observable<ResultList<QueryPopularBean>> getQguery_lately(@Query("circleId") int circleId, @Query("contentType") int contentType);
+    /**
+     * 获取最近动态信息--topic
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/topic/moment/query_lately")
+    Observable<ResultList<QueryPopularBean>> getQguery_lately_topic(@Query("topicId") String topicId, @Query("contentType") int contentType);
 
     /**
      * 获取热门(推荐)动态信息

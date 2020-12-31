@@ -17,6 +17,7 @@ import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.entity.HotTopicBean;
 import com.jxkj.fit_5a.view.adapter.TopicListAdapter;
 import com.jxkj.fit_5a.view.search.SearchGoodsActivity;
+import com.jxkj.fit_5a.view.search.SearchResultTopicActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,7 @@ public class TopicAllActivity extends BaseActivity {
         mTopicListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(TopicAllActivity.this, MineTopicActivity.class));
+                MineTopicActivity.startActivity(TopicAllActivity.this,mTopicListAdapter.getData().get(position).getId()+"");
             }
         });
         getAllTopic();

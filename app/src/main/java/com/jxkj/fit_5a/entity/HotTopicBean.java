@@ -14,6 +14,7 @@ public class HotTopicBean {
      * user : [{"userId":95,"relation":0,"nickName":"请修改昵称_17212312311","avatar":"13123","gender":0}]
      */
 
+    private int id;
     private String name;
     private String typeName;
     private int articlesCount;
@@ -21,6 +22,14 @@ public class HotTopicBean {
     private String introduction;
     private String imgUrl;
     private List<UserBean> user;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
