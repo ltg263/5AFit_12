@@ -107,9 +107,11 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_gg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
+                    android:visibility="gone"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="15dp">
@@ -182,7 +184,7 @@
                         android:padding="15dp">
 
                         <TextView
-
+                            android:id="@+id/tv_commentTotal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="宝贝评价(109）"
@@ -190,7 +192,6 @@
                             android:textSize="14sp" />
 
                         <TextView
-
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableEnd="@drawable/icon_jiantou_you_99"

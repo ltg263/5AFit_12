@@ -36,6 +36,8 @@ import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
+import com.jxkj.fit_5a.entity.ProductDetailsBean;
+import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.RankStatsData;
 import com.jxkj.fit_5a.entity.SpecListBaen;
@@ -365,10 +367,17 @@ public interface ApiService {
 
 
     /**
-     * 商品分类列表
+     * 商品列表
      */
     @GET(ConstValues.PORT_3 + "api/v1/product/list")
-    Observable<Result> getProductList(@Query("hasHot") Boolean hasHot);
+    Observable<Result<ProductListBean>> getProductList(@Query("hasHot") Integer hasHot);
+
+    /**
+     * 商品详情
+     */
+    @GET(ConstValues.PORT_3 + "api/v1/product/details")
+    Observable<Result<ProductDetailsBean>> getProductDetails(@Query("id") String id);
+
 
     /**
      * 地图列表
@@ -524,7 +533,7 @@ public interface ApiService {
      * 根据内容搜索发布的动态信息==圈子
      */
     @GET(ConstValues.PORT_21 + "api/v1/circle/moment/query_by_keyword")
-    Observable<ResultList<QueryPopularBean>> getQueryByKeyword(@Query("keyword") String keyword);
+    Observable<ResultList<QueryPopularBean>> getQueryByKeyword(@Query("keyword") String keyword,@Query("circleId") String circleId);
 
     /**
      * 获取自己发布的动态信息

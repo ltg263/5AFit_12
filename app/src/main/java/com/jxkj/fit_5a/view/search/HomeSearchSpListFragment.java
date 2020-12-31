@@ -75,7 +75,7 @@ public class HomeSearchSpListFragment extends BaseFragment {
 
     private void getData(String search) {
         RetrofitUtil.getInstance().apiService()
-                .getQueryByKeyword(search)
+                .getQueryByKeyword(search,"0")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultList<QueryPopularBean>>() {

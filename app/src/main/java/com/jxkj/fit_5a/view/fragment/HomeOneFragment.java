@@ -2,7 +2,6 @@ package com.jxkj.fit_5a.view.fragment;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,20 +24,19 @@ import com.github.mikephil.charting.utils.FileUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
-import com.jxkj.fit_5a.base.HelpListData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
-import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.view.StringToUtil;
 import com.jxkj.fit_5a.entity.AdListData;
+import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.exercise.RateControlActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
-import com.jxkj.fit_5a.view.adapter.HomeCommodityAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
+import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeTopAdapter;
 
 import java.util.ArrayList;
@@ -83,7 +81,7 @@ public class HomeOneFragment extends BaseFragment {
     @BindView(R.id.lineChart1)
     LineChart mLineChart;
     private HomeTopAdapter mHomeTopAdapter;
-    private HomeCommodityAdapter mHomeCommodityAdapter;
+    private HomeShoppingAdapter mHomeShoppingAdapter;
     private HomeDynamicAdapter mHomeDynamicAdapter;
 
     @Override
@@ -94,6 +92,7 @@ public class HomeOneFragment extends BaseFragment {
     @Override
     protected void initViews() {
         initRvUi();
+        getProductList(1);
         initLC();
         getAdList();
         getMomentQueryPopular();
@@ -169,17 +168,17 @@ public class HomeOneFragment extends BaseFragment {
             }
         });
 
-        mHomeCommodityAdapter = new HomeCommodityAdapter(list);
+        mHomeShoppingAdapter = new HomeShoppingAdapter(null);
         LinearLayoutManager ms1 = new LinearLayoutManager(getActivity());
         ms1.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRvRmspList.setLayoutManager(ms1);
         mRvRmspList.setHasFixedSize(true);
-        mRvRmspList.setAdapter(mHomeCommodityAdapter);
+        mRvRmspList.setAdapter(mHomeShoppingAdapter);
 
-        mHomeCommodityAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mHomeShoppingAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), ShoppingDetailsActivity.class));
+                ShoppingDetailsActivity.startActivity(getActivity(),mHomeShoppingAdapter.getData().get(position).getId());
             }
         });
 
@@ -239,6 +238,37 @@ public class HomeOneFragment extends BaseFragment {
         }
     }
 
+
+    private void getProductList(Integer hasHot) {
+        RetrofitUtil.getInstance().apiService()
+                .getProductList(hasHot)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<ProductListBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<ProductListBean> result) {
+                        if(isDataInfoSucceed(result)){
+                            mHomeShoppingAdapter.setNewData(result.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
+    }
+    
+    
     private void getAdList() {
         RetrofitUtil.getInstance().apiService()
                 .getAdList()

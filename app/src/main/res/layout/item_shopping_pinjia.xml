@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dp_10"
     android:orientation="vertical">
 
-    <ImageView
+    <com.jxkj.fit_5a.conpoment.view.RoundImageView
         android:id="@+id/iv_head_img"
         android:layout_width="@dimen/dimen_30dp"
         android:layout_height="@dimen/dimen_30dp"
         android:layout_margin="@dimen/dp_10"
-        android:src="@mipmap/ic_6" />
+        android:src="@mipmap/ic_6"
+        app:type="circle" />
 
     <TextView
+        android:id="@+id/tv_nickName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/iv_head_img"
@@ -38,34 +41,48 @@
         android:id="@+id/rv_img_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_below="@id/tv_content"
         android:layout_marginHorizontal="@dimen/dimen_5dp"
         android:layout_marginTop="@dimen/dp_10"
         android:orientation="horizontal">
 
         <com.jxkj.fit_5a.conpoment.view.SquareImageView
+            android:id="@+id/siv_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_5dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_7" />
+            android:src="@mipmap/ic_7"
+            android:visibility="gone" />
 
         <com.jxkj.fit_5a.conpoment.view.SquareImageView
+            android:id="@+id/siv_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_5dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_7" />
+            android:src="@mipmap/ic_7"
+            android:visibility="gone" />
 
         <com.jxkj.fit_5a.conpoment.view.SquareImageView
+            android:id="@+id/siv_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_5dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_7" />
+            android:src="@mipmap/ic_7"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/siv_4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_220dp"
+            android:scaleType="center"
+            android:src="@mipmap/ic_16" />
 
     </LinearLayout>
 

@@ -12,6 +12,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
+import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
 import com.jxkj.fit_5a.view.adapter.ShoppingRmAdapter;
 import com.youth.banner.Banner;
@@ -35,6 +36,7 @@ public class ShoppingFragment extends BaseFragment {
     @BindView(R.id.banner)
     Banner mBanner;
     private ShoppingRmAdapter mShoppingRmAdapter;
+    private HomeShoppingAdapter mHomeShoppingAdapter;
 
     @Override
     protected int getContentView() {
@@ -45,7 +47,7 @@ public class ShoppingFragment extends BaseFragment {
     protected void initViews() {
         initBannerOne();
         initRv();
-        getProductList(true);
+        getProductList(1);
         getProductList(null);
     }
 
@@ -80,21 +82,55 @@ public class ShoppingFragment extends BaseFragment {
         mBanner.start();
     }
 
+    private void initRv() {
+        mShoppingRmAdapter = new ShoppingRmAdapter(null);
+        LinearLayoutManager ms1 = new LinearLayoutManager(getActivity());
+        ms1.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRvList.setLayoutManager(ms1);
+        mRvList.setHasFixedSize(true);
+        mRvList.setAdapter(mShoppingRmAdapter);
 
-    private void getProductList(Boolean hasHot) {
+        mShoppingRmAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
+            }
+        });
+
+
+        mHomeShoppingAdapter = new HomeShoppingAdapter(null);
+        mRvListAll.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        mRvListAll.setHasFixedSize(true);
+        mRvListAll.setAdapter(mHomeShoppingAdapter);
+
+        mHomeShoppingAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
+            }
+        });
+    }
+
+
+    private void getProductList(Integer hasHot) {
         RetrofitUtil.getInstance().apiService()
                 .getProductList(hasHot)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result>() {
+                .subscribe(new Observer<Result<ProductListBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result result) {
+                    public void onNext(Result<ProductListBean> result) {
                         if(isDataInfoSucceed(result)){
+                            if(hasHot==null){
+                                mHomeShoppingAdapter.setNewData(result.getData().getList());
+                            }else {
+                                mShoppingRmAdapter.setNewData(result.getData().getList());
+                            }
                         }
                     }
 
@@ -106,42 +142,6 @@ public class ShoppingFragment extends BaseFragment {
                     public void onComplete() {
                     }
                 });
-
-    }
-    private void initRv() {
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        mShoppingRmAdapter = new ShoppingRmAdapter(list);
-        LinearLayoutManager ms1 = new LinearLayoutManager(getActivity());
-        ms1.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mRvList.setLayoutManager(ms1);
-        mRvList.setHasFixedSize(true);
-
-        mShoppingRmAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
-            }
-        });
-
-
-        HomeShoppingAdapter mHomeShoppingAdapter = new HomeShoppingAdapter(list);
-        mRvListAll.setLayoutManager(new GridLayoutManager(getActivity(),2));
-        mRvListAll.setHasFixedSize(true);
-        mRvListAll.setAdapter(mHomeShoppingAdapter);
-
-        mShoppingRmAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
-            }
-        });
 
     }
 

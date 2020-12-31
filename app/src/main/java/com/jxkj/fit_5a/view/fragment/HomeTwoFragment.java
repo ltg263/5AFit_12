@@ -13,16 +13,10 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
-import com.jxkj.fit_5a.entity.CircleTaskData;
-import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.RankStatsData;
 import com.jxkj.fit_5a.view.activity.exercise.ExerciseRecordActivity;
 import com.jxkj.fit_5a.view.activity.exercise.TaskSelectionActivity;
-import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
-import com.jxkj.fit_5a.view.adapter.HomeCommodityAdapter;
-import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
-import com.jxkj.fit_5a.view.adapter.HomeTopAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeTwoBelowAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeTwoTopAdapter;
 
