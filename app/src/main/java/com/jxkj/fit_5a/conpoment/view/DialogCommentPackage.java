@@ -2,15 +2,13 @@ package com.jxkj.fit_5a.conpoment.view;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.graphics.Rect;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,14 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.base.OrderInfoData;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.SDUIUtil;
 import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.view.adapter.MineCommentAdapter;
-import com.jxkj.fit_5a.view.adapter.OrderShoppingDetailsAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -87,9 +82,10 @@ public class DialogCommentPackage {
                             @Override
                             public void succeed(String path) {
                                 if(path.equals("0")){
+                                    ((TextView)view.findViewById(R.id.tv_xh_s)).setText((data.getLikeCount() - 1)+"");
+                                    ((ImageView)view.findViewById(R.id.iv_xh)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.icon_xin_99_d));
                                     data.setIsLike(false);
                                     data.setLikeCount(data.getLikeCount()-1);
-                                    mMineCommentAdapter.notifyDataSetChanged();
                                 }
                             }
                         });
@@ -98,9 +94,10 @@ public class DialogCommentPackage {
                             @Override
                             public void succeed(String path) {
                                 if(path.equals("0")) {
+                                    ((TextView)view.findViewById(R.id.tv_xh_s)).setText((data.getLikeCount() + 1)+"");
+                                    ((ImageView)view.findViewById(R.id.iv_xh)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_celect_xh_yes));
                                     data.setIsLike(true);
                                     data.setLikeCount(data.getLikeCount() + 1);
-                                    mMineCommentAdapter.notifyDataSetChanged();
                                 }
                             }
                         });
@@ -115,6 +112,7 @@ public class DialogCommentPackage {
     public void setNewData(List<CommentMomentBean> data,String num){
         mMineCommentAdapter.setNewData(data);
         mTvZs.setText("共"+num+"条评论");
+        mEtContext.setText("");
     }
 
 

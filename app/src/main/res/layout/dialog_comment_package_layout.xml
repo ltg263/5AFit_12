@@ -5,9 +5,9 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/ll"
         android:background="@drawable/shape_bj_back"
         android:orientation="vertical">
 
@@ -30,10 +30,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/ll"
         android:background="@color/color_ffffff"
         android:paddingStart="@dimen/dp_10">
 

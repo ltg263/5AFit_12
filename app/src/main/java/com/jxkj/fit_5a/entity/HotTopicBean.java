@@ -1,14 +1,17 @@
 package com.jxkj.fit_5a.entity;
 
+import java.util.List;
+
 public class HotTopicBean {
 
     /**
      * name : 如何减肥
      * typeName : 热门
-     * articlesCount : 8
-     * pageviews : 0
+     * articlesCount : 13
+     * pageviews : 152
      * introduction : 简单介绍
-     * imgUrl : https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201604%2F02%2F20160402173031_JYyrn.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1611215862&t=17cb6319866f942f465a4eaab2995496
+     * imgUrl : https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201604%2F02%2F20160402173031_JYyrn.thumb.700_0.jpeg&amp;refer=http%3A%2F%2Fb-ssl.duitang.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=jpeg?sec=1611215862&amp;t=17cb6319866f942f465a4eaab2995496
+     * user : [{"userId":95,"relation":0,"nickName":"请修改昵称_17212312311","avatar":"13123","gender":0}]
      */
 
     private String name;
@@ -17,6 +20,7 @@ public class HotTopicBean {
     private int pageviews;
     private String introduction;
     private String imgUrl;
+    private List<UserBean> user;
 
     public String getName() {
         return name;
@@ -64,5 +68,69 @@ public class HotTopicBean {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public List<UserBean> getUser() {
+        return user;
+    }
+
+    public void setUser(List<UserBean> user) {
+        this.user = user;
+    }
+
+    public static class UserBean {
+        /**
+         * userId : 95
+         * relation : 0
+         * nickName : 请修改昵称_17212312311
+         * avatar : 13123
+         * gender : 0
+         */
+
+        private int userId;
+        private int relation;
+        private String nickName;
+        private String avatar;
+        private int gender;
+
+        public int getUserId() {
+            return userId;
+        }
+
+        public void setUserId(int userId) {
+            this.userId = userId;
+        }
+
+        public int getRelation() {
+            return relation;
+        }
+
+        public void setRelation(int relation) {
+            this.relation = relation;
+        }
+
+        public String getNickName() {
+            return nickName;
+        }
+
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
+
+        public int getGender() {
+            return gender;
+        }
+
+        public void setGender(int gender) {
+            this.gender = gender;
+        }
     }
 }

@@ -94,15 +94,18 @@ public class AssociationActivity extends BaseActivity {
                         UserHomeActivity.startActivity(AssociationActivity.this,data.getPublisherId()+"");
                         break;
                     case R.id.ll_xihuan:
+                        show();
                         if(data.isIsLike()){
                             HttpRequestUtils.postLikeCancel1(circleId,data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
                                 @Override
                                 public void succeed(String path) {
                                     dismiss();
                                     if(path.equals("0")){
+                                        ((TextView)view.findViewById(R.id.tv_xihuan)).setText((data.getLikeCount() - 1)+"");
+                                        ((ImageView)view.findViewById(R.id.iv_xihuan)).setImageDrawable(getResources().getDrawable(R.drawable.icon_xin_99_d));
                                         data.setIsLike(false);
                                         data.setLikeCount(data.getLikeCount()-1);
-                                        mAssociationListAdapter.notifyDataSetChanged();
+//                                        mAssociationListAdapter.notifyDataSetChanged();
                                     }
                                 }
                             });
@@ -112,9 +115,11 @@ public class AssociationActivity extends BaseActivity {
                                 public void succeed(String path) {
                                     dismiss();
                                     if(path.equals("0")) {
+                                        ((TextView)view.findViewById(R.id.tv_xihuan)).setText((data.getLikeCount() + 1)+"");
+                                        ((ImageView)view.findViewById(R.id.iv_xihuan)).setImageDrawable(getResources().getDrawable(R.drawable.ic_celect_xh_yes));
                                         data.setIsLike(true);
                                         data.setLikeCount(data.getLikeCount() + 1);
-                                        mAssociationListAdapter.notifyDataSetChanged();
+//                                        mAssociationListAdapter.notifyDataSetChanged();
                                     }
                                 }
                             });
@@ -131,9 +136,11 @@ public class AssociationActivity extends BaseActivity {
                                         public void succeed(String path) {
                                             dismiss();
                                             if(path.equals("0")){
+                                                ((TextView)view.findViewById(R.id.tv_shoucang)).setText((data.getFavoriteCount() - 1)+"");
+                                                ((ImageView)view.findViewById(R.id.iv_shoucang)).setImageDrawable(getResources().getDrawable(R.drawable.icon_share_sc_d));
                                                 data.setIsFavorite(false);
                                                 data.setFavoriteCount(data.getFavoriteCount()-1);
-                                                mAssociationListAdapter.notifyDataSetChanged();
+//                                                mAssociationListAdapter.notifyDataSetChanged();
                                             }
                                         }
                                     });
@@ -144,9 +151,11 @@ public class AssociationActivity extends BaseActivity {
                                         public void succeed(String path) {
                                             dismiss();
                                             if(path.equals("0")) {
+                                                ((TextView)view.findViewById(R.id.tv_shoucang)).setText((data.getFavoriteCount() + 1)+"");
+                                                ((ImageView)view.findViewById(R.id.iv_shoucang)).setImageDrawable(getResources().getDrawable(R.drawable.icon_share_sc_dx));
                                                 data.setIsFavorite(true);
                                                 data.setFavoriteCount(data.getFavoriteCount() + 1);
-                                                mAssociationListAdapter.notifyDataSetChanged();
+//                                                mAssociationListAdapter.notifyDataSetChanged();
                                             }
                                         }
                                     });
@@ -210,6 +219,15 @@ public class AssociationActivity extends BaseActivity {
                     @Override
                     public void succeed(String path) {
                         dismiss();
+                        HttpRequestUtils.getCommentMoment1(circleId,data.getMomentId() + "", data.getPublisherId() + "",1,100,
+                                new HttpRequestUtils.ResultInterface() {
+                                    @Override
+                                    public void succeed(ResultList<CommentMomentBean> result) {
+                                        isDataInfoSucceed(result);
+                                        data.setCommentCount(data.getCommentCount()+1);
+                                        choicePackageDialog.setNewData(result.getData(),data.getCommentCount()+"");
+                                    }
+                                });
                     }
                 });
             }

@@ -150,7 +150,7 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
                                                         public void succeed(ResultList<CommentMomentBean> result) {
                                                             if(result!=null && result.getCode()==0 && result.getData().size()>0){
                                                                 helper.setGone(R.id.rl_pl_21,true);
-                                                                CommentMomentBean dataX = result.getData().get(1);
+                                                                CommentMomentBean dataX = result.getData().get(0);
                                                                 GlideImageUtils.setGlideImage(mContext,dataX.getUser().getAvatar(),helper.getView(R.id.iv_head_11));
                                                                 helper.setText(R.id.tv_name_11,dataX.getUser().getNickName()).setText(R.id.tv_pl_content_11,dataX.getContent());
                                                             }

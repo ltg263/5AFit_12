@@ -27,16 +27,15 @@ public class HomeThreeRmhtAdapter extends BaseQuickAdapter<HotTopicBean, BaseVie
         PileAvertView pile_view_1 = helper.getView(R.id.pile_view_1);
         List<String> urls=new ArrayList<>();
         urls.clear();
-        urls.add("https://gw.alicdn.com/tps/TB1W_X6OXXXXXcZXVXXXXXXXXXX-400-400.png");
-        urls.add("https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2979410926,2911304023&fm=26&gp=0.jpg");
-        urls.add("https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2979410926,2911304023&fm=26&gp=0.jpg");
-        urls.add("https://gw.alicdn.com/tps/TB1W_X6OXXXXXcZXVXXXXXXXXXX-400-400.png");
-        urls.add("https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2979410926,2911304023&fm=26&gp=0.jpg");
-//设置数据源
+        for(int i=0;i<item.getUser().size();i++){
+            urls.add(item.getUser().get(i).getAvatar());
+        }
         pile_view_1.setAvertImages(urls);
 
         GlideImageUtils.setGlideImage(mContext,item.getImgUrl(),helper.getView(R.id.iv));
         helper.setText(R.id.tv_name,"# "+item.getName()).setText(R.id.tv_state,item.getIntroduction());
+
+
     }
 
 }
