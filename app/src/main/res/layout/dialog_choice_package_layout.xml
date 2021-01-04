@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
-            android:text="选择规格"
+            android:text="选择颜色"
             android:textColor="#333333"
             android:textSize="14sp" />
 
@@ -102,15 +102,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginRight="15dp" />
 
         <TextView
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:text="选择子规格"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="选择尺码"
             android:textColor="#333333"
             android:textSize="14sp" />
 

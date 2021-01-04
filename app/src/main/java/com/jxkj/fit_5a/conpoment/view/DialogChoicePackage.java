@@ -2,6 +2,8 @@ package com.jxkj.fit_5a.conpoment.view;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ContentResolver;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,74 +32,117 @@ public class DialogChoicePackage {
     private Activity mContext;
     private LayoutInflater mInflater;
     private ImageView iv;
-    public static int currentNum = 0;
+    ShoppingFlowLayout mSflGuigeYs;
+    ShoppingFlowLayout mSflGuigeCm;
+    public static int currentNum1 = 0;
+    public static int currentNum2 = 0;
     List<ProductDetailsBean.SpecsLisBean> specsLis;
-    public DialogChoicePackage(Activity mContext, List<ProductDetailsBean.SpecsLisBean> specsLis, String imgUrl) {
+    List<ProductDetailsBean.SkuListBean> skuList;
+    public DialogChoicePackage(Activity mContext, List<ProductDetailsBean.SpecsLisBean> specsLis,
+                               List<ProductDetailsBean.SkuListBean> skuList, String imgUrl,OnChoicePackageDialogListener onChoicePackageDialogListener) {
+
+        this.onChoicePackageDialogListener = onChoicePackageDialogListener;
         this.mContext = mContext;
         this.mInflater = LayoutInflater.from(mContext);
         this.contentView = this.mInflater.inflate(R.layout.dialog_choice_package_layout, null);
         this.specsLis = specsLis;
+        this.skuList = skuList;
         initDialog();
         findViewById(imgUrl);
     }
 
     private void findViewById(String imgUrl){
         iv = contentView.findViewById(R.id.dialog_choice_package_layout_shopping_img_iv);
-        ShoppingFlowLayout mSflGuigeYs = contentView.findViewById(R.id.sfl_guige_ys);
-        ShoppingFlowLayout sfl_guige_cm = contentView.findViewById(R.id.sfl_guige_cm);
         GlideImageUtils.setGlideImage(mContext,imgUrl,iv);
-        setFlowLayout(mSflGuigeYs,sfl_guige_cm);
+        mSflGuigeYs = contentView.findViewById(R.id.sfl_guige_ys);
+        mSflGuigeCm = contentView.findViewById(R.id.sfl_guige_cm);
+        setFlowLayoutYs();
     }
+    boolean isY = false;
 
-    private void setFlowLayout(ShoppingFlowLayout mSflGuigeYs,ShoppingFlowLayout sfl_guige_cm) {
+    private void setFlowLayoutYs() {
         mSflGuigeYs.removeAllViews();
-        for (int i = 0; i < specsLis.size(); i++) {
+        isY = false;
+        List<ProductDetailsBean.SpecsLisBean.ChildrenBean> ys = specsLis.get(0).getChildren();
+        for (int i = 0; i < ys.size(); i++) {
             LinearLayout mLinearLayout = (LinearLayout) View.inflate(mContext, R.layout.adatper_dialog_set_meal_layout, null);
             TextView textView = mLinearLayout.findViewById(R.id.adatper_dialog_set_meal2_layout_name_tv);
             LinearLayout linearLayout = mLinearLayout.findViewById(R.id.adatper_dialog_set_meal1_layout_ll);
-            if(i==currentNum){
-                linearLayout.setBackground(mContext.getDrawable(R.drawable.shap_fef6de_5));
-                setFlowLayout(sfl_guige_cm,0);
-            }else{
-                linearLayout.setBackground(mContext.getDrawable(R.drawable.shap_f5f5f5_5));
-            }
-            textView.setText(specsLis.get(i).getName());
-            int finalI = i;
-            mLinearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    currentNum = finalI;
-                    setFlowLayout(mSflGuigeYs,sfl_guige_cm);
+            for(int j = 0;j<skuList.size();j++){
+                String specsLisId = skuList.get(j).getSpecIds();
+                linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_f5f5f5_5));
+                textView.setTextColor(mContext.getResources().getColor(R.color.color_ffffff));
+                if(specsLisId.contains(ys.get(i).getId())){
+                    textView.setTextColor(mContext.getResources().getColor(R.color.color_666666));
+                    if(i==currentNum1){
+                        onChoicePackageDialogListener.addListener(specsLisId,skuList.get(j).getSpecText());
+                        linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_fef6de_5));
+                        setFlowLayoutCm(ys.get(i).getId());
+                    }else{
+                        linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_f5f5f5_5));
+                        if(currentNum1==0 && i!=0 && !isY){
+                            onChoicePackageDialogListener.addListener(specsLisId,skuList.get(j).getSpecText());
+                            linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_fef6de_5));
+                        }
+                    }
+                    isY = true;
+                    int finalI = i;
+                    mLinearLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            currentNum1 = finalI;
+                            setFlowLayoutYs();
+                        }
+                    });
+                    break;
                 }
-            });
+            }
+            textView.setText(ys.get(i).getName());
             mSflGuigeYs.addView(mLinearLayout);
         }
     }
 
-    private void setFlowLayout(ShoppingFlowLayout sfl_guige_cm,int pos) {
-        sfl_guige_cm.removeAllViews();
-        for (int i = 0; i < specsLis.get(currentNum).getChildren().size(); i++) {
+    private void setFlowLayoutCm(String id) {
+        currentNum2 = 0;
+        isY = false;
+        mSflGuigeCm.removeAllViews();
+        List<ProductDetailsBean.SpecsLisBean.ChildrenBean> cm = specsLis.get(1).getChildren();
+        for (int i = 0; i < cm.size(); i++) {
             LinearLayout mLinearLayout = (LinearLayout) View.inflate(mContext, R.layout.adatper_dialog_set_meal_layout, null);
             TextView textView = mLinearLayout.findViewById(R.id.adatper_dialog_set_meal2_layout_name_tv);
             LinearLayout linearLayout = mLinearLayout.findViewById(R.id.adatper_dialog_set_meal1_layout_ll);
-            if(i==pos){
-                linearLayout.setBackground(mContext.getDrawable(R.drawable.shap_fef6de_5));
-            }else{
-                linearLayout.setBackground(mContext.getDrawable(R.drawable.shap_f5f5f5_5));
-            }
-            textView.setText(specsLis.get(currentNum).getChildren().get(i).getName());
-            int finalI = i;
-            mLinearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    setFlowLayout(sfl_guige_cm, finalI);
-
+            for(int j = 0;j<skuList.size();j++){
+                String specsLisId = skuList.get(j).getSpecIds();
+                linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_f5f5f5_5));
+                textView.setTextColor(mContext.getResources().getColor(R.color.color_ffffff));
+                if(specsLisId.equals(id+","+cm.get(i).getId())){
+                    textView.setTextColor(mContext.getResources().getColor(R.color.color_666666));
+                    if(i==currentNum2){
+                        linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_fef6de_5));
+                        onChoicePackageDialogListener.addListener(specsLisId,skuList.get(j).getSpecText());
+                    }else{
+                        linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_f5f5f5_5));
+                        if(currentNum2==0 && i!=0 && !isY){
+                            onChoicePackageDialogListener.addListener(specsLisId,skuList.get(j).getSpecText());
+                            linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_fef6de_5));
+                        }
+                    }
+                    isY = true;
+                    int finalI = i;
+                    mLinearLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            currentNum2 = finalI;
+                            setFlowLayoutCm(id);
+                        }
+                    });
+                    break;
                 }
-            });
-            sfl_guige_cm.addView(mLinearLayout);
+            }
+            textView.setText(cm.get(i).getName());
+            mSflGuigeCm.addView(mLinearLayout);
         }
     }
-
 
     private void initDialog() {
         dialog = new Dialog(mContext, R.style.MyDialog);
@@ -124,12 +169,8 @@ public class DialogChoicePackage {
         return onChoicePackageDialogListener;
     }
 
-    public void setOnChoicePackageDialogListener(OnChoicePackageDialogListener onChoicePackageDialogListener) {
-        this.onChoicePackageDialogListener = onChoicePackageDialogListener;
-    }
-
     public interface OnChoicePackageDialogListener {
-        void addListener(String skuId, int num);
+        void addListener(String skuId, String text);
 
         void buyListener(String skuId, int num);
     }

@@ -24,6 +24,8 @@ import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogChoicePackage;
 import com.jxkj.fit_5a.conpoment.view.JudgeNestedScrollView;
 import com.jxkj.fit_5a.conpoment.view.SquareBannerLayout;
+import com.jxkj.fit_5a.entity.AddressData;
+import com.jxkj.fit_5a.entity.PostOrderInfo;
 import com.jxkj.fit_5a.entity.ProductDetailsBean;
 import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.view.activity.mine.order.AddressActivity;
@@ -66,6 +68,8 @@ public class ShoppingDetailsActivity extends BaseActivity {
     TextView tvIntro;
     @BindView(R.id.tv_price)
     TextView tvPrice;
+    @BindView(R.id.tv_address)
+    TextView mTvAddress;
     @BindView(R.id.tv_sales)
     TextView tvSales;
     @BindView(R.id.ll_evalute)
@@ -78,6 +82,9 @@ public class ShoppingDetailsActivity extends BaseActivity {
     private ShoppingPingJiaAdapter mShoppingPingJiaAdapter;
     List<ProductDetailsBean.SpecsLisBean> specsLis;//规格
     String imgUrl="";
+    private AddressData addressData;
+    private List<ProductDetailsBean.SkuListBean> skuList;//规格
+
     public static void startActivity(Context mContext, String id) {
         Intent intent = new Intent(mContext, ShoppingDetailsActivity.class);
         intent.putExtra("id", id);
@@ -134,24 +141,83 @@ public class ShoppingDetailsActivity extends BaseActivity {
                 IntentUtils.getInstence().intent(this, CommentListActivity.class,"id",id);
                 break;
             case R.id.tv_ok:
-                startActivity(new Intent(this, OrderAffirmActivity.class));
+                postShowOrderInfo();
                 break;
         }
     }
 
-    private void ShowChoicePackageDialog() {
-        DialogChoicePackage choicePackageDialog = new DialogChoicePackage(ShoppingDetailsActivity.this,specsLis,imgUrl);
-        choicePackageDialog.setOnChoicePackageDialogListener(new DialogChoicePackage.OnChoicePackageDialogListener() {
-            @Override
-            public void addListener(String skuId, int num) {
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 20) {
+            if (resultCode == 1) {
+                addressData = (AddressData) data.getSerializableExtra("address");
+                if (addressData == null) {
+                    mTvAddress.setText("请选择收货地址");
+                } else {
+                    mTvAddress.setText(addressData.getRegions() + addressData.getLocation());
+                }
+            }
+        }
+
+    }
+
+    private void postShowOrderInfo() {
+        PostOrderInfo info = new PostOrderInfo();
+        info.setAddressId(addressData.getId());
+        List<PostOrderInfo.EntityListBean> entityList = new ArrayList<>();
+        PostOrderInfo.EntityListBean entityListBean = new PostOrderInfo.EntityListBean();
+        entityListBean.setSkuId(skuId);
+        entityListBean.setProductId(id);
+        entityListBean.setQuantity("1");
+        entityList.add(entityListBean);
+        info.setEntityList(entityList);
+
+        RetrofitUtil.getInstance().apiService()
+                .postShowOrderInfo(info)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        isDataInfoSucceed(result);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
+        startActivity(new Intent(this, OrderAffirmActivity.class));
+    }
+    String skuId = null;
+
+    private void ShowChoicePackageDialog() {
+        DialogChoicePackage choicePackageDialog = new DialogChoicePackage(
+                ShoppingDetailsActivity.this, specsLis, skuList, imgUrl,
+                new DialogChoicePackage.OnChoicePackageDialogListener() {
+            @Override
+            public void addListener(String skuId, String text) {
+                tv_gui_ge.setText(text);
             }
 
             @Override
             public void buyListener(String skuId, int num) {
 
             }
-
         });
         choicePackageDialog.showDialog();
     }
@@ -187,17 +253,15 @@ public class ShoppingDetailsActivity extends BaseActivity {
 
 
     private void initViewUi(ProductDetailsBean detailsBean) {
+        skuList = detailsBean.getSkuList();
         initBanner(detailsBean.getImgs());
         initWebView(detailsBean.getDetails());
         imgUrl = detailsBean.getImgUrl();
         specsLis = detailsBean.getSpecsLis();
-        if(specsLis!=null && specsLis.size()>0){
+        if(skuList!=null && skuList.size()>0){
             llGg.setVisibility(View.VISIBLE);
-            if(specsLis.get(0).getChildren()!=null &&specsLis.get(0).getChildren().size()>0){
-                tv_gui_ge.setText(specsLis.get(0).getName()+"+"+specsLis.get(0).getChildren().get(0).getName());
-            }else{
-                tv_gui_ge.setText(specsLis.get(0).getName());
-            }
+            tv_gui_ge.setText(skuList.get(0).getSpecText());
+            skuId = skuList.get(0).getId();
         }
         tvName.setText(detailsBean.getName());
         tvIntro.setText(detailsBean.getSubTitle());

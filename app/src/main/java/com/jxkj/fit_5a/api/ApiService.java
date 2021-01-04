@@ -38,6 +38,7 @@ import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
+import com.jxkj.fit_5a.entity.PostOrderInfo;
 import com.jxkj.fit_5a.entity.ProductDetailsBean;
 import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
@@ -421,8 +422,6 @@ public interface ApiService {
     @POST(ConstValues.PORT_3 + "api/v1/user/address/save")
     Observable<Result> getAddAddress(@Body AddressData data);
 
-
-
     /**
      * 修改地址
      *
@@ -430,6 +429,14 @@ public interface ApiService {
      */
     @POST(ConstValues.PORT_3 +"api/v1/user/address/update")
     Observable<Result> getUpdateAddress(@Body AddressData data);
+
+
+
+    /**
+     * 下单预览
+     */
+    @POST(ConstValues.PORT_3 +"api/v1/user/order/showOrderInfo")
+    Observable<Result> postShowOrderInfo(@Body PostOrderInfo data);
 
 
     /**
