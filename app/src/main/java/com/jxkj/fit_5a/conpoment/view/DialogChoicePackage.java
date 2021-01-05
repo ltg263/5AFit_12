@@ -36,6 +36,7 @@ public class DialogChoicePackage {
     ShoppingFlowLayout mSflGuigeCm;
     public static int currentNum1 = 0;
     public static int currentNum2 = 0;
+    TextView tv_price,tv_sales,tv_ok;
     List<ProductDetailsBean.SpecsLisBean> specsLis;
     List<ProductDetailsBean.SkuListBean> skuList;
     public DialogChoicePackage(Activity mContext, List<ProductDetailsBean.SpecsLisBean> specsLis,
@@ -53,10 +54,19 @@ public class DialogChoicePackage {
 
     private void findViewById(String imgUrl){
         iv = contentView.findViewById(R.id.dialog_choice_package_layout_shopping_img_iv);
+        tv_price = contentView.findViewById(R.id.tv_price);
+        tv_sales = contentView.findViewById(R.id.tv_sales);
+        tv_ok = contentView.findViewById(R.id.tv_ok);
         GlideImageUtils.setGlideImage(mContext,imgUrl,iv);
         mSflGuigeYs = contentView.findViewById(R.id.sfl_guige_ys);
         mSflGuigeCm = contentView.findViewById(R.id.sfl_guige_cm);
         setFlowLayoutYs();
+        tv_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onChoicePackageDialogListener.btn_Ok();
+            }
+        });
     }
     boolean isY = false;
 
@@ -75,13 +85,13 @@ public class DialogChoicePackage {
                 if(specsLisId.contains(ys.get(i).getId())){
                     textView.setTextColor(mContext.getResources().getColor(R.color.color_666666));
                     if(i==currentNum1){
-                        onChoicePackageDialogListener.addListener(specsLisId,skuList.get(j).getSpecText());
+                        onChoicePackageDialogListener.addListener(j,skuList.get(j).getSpecText());
                         linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_fef6de_5));
                         setFlowLayoutCm(ys.get(i).getId());
                     }else{
                         linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_f5f5f5_5));
                         if(currentNum1==0 && i!=0 && !isY){
-                            onChoicePackageDialogListener.addListener(specsLisId,skuList.get(j).getSpecText());
+                            onChoicePackageDialogListener.addListener(j,skuList.get(j).getSpecText());
                             linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_fef6de_5));
                         }
                     }
@@ -119,11 +129,14 @@ public class DialogChoicePackage {
                     textView.setTextColor(mContext.getResources().getColor(R.color.color_666666));
                     if(i==currentNum2){
                         linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_fef6de_5));
-                        onChoicePackageDialogListener.addListener(specsLisId,skuList.get(j).getSpecText());
+                        GlideImageUtils.setGlideImage(mContext,skuList.get(j).getImgUrl(),iv);
+                        onChoicePackageDialogListener.addListener(j,skuList.get(j).getSpecText());
+                        tv_price.setText(skuList.get(j).getDeductIntegral());
+                        tv_sales.setText("￥ "+skuList.get(j).getDisPrice());
                     }else{
                         linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_f5f5f5_5));
                         if(currentNum2==0 && i!=0 && !isY){
-                            onChoicePackageDialogListener.addListener(specsLisId,skuList.get(j).getSpecText());
+                            onChoicePackageDialogListener.addListener(j,skuList.get(j).getSpecText());
                             linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_fef6de_5));
                         }
                     }
@@ -170,9 +183,9 @@ public class DialogChoicePackage {
     }
 
     public interface OnChoicePackageDialogListener {
-        void addListener(String skuId, String text);
+        void addListener(int pos, String text);
 
-        void buyListener(String skuId, int num);
+        void btn_Ok();
     }
 }
 

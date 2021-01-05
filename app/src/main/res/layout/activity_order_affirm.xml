@@ -42,6 +42,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_name"
@@ -133,6 +134,7 @@
                             android:textSize="@dimen/sp_14" />
 
                         <TextView
+                            android:id="@+id/tv_totalDelivery"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_10"
@@ -155,6 +157,7 @@
                             android:textSize="@dimen/sp_14" />
 
                         <TextView
+                            android:id="@+id/tv_youhui"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawableEnd="@drawable/icon_jiantou_you_99_x"
@@ -172,6 +175,7 @@
                         android:background="@color/line_color" />
 
                     <EditText
+                        android:id="@+id/tv_levelMessage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"

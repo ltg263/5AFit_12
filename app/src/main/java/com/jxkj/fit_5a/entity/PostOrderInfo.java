@@ -1,8 +1,9 @@
 package com.jxkj.fit_5a.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PostOrderInfo {
+public class PostOrderInfo implements Serializable {
 
     /**
      * addressId : 0
@@ -98,7 +99,7 @@ public class PostOrderInfo {
         this.entityList = entityList;
     }
 
-    public static class EntityListBean {
+    public static class EntityListBean implements Serializable{
         /**
          * agentId : 0
          * groupId : 0
@@ -181,6 +182,20 @@ public class PostOrderInfo {
 
         public void setSpikeId(String spikeId) {
             this.spikeId = spikeId;
+        }
+
+        @Override
+        public String toString() {
+            return "EntityListBean{" +
+                    "agentId='" + agentId + '\'' +
+                    ", groupId='" + groupId + '\'' +
+                    ", id='" + id + '\'' +
+                    ", productId='" + productId + '\'' +
+                    ", quantity='" + quantity + '\'' +
+                    ", shareFlag='" + shareFlag + '\'' +
+                    ", skuId='" + skuId + '\'' +
+                    ", spikeId='" + spikeId + '\'' +
+                    '}';
         }
     }
 }

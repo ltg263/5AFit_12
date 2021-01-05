@@ -43,6 +43,7 @@ import com.jxkj.fit_5a.entity.ProductDetailsBean;
 import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.RankStatsData;
+import com.jxkj.fit_5a.entity.ShowOrderInfo;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 import com.jxkj.fit_5a.entity.SportLogBean;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
@@ -430,13 +431,11 @@ public interface ApiService {
     @POST(ConstValues.PORT_3 +"api/v1/user/address/update")
     Observable<Result> getUpdateAddress(@Body AddressData data);
 
-
-
     /**
      * 下单预览
      */
     @POST(ConstValues.PORT_3 +"api/v1/user/order/showOrderInfo")
-    Observable<Result> postShowOrderInfo(@Body PostOrderInfo data);
+    Observable<Result<ShowOrderInfo>> postShowOrderInfo(@Body PostOrderInfo data);
 
 
     /**

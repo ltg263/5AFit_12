@@ -1,16 +1,13 @@
 package com.jxkj.fit_5a.view.adapter;
 
-import android.content.Context;
-import android.text.Html;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.base.OrderInfoData;
+import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
+import com.jxkj.fit_5a.entity.ShowOrderInfo;
 
 import java.util.List;
 
@@ -20,16 +17,17 @@ import java.util.List;
  * 305.2+76.30+1920
  *
  */
-public class OrderAffirmAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    Context activity;
-    public OrderAffirmAdapter(Context activity, @Nullable List<String> data) {
+public class OrderAffirmAdapter extends BaseQuickAdapter<ShowOrderInfo.OrderProductsBean, BaseViewHolder> {
+    public OrderAffirmAdapter( @Nullable List<ShowOrderInfo.OrderProductsBean> data) {
         super(R.layout.item_order_affirm, data);
-        this.activity = activity;
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, String item) {
-
+    protected void convert(@NonNull BaseViewHolder helper, ShowOrderInfo.OrderProductsBean item) {
+        GlideImgLoader.loadImageViewRadius(mContext,item.getImgUrl(),helper.getView(R.id.iv_img));
+        helper.setText(R.id.tv_name,item.getName()).setText(R.id.tv_spec,item.getSkuName())
+                .setText(R.id.tv_shop_name,item.getDeductIntegral()+"+￥"+item.getDisPrice())
+        .setText(R.id.tv_price,"x "+item.getNum());
 
     }
 

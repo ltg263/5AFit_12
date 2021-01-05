@@ -3,6 +3,7 @@ package com.jxkj.fit_5a.view.activity.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -165,8 +166,12 @@ public class ShoppingDetailsActivity extends BaseActivity {
     }
 
     private void postShowOrderInfo() {
+
         PostOrderInfo info = new PostOrderInfo();
-        info.setAddressId(addressData.getId());
+        info.setOrderType("2");
+        if(addressData!=null){
+            info.setAddressId(addressData.getId());
+        }
         List<PostOrderInfo.EntityListBean> entityList = new ArrayList<>();
         PostOrderInfo.EntityListBean entityListBean = new PostOrderInfo.EntityListBean();
         entityListBean.setSkuId(skuId);
@@ -174,34 +179,11 @@ public class ShoppingDetailsActivity extends BaseActivity {
         entityListBean.setQuantity("1");
         entityList.add(entityListBean);
         info.setEntityList(entityList);
+        Log.w("info:","info:"+info.toString());
 
-        RetrofitUtil.getInstance().apiService()
-                .postShowOrderInfo(info)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Result result) {
-                        isDataInfoSucceed(result);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
-
-        startActivity(new Intent(this, OrderAffirmActivity.class));
+        Intent intent = new Intent(this, OrderAffirmActivity.class);
+        intent.putExtra("info",info);
+        startActivity(intent);
     }
     String skuId = null;
 
@@ -210,13 +192,16 @@ public class ShoppingDetailsActivity extends BaseActivity {
                 ShoppingDetailsActivity.this, specsLis, skuList, imgUrl,
                 new DialogChoicePackage.OnChoicePackageDialogListener() {
             @Override
-            public void addListener(String skuId, String text) {
-                tv_gui_ge.setText(text);
+            public void addListener(int pos, String text) {
+                skuId = skuList.get(pos).getId();
+                tv_gui_ge.setText(skuList.get(pos).getSpecText());
+                tvPrice.setText(skuList.get(pos).getDeductIntegral());
+                tvSales.setText("￥ "+skuList.get(pos).getPrice());
             }
 
             @Override
-            public void buyListener(String skuId, int num) {
-
+            public void btn_Ok() {
+                postShowOrderInfo();
             }
         });
         choicePackageDialog.showDialog();
@@ -258,15 +243,17 @@ public class ShoppingDetailsActivity extends BaseActivity {
         initWebView(detailsBean.getDetails());
         imgUrl = detailsBean.getImgUrl();
         specsLis = detailsBean.getSpecsLis();
+        tvPrice.setText(detailsBean.getDeductIntegral());
+        tvSales.setText("￥ "+detailsBean.getPrice());
         if(skuList!=null && skuList.size()>0){
+            skuId = skuList.get(0).getId();
             llGg.setVisibility(View.VISIBLE);
             tv_gui_ge.setText(skuList.get(0).getSpecText());
-            skuId = skuList.get(0).getId();
+            tvPrice.setText(skuList.get(0).getDeductIntegral());
+            tvSales.setText(skuList.get(0).getPrice());
         }
         tvName.setText(detailsBean.getName());
         tvIntro.setText(detailsBean.getSubTitle());
-        tvPrice.setText(detailsBean.getPrice());
-        tvSales.setText(detailsBean.getDeductIntegral());
         tv_commentTotal.setText("宝贝评价("+detailsBean.getCommentTotal()+"）");
         mShoppingPingJiaAdapter.setNewData(detailsBean.getCommentList());
     }
