@@ -64,20 +64,12 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dp_10"
-                    android:text="+"
-                    android:textColor="@color/color_333333"
-                    android:textSize="18sp" />
-
-                <TextView
                     android:id="@+id/tv_sales"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
-                    android:text="¥ 2999"
-                    android:textColor="@color/color_text_theme"
+                    android:text="+ ¥ 2999"
+                    android:textColor="@color/color_333333"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>

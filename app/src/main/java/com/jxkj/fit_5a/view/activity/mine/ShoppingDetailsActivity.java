@@ -3,6 +3,7 @@ package com.jxkj.fit_5a.view.activity.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -126,13 +127,14 @@ public class ShoppingDetailsActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.ll_back,R.id.ll_gg,R.id.tv_address,R.id.ll_all_evalute,R.id.tv_ok})
+    @OnClick({R.id.ll_back,R.id.ll_gg,R.id.tv_gui_ge,R.id.tv_address,R.id.ll_all_evalute,R.id.tv_ok})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
                 finish();
                 break;
             case R.id.ll_gg:
+            case R.id.tv_gui_ge:
                 ShowChoicePackageDialog();
                 break;
             case R.id.tv_address:
@@ -196,7 +198,12 @@ public class ShoppingDetailsActivity extends BaseActivity {
                 skuId = skuList.get(pos).getId();
                 tv_gui_ge.setText(skuList.get(pos).getSpecText());
                 tvPrice.setText(skuList.get(pos).getDeductIntegral());
-                tvSales.setText("￥ "+skuList.get(pos).getPrice());
+                if(Double.valueOf(skuList.get(pos).getPrice())!=0){
+                    String str = "+ <font color=\"#FFB300\">¥ </font>"+skuList.get(pos).getPrice();
+                    tvSales.setText(Html.fromHtml(str));
+                }else{
+                    tvSales.setText("");
+                }
             }
 
             @Override
@@ -244,13 +251,23 @@ public class ShoppingDetailsActivity extends BaseActivity {
         imgUrl = detailsBean.getImgUrl();
         specsLis = detailsBean.getSpecsLis();
         tvPrice.setText(detailsBean.getDeductIntegral());
-        tvSales.setText("￥ "+detailsBean.getPrice());
+        if(Double.valueOf(detailsBean.getPrice())!=0) {
+            String str = "+ <font color=\"#FFB300\">¥ </font>" + detailsBean.getPrice();
+            tvSales.setText(Html.fromHtml(str));
+        }else{
+            tvSales.setText("");
+        }
         if(skuList!=null && skuList.size()>0){
             skuId = skuList.get(0).getId();
             llGg.setVisibility(View.VISIBLE);
             tv_gui_ge.setText(skuList.get(0).getSpecText());
             tvPrice.setText(skuList.get(0).getDeductIntegral());
-            tvSales.setText(skuList.get(0).getPrice());
+            if(Double.valueOf(skuList.get(0).getPrice())!=0) {
+                String str = "+ <font color=\"#FFB300\">¥ </font>" + skuList.get(0).getPrice();
+                tvSales.setText(Html.fromHtml(str));
+            }else{
+                tvSales.setText("");
+            }
         }
         tvName.setText(detailsBean.getName());
         tvIntro.setText(detailsBean.getSubTitle());

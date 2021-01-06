@@ -3,6 +3,7 @@ package com.jxkj.fit_5a.conpoment.view;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentResolver;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -132,7 +133,12 @@ public class DialogChoicePackage {
                         GlideImageUtils.setGlideImage(mContext,skuList.get(j).getImgUrl(),iv);
                         onChoicePackageDialogListener.addListener(j,skuList.get(j).getSpecText());
                         tv_price.setText(skuList.get(j).getDeductIntegral());
-                        tv_sales.setText("￥ "+skuList.get(j).getDisPrice());
+                        if(Double.valueOf(skuList.get(j).getDisPrice())!=0){
+                            String str = "+ <font color=\"#FFB300\">¥ </font>"+skuList.get(j).getDisPrice();
+                            tv_sales.setText(Html.fromHtml(str));
+                        }else{
+                            tv_sales.setText("");
+                        }
                     }else{
                         linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_f5f5f5_5));
                         if(currentNum2==0 && i!=0 && !isY){
