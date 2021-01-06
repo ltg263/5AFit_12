@@ -38,8 +38,14 @@ public class OrderAffirmActivity extends BaseActivity {
     RecyclerView mRvList;
     @BindView(R.id.tv_name)
     TextView mTvName;
+    @BindView(R.id.tv_syjf)
+    TextView tv_syjf;
     @BindView(R.id.tv_address)
     TextView mTvAddress;
+    @BindView(R.id.tv1)
+    TextView tv1;
+    @BindView(R.id.tv11)
+    TextView tv11;
     private OrderAffirmAdapter mOrderAffirmAdapter;
 
     @Override
@@ -96,6 +102,13 @@ public class OrderAffirmActivity extends BaseActivity {
                             }
                             if(data.getOrderProducts()!=null){
                                 mOrderAffirmAdapter.setNewData(data.getOrderProducts());
+                            }
+                            tv_syjf.setText(data.getUseableIntegral());
+                            tv1.setText(data.getGroupId()+"件商品");
+                            if(Double.valueOf(data.getRealAmount())!=0){
+                                tv11.setText(data.getTotalIntegral()+"积分" +"+￥"+data.getRealAmount());
+                            }else{
+                                tv11.setText(data.getTotalIntegral()+"积分");
                             }
                         }else{
                             OrderAffirmActivity.this.finish();

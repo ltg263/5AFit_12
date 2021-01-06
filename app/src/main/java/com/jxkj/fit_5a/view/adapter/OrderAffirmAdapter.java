@@ -26,8 +26,11 @@ public class OrderAffirmAdapter extends BaseQuickAdapter<ShowOrderInfo.OrderProd
     protected void convert(@NonNull BaseViewHolder helper, ShowOrderInfo.OrderProductsBean item) {
         GlideImgLoader.loadImageViewRadius(mContext,item.getImgUrl(),helper.getView(R.id.iv_img));
         helper.setText(R.id.tv_name,item.getName()).setText(R.id.tv_spec,item.getSkuName())
-                .setText(R.id.tv_shop_name,item.getDeductIntegral()+"+￥"+item.getDisPrice())
+                .setText(R.id.tv_shop_name,item.getDeductIntegral()+"+ ￥"+item.getPrice())
         .setText(R.id.tv_price,"x "+item.getNum());
+        if (Double.valueOf(item.getPrice())==0){
+            helper.setText(R.id.tv_shop_name,item.getDeductIntegral());
+        }
 
     }
 

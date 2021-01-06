@@ -80,10 +80,17 @@ public class DialogChoicePackage {
             TextView textView = mLinearLayout.findViewById(R.id.adatper_dialog_set_meal2_layout_name_tv);
             LinearLayout linearLayout = mLinearLayout.findViewById(R.id.adatper_dialog_set_meal1_layout_ll);
             for(int j = 0;j<skuList.size();j++){
-                String specsLisId = skuList.get(j).getSpecIds();
                 linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_f5f5f5_5));
                 textView.setTextColor(mContext.getResources().getColor(R.color.color_ffffff));
-                if(specsLisId.contains(ys.get(i).getId())){
+                String[] strArr = skuList.get(j).getSpecIds().split(",");
+                boolean isYou = false;
+                for (int a = 0;a<strArr.length;a++){
+                    if(ys.get(i).getId().equals(strArr[a])){
+                        isYou = true;
+                        break;
+                    }
+                }
+                if(isYou){
                     textView.setTextColor(mContext.getResources().getColor(R.color.color_666666));
                     if(i==currentNum1){
                         onChoicePackageDialogListener.addListener(j,skuList.get(j).getSpecText());
@@ -94,6 +101,13 @@ public class DialogChoicePackage {
                         if(currentNum1==0 && i!=0 && !isY){
                             onChoicePackageDialogListener.addListener(j,skuList.get(j).getSpecText());
                             linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_fef6de_5));
+                            tv_price.setText(skuList.get(j).getDeductIntegral());
+                            if(Double.valueOf(skuList.get(j).getDisPrice())!=0){
+                                String str = "+ <font color=\"#FFB300\">¥ </font>"+skuList.get(j).getDisPrice();
+                                tv_sales.setText(Html.fromHtml(str));
+                            }else{
+                                tv_sales.setText("");
+                            }
                         }
                     }
                     isY = true;
@@ -144,6 +158,13 @@ public class DialogChoicePackage {
                         if(currentNum2==0 && i!=0 && !isY){
                             onChoicePackageDialogListener.addListener(j,skuList.get(j).getSpecText());
                             linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_fef6de_5));
+                            tv_price.setText(skuList.get(j).getDeductIntegral());
+                            if(Double.valueOf(skuList.get(j).getDisPrice())!=0){
+                                String str = "+ <font color=\"#FFB300\">¥ </font>"+skuList.get(j).getDisPrice();
+                                tv_sales.setText(Html.fromHtml(str));
+                            }else{
+                                tv_sales.setText("");
+                            }
                         }
                     }
                     isY = true;
