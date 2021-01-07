@@ -437,6 +437,25 @@ public interface ApiService {
     @POST(ConstValues.PORT_3 +"api/v1/user/order/showOrderInfo")
     Observable<Result<ShowOrderInfo>> postShowOrderInfo(@Body PostOrderInfo data);
 
+    /**
+     * 创建订单
+     * @return
+     */
+    @POST(ConstValues.PORT_3 +"api/v1/user/order/createOrder")
+    Observable<Result> postcreateOrder(@Body PostOrderInfo data);
+
+
+    /**
+     * 订单列表
+     * @param page
+     * @param pageSize
+     * @param status 单个订单状态1,待支付;2,待发货;3,待收货;4,待评价;5,已完成;6,已取消;7,已过期;8,已结束
+     * @return
+     */
+    @GET(ConstValues.PORT_3 +"api/v1/user/order/list")
+    Observable<Result<OrderInfoData>> getOrderAll(@Query("page") int page,
+                                                  @Query("pageSize") int pageSize,
+                                                  @Query("status") String status);
 
     /**
      * 地图列表
@@ -870,21 +889,4 @@ public interface ApiService {
                                                                     @Query("momentId") String momentId,
                                                                     @Query("momentPublisherId")String momentPublisherId,
                                                                     @Query("page")int page, @Query("pageSize")int pageSize);
-
-    /**
-     * 订单列表
-     * @param page
-     * @param pageSize
-     * @param status
-     * @return
-     */
-    @GET("order/api/v1/user/order/query")
-    Observable<Result<OrderInfoData>> getOrderAll(@Query("page") int page,
-                                                  @Query("pageSize") int pageSize,
-                                                  @Query("status") String status);
-
-
-
-
-
 }

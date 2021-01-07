@@ -22,6 +22,7 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogChoicePackage;
 import com.jxkj.fit_5a.conpoment.view.JudgeNestedScrollView;
@@ -181,6 +182,7 @@ public class ShoppingDetailsActivity extends BaseActivity {
         entityListBean.setQuantity("1");
         entityList.add(entityListBean);
         info.setEntityList(entityList);
+        info.setUserId(SharedUtils.getUserId()+"");
         Log.w("info:","info:"+info.toString());
 
         Intent intent = new Intent(this, OrderAffirmActivity.class);
@@ -188,9 +190,13 @@ public class ShoppingDetailsActivity extends BaseActivity {
         startActivity(intent);
     }
     String skuId = null;
-
+    DialogChoicePackage choicePackageDialog;
     private void ShowChoicePackageDialog() {
-        DialogChoicePackage choicePackageDialog = new DialogChoicePackage(
+        if(choicePackageDialog!=null){
+            choicePackageDialog.showDialog();
+            return;
+        }
+        choicePackageDialog = new DialogChoicePackage(
                 ShoppingDetailsActivity.this, specsLis, skuList, imgUrl,
                 new DialogChoicePackage.OnChoicePackageDialogListener() {
             @Override

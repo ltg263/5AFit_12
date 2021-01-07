@@ -198,4 +198,19 @@ public class PostOrderInfo implements Serializable {
                     '}';
         }
     }
+
+    @Override
+    public String toString() {
+        return "PostOrderInfo{" +
+                "addressId='" + addressId + '\'' +
+                ", agentId='" + agentId + '\'' +
+                ", groupId='" + groupId + '\'' +
+                ", StringegralFlag='" + StringegralFlag + '\'' +
+                ", levelMessage='" + levelMessage + '\'' +
+                ", orderType='" + orderType + '\'' +
+                ", redId='" + redId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", entityList=" + entityList +
+                '}';
+    }
 }

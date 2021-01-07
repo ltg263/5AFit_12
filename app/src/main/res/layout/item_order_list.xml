@@ -76,6 +76,7 @@
                 android:background="@drawable/btn_shape_bj_theme_99"
                 android:gravity="center"
                 android:text="联系商家"
+                android:visibility="gone"
                 android:textColor="@color/color_333333"
                 android:textSize="15sp" />
 

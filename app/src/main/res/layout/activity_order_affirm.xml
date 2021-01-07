@@ -182,8 +182,9 @@
                         android:gravity="top"
                         android:minLines="3"
                         android:padding="@dimen/dp_10"
-                        android:text="填写备注：选填"
-                        android:textColor="#A8A8A8"
+                        android:hint="填写备注：选填"
+                        android:textColorHint="#A8A8A8"
+                        android:textColor="@color/color_333333"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -231,6 +232,7 @@
                         android:textSize="14sp" />
 
                     <ImageView
+                        android:id="@+id/iv_wx"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dimen_5dp"
@@ -256,6 +258,7 @@
                         android:textSize="14sp" />
 
                     <ImageView
+                        android:id="@+id/iv_zfb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dimen_5dp"
@@ -330,6 +333,7 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tv_pay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

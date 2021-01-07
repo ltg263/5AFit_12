@@ -6,8 +6,8 @@ import java.util.List;
 public class OrderInfoData implements Serializable {
 
     /**
-     * list : [{"id":172,"userId":89,"orderNo":"200527112027057620","amount":18.9,"couponId":null,"couponAmount":0,"discountAmount":4,"deliveryAmount":0,"realAmount":14.9,"lunchBoxAmount":0,"remark":"（单）清蒸腊鸡腿+肉末茄子+干锅包菜等 1 件商品","payType":1,"payTime":"2020-05-27T11:20:45.367+0800","businessId":7,"receiptTime":"2020-05-27T11:20:45.382+0800","deliveryTime":null,"finishTime":null,"closeTime":"2020-05-28T11:20:45.383+0800","endCancelTime":"2020-05-27T11:21:45.367+0800","status":9,"createTime":"2020-05-27T11:20:27.859+0800","expireTime":"2020-05-27T11:50:27.859+0800","print":false,"delTf":false,"printNo":null,"reserveTime":null,"statusStr":"已完成","products":[{"id":263,"orderId":172,"productId":88,"imgUrl":"https://cnkj.nbyjdz.com/upload/0BB94F34E63F899786CFE979C9C1AEC4.jpg","name":"（单）清蒸腊鸡腿+肉末茄子+干锅包菜","num":1,"price":18.9,"realPrice":14.9,"lunchBoxPrice":0,"realNum":1,"refundId":null,"status":5,"createTime":"2020-05-27T11:20:27.000+0800","setMealProduct":null,"setMeal":null,"type":1,"categoryId":1,"categoryLevel":1}],"userAddressDTO":null,"coupons":null,"location":null,"regions":null,"acceptName":null,"mobile":null,"lat":null,"lng":null,"estimateTime":null,"cartStr":null,"active":null,"businessName":"科创美食","businessImgUrl":"https://cnkj.nbyjdz.com/upload/2F35A161A8F8A5E99B50C7BC102B898E.png","tel":"057487150666"}]
-     * totalCount : 1
+     * list : [{"acceptName":"","amount":0,"closeTime":"","couponAmount":0,"couponId":0,"createTime":"","deductIntegral":0,"deliveryAmount":0,"deliveryTime":"","deliveryType":0,"detail":{"acceptName":"","cityId":0,"districtId":0,"location":"","logistics":"","logisticsNo":"","mobile":"","orderId":0,"provinceId":0,"regions":"","remark":""},"disCountamount":0,"expireTime":"","explain":"","finishTime":"","hasClear":0,"hasDel":0,"hasExpediting":0,"id":0,"location":"","mobile":"","orderNo":"","orderType":0,"orderTypeStr":"","payTime":"","payType":0,"payTypeStr":"","productList":[{"count":0,"createTime":"","deductIntegral":0,"disPrice":0,"hasSku":0,"id":0,"imgUrl":"","name":"","num":0,"orderId":0,"price":0,"productId":0,"realNum":0,"skuId":0,"skuName":"","stock":0,"sumAmount":0,"sumIntegral":0,"type":0}],"realAmount":0,"regions":"","remarks":"","status":0,"statusStr":"","totalNum":0,"userId":0}]
+     * totalCount : 0
      */
 
     private int totalCount;
@@ -29,228 +29,95 @@ public class OrderInfoData implements Serializable {
         this.list = list;
     }
 
-    public static class ListBean implements Serializable{
+    public static class ListBean {
         /**
-         * id : 172
-         * userId : 89
-         * orderNo : 200527112027057620
-         * amount : 18.9
-         * couponId : null
+         * acceptName :
+         * amount : 0
+         * closeTime :
          * couponAmount : 0
-         * discountAmount : 4
+         * couponId : 0
+         * createTime :
+         * deductIntegral : 0
          * deliveryAmount : 0
-         * realAmount : 14.9
-         * lunchBoxAmount : 0
-         * remark : （单）清蒸腊鸡腿+肉末茄子+干锅包菜等 1 件商品
-         * payType : 1
-         * payTime : 2020-05-27T11:20:45.367+0800
-         * businessId : 7
-         * receiptTime : 2020-05-27T11:20:45.382+0800
-         * deliveryTime : null
-         * finishTime : null
-         * closeTime : 2020-05-28T11:20:45.383+0800
-         * endCancelTime : 2020-05-27T11:21:45.367+0800
-         * status : 9
-         * createTime : 2020-05-27T11:20:27.859+0800
-         * expireTime : 2020-05-27T11:50:27.859+0800
-         * print : false
-         * delTf : false
-         * printNo : null
-         * reserveTime : null
-         * statusStr : 已完成
-         * products : [{"id":263,"orderId":172,"productId":88,"imgUrl":"https://cnkj.nbyjdz.com/upload/0BB94F34E63F899786CFE979C9C1AEC4.jpg","name":"（单）清蒸腊鸡腿+肉末茄子+干锅包菜","num":1,"price":18.9,"realPrice":14.9,"lunchBoxPrice":0,"realNum":1,"refundId":null,"status":5,"createTime":"2020-05-27T11:20:27.000+0800","setMealProduct":null,"setMeal":null,"type":1,"categoryId":1,"categoryLevel":1}]
-         * userAddressDTO : null
-         * coupons : null
-         * location : null
-         * regions : null
-         * acceptName : null
-         * mobile : null
-         * lat : null
-         * lng : null
-         * estimateTime : null
-         * cartStr : null
-         * active : null
-         * businessName : 科创美食
-         * businessImgUrl : https://cnkj.nbyjdz.com/upload/2F35A161A8F8A5E99B50C7BC102B898E.png
-         * tel : 057487150666
+         * deliveryTime :
+         * deliveryType : 0
+         * detail : {"acceptName":"","cityId":0,"districtId":0,"location":"","logistics":"","logisticsNo":"","mobile":"","orderId":0,"provinceId":0,"regions":"","remark":""}
+         * disCountamount : 0
+         * expireTime :
+         * explain :
+         * finishTime :
+         * hasClear : 0
+         * hasDel : 0
+         * hasExpediting : 0
+         * id : 0
+         * location :
+         * mobile :
+         * orderNo :
+         * orderType : 0
+         * orderTypeStr :
+         * payTime :
+         * payType : 0
+         * payTypeStr :
+         * productList : [{"count":0,"createTime":"","deductIntegral":0,"disPrice":0,"hasSku":0,"id":0,"imgUrl":"","name":"","num":0,"orderId":0,"price":0,"productId":0,"realNum":0,"skuId":0,"skuName":"","stock":0,"sumAmount":0,"sumIntegral":0,"type":0}]
+         * realAmount : 0
+         * regions :
+         * remarks :
+         * status : 0
+         * statusStr :
+         * totalNum : 0
+         * userId : 0
          */
-        private int id;
-        private int userId;
-        private String orderNo;
-        private double amount;
-        private Object couponId;
-        private int couponAmount;
-        private int discountAmount;
-        private int deliveryAmount;
-        private double realAmount;
-        private int lunchBoxAmount;
-        private String remark;
-        private int payType;
-        private String payTime;
-        private int businessId;
-        private String receiptTime;
-        private Object deliveryTime;
-        private Object finishTime;
+
+        private String acceptName;
+        private String amount;
         private String closeTime;
-        private String endCancelTime;
-        private String status;
+        private String couponAmount;
+        private String couponId;
         private String createTime;
+        private String deductIntegral;
+        private String deliveryAmount;
+        private String deliveryTime;
+        private String deliveryType;
+        private DetailBean detail;
+        private String disCountamount;
         private String expireTime;
-        private boolean print;
-        private boolean delTf;
-        private Object printNo;
-        private Object reserveTime;
+        private String explain;
+        private String finishTime;
+        private String hasClear;
+        private String hasDel;
+        private String hasExpediting;
+        private String id;
+        private String location;
+        private String mobile;
+        private String orderNo;
+        private String orderType;
+        private String orderTypeStr;
+        private String payTime;
+        private String payType;
+        private String payTypeStr;
+        private String realAmount;
+        private String regions;
+        private String remarks;
+        private String status;
         private String statusStr;
-        private Object userAddressDTO;
-        private Object coupons;
-        private Object location;
-        private Object regions;
-        private Object acceptName;
-        private Object mobile;
-        private Object lat;
-        private Object lng;
-        private Object estimateTime;
-        private Object cartStr;
-        private Object active;
-        private String businessName;
-        private String businessImgUrl;
-        private String tel;
-        private List<ProductsBean> products;
+        private String totalNum;
+        private String userId;
+        private List<ProductListBean> productList;
 
-        public int getId() {
-            return id;
+        public String getAcceptName() {
+            return acceptName;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public void setAcceptName(String acceptName) {
+            this.acceptName = acceptName;
         }
 
-        public int getUserId() {
-            return userId;
-        }
-
-        public void setUserId(int userId) {
-            this.userId = userId;
-        }
-
-        public String getOrderNo() {
-            return orderNo;
-        }
-
-        public void setOrderNo(String orderNo) {
-            this.orderNo = orderNo;
-        }
-
-        public double getAmount() {
+        public String getAmount() {
             return amount;
         }
 
-        public void setAmount(double amount) {
+        public void setAmount(String amount) {
             this.amount = amount;
-        }
-
-        public Object getCouponId() {
-            return couponId;
-        }
-
-        public void setCouponId(Object couponId) {
-            this.couponId = couponId;
-        }
-
-        public int getCouponAmount() {
-            return couponAmount;
-        }
-
-        public void setCouponAmount(int couponAmount) {
-            this.couponAmount = couponAmount;
-        }
-
-        public int getDiscountAmount() {
-            return discountAmount;
-        }
-
-        public void setDiscountAmount(int discountAmount) {
-            this.discountAmount = discountAmount;
-        }
-
-        public int getDeliveryAmount() {
-            return deliveryAmount;
-        }
-
-        public void setDeliveryAmount(int deliveryAmount) {
-            this.deliveryAmount = deliveryAmount;
-        }
-
-        public double getRealAmount() {
-            return realAmount;
-        }
-
-        public void setRealAmount(double realAmount) {
-            this.realAmount = realAmount;
-        }
-
-        public int getLunchBoxAmount() {
-            return lunchBoxAmount;
-        }
-
-        public void setLunchBoxAmount(int lunchBoxAmount) {
-            this.lunchBoxAmount = lunchBoxAmount;
-        }
-
-        public String getRemark() {
-            return remark;
-        }
-
-        public void setRemark(String remark) {
-            this.remark = remark;
-        }
-
-        public int getPayType() {
-            return payType;
-        }
-
-        public void setPayType(int payType) {
-            this.payType = payType;
-        }
-
-        public String getPayTime() {
-            return payTime;
-        }
-
-        public void setPayTime(String payTime) {
-            this.payTime = payTime;
-        }
-
-        public int getBusinessId() {
-            return businessId;
-        }
-
-        public void setBusinessId(int businessId) {
-            this.businessId = businessId;
-        }
-
-        public String getReceiptTime() {
-            return receiptTime;
-        }
-
-        public void setReceiptTime(String receiptTime) {
-            this.receiptTime = receiptTime;
-        }
-
-        public Object getDeliveryTime() {
-            return deliveryTime;
-        }
-
-        public void setDeliveryTime(Object deliveryTime) {
-            this.deliveryTime = deliveryTime;
-        }
-
-        public Object getFinishTime() {
-            return finishTime;
-        }
-
-        public void setFinishTime(Object finishTime) {
-            this.finishTime = finishTime;
         }
 
         public String getCloseTime() {
@@ -261,20 +128,20 @@ public class OrderInfoData implements Serializable {
             this.closeTime = closeTime;
         }
 
-        public String getEndCancelTime() {
-            return endCancelTime;
+        public String getCouponAmount() {
+            return couponAmount;
         }
 
-        public void setEndCancelTime(String endCancelTime) {
-            this.endCancelTime = endCancelTime;
+        public void setCouponAmount(String couponAmount) {
+            this.couponAmount = couponAmount;
         }
 
-        public String getStatus() {
-            return status;
+        public String getCouponId() {
+            return couponId;
         }
 
-        public void setStatus(String status) {
-            this.status = status;
+        public void setCouponId(String couponId) {
+            this.couponId = couponId;
         }
 
         public String getCreateTime() {
@@ -285,6 +152,54 @@ public class OrderInfoData implements Serializable {
             this.createTime = createTime;
         }
 
+        public String getDeductIntegral() {
+            return deductIntegral;
+        }
+
+        public void setDeductIntegral(String deductIntegral) {
+            this.deductIntegral = deductIntegral;
+        }
+
+        public String getDeliveryAmount() {
+            return deliveryAmount;
+        }
+
+        public void setDeliveryAmount(String deliveryAmount) {
+            this.deliveryAmount = deliveryAmount;
+        }
+
+        public String getDeliveryTime() {
+            return deliveryTime;
+        }
+
+        public void setDeliveryTime(String deliveryTime) {
+            this.deliveryTime = deliveryTime;
+        }
+
+        public String getDeliveryType() {
+            return deliveryType;
+        }
+
+        public void setDeliveryType(String deliveryType) {
+            this.deliveryType = deliveryType;
+        }
+
+        public DetailBean getDetail() {
+            return detail;
+        }
+
+        public void setDetail(DetailBean detail) {
+            this.detail = detail;
+        }
+
+        public String getDisCountamount() {
+            return disCountamount;
+        }
+
+        public void setDisCountamount(String disCountamount) {
+            this.disCountamount = disCountamount;
+        }
+
         public String getExpireTime() {
             return expireTime;
         }
@@ -293,36 +208,148 @@ public class OrderInfoData implements Serializable {
             this.expireTime = expireTime;
         }
 
-        public boolean isPrint() {
-            return print;
+        public String getExplain() {
+            return explain;
         }
 
-        public void setPrint(boolean print) {
-            this.print = print;
+        public void setExplain(String explain) {
+            this.explain = explain;
         }
 
-        public boolean isDelTf() {
-            return delTf;
+        public String getFinishTime() {
+            return finishTime;
         }
 
-        public void setDelTf(boolean delTf) {
-            this.delTf = delTf;
+        public void setFinishTime(String finishTime) {
+            this.finishTime = finishTime;
         }
 
-        public Object getPrintNo() {
-            return printNo;
+        public String getHasClear() {
+            return hasClear;
         }
 
-        public void setPrintNo(Object printNo) {
-            this.printNo = printNo;
+        public void setHasClear(String hasClear) {
+            this.hasClear = hasClear;
         }
 
-        public Object getReserveTime() {
-            return reserveTime;
+        public String getHasDel() {
+            return hasDel;
         }
 
-        public void setReserveTime(Object reserveTime) {
-            this.reserveTime = reserveTime;
+        public void setHasDel(String hasDel) {
+            this.hasDel = hasDel;
+        }
+
+        public String getHasExpediting() {
+            return hasExpediting;
+        }
+
+        public void setHasExpediting(String hasExpediting) {
+            this.hasExpediting = hasExpediting;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public void setLocation(String location) {
+            this.location = location;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
+
+        public String getOrderNo() {
+            return orderNo;
+        }
+
+        public void setOrderNo(String orderNo) {
+            this.orderNo = orderNo;
+        }
+
+        public String getOrderType() {
+            return orderType;
+        }
+
+        public void setOrderType(String orderType) {
+            this.orderType = orderType;
+        }
+
+        public String getOrderTypeStr() {
+            return orderTypeStr;
+        }
+
+        public void setOrderTypeStr(String orderTypeStr) {
+            this.orderTypeStr = orderTypeStr;
+        }
+
+        public String getPayTime() {
+            return payTime;
+        }
+
+        public void setPayTime(String payTime) {
+            this.payTime = payTime;
+        }
+
+        public String getPayType() {
+            return payType;
+        }
+
+        public void setPayType(String payType) {
+            this.payType = payType;
+        }
+
+        public String getPayTypeStr() {
+            return payTypeStr;
+        }
+
+        public void setPayTypeStr(String payTypeStr) {
+            this.payTypeStr = payTypeStr;
+        }
+
+        public String getRealAmount() {
+            return realAmount;
+        }
+
+        public void setRealAmount(String realAmount) {
+            this.realAmount = realAmount;
+        }
+
+        public String getRegions() {
+            return regions;
+        }
+
+        public void setRegions(String regions) {
+            this.regions = regions;
+        }
+
+        public String getRemarks() {
+            return remarks;
+        }
+
+        public void setRemarks(String remarks) {
+            this.remarks = remarks;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
         }
 
         public String getStatusStr() {
@@ -333,189 +360,235 @@ public class OrderInfoData implements Serializable {
             this.statusStr = statusStr;
         }
 
-        public Object getUserAddressDTO() {
-            return userAddressDTO;
+        public String getTotalNum() {
+            return totalNum;
         }
 
-        public void setUserAddressDTO(Object userAddressDTO) {
-            this.userAddressDTO = userAddressDTO;
+        public void setTotalNum(String totalNum) {
+            this.totalNum = totalNum;
         }
 
-        public Object getCoupons() {
-            return coupons;
+        public String getUserId() {
+            return userId;
         }
 
-        public void setCoupons(Object coupons) {
-            this.coupons = coupons;
+        public void setUserId(String userId) {
+            this.userId = userId;
         }
 
-        public Object getLocation() {
-            return location;
+        public List<ProductListBean> getProductList() {
+            return productList;
         }
 
-        public void setLocation(Object location) {
-            this.location = location;
+        public void setProductList(List<ProductListBean> productList) {
+            this.productList = productList;
         }
 
-        public Object getRegions() {
-            return regions;
-        }
-
-        public void setRegions(Object regions) {
-            this.regions = regions;
-        }
-
-        public Object getAcceptName() {
-            return acceptName;
-        }
-
-        public void setAcceptName(Object acceptName) {
-            this.acceptName = acceptName;
-        }
-
-        public Object getMobile() {
-            return mobile;
-        }
-
-        public void setMobile(Object mobile) {
-            this.mobile = mobile;
-        }
-
-        public Object getLat() {
-            return lat;
-        }
-
-        public void setLat(Object lat) {
-            this.lat = lat;
-        }
-
-        public Object getLng() {
-            return lng;
-        }
-
-        public void setLng(Object lng) {
-            this.lng = lng;
-        }
-
-        public Object getEstimateTime() {
-            return estimateTime;
-        }
-
-        public void setEstimateTime(Object estimateTime) {
-            this.estimateTime = estimateTime;
-        }
-
-        public Object getCartStr() {
-            return cartStr;
-        }
-
-        public void setCartStr(Object cartStr) {
-            this.cartStr = cartStr;
-        }
-
-        public Object getActive() {
-            return active;
-        }
-
-        public void setActive(Object active) {
-            this.active = active;
-        }
-
-        public String getBusinessName() {
-            return businessName;
-        }
-
-        public void setBusinessName(String businessName) {
-            this.businessName = businessName;
-        }
-
-        public String getBusinessImgUrl() {
-            return businessImgUrl;
-        }
-
-        public void setBusinessImgUrl(String businessImgUrl) {
-            this.businessImgUrl = businessImgUrl;
-        }
-
-        public String getTel() {
-            return tel;
-        }
-
-        public void setTel(String tel) {
-            this.tel = tel;
-        }
-
-        public List<ProductsBean> getProducts() {
-            return products;
-        }
-
-        public void setProducts(List<ProductsBean> products) {
-            this.products = products;
-        }
-
-        public static class ProductsBean implements Serializable {
+        public static class DetailBean {
             /**
-             * id : 263
-             * orderId : 172
-             * productId : 88
-             * imgUrl : https://cnkj.nbyjdz.com/upload/0BB94F34E63F899786CFE979C9C1AEC4.jpg
-             * name : （单）清蒸腊鸡腿+肉末茄子+干锅包菜
-             * num : 1
-             * price : 18.9
-             * realPrice : 14.9
-             * lunchBoxPrice : 0
-             * realNum : 1
-             * refundId : null
-             * status : 5
-             * createTime : 2020-05-27T11:20:27.000+0800
-             * setMealProduct : null
-             * setMeal : null
-             * type : 1
-             * categoryId : 1
-             * categoryLevel : 1
+             * acceptName :
+             * cityId : 0
+             * districtId : 0
+             * location :
+             * logistics :
+             * logisticsNo :
+             * mobile :
+             * orderId : 0
+             * provinceId : 0
+             * regions :
+             * remark :
              */
 
-            private int id;
-            private int orderId;
-            private int productId;
-            private String imgUrl;
-            private String name;
-            private int num;
-            private double price;
-            private double realPrice;
-            private int lunchBoxPrice;
-            private int realNum;
-            private Object refundId;
-            private int status;
-            private String createTime;
-            private Object setMealProduct;
-            private Object setMeal;
-            private int type;
-            private int categoryId;
-            private int categoryLevel;
+            private String acceptName;
+            private String cityId;
+            private String districtId;
+            private String location;
+            private String logistics;
+            private String logisticsNo;
+            private String mobile;
+            private String orderId;
+            private String provinceId;
+            private String regions;
+            private String remark;
 
-            public int getId() {
-                return id;
+            public String getAcceptName() {
+                return acceptName;
             }
 
-            public void setId(int id) {
-                this.id = id;
+            public void setAcceptName(String acceptName) {
+                this.acceptName = acceptName;
             }
 
-            public int getOrderId() {
+            public String getCityId() {
+                return cityId;
+            }
+
+            public void setCityId(String cityId) {
+                this.cityId = cityId;
+            }
+
+            public String getDistrictId() {
+                return districtId;
+            }
+
+            public void setDistrictId(String districtId) {
+                this.districtId = districtId;
+            }
+
+            public String getLocation() {
+                return location;
+            }
+
+            public void setLocation(String location) {
+                this.location = location;
+            }
+
+            public String getLogistics() {
+                return logistics;
+            }
+
+            public void setLogistics(String logistics) {
+                this.logistics = logistics;
+            }
+
+            public String getLogisticsNo() {
+                return logisticsNo;
+            }
+
+            public void setLogisticsNo(String logisticsNo) {
+                this.logisticsNo = logisticsNo;
+            }
+
+            public String getMobile() {
+                return mobile;
+            }
+
+            public void setMobile(String mobile) {
+                this.mobile = mobile;
+            }
+
+            public String getOrderId() {
                 return orderId;
             }
 
-            public void setOrderId(int orderId) {
+            public void setOrderId(String orderId) {
                 this.orderId = orderId;
             }
 
-            public int getProductId() {
-                return productId;
+            public String getProvinceId() {
+                return provinceId;
             }
 
-            public void setProductId(int productId) {
-                this.productId = productId;
+            public void setProvinceId(String provinceId) {
+                this.provinceId = provinceId;
+            }
+
+            public String getRegions() {
+                return regions;
+            }
+
+            public void setRegions(String regions) {
+                this.regions = regions;
+            }
+
+            public String getRemark() {
+                return remark;
+            }
+
+            public void setRemark(String remark) {
+                this.remark = remark;
+            }
+        }
+
+        public static class ProductListBean {
+            /**
+             * count : 0
+             * createTime :
+             * deductIntegral : 0
+             * disPrice : 0
+             * hasSku : 0
+             * id : 0
+             * imgUrl :
+             * name :
+             * num : 0
+             * orderId : 0
+             * price : 0
+             * productId : 0
+             * realNum : 0
+             * skuId : 0
+             * skuName :
+             * stock : 0
+             * sumAmount : 0
+             * sumIntegral : 0
+             * type : 0
+             */
+
+            private String count;
+            private String createTime;
+            private String deductIntegral;
+            private String disPrice;
+            private String hasSku;
+            private String id;
+            private String imgUrl;
+            private String name;
+            private String num;
+            private String orderId;
+            private String price;
+            private String productId;
+            private String realNum;
+            private String skuId;
+            private String skuName;
+            private String stock;
+            private String sumAmount;
+            private String sumIntegral;
+            private String type;
+
+            public String getCount() {
+                return count;
+            }
+
+            public void setCount(String count) {
+                this.count = count;
+            }
+
+            public String getCreateTime() {
+                return createTime;
+            }
+
+            public void setCreateTime(String createTime) {
+                this.createTime = createTime;
+            }
+
+            public String getDeductIntegral() {
+                return deductIntegral;
+            }
+
+            public void setDeductIntegral(String deductIntegral) {
+                this.deductIntegral = deductIntegral;
+            }
+
+            public String getDisPrice() {
+                return disPrice;
+            }
+
+            public void setDisPrice(String disPrice) {
+                this.disPrice = disPrice;
+            }
+
+            public String getHasSku() {
+                return hasSku;
+            }
+
+            public void setHasSku(String hasSku) {
+                this.hasSku = hasSku;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
             }
 
             public String getImgUrl() {
@@ -534,108 +607,92 @@ public class OrderInfoData implements Serializable {
                 this.name = name;
             }
 
-            public int getNum() {
+            public String getNum() {
                 return num;
             }
 
-            public void setNum(int num) {
+            public void setNum(String num) {
                 this.num = num;
             }
 
-            public double getPrice() {
+            public String getOrderId() {
+                return orderId;
+            }
+
+            public void setOrderId(String orderId) {
+                this.orderId = orderId;
+            }
+
+            public String getPrice() {
                 return price;
             }
 
-            public void setPrice(double price) {
+            public void setPrice(String price) {
                 this.price = price;
             }
 
-            public double getRealPrice() {
-                return realPrice;
+            public String getProductId() {
+                return productId;
             }
 
-            public void setRealPrice(double realPrice) {
-                this.realPrice = realPrice;
+            public void setProductId(String productId) {
+                this.productId = productId;
             }
 
-            public int getLunchBoxPrice() {
-                return lunchBoxPrice;
-            }
-
-            public void setLunchBoxPrice(int lunchBoxPrice) {
-                this.lunchBoxPrice = lunchBoxPrice;
-            }
-
-            public int getRealNum() {
+            public String getRealNum() {
                 return realNum;
             }
 
-            public void setRealNum(int realNum) {
+            public void setRealNum(String realNum) {
                 this.realNum = realNum;
             }
 
-            public Object getRefundId() {
-                return refundId;
+            public String getSkuId() {
+                return skuId;
             }
 
-            public void setRefundId(Object refundId) {
-                this.refundId = refundId;
+            public void setSkuId(String skuId) {
+                this.skuId = skuId;
             }
 
-            public int getStatus() {
-                return status;
+            public String getSkuName() {
+                return skuName;
             }
 
-            public void setStatus(int status) {
-                this.status = status;
+            public void setSkuName(String skuName) {
+                this.skuName = skuName;
             }
 
-            public String getCreateTime() {
-                return createTime;
+            public String getStock() {
+                return stock;
             }
 
-            public void setCreateTime(String createTime) {
-                this.createTime = createTime;
+            public void setStock(String stock) {
+                this.stock = stock;
             }
 
-            public Object getSetMealProduct() {
-                return setMealProduct;
+            public String getSumAmount() {
+                return sumAmount;
             }
 
-            public void setSetMealProduct(Object setMealProduct) {
-                this.setMealProduct = setMealProduct;
+            public void setSumAmount(String sumAmount) {
+                this.sumAmount = sumAmount;
             }
 
-            public Object getSetMeal() {
-                return setMeal;
+            public String getSumIntegral() {
+                return sumIntegral;
             }
 
-            public void setSetMeal(Object setMeal) {
-                this.setMeal = setMeal;
+            public void setSumIntegral(String sumIntegral) {
+                this.sumIntegral = sumIntegral;
             }
 
-            public int getType() {
+            public String getType() {
                 return type;
             }
 
-            public void setType(int type) {
+            public void setType(String type) {
                 this.type = type;
-            }
-
-            public int getCategoryId() {
-                return categoryId;
-            }
-
-            public void setCategoryId(int categoryId) {
-                this.categoryId = categoryId;
-            }
-
-            public int getCategoryLevel() {
-                return categoryLevel;
-            }
-
-            public void setCategoryLevel(int categoryLevel) {
-                this.categoryLevel = categoryLevel;
             }
         }
     }

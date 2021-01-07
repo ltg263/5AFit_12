@@ -53,8 +53,6 @@ public class OrderListFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
-        lv_not.setVisibility(View.GONE);
-        refreshLayout.setVisibility(View.VISIBLE);
         bundle = getArguments();
         if (bundle != null) {
             type = bundle.getInt("type");
@@ -64,14 +62,14 @@ public class OrderListFragment extends BaseFragment {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 page++;
-//                getData();
+                getData();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
-//                orderDataList.clear();
-//                getData();
+                orderDataList.clear();
+                getData();
             }
         });
     }
@@ -87,10 +85,6 @@ public class OrderListFragment extends BaseFragment {
     private void initOrder() {
 
         rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        orderDataList.add(null);
-        orderDataList.add(null);
-        orderDataList.add(null);
-        orderDataList.add(null);
         orderListAdapter = new OrderListAdapter(orderDataList);
         rvList.setAdapter(orderListAdapter);
         orderListAdapter.setMyOrderAdapterListener(new OrderListAdapter.MyOrderAdapterListener() {
@@ -157,13 +151,15 @@ public class OrderListFragment extends BaseFragment {
                 IntentUtils.getInstence().intent(getActivity(), OrderDetailsActivity.class, "id", "");
             }
         });
+
+        getData();
     }
 
     public void refreshData() {
         page = 1;
         orderDataList.clear();
-//        show(getActivity());
-//        getData();
+        show(getActivity());
+        getData();
     }
 
     private int page = 1;
@@ -184,21 +180,20 @@ public class OrderListFragment extends BaseFragment {
                     }
                     @Override
                     public void onNext(Result<OrderInfoData> result) {
-//                        ifNotLoginTurnToLogin(result.getCode());
-//                        if (result.getStatus()==0) {
-//                            if(result.getData().getList().size()>0){
-//                                lv_not.setVisibility(View.GONE);
-//                                refreshLayout.setVisibility(View.VISIBLE);
-//                            }
-//                            orderDataList.addAll(result.getData().getList());
-//                            orderListAdapter.notifyDataSetChanged();
-//                            refreshLayout.finishRefresh();
-//                            refreshLayout.finishLoadMore();
-//                            totalPage = StringUtil.getTotalPage(result.getData().getTotalCount(), ConstValues.PAGE_SIZE);
-//                            if(totalPage <= page){
-//                                refreshLayout.finishLoadMoreWithNoMoreData();
-//                            }
-//                        }
+                        if (isDataInfoSucceed(result)) {
+                            if(result.getData().getList().size()>0){
+                                lv_not.setVisibility(View.GONE);
+                                refreshLayout.setVisibility(View.VISIBLE);
+                            }
+                            orderDataList.addAll(result.getData().getList());
+                            orderListAdapter.notifyDataSetChanged();
+                            refreshLayout.finishRefresh();
+                            refreshLayout.finishLoadMore();
+                            totalPage = StringUtil.getTotalPage(result.getData().getTotalCount(), ConstValues.PAGE_SIZE);
+                            if(totalPage <= page){
+                                refreshLayout.finishLoadMoreWithNoMoreData();
+                            }
+                        }
 
                     }
 

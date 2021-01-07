@@ -39,14 +39,14 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
     @Override
     protected void convert(@NonNull BaseViewHolder helper, OrderInfoData.ListBean item) {
 
-//        helper.setText(R.id.tv_order_shop_name, item.getBusinessName());
-//        helper.setText(R.id.tv_status, item.getStatusStr());
-//        helper.setText(R.id.tv_time,item.getCreateTime());
+        helper.setText(R.id.tv_order_shop_name, item.getOrderNo());
+        helper.setText(R.id.tv_status, item.getStatusStr());
+        helper.setText(R.id.tv_time,item.getCreateTime());
         String str = "共计<font color=\"#FF6666\">1</font>件：4890积分 + ￥24 （含￥0运费）";
         helper.setText(R.id.tv_jg_num, Html.fromHtml(str));
         RecyclerView recyclerView = helper.getView(R.id.rv_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        List<OrderInfoData.ListBean.ProductsBean> data = new ArrayList<>();
+        List<OrderInfoData.ListBean.ProductListBean> data = new ArrayList<>();
         data.add(null);
         OrderShoppingAdapter mOrderShoppingAdapter = new OrderShoppingAdapter(recyclerView.getContext(), data);//item.getProducts()
         recyclerView.setAdapter(mOrderShoppingAdapter);
@@ -60,16 +60,15 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
                 return false;
             }
         });
-//        helper.setText(R.id.tv_price, "￥" + item.getRealAmount());
+        helper.setText(R.id.tv_price, "￥" + item.getRealAmount());
         TextView btn0 = helper.getView(R.id.btn0);
         TextView btn1 = helper.getView(R.id.btn1);
         TextView btn2 = helper.getView(R.id.btn2);
-//        btn0.setVisibility(View.GONE);
-//        btn1.setVisibility(View.GONE);
-//        btn2.setVisibility(View.GONE);
-
-//        switch (item.getStatus()) {
-        switch ("1") {
+        btn0.setVisibility(View.GONE);
+        btn1.setVisibility(View.GONE);
+        btn2.setVisibility(View.GONE);
+        //1,待支付;2,待发货;3,待收货;4,待评价;5,已完成;6,已取消;7,已过期;8,已结束
+        switch (item.getStatus()) {
             case "1"://待支付
                 btn0.setVisibility(View.VISIBLE);
                 btn0.setText("联系商家");
@@ -78,50 +77,44 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
                 btn2.setVisibility(View.VISIBLE);
                 btn2.setText("去支付");
                 break;
-            case "2"://待接单
+            case "2"://待发货
                 btn0.setVisibility(View.VISIBLE);
                 btn0.setText("联系商家");
                 btn1.setVisibility(View.VISIBLE);
-                btn1.setText("取消订单");
+                btn1.setText("提醒发货");
                 break;
-            case "3"://待配送
+            case "3"://待收货
                 btn0.setVisibility(View.VISIBLE);
                 btn0.setText("联系商家");
-                break;
-            case "4"://配送中
-                btn0.setVisibility(View.VISIBLE);
-                btn0.setText("联系商家");
+                btn1.setVisibility(View.VISIBLE);
+                btn1.setText("查看物流");
                 btn2.setVisibility(View.VISIBLE);
                 btn2.setText("确认收货");
                 break;
-            case "5"://待评价
-                btn0.setVisibility(View.VISIBLE);
-                btn0.setText("申请退款");
-                btn1.setVisibility(View.VISIBLE);
-                btn1.setText("联系商家");
-                btn2.setVisibility(View.VISIBLE);
-                btn2.setText("去评价");
-                break;
-            case "6"://已完成
-                btn0.setVisibility(View.VISIBLE);
-                btn0.setText("联系商家");
-                btn2.setVisibility(View.VISIBLE);
-                btn2.setText("再来一单");
-                break;
-            case "7"://已取消
-            case "8"://已超时
+            case "4"://待评价
                 btn0.setVisibility(View.VISIBLE);
                 btn0.setText("联系商家");
                 btn1.setVisibility(View.VISIBLE);
                 btn1.setText("删除订单");
                 btn2.setVisibility(View.VISIBLE);
-                btn2.setText("再来一单");
+                btn2.setText("去评价");
                 break;
-            case "9"://已结束
-                btn2.setVisibility(View.VISIBLE);
-                btn2.setText("联系商家");
+            case "5"://已完成
+                btn0.setVisibility(View.VISIBLE);
+                btn0.setText("申请退款");
+                btn1.setVisibility(View.VISIBLE);
+                btn1.setText("删除订单");
+                break;
+            case "6"://已取消
+            case "7"://已过期
+            case "8"://已超时
+                btn0.setVisibility(View.VISIBLE);
+                btn0.setText("联系商家");
+                btn1.setVisibility(View.VISIBLE);
+                btn1.setText("删除订单");
                 break;
             default:
+                btn0.setVisibility(View.GONE);
         }
         btn0.setOnClickListener(new View.OnClickListener() {
             @Override
