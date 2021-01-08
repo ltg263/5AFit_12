@@ -45,6 +45,8 @@ public class ConstValues {
     public static final String endpoint = "endpoint";
     public static final String bucketName = "bucketName";
     public static final String SecurityToken = "SecurityToken";
+    public static final String dir = "dir";
+    public static final String host = "host";
 
     /**
      * 服务器后台地址
@@ -55,7 +57,6 @@ public class ConstValues {
     public static final String BASE_URL_DETAIL = "http://admin.zjduon.com/";
 
     public static final String WX_APP_ID = "wxf2824afc51ad69a0";
-    public static final String REGISTRATION_ID = "registration_id";
 
 
     public static final String PORT_9 = "http://192.168.2.175:9505/";//积分商城
@@ -66,8 +67,8 @@ public class ConstValues {
     public static final String PORT_3 = "shop/";//商城
 //    public static final String PORT_3 = "http://192.168.2.175:9503/";//商城
     public static final String PORT_4 = "sport/";//运动
-//    public static final String PORT_5 = "third/";//第三方登录 third
-    public static final String PORT_5 = "http://192.168.2.145:9505/";//积分商城
+    public static final String PORT_5 = "third/";//第三方登录 third
+//    public static final String PORT_5 = "http://192.168.2.145:9505/";//积分商城
     public static final String PORT_8 = "pay/";//支付相关 pay
     public static final String PORT_21 = "community-service/";//社群
 //    public static final String PORT_21 = "http://192.168.2.145:9021/";//社群

@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.conpoment.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.PostUser;
@@ -804,7 +805,12 @@ public class HttpRequestUtils {
 //        void failure();
     }
 
-    public static void postOSSFile(OSSClientInterface mResultInterface){
+    /**
+     *
+     * @param mResultInterface
+     * @param type
+     */
+    public static void postOSSFile(int type,OSSClientInterface mResultInterface){
         RetrofitUtil.getInstance().apiService()
                 .getStsToken()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -822,7 +828,7 @@ public class HttpRequestUtils {
                             SharedUtils.singleton().put(ConstValues.accessKeyId,data.getAccessKeyId());
                             SharedUtils.singleton().put(ConstValues.accessKeySecret,data.getAccessKeySecret());
                             SharedUtils.singleton().put(ConstValues.SecurityToken,data.getSecurityToken());
-                            getOssInfo(mResultInterface);
+                            getOssInfo(mResultInterface,type);
                         }
                     }
 
@@ -839,7 +845,7 @@ public class HttpRequestUtils {
     }
 
 
-    public static void getOssInfo(OSSClientInterface mResultInterface){
+    public static void getOssInfo(OSSClientInterface mResultInterface, int type){
         RetrofitUtil.getInstance().apiService()
                 .getOssInfo()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -855,41 +861,9 @@ public class HttpRequestUtils {
                         if(result.getCode()==0) {
                             OssInfoBean data = result.getData();
                             SharedUtils.singleton().put(ConstValues.endpoint,data.getEndpoint());
-                            SharedUtils.singleton().put(ConstValues.bucketName,data.getDirUnits().get(2).getDir());
-                            getSignature(mResultInterface,data.getDirUnits().get(2).getDir());
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mResultInterface.succeed(0);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-
-
-    public static void getSignature(OSSClientInterface mResultInterface, String dir){
-        RetrofitUtil.getInstance().apiService()
-                .getSignature(dir)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result<SignatureBean>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Result<SignatureBean> result) {
-                        if(result.getCode()==0) {
-                            SignatureBean data = result.getData();
-//                            SharedUtils.singleton().put(ConstValues.accessKeyId,data.getAccessid());
+                            SharedUtils.singleton().put(ConstValues.bucketName,data.getBucket());
+                            SharedUtils.singleton().put(ConstValues.host,data.getHost());
+                            SharedUtils.singleton().put(ConstValues.dir,data.getDirUnits().get(type).getDir());
                             mResultInterface.succeed(1);
                         }
                     }
@@ -906,30 +880,22 @@ public class HttpRequestUtils {
                 });
     }
 
-    public static void initOSSClient(Context mContext, String filename, String filePath, OSSClientInterface mResultInterface){
+
+    public static void initOSSClient(Context mContext,  String fileName,String filePath, OSSClientInterface mResultInterface){
         //初始化OssService类，参数分别是Content，accessKeyId，accessKeySecret，endpoint，bucketName（后4个参数是您自己阿里云Oss中参数）
-        OssService ossService = new OssService(mContext,
-                SharedUtils.singleton().get(ConstValues.accessKeyId,""),
-                SharedUtils.singleton().get(ConstValues.accessKeySecret,""),
-                SharedUtils.singleton().get(ConstValues.endpoint,""),
-                SharedUtils.singleton().get(ConstValues.bucketName,""),
-                SharedUtils.singleton().get(ConstValues.SecurityToken,""));
+        // String accessKeyId, String accessKeySecret, String endpoint,String bucketName,String dir, String SecurityToken
+        OssService ossService = new OssService(mContext);
         //初始化OSSClient
         ossService.initOSSClient();
         //开始上传，参数分别为content，上传的文件名filename，上传的文件路径filePath
-        ossService.beginupload(mContext, filename, filePath);
+
+        ossService.beginupload(mContext, fileName, filePath);
         //上传的进度回调
         ossService.setProgressCallback(new OssService.ProgressCallback() {
             @Override
             public void onProgressCallback(final double progress) {
                 LogUtil.d("上传进度："+progress);
                 mResultInterface.succeed(progress);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                    }
-//                });
             }
         });
     }

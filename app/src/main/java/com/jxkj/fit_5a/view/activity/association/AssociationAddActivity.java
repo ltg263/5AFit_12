@@ -18,9 +18,12 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.utils.ToastUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
 import com.jxkj.fit_5a.entity.TopicAllBean;
@@ -144,13 +147,24 @@ public class AssociationAddActivity extends BaseActivity {
     }
 
     private void setIMaaa(List<LocalMedia> selectList) {
-        HttpRequestUtils.postOSSFile(new HttpRequestUtils.OSSClientInterface() {
+        HttpRequestUtils.postOSSFile(2,new HttpRequestUtils.OSSClientInterface() {
             @Override
             public void succeed(double pos) {
-                HttpRequestUtils.initOSSClient(AssociationAddActivity.this, "113131313144", selectList.get(0).getPath(), new HttpRequestUtils.OSSClientInterface() {
+                if(pos==0){
+                    ToastUtils.showShort("获取oss信息错误");
+                    return;
+                }
+                String fileName = StringUtil.stringToMD5(selectList.get(0).getPath())+".png";
+                HttpRequestUtils.initOSSClient(AssociationAddActivity.this, fileName,selectList.get(0).getPath(), new HttpRequestUtils.OSSClientInterface() {
                     @Override
                     public void succeed(double pos) {
                         Log.w("pso","pos:"+pos);
+                        if(pos==101){
+                            String urlpath= SharedUtils.singleton().get(ConstValues.host,"")
+                                    +"/"+SharedUtils.singleton().get(ConstValues.dir,"")
+                                    +"/"+fileName;
+                            Log.w("pso","url:"+ urlpath);
+                        }
                     }
                 });
             }
