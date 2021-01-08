@@ -9,6 +9,9 @@ import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.LoginInfo;
+import com.jxkj.fit_5a.entity.OssInfoBean;
+import com.jxkj.fit_5a.entity.SignatureBean;
+import com.jxkj.fit_5a.entity.StsTokenBean;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
 import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
 
@@ -18,6 +21,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.forward.androids.utils.LogUtil;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -794,5 +798,139 @@ public class HttpRequestUtils {
     public interface ResultInterface {
         void succeed(ResultList<CommentMomentBean> result);
 //        void failure();
+    }
+    public interface OSSClientInterface {
+        void succeed(double pos);
+//        void failure();
+    }
+
+    public static void postOSSFile(OSSClientInterface mResultInterface){
+        RetrofitUtil.getInstance().apiService()
+                .getStsToken()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<StsTokenBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<StsTokenBean> result) {
+                        if(result.getCode()==0) {
+                            StsTokenBean data = result.getData();
+                            SharedUtils.singleton().put(ConstValues.accessKeyId,data.getAccessKeyId());
+                            SharedUtils.singleton().put(ConstValues.accessKeySecret,data.getAccessKeySecret());
+                            SharedUtils.singleton().put(ConstValues.SecurityToken,data.getSecurityToken());
+                            getOssInfo(mResultInterface);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mResultInterface.succeed(0);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    public static void getOssInfo(OSSClientInterface mResultInterface){
+        RetrofitUtil.getInstance().apiService()
+                .getOssInfo()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<OssInfoBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<OssInfoBean> result) {
+                        if(result.getCode()==0) {
+                            OssInfoBean data = result.getData();
+                            SharedUtils.singleton().put(ConstValues.endpoint,data.getEndpoint());
+                            SharedUtils.singleton().put(ConstValues.bucketName,data.getDirUnits().get(2).getDir());
+                            getSignature(mResultInterface,data.getDirUnits().get(2).getDir());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mResultInterface.succeed(0);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+
+    public static void getSignature(OSSClientInterface mResultInterface, String dir){
+        RetrofitUtil.getInstance().apiService()
+                .getSignature(dir)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<SignatureBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<SignatureBean> result) {
+                        if(result.getCode()==0) {
+                            SignatureBean data = result.getData();
+//                            SharedUtils.singleton().put(ConstValues.accessKeyId,data.getAccessid());
+                            mResultInterface.succeed(1);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mResultInterface.succeed(0);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public static void initOSSClient(Context mContext, String filename, String filePath, OSSClientInterface mResultInterface){
+        //初始化OssService类，参数分别是Content，accessKeyId，accessKeySecret，endpoint，bucketName（后4个参数是您自己阿里云Oss中参数）
+        OssService ossService = new OssService(mContext,
+                SharedUtils.singleton().get(ConstValues.accessKeyId,""),
+                SharedUtils.singleton().get(ConstValues.accessKeySecret,""),
+                SharedUtils.singleton().get(ConstValues.endpoint,""),
+                SharedUtils.singleton().get(ConstValues.bucketName,""),
+                SharedUtils.singleton().get(ConstValues.SecurityToken,""));
+        //初始化OSSClient
+        ossService.initOSSClient();
+        //开始上传，参数分别为content，上传的文件名filename，上传的文件路径filePath
+        ossService.beginupload(mContext, filename, filePath);
+        //上传的进度回调
+        ossService.setProgressCallback(new OssService.ProgressCallback() {
+            @Override
+            public void onProgressCallback(final double progress) {
+                LogUtil.d("上传进度："+progress);
+                mResultInterface.succeed(progress);
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                    }
+//                });
+            }
+        });
     }
 }

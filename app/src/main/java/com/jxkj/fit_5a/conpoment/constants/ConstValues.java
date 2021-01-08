@@ -40,6 +40,12 @@ public class ConstValues {
     public static final String MY_COUPON_COUNT = "couponCount";//券
     public static final String MY_INTEGRAL = "integral";//积分
 
+    public static final String accessKeyId = "accessKeyId";
+    public static final String accessKeySecret = "accessKeySecret";
+    public static final String endpoint = "endpoint";
+    public static final String bucketName = "bucketName";
+    public static final String SecurityToken = "SecurityToken";
+
     /**
      * 服务器后台地址
      */
@@ -51,11 +57,6 @@ public class ConstValues {
     public static final String WX_APP_ID = "wxf2824afc51ad69a0";
     public static final String REGISTRATION_ID = "registration_id";
 
-    //http://192.168.2.21:9502/ 192.168.2.21:80
-//    public static final String PORT_1 = "http://192.168.2.21:9501/";//用户 user
-//    public static final String PORT_2 = "http://192.168.2.21:9502/";//系统相关设置 sysconfig
-//    public static final String PORT_5 = "http://192.168.2.21:9505/";//第三方登录 third
-//    public static final String PORT_8 = "http://192.168.2.21:9508/";//支付相关 pay
 
     public static final String PORT_9 = "http://192.168.2.175:9505/";//积分商城
 
@@ -65,7 +66,8 @@ public class ConstValues {
     public static final String PORT_3 = "shop/";//商城
 //    public static final String PORT_3 = "http://192.168.2.175:9503/";//商城
     public static final String PORT_4 = "sport/";//运动
-    public static final String PORT_5 = "third/";//第三方登录 third
+//    public static final String PORT_5 = "third/";//第三方登录 third
+    public static final String PORT_5 = "http://192.168.2.145:9505/";//积分商城
     public static final String PORT_8 = "pay/";//支付相关 pay
     public static final String PORT_21 = "community-service/";//社群
 //    public static final String PORT_21 = "http://192.168.2.145:9021/";//社群

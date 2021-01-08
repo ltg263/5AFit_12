@@ -225,7 +225,6 @@ dependencies {
     implementation files('libs/fastjson-1.2.62.jar')
     implementation files('libs/windvane-min-8.0.3.2.3.jar')
     implementation(name: 'rpsdk-3.3.0.1', ext: 'aar')
-    implementation(name: 'oss-android-sdk-2.9.2', ext: 'aar')
     implementation(name: 'SecurityBodySDK-external-release-5.4.109-preInstall', ext: 'aar')
     implementation(name: 'SecurityGuardSDK-external-release-5.4.187-preInstall', ext: 'aar')
     implementation files('libs/SocialSDK_WeiXin_Full.jar')
@@ -261,4 +260,6 @@ dependencies {
 
     implementation 'com.github.1993hzw:Androids:1.3'
 //    implementation 'com.changyow:consolelib:1.1'
+
+    implementation 'com.aliyun.dpa:oss-android-sdk:+'
 }

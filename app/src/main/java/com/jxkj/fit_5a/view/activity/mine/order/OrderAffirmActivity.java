@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.mine.order;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,8 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.AddressData;
 import com.jxkj.fit_5a.entity.PostOrderInfo;
 import com.jxkj.fit_5a.entity.ShowOrderInfo;
@@ -50,6 +53,8 @@ public class OrderAffirmActivity extends BaseActivity {
     TextView tv1;
     @BindView(R.id.tv11)
     TextView tv11;
+    @BindView(R.id.tv_youhui)
+    TextView tv_youhui;
     @BindView(R.id.iv_wx)
     ImageView iv_wx;
     @BindView(R.id.iv_zfb)
@@ -79,6 +84,12 @@ public class OrderAffirmActivity extends BaseActivity {
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mOrderAffirmAdapter);
+        String couponCount = getIntent().getStringExtra(ConstValues.MY_COUPON_COUNT);
+        if(StringUtil.isBlank(couponCount) || Double.valueOf(couponCount)==0){
+            tv_youhui.setText("暂无优惠券");
+        }else{
+            tv_youhui.setText("有"+couponCount+"张优惠券");
+        }
     }
 
     @OnClick({R.id.ll_back, R.id.rl_address,R.id.iv_zfb,R.id.iv_wx,R.id.tv_pay})
@@ -129,7 +140,7 @@ public class OrderAffirmActivity extends BaseActivity {
 
     private void postcreateOrder() {
         info.setLevelMessage(tv_levelMessage.getText().toString());
-        info.setOrderType("1");
+        info.setOrderType("2");
         Log.w("info","info"+info.toString());
         RetrofitUtil.getInstance().apiService()
                 .postcreateOrder(info)

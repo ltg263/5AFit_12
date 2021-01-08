@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.activity.association;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
@@ -127,6 +129,7 @@ public class AssociationAddActivity extends BaseActivity {
                         mSpPhotoAdapter.remove(mSpPhotoAdapter.getData().size() - 1);
                     }
                     mSpPhotoAdapter.notifyDataSetChanged();
+                    setIMaaa(selectList);
                     break;
                 case 2:
                     double latitude=data.getDoubleExtra("latitude",0.0);
@@ -138,6 +141,20 @@ public class AssociationAddActivity extends BaseActivity {
                     break;
             }
         }
+    }
+
+    private void setIMaaa(List<LocalMedia> selectList) {
+        HttpRequestUtils.postOSSFile(new HttpRequestUtils.OSSClientInterface() {
+            @Override
+            public void succeed(double pos) {
+                HttpRequestUtils.initOSSClient(AssociationAddActivity.this, "113131313144", selectList.get(0).getPath(), new HttpRequestUtils.OSSClientInterface() {
+                    @Override
+                    public void succeed(double pos) {
+                        Log.w("pso","pos:"+pos);
+                    }
+                });
+            }
+        });
     }
 
 

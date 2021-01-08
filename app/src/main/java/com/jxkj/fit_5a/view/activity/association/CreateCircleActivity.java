@@ -91,7 +91,7 @@ public class CreateCircleActivity extends BaseActivity {
     View mView1;
     @BindView(R.id.tv_go_find)
     TextView mTvGoFind;
-    int deviceType = 0;
+    int deviceType = -1;
     int circleTargetId = 0;
     private List<DeviceTypeData.ListBean> dataSbType;
 

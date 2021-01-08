@@ -38,14 +38,17 @@ import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
+import com.jxkj.fit_5a.entity.OssInfoBean;
 import com.jxkj.fit_5a.entity.PostOrderInfo;
 import com.jxkj.fit_5a.entity.ProductDetailsBean;
 import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.RankStatsData;
 import com.jxkj.fit_5a.entity.ShowOrderInfo;
+import com.jxkj.fit_5a.entity.SignatureBean;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 import com.jxkj.fit_5a.entity.SportLogBean;
+import com.jxkj.fit_5a.entity.StsTokenBean;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
 import com.jxkj.fit_5a.entity.TaskCircleQueryBean;
 import com.jxkj.fit_5a.entity.TemplateBean;
@@ -294,6 +297,26 @@ public interface ApiService {
     Observable<Result<DeviceCourseTypeData>> queryDeviceCourseTypeList(@Query("deviceId") String deviceId);
 
 
+
+    /**
+     * 获取sts-token
+     */
+    @GET(ConstValues.PORT_5 + "api/v1/oss/info")
+    Observable<Result<OssInfoBean>> getOssInfo();
+
+
+    /**
+     * 获取sts-token
+     */
+    @GET(ConstValues.PORT_5 + "api/v1/oss/signature")
+    Observable<Result<SignatureBean>> getSignature(@Query("dir") String dir);
+
+
+    /**
+     * 获取sts-token
+     */
+    @GET(ConstValues.PORT_5 + "api/v1/sts/token")
+    Observable<Result<StsTokenBean>> getStsToken();
     /**
      * 获取短信验证码
      * @return type:类型0注册1修改密码2登录
@@ -351,9 +374,9 @@ public interface ApiService {
     @POST(ConstValues.PORT_5 + "api/v1/user/bind/third/bind")
     Observable<Result> userThirdBind(@Query("clientType") int clientType, @Query("loginType") int loginType, @Query("phone") String phone,
                                      @Query("verify") String verify, @Query("gender") String gender, @Query("nickName") String nickName,
-
-
                                      @Query("portraitUri") String portraitUri);
+
+
 
     /**
      * app授权登录
@@ -473,7 +496,6 @@ public interface ApiService {
 
     /**
      * 宝箱领取
-     *
      * @param
      */
     @GET(ConstValues.PORT_4 + "api/v1/user/box/receive")
