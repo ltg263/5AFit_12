@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.conpoment.utils;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.PostUser;
@@ -11,7 +10,6 @@ import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.OssInfoBean;
-import com.jxkj.fit_5a.entity.SignatureBean;
 import com.jxkj.fit_5a.entity.StsTokenBean;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
 import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
