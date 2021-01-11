@@ -3,6 +3,7 @@ package com.jxkj.fit_5a.view.activity.association;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,7 +20,11 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
+import com.jxkj.fit_5a.conpoment.utils.PictureUtil;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
@@ -30,6 +35,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,11 +133,7 @@ public class CircleAddActivity extends BaseActivity {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    mSpPhotoAdapter.addData(mSpPhotoAdapter.getData().size() - 1, selectList);
-                    if (mSpPhotoAdapter.getData().size() > 6 && mSpPhotoAdapter.getData().contains("-1")) {
-                        mSpPhotoAdapter.remove(mSpPhotoAdapter.getData().size() - 1);
-                    }
-                    mSpPhotoAdapter.notifyDataSetChanged();
+                    setIMaaa(selectList);
                     break;
                 case 2:
                     double latitude=data.getDoubleExtra("latitude",0.0);
@@ -145,6 +147,50 @@ public class CircleAddActivity extends BaseActivity {
         }
     }
 
+
+    List <String> listUrls= new ArrayList<>();
+
+    private void setIMaaa(List<LocalMedia> selectList) {
+        HttpRequestUtils.postOSSFile(2,new HttpRequestUtils.OSSClientInterface() {
+            @Override
+            public void succeed(double pos) {
+                if(pos==0){
+                    ToastUtils.showShort("获取oss信息错误");
+                    return;
+                }
+                if(selectList.size()>0){
+                    postImg(selectList,0);
+                }
+            }
+        });
+    }
+
+    private void postImg(List<LocalMedia> selectList, int i) {
+        String path = PictureUtil.compressBmpFileToTargetSize(new File(selectList.get(i).getPath()),1024*1024).getPath();
+        String fileName = StringUtil.stringToMD5(path)+".jpg";
+        i++;
+        int finalI = i;
+        HttpRequestUtils.initOSSClient(CircleAddActivity.this, fileName,path, new HttpRequestUtils.OSSClientInterface() {
+            @Override
+            public void succeed(double pos) {
+                if(pos==101){
+                    String urlpath= SharedUtils.singleton().get(ConstValues.host,"")
+                            +"/"+SharedUtils.singleton().get(ConstValues.dir,"")+"/"+fileName;
+                    listUrls.add(urlpath);
+                    mSpPhotoAdapter.addData(mSpPhotoAdapter.getData().size() - 1, selectList.get(finalI-1));
+                    if (mSpPhotoAdapter.getData().size() > 6 && mSpPhotoAdapter.getData().contains("-1")) {
+                        mSpPhotoAdapter.remove(mSpPhotoAdapter.getData().size() - 1);
+                    }
+                    mSpPhotoAdapter.notifyDataSetChanged();
+                    if(selectList.size()>finalI){
+                        postImg(selectList, finalI);
+                    }else{
+                        Log.w("listUrls","listUrls:"+listUrls.toString());
+                    }
+                }
+            }
+        });
+    }
 
     private List<String> mFeedTypeList = new ArrayList<>();
 
@@ -205,10 +251,11 @@ public class CircleAddActivity extends BaseActivity {
         if (StringUtil.isBlank(content)) {
             ToastUtils.showShort("内容不能为空");
         }
+        String imgs = listUrls.toString().replace("[","").replace("]","");
 
         RetrofitUtil.getInstance().apiService()
                 .postPublishMomentCircle(id,content,"2",shareType+"",
-                        location,"https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png,https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png",
+                        location,imgs,
                         position,null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
