@@ -21,6 +21,7 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
+import com.jxkj.fit_5a.conpoment.utils.PictureUtil;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
@@ -32,6 +33,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,6 +142,7 @@ public class AssociationAddActivity extends BaseActivity {
                     position=data.getStringExtra("address");
                     mTvPosition.setText(position);
 //                    mTvPosition.setText("详细地址："+address+"\n经度："+longitude+"\n纬度："+latitude);
+//                    Success/storage/emulated/0/DCIM/Camera/20210111_100058.jpg
                     break;
             }
         }
@@ -153,8 +156,10 @@ public class AssociationAddActivity extends BaseActivity {
                     ToastUtils.showShort("获取oss信息错误");
                     return;
                 }
-                String fileName = StringUtil.stringToMD5(selectList.get(0).getPath())+".png";
-                HttpRequestUtils.initOSSClient(AssociationAddActivity.this, fileName,selectList.get(0).getPath(), new HttpRequestUtils.OSSClientInterface() {
+
+                String path = PictureUtil.compressBmpFileToTargetSize(new File(selectList.get(0).getPath()),1024*1024).getPath();
+                String fileName = StringUtil.stringToMD5(path)+".jpg";
+                HttpRequestUtils.initOSSClient(AssociationAddActivity.this, fileName,path, new HttpRequestUtils.OSSClientInterface() {
                     @Override
                     public void succeed(double pos) {
                         Log.w("pso","pos:"+pos);
