@@ -114,6 +114,7 @@ public class AssociationAddActivity extends BaseActivity {
                 if (!mSpPhotoAdapter.getData().get(mSpPhotoAdapter.getData().size() - 1).getPath().equals("-1")) {
                     LocalMedia mLocalMedia = new LocalMedia();
                     mLocalMedia.setPath("-1");
+                    listUrls.remove(position);
                     mSpPhotoAdapter.addData(mLocalMedia);
                 }
             }
@@ -128,11 +129,6 @@ public class AssociationAddActivity extends BaseActivity {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    mSpPhotoAdapter.addData(mSpPhotoAdapter.getData().size() - 1, selectList);
-                    if (mSpPhotoAdapter.getData().size() > 6 && mSpPhotoAdapter.getData().contains("-1")) {
-                        mSpPhotoAdapter.remove(mSpPhotoAdapter.getData().size() - 1);
-                    }
-                    mSpPhotoAdapter.notifyDataSetChanged();
                     setIMaaa(selectList);
                     break;
                 case 2:
@@ -147,6 +143,7 @@ public class AssociationAddActivity extends BaseActivity {
             }
         }
     }
+    List <String> listUrls= new ArrayList<>();
 
     private void setIMaaa(List<LocalMedia> selectList) {
         HttpRequestUtils.postOSSFile(2,new HttpRequestUtils.OSSClientInterface() {
@@ -156,21 +153,36 @@ public class AssociationAddActivity extends BaseActivity {
                     ToastUtils.showShort("获取oss信息错误");
                     return;
                 }
+                if(selectList.size()>0){
+                    postImg(selectList,0);
+                }
+            }
+        });
+    }
 
-                String path = PictureUtil.compressBmpFileToTargetSize(new File(selectList.get(0).getPath()),1024*1024).getPath();
-                String fileName = StringUtil.stringToMD5(path)+".jpg";
-                HttpRequestUtils.initOSSClient(AssociationAddActivity.this, fileName,path, new HttpRequestUtils.OSSClientInterface() {
-                    @Override
-                    public void succeed(double pos) {
-                        Log.w("pso","pos:"+pos);
-                        if(pos==101){
-                            String urlpath= SharedUtils.singleton().get(ConstValues.host,"")
-                                    +"/"+SharedUtils.singleton().get(ConstValues.dir,"")
-                                    +"/"+fileName;
-                            Log.w("pso","url:"+ urlpath);
-                        }
+    private void postImg(List<LocalMedia> selectList, int i) {
+        String path = PictureUtil.compressBmpFileToTargetSize(new File(selectList.get(i).getPath()),1024*1024).getPath();
+        String fileName = StringUtil.stringToMD5(path)+".jpg";
+        i++;
+        int finalI = i;
+        HttpRequestUtils.initOSSClient(AssociationAddActivity.this, fileName,path, new HttpRequestUtils.OSSClientInterface() {
+            @Override
+            public void succeed(double pos) {
+                if(pos==101){
+                    String urlpath= SharedUtils.singleton().get(ConstValues.host,"")
+                            +"/"+SharedUtils.singleton().get(ConstValues.dir,"")+"/"+fileName;
+                    listUrls.add(urlpath);
+                    mSpPhotoAdapter.addData(mSpPhotoAdapter.getData().size() - 1, selectList.get(finalI-1));
+                    if (mSpPhotoAdapter.getData().size() > 6 && mSpPhotoAdapter.getData().contains("-1")) {
+                        mSpPhotoAdapter.remove(mSpPhotoAdapter.getData().size() - 1);
                     }
-                });
+                    mSpPhotoAdapter.notifyDataSetChanged();
+                    if(selectList.size()>finalI){
+                        postImg(selectList, finalI);
+                    }else{
+                        Log.w("listUrls","listUrls:"+listUrls.toString());
+                    }
+                }
             }
         });
     }
@@ -250,10 +262,11 @@ public class AssociationAddActivity extends BaseActivity {
         if (StringUtil.isBlank(content)) {
             ToastUtils.showShort("内容不能为空");
         }
+        String imgs = listUrls.toString().replace("[","").replace("]","");
         show();
         RetrofitUtil.getInstance().apiService()
                 .postPublishMoment(content,"2",shareType+"",
-                        "https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png,https://haide.nbqichen.com/haide/upload/3E4AF99151356675D4565C313C6E7474.png",
+                        imgs,
                         position,location,null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
