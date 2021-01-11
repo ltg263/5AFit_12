@@ -49,13 +49,29 @@ public class OrderActivity extends BaseActivity {
         initVP();
         MagicIndicatorUtils.initMagicIndicator_1(this, mDataList, mMagicIndicator, mViewPager);
     }
-
+//1,待支付;2,待发货;3,待收货;4,待评价;5,已完成;6,已取消;7,已过期;8,已结束
     List<Fragment> fragments = new ArrayList<>();
     private List<Fragment> getFragments() {
         for(int i=0;i<mDataList.size();i++){
             OrderListFragment fragment = new OrderListFragment();
             Bundle bundle = new Bundle();
-            bundle.putInt("type",type);
+            switch (i){
+                case 0:
+                    bundle.putInt("type",0);
+                    break;
+                case 1:
+                    bundle.putInt("type",1);
+                    break;
+                case 2:
+                    bundle.putInt("type",2);
+                    break;
+                case 3:
+                    bundle.putInt("type",3);
+                    break;
+                case 4:
+                    bundle.putInt("type",4);
+                    break;
+            }
             fragment.setArguments(bundle);
             fragments.add(fragment);
         }

@@ -41,14 +41,12 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
 
         helper.setText(R.id.tv_order_shop_name, item.getOrderNo());
         helper.setText(R.id.tv_status, item.getStatusStr());
-        helper.setText(R.id.tv_time,item.getCreateTime());
+//        helper.setText(R.id.tv_time,item.getCreateTime());
         String str = "共计<font color=\"#FF6666\">1</font>件：4890积分 + ￥24 （含￥0运费）";
         helper.setText(R.id.tv_jg_num, Html.fromHtml(str));
         RecyclerView recyclerView = helper.getView(R.id.rv_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        List<OrderInfoData.ListBean.ProductListBean> data = new ArrayList<>();
-        data.add(null);
-        OrderShoppingAdapter mOrderShoppingAdapter = new OrderShoppingAdapter(recyclerView.getContext(), data);//item.getProducts()
+        OrderShoppingAdapter mOrderShoppingAdapter = new OrderShoppingAdapter(recyclerView.getContext(), item.getProductList());//item.getProducts()
         recyclerView.setAdapter(mOrderShoppingAdapter);
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -60,7 +58,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
                 return false;
             }
         });
-        helper.setText(R.id.tv_price, "￥" + item.getRealAmount());
+//        helper.setText(R.id.tv_price, "￥" + item.getRealAmount());
         TextView btn0 = helper.getView(R.id.btn0);
         TextView btn1 = helper.getView(R.id.btn1);
         TextView btn2 = helper.getView(R.id.btn2);

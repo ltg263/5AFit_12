@@ -16,9 +16,12 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.DeviceTypeData;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
+import com.jxkj.fit_5a.conpoment.utils.PictureUtil;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
@@ -30,6 +33,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,7 +115,7 @@ public class CreateCircleActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.ll_back, R.id.tv_go_find,R.id.tv_sb_name,R.id.iv_bgImg,R.id.tv_mblx,R.id.tv_zqsc})
+    @OnClick({R.id.ll_back, R.id.tv_go_find, R.id.tv_sb_name, R.id.iv_bgImg, R.id.tv_mblx, R.id.tv_zqsc})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
@@ -121,11 +125,11 @@ public class CreateCircleActivity extends BaseActivity {
                 getCircleCreate();
                 break;
             case R.id.tv_sb_name:
-                if(dataSbType==null || dataSbType.size()==0){
+                if (dataSbType == null || dataSbType.size() == 0) {
                     return;
                 }
-                List <String> list = new ArrayList<>();
-                for(int i =0;i<dataSbType.size();i++){
+                List<String> list = new ArrayList<>();
+                for (int i = 0; i < dataSbType.size(); i++) {
                     list.add(dataSbType.get(i).getName());
                 }
                 PickerViewUtils.selectorCustom(this, list, "设备类型", new PickerViewUtils.ConditionInterfacd() {
@@ -137,10 +141,10 @@ public class CreateCircleActivity extends BaseActivity {
                 });
                 break;
             case R.id.tv_zqsc:
-                if(zqscLists==null || zqscLists.size()==0){
+                if (zqscLists == null || zqscLists.size() == 0) {
                     return;
                 }
-                PickerViewUtils.selectorCustom(this, zqscLists, "选择周期",mTvZqsc);
+                PickerViewUtils.selectorCustom(this, zqscLists, "选择周期", mTvZqsc);
                 break;
             case R.id.iv_bgImg:
                 MatisseUtils.gotoSelectPhoto(this, 1, true);
@@ -168,20 +172,32 @@ public class CreateCircleActivity extends BaseActivity {
     }
 
     String avatar = null;
+
     private void postImg(final String listPath) {
         show();
-        HttpRequestUtils.uploadFiles(listPath, new HttpRequestUtils.UploadFileInterface() {
+        HttpRequestUtils.postOSSFile(2, new HttpRequestUtils.OSSClientInterface() {
             @Override
-            public void succeed(String path) {
-                dismiss();
-                avatar = path;
-                GlideImgLoader.loadImageViewRadius(CreateCircleActivity.this,avatar,10,mIvBgImg);
+            public void succeed(double pos) {
+                if (pos == 0) {
+                    ToastUtils.showShort("获取oss信息错误");
+                    return;
+                }
+                String path = PictureUtil.compressBmpFileToTargetSize(new File(listPath), 1024 * 1024).getPath();
+                String fileName = StringUtil.stringToMD5(path) + ".jpg";
+                HttpRequestUtils.initOSSClient(CreateCircleActivity.this, fileName, path, new HttpRequestUtils.OSSClientInterface() {
+                    @Override
+                    public void succeed(double pos) {
+                        if (pos == 101) {
+                            CreateCircleActivity.this.dismiss();
+                            avatar = SharedUtils.singleton().get(ConstValues.host,"")
+                                    +"/"+SharedUtils.singleton().get(ConstValues.dir,"")+"/"+fileName;
+                            Log.w("--:","avfater:"+avatar);
+                            GlideImgLoader.loadImageViewRadius(CreateCircleActivity.this, avatar, 10, mIvBgImg);
+                        }
+                    }
+                });
             }
 
-            @Override
-            public void failure() {
-                dismiss();
-            }
         });
     }
 
@@ -201,24 +217,24 @@ public class CreateCircleActivity extends BaseActivity {
                         if (isDataInfoSucceed(result)) {
                             List<TaskCircleQueryBean.ListBean> data = result.getData().getList();
 
-                            List <String> listMblx = new ArrayList<>();
-                            for(int i =0;i<data.size();i++){
-                                listMblx.add(data.get(i).getDeviceTypeStr()+"");
+                            List<String> listMblx = new ArrayList<>();
+                            for (int i = 0; i < data.size(); i++) {
+                                listMblx.add(data.get(i).getDeviceTypeStr() + "");
                             }
                             PickerViewUtils.selectorCustom(CreateCircleActivity.this, listMblx, "目标类型",
                                     new PickerViewUtils.ConditionInterfacd() {
-                                @Override
-                                public void setIndex(int pos) {
-                                    circleTargetId = data.get(pos).getId();
-                                    mTvMblx.setText(data.get(pos).getDeviceTypeStr());
-                                    zqscLists.clear();
-                                    rewardJson = data.get(pos).getReward();
-                                    for(int i=data.get(pos).getMinCycle();i<data.get(pos).getMaxCycle()+1;i++){
-                                        zqscLists.add(i+"");
-                                    }
-                                    Log.w("zqscLists:","circleTargetId"+circleTargetId);
-                                }
-                            });
+                                        @Override
+                                        public void setIndex(int pos) {
+                                            circleTargetId = data.get(pos).getId();
+                                            mTvMblx.setText(data.get(pos).getDeviceTypeStr());
+                                            zqscLists.clear();
+                                            rewardJson = data.get(pos).getReward();
+                                            for (int i = data.get(pos).getMinCycle(); i < data.get(pos).getMaxCycle() + 1; i++) {
+                                                zqscLists.add(i + "");
+                                            }
+                                            Log.w("zqscLists:", "circleTargetId" + circleTargetId);
+                                        }
+                                    });
                         }
                     }
 
@@ -232,6 +248,7 @@ public class CreateCircleActivity extends BaseActivity {
                 });
 
     }
+
     private void queryDeviceTypeLists() {
         RetrofitUtil.getInstance().apiService()
                 .queryDeviceTypeLists()
@@ -263,9 +280,9 @@ public class CreateCircleActivity extends BaseActivity {
     }
 
     private void getCircleCreate() {
-        if(StringUtil.isBlank(mEt1.getText().toString())
+        if (StringUtil.isBlank(mEt1.getText().toString())
                 || StringUtil.isBlank(mEt2.getText().toString())
-                || StringUtil.isBlank(mTvZqsc.getText().toString())){
+                || StringUtil.isBlank(mTvZqsc.getText().toString())) {
             ToastUtils.showShort("信息不完整");
             return;
         }
@@ -306,11 +323,11 @@ public class CreateCircleActivity extends BaseActivity {
                         if (isDataInfoSucceed(result)) {
                             DialogUtils.showDialogCgCircle(CreateCircleActivity.this,
                                     "创建圈子权限", 1, new DialogUtils.DialogLyInterface() {
-                                @Override
-                                public void btnConfirm() {
-                                    CreateCircleActivity.this.finish();
-                                }
-                            });
+                                        @Override
+                                        public void btnConfirm() {
+                                            CreateCircleActivity.this.finish();
+                                        }
+                                    });
                         }
                     }
 
