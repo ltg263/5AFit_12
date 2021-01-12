@@ -27,7 +27,6 @@
             android:layout_alignTop="@id/tv"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/dimen_25dp"
-            android:background="@drawable/line_stroke_f"
             android:paddingHorizontal="@dimen/dimen_5dp"
             android:src="@drawable/icon_close_1" />
 

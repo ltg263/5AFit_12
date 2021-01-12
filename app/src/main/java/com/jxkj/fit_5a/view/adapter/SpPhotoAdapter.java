@@ -20,13 +20,11 @@ public class SpPhotoAdapter extends BaseQuickAdapter<LocalMedia, BaseViewHolder>
     @Override
     protected void convert(BaseViewHolder helper, LocalMedia item) {
         if (item.getPath().equals("-1")) {
-            Glide.with(mContext)
-                    .load(R.drawable.icon_add_theme).into((SquareImageView) helper.getView(R.id.iv_icon));
-            helper.setVisible(R.id.iv_close,false);
+            helper.setVisible(R.id.iv_close,false).setVisible(R.id.iv_icon_add,true).setVisible(R.id.iv_icon,false);
         } else {
             Glide.with(mContext)
                     .load(item.getCompressPath()).into((SquareImageView) helper.getView(R.id.iv_icon));
-            helper.setVisible(R.id.iv_close,true);
+            helper.setVisible(R.id.iv_close,true).setVisible(R.id.iv_icon_add,false).setVisible(R.id.iv_icon,true);
             helper.addOnClickListener(R.id.iv_close);
         }
     }
