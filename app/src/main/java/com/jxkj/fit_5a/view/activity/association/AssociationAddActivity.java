@@ -190,7 +190,7 @@ public class AssociationAddActivity extends BaseActivity {
 
     private List<String> mFeedTypeList = new ArrayList<>();
 
-    @OnClick({R.id.ll_back, R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_gk,R.id.tv_position})
+    @OnClick({R.id.ll_back, R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_gk,R.id.tv_topics,R.id.tv_position})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
@@ -199,9 +199,11 @@ public class AssociationAddActivity extends BaseActivity {
             case R.id.tv_righttext:
                 postPublishMoment();
                 break;
+            case R.id.tv_topics:
+                startActivityForResult(new Intent(AssociationAddActivity.this, TopicAllActivity.class),2);
+                break;
             case R.id.tv_position:
-                Intent intent=new Intent(AssociationAddActivity.this, LocationSelectActivity.class);
-                startActivityForResult(intent,2);
+                startActivityForResult(new Intent(AssociationAddActivity.this, LocationSelectActivity.class),2);
                 break;
             case R.id.tv_gk:
                 mFeedTypeList.clear();

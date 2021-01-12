@@ -147,13 +147,9 @@ public class HomeOneFragment extends BaseFragment {
     private void initRvUi() {
 
         List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-
+        list.add("卡路里");
+        list.add("总里程");
+        list.add("总时间");
         mHomeTopAdapter = new HomeTopAdapter(list);
         LinearLayoutManager ms = new LinearLayoutManager(getActivity());
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);

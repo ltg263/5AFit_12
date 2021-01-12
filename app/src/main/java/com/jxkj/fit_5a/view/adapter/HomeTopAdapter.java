@@ -20,7 +20,7 @@ public class HomeTopAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, String item) {
-
+        helper.setText(R.id.tv_name,item);
     }
 
 }

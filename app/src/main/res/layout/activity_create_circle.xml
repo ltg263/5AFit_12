@@ -359,7 +359,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:text="200"
+                            android:text="100"
                             android:textColor="@color/color_text_theme"
                             android:textSize="32sp"
                             android:textStyle="bold" />

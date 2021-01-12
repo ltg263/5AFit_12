@@ -57,13 +57,6 @@ public class MineTopicActivity extends BaseActivity {
     @Override
     protected void initViews() {
         id = getIntent().getStringExtra("id");
-        List<String> list = new ArrayList<>();
-        list.add("-1");
-        list.add("");
-        list.add("-2");
-        list.add("");
-        list.add("");
-        list.add("");
 
         mCircleDynamicAdapter = new CircleDynamicAdapter(null);
         mRvListTp.setLayoutManager(new LinearLayoutManager(this));
