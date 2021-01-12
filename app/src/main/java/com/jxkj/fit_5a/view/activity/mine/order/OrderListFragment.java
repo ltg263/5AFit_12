@@ -8,11 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.OrderInfoData;
+import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
@@ -132,12 +134,12 @@ public class OrderListFragment extends BaseFragment {
 
             @Override
             public void setZlyd(int position) {
-//                getAgainOrder(orderDataList.get(position).getId()+"");
+                getAgainOrder(orderDataList.get(position).getId()+"");
             }
 
             @Override
             public void setSc(int position) {
-//                getDelOrder(orderDataList.get(position).getId()+"");
+                postDelete(orderDataList.get(position).getId()+"");
             }
 
             @Override
@@ -153,6 +155,70 @@ public class OrderListFragment extends BaseFragment {
         });
 
         getData();
+    }
+
+    private void getAgainOrder(String id) {
+        PostUser.Expediting expediting = new PostUser.Expediting();
+        expediting.setOrderId(id);
+        RetrofitUtil.getInstance().apiService()
+                .postExpediting(expediting)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result result) {
+                        if (isDataInfoSucceed(result)) {
+                            ToastUtils.showShort("已通知卖家");
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dismiss();
+                    }
+                });
+    }
+
+    private void postDelete(String id) {
+        PostUser.Expediting expediting = new PostUser.Expediting();
+        expediting.setOrderId(id);
+        RetrofitUtil.getInstance().apiService()
+                .postDelete(expediting)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result result) {
+                        if (isDataInfoSucceed(result)) {
+                            ToastUtils.showShort("已通知卖家");
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dismiss();
+                    }
+                });
     }
 
     public void refreshData() {

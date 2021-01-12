@@ -152,7 +152,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
             case "去评价":
                 myOrderAdapterListener.setQpj(pos);
                 break;
-            case "再来一单":
+            case "提醒发货":
                 myOrderAdapterListener.setZlyd(pos);
                 break;
             case "删除订单":

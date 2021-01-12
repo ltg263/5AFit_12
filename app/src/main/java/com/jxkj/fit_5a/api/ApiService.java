@@ -467,6 +467,20 @@ public interface ApiService {
     @POST(ConstValues.PORT_3 +"api/v1/user/order/createOrder")
     Observable<Result> postcreateOrder(@Body PostOrderInfo data);
 
+    /**
+     * 发货提醒
+     * @return
+     */
+    @POST(ConstValues.PORT_3 +"api/v1/user/order/expediting")
+    Observable<Result> postExpediting(@Body PostUser.Expediting expediting);
+
+    /**
+     * 发货提醒
+     * @return
+     */
+    @POST(ConstValues.PORT_3 +"api/v1/user/order/delete")
+    Observable<Result> postDelete(@Body PostUser.Expediting expediting);
+
 
     /**
      * 订单列表
