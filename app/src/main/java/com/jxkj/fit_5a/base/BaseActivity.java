@@ -3,6 +3,7 @@ package com.jxkj.fit_5a.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -33,10 +34,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
+        Log.w("当前Activity","Activity:"+this.getClass().toString());
         ImmersionBar.with(this).statusBarDarkFont(true).titleBar(R.id.rl_actionbar).fitsSystemWindows(true).init();
         ButterKnife.bind(this);
         initViews();
-
     }
 
     protected abstract int getContentView();
