@@ -11,6 +11,7 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.entity.MapDetails;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
+import com.jxkj.fit_5a.entity.MapListSposrt;
 
 import butterknife.BindView;
 import io.reactivex.Observer;
@@ -28,7 +29,7 @@ public class SelectMapFragment extends BaseFragment {
     TextView mTvName;
     @BindView(R.id.tv_go_2)
     TextView mTvGo2;
-    private String id;
+    private MapListSposrt.ListBean data;
 
     @Override
     protected int getContentView() {
@@ -39,42 +40,17 @@ public class SelectMapFragment extends BaseFragment {
     protected void initViews() {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            id = bundle.getString("id","");
+            data = (MapListSposrt.ListBean) bundle.getSerializable("data");
         }
         getSportMapDetails();
 
     }
 
     private void getSportMapDetails() {
-        RetrofitUtil.getInstance().apiService()
-                .getMapDetails(id)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result<MapDetailsBean>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
 
-                    }
-
-                    @Override
-                    public void onNext(Result<MapDetailsBean> result) {
-                        if (isDataInfoSucceed(result)) {
-                            mTvName.setText(result.getData().getName());
-                            GlideImgLoader.loadImageViewRadius(getActivity(),result.getData().getImgUrl(),15,mIv);
-                            mTvGo2.setText(result.getData().getDistance()+"km");
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+        mTvName.setText(data.getName());
+        GlideImgLoader.loadImageViewRadius(getActivity(),data.getImgUrl(),15,mIv);
+        mTvGo2.setText(data.getDistance()+"km");
     }
 
     @Override

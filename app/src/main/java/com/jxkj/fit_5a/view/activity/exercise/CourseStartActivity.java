@@ -141,7 +141,7 @@ public class CourseStartActivity extends BaseActivity {
         for (int i = 0; i < list.size(); i++) {
             SelectMapFragment fragment = new SelectMapFragment();
             Bundle bundle = new Bundle();
-            bundle.putString("id", list.get(i).getId());
+            bundle.putSerializable("data", list.get(i));
             fragment.setArguments(bundle);
             fragments.add(fragment);
         }

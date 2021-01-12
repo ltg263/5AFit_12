@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.entity;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 public class MapListSposrt {
@@ -29,7 +30,7 @@ public class MapListSposrt {
         this.list = list;
     }
 
-    public static class ListBean {
+    public static class ListBean implements Serializable {
         /**
          * id : 11
          * name : 测试
@@ -104,7 +105,7 @@ public class MapListSposrt {
             this.boxs = boxs;
         }
 
-        public static class BoxsBean {
+        public static class BoxsBean  implements Serializable{
             /**
              * distance : 1
              * latlng : [1,1]
@@ -149,7 +150,7 @@ public class MapListSposrt {
                 this.latlng = latlng;
             }
 
-            public static class SportBoxBean {
+            public static class SportBoxBean  implements Serializable{
                 /**
                  * id : 0
                  * name :
@@ -214,7 +215,7 @@ public class MapListSposrt {
                     this.aliasArray = aliasArray;
                 }
 
-                public static class RewardListBean {
+                public static class RewardListBean  implements Serializable{
                     /**
                      * id : 0
                      * name :

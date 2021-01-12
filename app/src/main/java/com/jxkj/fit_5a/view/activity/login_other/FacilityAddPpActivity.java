@@ -22,6 +22,7 @@ import com.jxkj.fit_5a.base.DeviceData;
 import com.jxkj.fit_5a.base.DeviceDrandData;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.view.adapter.FacilityAddAdapter;
 
@@ -51,6 +52,7 @@ public class FacilityAddPpActivity extends BaseActivity {
     @BindView(R.id.iv_d)
     ImageView mIvD;
     String type;
+    String id = "";
     private FacilityAddAdapter mFacilityAddAdapter;
 
     @Override
@@ -166,9 +168,11 @@ public class FacilityAddPpActivity extends BaseActivity {
     }
 
     private void initRvUi(List<DeviceDrandData.ListBean> list) {
-
+        if(list.size()==0){
+            return;
+        }
+        id = list.get(0).getId()+"";
         mFacilityAddAdapter = new FacilityAddAdapter(list);
-
         mRvAllList.setLayoutManager(new GridLayoutManager(this, 3));
         mRvAllList.setHasFixedSize(true);
         mRvAllList.setAdapter(mFacilityAddAdapter);
@@ -181,6 +185,7 @@ public class FacilityAddPpActivity extends BaseActivity {
                 }
                 list.get(position).setSelect(true);
                 mFacilityAddAdapter.notifyDataSetChanged();
+                id = list.get(position).getId()+"";
                 queryDeviceLists(list.get(position).getId());
             }
         });
@@ -205,8 +210,8 @@ public class FacilityAddPpActivity extends BaseActivity {
         PostUser.DeviceFormDTO deviceFormDTO= new PostUser.DeviceFormDTO();
         deviceFormDTO.setDeviceId("1");
         deviceFormDTO.setDeviceNo("123456");
-        deviceFormDTO.setId(null);
-        deviceFormDTO.setUserId(null);
+        deviceFormDTO.setId(id);
+        deviceFormDTO.setUserId(SharedUtils.getUserId()+"");
         show();
         RetrofitUtil.getInstance().apiService()
                 .userDeviceAdd(deviceFormDTO)
@@ -232,7 +237,7 @@ public class FacilityAddPpActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
-
+                        dismiss();
                     }
                 });
 
@@ -243,7 +248,6 @@ public class FacilityAddPpActivity extends BaseActivity {
         mIv.setVisibility(View.VISIBLE);
         mTv.setVisibility(View.VISIBLE);
         mIvD.setVisibility(View.GONE);
-        dismiss();
         DialogUtils.showDialogLyState(FacilityAddPpActivity.this, "这是一个标题", 1, new DialogUtils.DialogLyInterface() {
             @Override
             public void btnConfirm() {
