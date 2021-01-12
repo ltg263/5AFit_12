@@ -14,12 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
-import com.jxkj.fit_5a.base.DeviceTypeData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.view.adapter.FacilityManageAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -99,12 +95,12 @@ public class FacilityManageActivity extends BaseActivity {
     }
 
     private void initRvUi() {
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
+//        List<String> list = new ArrayList<>();
+//        list.add("");
+//        list.add("");
+//        list.add("");
 
-        mFacilityManageAdapter = new FacilityManageAdapter(list);
+        mFacilityManageAdapter = new FacilityManageAdapter(null);
 
         mRvLsydsbList.setLayoutManager(new LinearLayoutManager(this));
         mRvLsydsbList.setHasFixedSize(true);
@@ -120,6 +116,7 @@ public class FacilityManageActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
+                finish();
                 break;
             case R.id.iv_rightimg:
                 startActivity(new Intent(this, FacilityAddSbActivity.class));

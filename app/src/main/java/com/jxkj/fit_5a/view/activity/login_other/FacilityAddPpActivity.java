@@ -208,8 +208,8 @@ public class FacilityAddPpActivity extends BaseActivity {
         mIvD.setVisibility(View.VISIBLE);
 
         PostUser.DeviceFormDTO deviceFormDTO= new PostUser.DeviceFormDTO();
-        deviceFormDTO.setDeviceId("1");
-        deviceFormDTO.setDeviceNo("123456");
+        deviceFormDTO.setDeviceId("0");
+        deviceFormDTO.setDeviceNo("");
         deviceFormDTO.setId(id);
         deviceFormDTO.setUserId(SharedUtils.getUserId()+"");
         show();
