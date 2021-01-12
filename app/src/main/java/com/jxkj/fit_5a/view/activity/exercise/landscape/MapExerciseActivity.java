@@ -265,7 +265,7 @@ public class MapExerciseActivity extends Activity {
         aMap.addPolyline(new PolylineOptions().
                 addAll(latLngs).width(10).color(getResources().getColor(R.color.color_text_theme)));
 
-        //滑动 模仿跑步
+        //滑动 模仿跑步饿
         setHD(latLngs);
 
         //绘制适应大小

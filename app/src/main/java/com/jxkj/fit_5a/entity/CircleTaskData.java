@@ -5,145 +5,258 @@ import java.util.List;
 public class CircleTaskData {
 
     /**
-     * list : [{"count":0,"curCount":0,"curRound":0,"cycle":0,"expireTime":"","explain":"","finishTime":"","hasDisplay":0,"id":"","img":"","name":"","resetTime":"","resetType":0,"rewards":[{"detail":"","explain":"","hasDel":0,"id":0,"imgUrl":"","name":"","status":0,"type":0}],"roundCount":0,"speeds":[{"id":0,"paramId":0,"paramName":"","round":0,"speed":0,"status":0,"target":0,"unit":"","updateTime":"","userTaskId":""}],"status":0,"taskId":0,"type":0,"userId":0}]
-     * totalCount : 0
+     * id : 80_36
+     * userId : 80
+     * taskId : 36
+     * count : 0
+     * type : 1
+     * name : 圈子任务
+     * explain :
+     * reward :
+     * details :
+     * resetTime :
+     * resetType : 1
+     * hasDisplay : 1
+     * status : 1
+     * finishTime :
+     * expireTime :
+     * roundCount : 1
+     * img :
+     * cycle : 3
+     * curCount : 0
+     * curRound : 0
+     * rewards : [{"id":3,"name":"积分10递增（max-100）","imgUrl":"","explain":"","type":1,"detail":"{\"incrementValue\":10,\"initialValue\":10,\"maxValue\":100}","hasDel":0,"status":1}]
+     * speeds : [{"id":698,"round":1,"userTaskId":"80_36","paramId":4,"paramName":"运动时长","unit":"分钟","target":10,"speed":0,"status":1,"updateTime":"2020-12-25 11:58:45"}]
      */
 
-    private int totalCount;
-    private List<ListBean> list;
+    private boolean isSelect;
+    private String id;
+    private String userId;
+    private String taskId;
+    private String count;
+    private String type;
+    private String name;
+    private String explain;
+    private String reward;
+    private String details;
+    private String resetTime;
+    private String resetType;
+    private String hasDisplay;
+    private String status;
+    private String finishTime;
+    private String expireTime;
+    private String roundCount;
+    private String img;
+    private String cycle;
+    private String curCount;
+    private String curRound;
+    private List<RewardsBean> rewards;
+    private List<SpeedsBean> speeds;
 
-    public int getTotalCount() {
-        return totalCount;
+    public boolean isSelect() {
+        return isSelect;
     }
 
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
+    public void setSelect(boolean select) {
+        isSelect = select;
     }
 
-    public List<ListBean> getList() {
-        return list;
+    public String getId() {
+        return id;
     }
 
-    public void setList(List<ListBean> list) {
-        this.list = list;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public static class ListBean {
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getExplain() {
+        return explain;
+    }
+
+    public void setExplain(String explain) {
+        this.explain = explain;
+    }
+
+    public String getReward() {
+        return reward;
+    }
+
+    public void setReward(String reward) {
+        this.reward = reward;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public String getResetTime() {
+        return resetTime;
+    }
+
+    public void setResetTime(String resetTime) {
+        this.resetTime = resetTime;
+    }
+
+    public String getResetType() {
+        return resetType;
+    }
+
+    public void setResetType(String resetType) {
+        this.resetType = resetType;
+    }
+
+    public String getHasDisplay() {
+        return hasDisplay;
+    }
+
+    public void setHasDisplay(String hasDisplay) {
+        this.hasDisplay = hasDisplay;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getFinishTime() {
+        return finishTime;
+    }
+
+    public void setFinishTime(String finishTime) {
+        this.finishTime = finishTime;
+    }
+
+    public String getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(String expireTime) {
+        this.expireTime = expireTime;
+    }
+
+    public String getRoundCount() {
+        return roundCount;
+    }
+
+    public void setRoundCount(String roundCount) {
+        this.roundCount = roundCount;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getCycle() {
+        return cycle;
+    }
+
+    public void setCycle(String cycle) {
+        this.cycle = cycle;
+    }
+
+    public String getCurCount() {
+        return curCount;
+    }
+
+    public void setCurCount(String curCount) {
+        this.curCount = curCount;
+    }
+
+    public String getCurRound() {
+        return curRound;
+    }
+
+    public void setCurRound(String curRound) {
+        this.curRound = curRound;
+    }
+
+    public List<RewardsBean> getRewards() {
+        return rewards;
+    }
+
+    public void setRewards(List<RewardsBean> rewards) {
+        this.rewards = rewards;
+    }
+
+    public List<SpeedsBean> getSpeeds() {
+        return speeds;
+    }
+
+    public void setSpeeds(List<SpeedsBean> speeds) {
+        this.speeds = speeds;
+    }
+
+    public static class RewardsBean {
         /**
-         * count : 0
-         * curCount : 0
-         * curRound : 0
-         * cycle : 0
-         * expireTime :
+         * id : 3
+         * name : 积分10递增（max-100）
+         * imgUrl :
          * explain :
-         * finishTime :
-         * hasDisplay : 0
-         * id :
-         * img :
-         * name :
-         * resetTime :
-         * resetType : 0
-         * rewards : [{"detail":"","explain":"","hasDel":0,"id":0,"imgUrl":"","name":"","status":0,"type":0}]
-         * roundCount : 0
-         * speeds : [{"id":0,"paramId":0,"paramName":"","round":0,"speed":0,"status":0,"target":0,"unit":"","updateTime":"","userTaskId":""}]
-         * status : 0
-         * taskId : 0
-         * type : 0
-         * userId : 0
+         * type : 1
+         * detail : {"incrementValue":10,"initialValue":10,"maxValue":100}
+         * hasDel : 0
+         * status : 1
          */
-        private boolean isSelect;
-        private int count;
-        private int curCount;
-        private int curRound;
-        private int cycle;
-        private String expireTime;
-        private String explain;
-        private String finishTime;
-        private int hasDisplay;
+
         private String id;
-        private String img;
         private String name;
-        private String resetTime;
-        private int resetType;
-        private int roundCount;
-        private int status;
-        private int taskId;
-        private int type;
-        private int userId;
-        private List<RewardsBean> rewards;
-        private List<SpeedsBean> speeds;
-
-        public void setSelect(boolean select) {
-            isSelect = select;
-        }
-
-        public boolean isSelect() {
-            return isSelect;
-        }
-
-        public int getCount() {
-            return count;
-        }
-
-        public void setCount(int count) {
-            this.count = count;
-        }
-
-        public int getCurCount() {
-            return curCount;
-        }
-
-        public void setCurCount(int curCount) {
-            this.curCount = curCount;
-        }
-
-        public int getCurRound() {
-            return curRound;
-        }
-
-        public void setCurRound(int curRound) {
-            this.curRound = curRound;
-        }
-
-        public int getCycle() {
-            return cycle;
-        }
-
-        public void setCycle(int cycle) {
-            this.cycle = cycle;
-        }
-
-        public String getExpireTime() {
-            return expireTime;
-        }
-
-        public void setExpireTime(String expireTime) {
-            this.expireTime = expireTime;
-        }
-
-        public String getExplain() {
-            return explain;
-        }
-
-        public void setExplain(String explain) {
-            this.explain = explain;
-        }
-
-        public String getFinishTime() {
-            return finishTime;
-        }
-
-        public void setFinishTime(String finishTime) {
-            this.finishTime = finishTime;
-        }
-
-        public int getHasDisplay() {
-            return hasDisplay;
-        }
-
-        public void setHasDisplay(int hasDisplay) {
-            this.hasDisplay = hasDisplay;
-        }
+        private String imgUrl;
+        private String explain;
+        private String type;
+        private String detail;
+        private String hasDel;
+        private String status;
 
         public String getId() {
             return id;
@@ -151,14 +264,6 @@ public class CircleTaskData {
 
         public void setId(String id) {
             this.id = id;
-        }
-
-        public String getImg() {
-            return img;
-        }
-
-        public void setImg(String img) {
-            this.img = img;
         }
 
         public String getName() {
@@ -169,268 +274,158 @@ public class CircleTaskData {
             this.name = name;
         }
 
-        public String getResetTime() {
-            return resetTime;
+        public String getImgUrl() {
+            return imgUrl;
         }
 
-        public void setResetTime(String resetTime) {
-            this.resetTime = resetTime;
+        public void setImgUrl(String imgUrl) {
+            this.imgUrl = imgUrl;
         }
 
-        public int getResetType() {
-            return resetType;
+        public String getExplain() {
+            return explain;
         }
 
-        public void setResetType(int resetType) {
-            this.resetType = resetType;
+        public void setExplain(String explain) {
+            this.explain = explain;
         }
 
-        public int getRoundCount() {
-            return roundCount;
-        }
-
-        public void setRoundCount(int roundCount) {
-            this.roundCount = roundCount;
-        }
-
-        public int getStatus() {
-            return status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
-        }
-
-        public int getTaskId() {
-            return taskId;
-        }
-
-        public void setTaskId(int taskId) {
-            this.taskId = taskId;
-        }
-
-        public int getType() {
+        public String getType() {
             return type;
         }
 
-        public void setType(int type) {
+        public void setType(String type) {
             this.type = type;
         }
 
-        public int getUserId() {
-            return userId;
+        public String getDetail() {
+            return detail;
         }
 
-        public void setUserId(int userId) {
-            this.userId = userId;
+        public void setDetail(String detail) {
+            this.detail = detail;
         }
 
-        public List<RewardsBean> getRewards() {
-            return rewards;
+        public String getHasDel() {
+            return hasDel;
         }
 
-        public void setRewards(List<RewardsBean> rewards) {
-            this.rewards = rewards;
+        public void setHasDel(String hasDel) {
+            this.hasDel = hasDel;
         }
 
-        public List<SpeedsBean> getSpeeds() {
-            return speeds;
+        public String getStatus() {
+            return status;
         }
 
-        public void setSpeeds(List<SpeedsBean> speeds) {
-            this.speeds = speeds;
+        public void setStatus(String status) {
+            this.status = status;
+        }
+    }
+
+    public static class SpeedsBean {
+        /**
+         * id : 698
+         * round : 1
+         * userTaskId : 80_36
+         * paramId : 4
+         * paramName : 运动时长
+         * unit : 分钟
+         * target : 10
+         * speed : 0
+         * status : 1
+         * updateTime : 2020-12-25 11:58:45
+         */
+
+        private String id;
+        private String round;
+        private String userTaskId;
+        private String paramId;
+        private String paramName;
+        private String unit;
+        private String target;
+        private String speed;
+        private String status;
+        private String updateTime;
+
+        public String getId() {
+            return id;
         }
 
-        public static class RewardsBean {
-            /**
-             * detail :
-             * explain :
-             * hasDel : 0
-             * id : 0
-             * imgUrl :
-             * name :
-             * status : 0
-             * type : 0
-             */
-
-            private String detail;
-            private String explain;
-            private int hasDel;
-            private int id;
-            private String imgUrl;
-            private String name;
-            private int status;
-            private int type;
-
-            public String getDetail() {
-                return detail;
-            }
-
-            public void setDetail(String detail) {
-                this.detail = detail;
-            }
-
-            public String getExplain() {
-                return explain;
-            }
-
-            public void setExplain(String explain) {
-                this.explain = explain;
-            }
-
-            public int getHasDel() {
-                return hasDel;
-            }
-
-            public void setHasDel(int hasDel) {
-                this.hasDel = hasDel;
-            }
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public String getImgUrl() {
-                return imgUrl;
-            }
-
-            public void setImgUrl(String imgUrl) {
-                this.imgUrl = imgUrl;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public int getStatus() {
-                return status;
-            }
-
-            public void setStatus(int status) {
-                this.status = status;
-            }
-
-            public int getType() {
-                return type;
-            }
-
-            public void setType(int type) {
-                this.type = type;
-            }
+        public void setId(String id) {
+            this.id = id;
         }
 
-        public static class SpeedsBean {
-            /**
-             * id : 0
-             * paramId : 0
-             * paramName :
-             * round : 0
-             * speed : 0
-             * status : 0
-             * target : 0
-             * unit :
-             * updateTime :
-             * userTaskId :
-             */
+        public String getRound() {
+            return round;
+        }
 
-            private int id;
-            private int paramId;
-            private String paramName;
-            private int round;
-            private int speed;
-            private int status;
-            private int target;
-            private String unit;
-            private String updateTime;
-            private String userTaskId;
+        public void setRound(String round) {
+            this.round = round;
+        }
 
-            public int getId() {
-                return id;
-            }
+        public String getUserTaskId() {
+            return userTaskId;
+        }
 
-            public void setId(int id) {
-                this.id = id;
-            }
+        public void setUserTaskId(String userTaskId) {
+            this.userTaskId = userTaskId;
+        }
 
-            public int getParamId() {
-                return paramId;
-            }
+        public String getParamId() {
+            return paramId;
+        }
 
-            public void setParamId(int paramId) {
-                this.paramId = paramId;
-            }
+        public void setParamId(String paramId) {
+            this.paramId = paramId;
+        }
 
-            public String getParamName() {
-                return paramName;
-            }
+        public String getParamName() {
+            return paramName;
+        }
 
-            public void setParamName(String paramName) {
-                this.paramName = paramName;
-            }
+        public void setParamName(String paramName) {
+            this.paramName = paramName;
+        }
 
-            public int getRound() {
-                return round;
-            }
+        public String getUnit() {
+            return unit;
+        }
 
-            public void setRound(int round) {
-                this.round = round;
-            }
+        public void setUnit(String unit) {
+            this.unit = unit;
+        }
 
-            public int getSpeed() {
-                return speed;
-            }
+        public String getTarget() {
+            return target;
+        }
 
-            public void setSpeed(int speed) {
-                this.speed = speed;
-            }
+        public void setTarget(String target) {
+            this.target = target;
+        }
 
-            public int getStatus() {
-                return status;
-            }
+        public String getSpeed() {
+            return speed;
+        }
 
-            public void setStatus(int status) {
-                this.status = status;
-            }
+        public void setSpeed(String speed) {
+            this.speed = speed;
+        }
 
-            public int getTarget() {
-                return target;
-            }
+        public String getStatus() {
+            return status;
+        }
 
-            public void setTarget(int target) {
-                this.target = target;
-            }
+        public void setStatus(String status) {
+            this.status = status;
+        }
 
-            public String getUnit() {
-                return unit;
-            }
+        public String getUpdateTime() {
+            return updateTime;
+        }
 
-            public void setUnit(String unit) {
-                this.unit = unit;
-            }
-
-            public String getUpdateTime() {
-                return updateTime;
-            }
-
-            public void setUpdateTime(String updateTime) {
-                this.updateTime = updateTime;
-            }
-
-            public String getUserTaskId() {
-                return userTaskId;
-            }
-
-            public void setUserTaskId(String userTaskId) {
-                this.userTaskId = userTaskId;
-            }
+        public void setUpdateTime(String updateTime) {
+            this.updateTime = updateTime;
         }
     }
 }

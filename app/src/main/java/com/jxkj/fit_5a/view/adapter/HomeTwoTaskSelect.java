@@ -14,13 +14,13 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/5/2914:03
  */
-public class HomeTwoTaskSelect extends BaseQuickAdapter<CircleTaskData.ListBean, BaseViewHolder> {
-    public HomeTwoTaskSelect(@Nullable List<CircleTaskData.ListBean> data) {
+public class HomeTwoTaskSelect extends BaseQuickAdapter<CircleTaskData, BaseViewHolder> {
+    public HomeTwoTaskSelect(@Nullable List<CircleTaskData> data) {
         super(R.layout.item_home_two_task_select, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, CircleTaskData.ListBean item) {
+    protected void convert(@NonNull BaseViewHolder helper, CircleTaskData item) {
         if(item.isSelect()){
             helper.setGone(R.id.rl_select_no,false).setGone(R.id.rl_select_yes,true);
         }else{

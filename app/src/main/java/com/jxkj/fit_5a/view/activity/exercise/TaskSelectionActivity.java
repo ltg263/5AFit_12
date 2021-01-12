@@ -12,6 +12,7 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.entity.CircleTaskData;
 import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.view.activity.exercise.landscape.MotorPatternActivity;
@@ -49,7 +50,7 @@ public class TaskSelectionActivity extends BaseActivity {
         mHomeTwoTaskSelect.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                List<CircleTaskData.ListBean> data = mHomeTwoTaskSelect.getData();
+                List<CircleTaskData> data = mHomeTwoTaskSelect.getData();
                 for (int i = 0; i < data.size(); i++) {
                     data.get(i).setSelect(false);
                 }
@@ -83,16 +84,16 @@ public class TaskSelectionActivity extends BaseActivity {
                 .getCircleTaskList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result<CircleTaskData>>() {
+                .subscribe(new Observer<ResultList<CircleTaskData>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result<CircleTaskData> result) {
+                    public void onNext(ResultList<CircleTaskData> result) {
                         if(isDataInfoSucceed(result)){
-                            mHomeTwoTaskSelect.setNewData(result.getData().getList());
+                            mHomeTwoTaskSelect.setNewData(result.getData());
                         }
                     }
 
