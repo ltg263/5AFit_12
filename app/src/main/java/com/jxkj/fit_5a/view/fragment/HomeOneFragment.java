@@ -143,17 +143,17 @@ public class HomeOneFragment extends BaseFragment {
 
 
         AASeriesElement element1 = new AASeriesElement()
-                .name("Tokyo")
+                .name("卡路里")
                 .lineWidth(3f)
                 .data(new Object[]{50, 320, 130, 370, 230, 400,});
 
         AASeriesElement element2 = new AASeriesElement()
-                .name("Berlin")
+                .name("总里程")
                 .lineWidth(3f)
                 .data(new Object[]{80, 190, 210, 340, 240, 350,});
 
-        AASeriesElement element3 = new AASeriesElement()
-                .name("New York")
+        AASeriesElement element3 = new AASeriesElement()                                                                                                             
+                .name("总时间")
                 .lineWidth(3f)
                 .data(new Object[]{120, 370, 180, 280, 260, 100,});
 
