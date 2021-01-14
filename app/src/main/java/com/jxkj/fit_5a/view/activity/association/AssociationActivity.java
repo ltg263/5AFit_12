@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,18 +15,17 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
-import com.jxkj.fit_5a.base.OrderInfoData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
-import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogCommentPackage;
 import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
-import com.jxkj.fit_5a.view.activity.mine.UserFsActivity;
 import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
-import com.jxkj.fit_5a.view.activity.mine.UserScActivity;
 import com.jxkj.fit_5a.view.adapter.AssociationListAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +48,8 @@ public class AssociationActivity extends BaseActivity {
     TextView mTvRighttext;
     @BindView(R.id.iv_rightimg)
     ImageView mIvRightimg;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
     int type;
@@ -72,6 +74,18 @@ public class AssociationActivity extends BaseActivity {
                 finish();
             }
         });
+        refreshLayout.setEnableRefresh(false);
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if(type==1){
+                    getMomentDetails();
+                }else if(type==2){
+                    getMomentDetailsCircle();
+                }
+            }
+        });
+
         type = getIntent().getIntExtra("type",0);
         if(type==2){
             circleId = getIntent().getStringExtra("circleId");
@@ -199,6 +213,7 @@ public class AssociationActivity extends BaseActivity {
         }else if(type==2){
             getMomentDetailsCircle();
         }
+
     }
     private void ShowCommentPackageDialog(MomentDetailsBean data) {
         DialogCommentPackage choicePackageDialog = new DialogCommentPackage(this,circleId);
@@ -279,6 +294,7 @@ public class AssociationActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
+                        refreshLayout.finishLoadMore();
                         dismiss();
                     }
                 });
@@ -310,6 +326,7 @@ public class AssociationActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
+                        refreshLayout.finishLoadMore();
                         dismiss();
                     }
                 });
