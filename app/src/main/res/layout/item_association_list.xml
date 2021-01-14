@@ -119,6 +119,7 @@
             android:id="@+id/ll_pl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_below="@id/tv_topic"
             android:layout_marginTop="@dimen/dimen_20dp"
             android:background="@drawable/btn_shape_bj_7f7_10"

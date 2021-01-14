@@ -48,7 +48,7 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
         helper.setText(R.id.tv_name,item.getUser().getNickName())
                 .setText(R.id.tv_time, StringUtil.getTimeToYMD(item.getTimestamp(),"yyyy-MM-dd HH:mm:ss"))
                 .setVisible(R.id.tv_topic,false)
-                .setVisible(R.id.ll_pl,false)
+                .setGone(R.id.ll_pl,false)
                 .setText(R.id.banner_home_one,item.getContent()+"")
                 .setText(R.id.tv_shoucang,item.getFavoriteCount()+"")
                 .setText(R.id.tv_xihuan,item.getLikeCount()+"")
