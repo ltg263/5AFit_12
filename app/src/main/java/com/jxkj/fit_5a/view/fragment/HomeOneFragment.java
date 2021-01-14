@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.view.fragment;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,15 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.FileUtils;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAOptionsConstructor;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AASeriesElement;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartAnimationType;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolStyleType;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartType;
+import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AADataElement;
+import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAOptions;
+import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAScrollablePlotArea;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
@@ -50,6 +50,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class HomeOneFragment extends BaseFragment {
+    @BindView(R.id.AAChartView)
+    AAChartView mAAChartView;
     @BindView(R.id.tv_left_text)
     TextView mTvLeftText;
     @BindView(R.id.tv_message_content)
@@ -78,8 +80,6 @@ public class HomeOneFragment extends BaseFragment {
     RecyclerView mRvRmspList;
     @BindView(R.id.rv_dtrm_list)
     RecyclerView mRvDtrmList;
-    @BindView(R.id.lineChart1)
-    LineChart mLineChart;
     private HomeTopAdapter mHomeTopAdapter;
     private HomeShoppingAdapter mHomeShoppingAdapter;
     private HomeDynamicAdapter mHomeDynamicAdapter;
@@ -93,57 +93,93 @@ public class HomeOneFragment extends BaseFragment {
     protected void initViews() {
         initRvUi();
         getProductList(1);
-        initLC();
         getAdList();
         getMomentQueryPopular();
+        initAAChar();
     }
 
-    private void initLC() {
-        mLineChart.getDescription().setEnabled(false);
+    private AAOptions aaOptions;
+    private AAChartModel aaChartModel;
+    private void initAAChar() {
 
-        mLineChart.setDrawGridBackground(false);
+        AAChartModel aaChartModel = configureChartModel();
+        if (aaOptions == null) {
+            aaOptions = AAOptionsConstructor.configureChartOptions(aaChartModel);
+        }
 
-        mLineChart.setData(generateLineData());
-        mLineChart.animateX(3000);
-
-        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");
-
-        Legend l = mLineChart.getLegend();
-        l.setTypeface(tf);
-
-        YAxis leftAxis = mLineChart.getAxisLeft();
-        leftAxis.setTypeface(tf);
-        leftAxis.setAxisMaximum(1.2f);
-        leftAxis.setAxisMinimum(-1.2f);
-
-        mLineChart.getAxisRight().setEnabled(false);
-
-        XAxis xAxis = mLineChart.getXAxis();
-        xAxis.setEnabled(false);
-
+        mAAChartView.aa_drawChartWithChartOptions(aaOptions);
     }
-    protected LineData generateLineData() {
 
-        ArrayList<ILineDataSet> sets = new ArrayList<>();
-        LineDataSet ds1 = new LineDataSet(FileUtils.loadEntriesFromAssets(getActivity().getAssets(), "sine.txt"), "Sine function");
-        LineDataSet ds2 = new LineDataSet(FileUtils.loadEntriesFromAssets(getActivity().getAssets(), "cosine.txt"), "Cosine function");
 
-        ds1.setLineWidth(2f);
-        ds2.setLineWidth(2f);
+    private AAChartModel configureChartModel() {
 
-        ds1.setDrawCircles(false);
-        ds2.setDrawCircles(false);
+        AAChartModel aaChartModel = new AAChartModel()
+                .chartType(AAChartType.Spline)
+                .title("")
+                .yAxisTitle("")
+                .legendEnabled(false)
+                .yAxisGridLineWidth(0f)
+                .scrollablePlotArea(
+                        new AAScrollablePlotArea()
+                                .minWidth(500)
+                                .scrollPositionX(1f)
+                )
+                .series(new AASeriesElement[]{
+                        new AASeriesElement()
+                                .name("Tokyo")
+                                .data(configureSeriesDataArray())
 
-        ds1.setColor(ColorTemplate.VORDIPLOM_COLORS[0]);
-        ds2.setColor(ColorTemplate.VORDIPLOM_COLORS[1]);
+                });
+        this.aaChartModel = aaChartModel;
 
-        // load DataSets from files in assets folder
-        sets.add(ds1);
-//        sets.add(ds2);
-        LineData d = new LineData(sets);
-        d.setValueTypeface(Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Regular.ttf"));
-        return d;
+        configureTheStyleForDifferentTypeChart();
+        return aaChartModel;
     }
+
+    private void configureTheStyleForDifferentTypeChart() {
+        aaChartModel
+                .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)//设置折线连接点样式为:边缘白色
+                .markerRadius(2f);
+
+
+        AASeriesElement element1 = new AASeriesElement()
+                .name("Tokyo")
+                .lineWidth(3f)
+                .data(new Object[]{50, 320, 130, 370, 230, 400,});
+
+        AASeriesElement element2 = new AASeriesElement()
+                .name("Berlin")
+                .lineWidth(3f)
+                .data(new Object[]{80, 190, 210, 340, 240, 350,});
+
+        AASeriesElement element3 = new AASeriesElement()
+                .name("New York")
+                .lineWidth(3f)
+                .data(new Object[]{120, 370, 180, 280, 260, 100,});
+
+        aaChartModel
+                .animationType(AAChartAnimationType.SwingFromTo)
+                .series(new AASeriesElement[]{element1, element2, element3});
+    }
+
+    private AADataElement[] configureSeriesDataArray() {
+        int maxRange = 388;
+        AADataElement[] numberArr1 = new AADataElement[maxRange];
+
+        double y1;
+        int max = 38, min = 1;
+        int random = (int) (Math.random() * (max - min) + min);
+        for (int i = 0; i < maxRange; i++) {
+            y1 = Math.sin(random * (i * Math.PI / 180)) + i * 2 * 0.01;
+            AADataElement aaDataElement = new AADataElement()
+                    .y((float) y1);
+
+            numberArr1[i] = aaDataElement;
+        }
+
+        return numberArr1;
+    }
+
     private void initRvUi() {
 
         List<String> list = new ArrayList<>();

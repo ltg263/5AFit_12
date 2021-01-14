@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.home;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -175,7 +176,11 @@ public class TaskSignActivity extends BaseActivity {
                 if((i+1)<10){
                     str = "0"+(i+1);
                 }
-                if((listData.get(j).getSignDate()+"").equals(String.valueOf(year)+String.valueOf(month)+str)){
+                String singDate = String.valueOf(year)+month+str;
+                if(month<10){
+                    singDate = year+"0"+month+str;
+                }
+                if((listData.get(j).getSignDate()+"").equals(singDate)){
                     listBean = listData.get(j);
                     listBean.setSig(true);
                 }

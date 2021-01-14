@@ -146,9 +146,9 @@
 
 
                 </LinearLayout>
-
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/lineChart1"
+<!--                https://github.com/AAChartModel/AAChartCore/blob/master/CHINESE-README.md-->
+                <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView
+                    android:id="@+id/AAChartView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/ll_top" />
@@ -209,8 +209,8 @@
                 <com.jxkj.fit_5a.conpoment.view.MarqueeTextView
                     android:id="@+id/tv_message_content"
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:ellipsize="marquee"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
@@ -219,7 +219,7 @@
                     android:singleLine="true"
                     android:text="有鸡可乘已更新！有鸡可乘APP更新啦，快来租鸡产蛋吧~"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_14"/>
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
                     android:layout_width="@dimen/dimen_20dp"
