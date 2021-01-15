@@ -1,6 +1,5 @@
 package com.jxkj.fit_5a.view.activity.home;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;

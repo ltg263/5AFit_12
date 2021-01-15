@@ -162,7 +162,6 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result<LoginInfo> result) {
-                        dismiss();
                         if(isDataInfoSucceed(result)){
                             SharedUtils.singleton().put(ConstValues.TOKEN,"Bearer "+result.getData().getTokenId());
                             SharedUtils.singleton().put(ConstValues.USER_PASSWORD, finalMm);
@@ -173,12 +172,14 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        dismiss();
+                        Log.w("e","e:"+e);
+                        ToastUtils.showShort("系统异常" + e);
                     }
 
                     @Override
                     public void onComplete() {
-
+                        dismiss();
                     }
                 });
     }
