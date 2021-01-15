@@ -43,6 +43,7 @@ import com.jxkj.fit_5a.entity.PostOrderInfo;
 import com.jxkj.fit_5a.entity.ProductDetailsBean;
 import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
+import com.jxkj.fit_5a.entity.RankListData;
 import com.jxkj.fit_5a.entity.RankStatsData;
 import com.jxkj.fit_5a.entity.ShowOrderInfo;
 import com.jxkj.fit_5a.entity.SignatureBean;
@@ -201,6 +202,12 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_1 + "api/v1/user/circle/task/list")
     Observable<ResultList<CircleTaskData>> getCircleTaskList();
+
+    /**
+     * 排行榜列表
+     */
+    @GET(ConstValues.PORT_1 + "api/v1/rank/list")
+    Observable<Result<RankListData>> getRankList(@Query("type") int type);
 
     /**
      * 排行榜排名

@@ -13,7 +13,9 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.entity.RankListData;
 import com.jxkj.fit_5a.entity.RankStatsData;
+import com.jxkj.fit_5a.view.activity.home.RankListActivity;
 import com.jxkj.fit_5a.view.activity.exercise.ExerciseRecordActivity;
 import com.jxkj.fit_5a.view.activity.exercise.TaskSelectionActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
@@ -87,7 +89,7 @@ public class HomeTwoFragment extends BaseFragment {
                         ,!mHomeTwoBelowAdapter.getData().get(position).isHasZan());
             }
         });
-        getRankStatsList(1);
+        getRankList(1);
     }
 
     @Override
@@ -108,16 +110,16 @@ public class HomeTwoFragment extends BaseFragment {
                 FacilityManageActivity.intentActivity(getActivity());
                 break;
             case R.id.tv_two_ri:
-                getRankStatsList(3);
+                getRankList(3);
                 break;
             case R.id.tv_two_zhou:
-                getRankStatsList(2);
+                getRankList(2);
                 break;
             case R.id.tv_two_yue:
-                getRankStatsList(1);
+                getRankList(1);
                 break;
             case R.id.tv_go_find:
-                startActivity(new Intent(getActivity(), TaskSelectionActivity.class));
+                startActivity(new Intent(getActivity(), RankListActivity.class));
                 break;
             case R.id.tv_ydjl:
 
@@ -126,6 +128,40 @@ public class HomeTwoFragment extends BaseFragment {
         }
     }
     int typeD = 0;
+
+    private void getRankList(int type) {
+        RetrofitUtil.getInstance().apiService()
+                .getRankList(type)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<RankListData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<RankListData> result) {
+                        if(isDataInfoSucceed(result)){
+                            typeD = type;
+
+                            getRankStatsList(type);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
 
     private void getRankStatsList(int type) {
         RetrofitUtil.getInstance().apiService()
