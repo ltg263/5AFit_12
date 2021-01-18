@@ -464,6 +464,39 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/on_ll_mine_lwj"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/dimen_15dp"
+                        android:text="礼物金"
+                        android:textColor="@color/color_333333"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_mine_lwj" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:src="@drawable/icon_jiantou_you_99" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:background="#F2F2F2" />
+
+                <LinearLayout
                     android:id="@+id/on_ll_mine_rwzx"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -481,7 +514,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_mine_wz" />
+                        android:src="@drawable/ic_mine_rwzx" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -514,7 +547,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_mine_wz" />
+                        android:src="@drawable/ic_mine_wzq" />
 
                     <ImageView
                         android:layout_width="wrap_content"

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_5dp"
+    android:background="@drawable/shape_yy_ff_all_10"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="@dimen/dimen_50dp"
+            android:layout_height="@dimen/dimen_50dp"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:scaleType="center"
+            android:src="@drawable/ic_lw" />
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:layout_toEndOf="@id/iv"
+            android:text="已转换成礼物金"
+            android:textColor="@color/color_text_theme"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv1"
+            android:layout_marginTop="@dimen/dimen_7dp"
+            android:layout_toEndOf="@id/iv"
+            android:text="2020.05.09 14:02:22"
+            android:textColor="#808080"
+            android:textSize="10sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dimen_3dp">
+
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+  100"
+                android:textColor="@color/color_000000"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/common_margin_16"
+                android:layout_height="@dimen/common_margin_16"
+                android:layout_marginStart="@dimen/dimen_5dp"
+                android:background="@drawable/ic_jwj_x"
+                android:scaleType="center"
+                android:src="@drawable/icon_rwzx" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

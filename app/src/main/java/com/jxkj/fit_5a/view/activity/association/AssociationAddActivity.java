@@ -162,6 +162,7 @@ public class AssociationAddActivity extends BaseActivity {
 
     private void postImg(List<LocalMedia> selectList, int i) {
         String path = PictureUtil.compressBmpFileToTargetSize(new File(selectList.get(i).getPath()),1024*1024).getPath();
+//        String path = selectList.get(i).getPath();
         String fileName = StringUtil.stringToMD5(path)+".jpg";
         i++;
         int finalI = i;

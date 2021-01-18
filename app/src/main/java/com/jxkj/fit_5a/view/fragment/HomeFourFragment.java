@@ -27,6 +27,7 @@ import com.jxkj.fit_5a.view.activity.mine.MineIntegralActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineIssueActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineIssueQcActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineJinDouActivity;
+import com.jxkj.fit_5a.view.activity.mine.MineLwjActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineMessageActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineRegardsActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineRwzxActivity;
@@ -146,7 +147,7 @@ public class HomeFourFragment extends BaseFragment {
         return homeFragment;
     }
 
-    @OnClick({R.id.iv_avatar, R.id.on_iv_set, R.id.rl_jfsc, R.id.on_iv_msg, R.id.on_bnt_zjxf, R.id.on_ll_mine_jd, R.id.on_ll_mine_jf, R.id.on_ll_mine_fpq, R.id.on_ll_mine_lw, R.id.on_tv_mine_grzy, R.id.on_ll_mine_qb, R.id.on_ll_mine_dfk, R.id.on_ll_mine_dfh, R.id.on_ll_mine_dsh, R.id.on_ll_mine_dpj, R.id.on_ll_mine_rwzx, R.id.on_ll_mine_wzq, R.id.on_ll_mine_zxkh, R.id.on_ll_mine_shdz, R.id.on_ll_mine_qcbz, R.id.on_ll_mine_cjwt, R.id.on_ll_mine_gywm})
+    @OnClick({R.id.iv_avatar, R.id.on_iv_set, R.id.rl_jfsc, R.id.on_iv_msg, R.id.on_bnt_zjxf,R.id.on_ll_mine_lwj, R.id.on_ll_mine_jd, R.id.on_ll_mine_jf, R.id.on_ll_mine_fpq, R.id.on_ll_mine_lw, R.id.on_tv_mine_grzy, R.id.on_ll_mine_qb, R.id.on_ll_mine_dfk, R.id.on_ll_mine_dfh, R.id.on_ll_mine_dsh, R.id.on_ll_mine_dpj, R.id.on_ll_mine_rwzx, R.id.on_ll_mine_wzq, R.id.on_ll_mine_zxkh, R.id.on_ll_mine_shdz, R.id.on_ll_mine_qcbz, R.id.on_ll_mine_cjwt, R.id.on_ll_mine_gywm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_avatar:
@@ -194,6 +195,9 @@ public class HomeFourFragment extends BaseFragment {
                 break;
             case R.id.on_ll_mine_dpj:
                 IntentUtils.getInstence().intent(getActivity(), OrderActivity.class, "type", 4);
+                break;
+            case R.id.on_ll_mine_lwj:
+                startActivity(new Intent(getActivity(), MineLwjActivity.class));
                 break;
             case R.id.on_ll_mine_rwzx:
                 startActivity(new Intent(getActivity(), MineRwzxActivity.class));

@@ -173,7 +173,7 @@ public interface ApiService {
     /**
      * 礼物赠送记录
      * flag:true只显示余额false只显示收到的礼物余额
-     *
+     * 我猜你现在肯定是在太阳下面
      * @return
      */
 
@@ -191,11 +191,18 @@ public interface ApiService {
     Observable<Result<PrizeListData>> getUserPrizeList(@Query("status") int status);
 
     /**
+     * 礼物金
+     */
+
+    @GET(ConstValues.PORT_1 + "api/v1/user/medal/list")
+    Observable<ResultList<MedalListData>> getUserMedalList1();
+
+    /**
      * 勋章列表
      */
 
     @GET(ConstValues.PORT_1 + "api/v1/user/medal/list")
-    Observable<MedalListData> getUserMedalList();
+    Observable<ResultList<MedalListData>> getUserMedalList();
 
     /**
      * 圈子任务列表

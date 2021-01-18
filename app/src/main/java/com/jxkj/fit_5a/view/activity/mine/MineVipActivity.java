@@ -195,6 +195,7 @@ public class MineVipActivity extends BaseActivity {
 
     private List<Fragment> getFragments(List<SpecListBaen.ListBean> list) {
         for (int i = 0; i < list.size(); i++) {
+            levelSpecId = list.get(0).getId();
             VipItemFragment fragment = new VipItemFragment();
             Bundle bundle = new Bundle();
             bundle.putParcelable("ListBean", list.get(i));

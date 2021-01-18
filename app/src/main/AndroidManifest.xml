@@ -298,6 +298,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activity.mine.MineLwjActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activity.mine.order.OrderDetailsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

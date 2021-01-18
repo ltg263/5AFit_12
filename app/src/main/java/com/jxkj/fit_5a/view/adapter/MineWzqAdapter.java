@@ -18,15 +18,15 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/5/2914:03
  */
-public class MineWzqAdapter extends BaseQuickAdapter<MedalListData.DataBean, BaseViewHolder> {
+public class MineWzqAdapter extends BaseQuickAdapter<MedalListData, BaseViewHolder> {
 
-    public MineWzqAdapter(@Nullable List<MedalListData.DataBean> data) {
+    public MineWzqAdapter(@Nullable List<MedalListData> data) {
         super(R.layout.item_mine_wzq, data);
     }
 
     @SuppressLint("CheckResult")
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, MedalListData.DataBean item) {
+    protected void convert(@NonNull BaseViewHolder helper, MedalListData item) {
         helper.setText(R.id.tv_title,item.getName())
                 .setGone(R.id.ll_b,false)
                 .setVisible(R.id.ll_1,false)
@@ -39,9 +39,9 @@ public class MineWzqAdapter extends BaseQuickAdapter<MedalListData.DataBean, Bas
                 .setVisible(R.id.ll_5,false)
                 .setVisible(R.id.ll_55,false)
                 .setVisible(R.id.ll_6,false);
-        List<MedalListData.DataBean.MedalsBean> medals = item.getMedals();
+        List<MedalListData.MedalsBean> medals = item.getMedals();
         for(int i=0;i<medals.size();i++){
-            MedalListData.DataBean.MedalsBean bean = medals.get(i);
+            MedalListData.MedalsBean bean = medals.get(i);
             switch (i){
                 case 0:
                     helper.setVisible(R.id.ll_1,true).setText(R.id.tv_1,bean.getName());
