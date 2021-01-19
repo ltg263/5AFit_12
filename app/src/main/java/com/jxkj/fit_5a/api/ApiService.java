@@ -38,6 +38,7 @@ import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
+import com.jxkj.fit_5a.entity.OrderDetailsData;
 import com.jxkj.fit_5a.entity.OssInfoBean;
 import com.jxkj.fit_5a.entity.PostOrderInfo;
 import com.jxkj.fit_5a.entity.ProductDetailsBean;
@@ -407,7 +408,7 @@ public interface ApiService {
 //
 
 
-    /**
+    /**3728
      * 商品列表
      */
     @GET(ConstValues.PORT_3 + "api/v1/product/list")
@@ -507,6 +508,13 @@ public interface ApiService {
     Observable<Result<OrderInfoData>> getOrderAll(@Query("page") int page,
                                                   @Query("pageSize") int pageSize,
                                                   @Query("status") String status);
+
+
+    /**
+     * 订单详情
+     */
+    @GET(ConstValues.PORT_3 +"api/v1/user/order/details")
+    Observable<Result<OrderDetailsData>> getOrderDetails(@Query("id") String id);
 
     /**
      * 地图列表

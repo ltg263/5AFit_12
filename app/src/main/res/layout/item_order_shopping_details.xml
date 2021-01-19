@@ -60,7 +60,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="水杯套装 水杯+水杯套"
+                        android:text=""
+                        android:visibility="gone"
                         android:textColor="@color/color_999999"
                         android:textSize="12sp" />
 

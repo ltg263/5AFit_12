@@ -53,7 +53,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     //模拟父控件的点击
-                    IntentUtils.getInstence().intent(recyclerView.getContext(), OrderDetailsActivity.class, "id", "");
+                    IntentUtils.getInstence().intent(recyclerView.getContext(), OrderDetailsActivity.class, "id", item.getId());
                 }
                 return false;
             }

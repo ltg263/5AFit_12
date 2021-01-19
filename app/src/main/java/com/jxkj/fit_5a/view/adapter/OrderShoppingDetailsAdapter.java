@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.OrderInfoData;
+import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 
 import java.util.List;
 
@@ -27,15 +28,13 @@ public class OrderShoppingDetailsAdapter extends BaseQuickAdapter<OrderInfoData.
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, OrderInfoData.ListBean.ProductListBean item) {
-//        ImageView iv_img = helper.getView(R.id.iv_img);
-//        TextView tv_name = helper.getView(R.id.tv_name);
-        TextView tv_shop_name = helper.getView(R.id.tv_shop_name);
-//        TextView tv_price = helper.getView(R.id.tv_price);
-//        tv_name.setText(item.getName());
-        String str = "单价：<font color=\"#FF6666\">4890积分 + 24元</font>";
-        tv_shop_name.setText( Html.fromHtml(str));
-//        tv_price.setText("￥"+item.getRealPrice());
-//        GlideImgLoader.loadImageViewRadius(activity, item.getImgUrl(),10, iv_img);
+        GlideImgLoader.loadImageViewRadius(activity, item.getImgUrl(),10, helper.getView(R.id.iv_img));
+        String str = "单价：<font color=\"#FF6666\">"+item.getDeductIntegral()+"积分 + "+item.getPrice()+"元</font>";
+        if(Integer.valueOf(item.getPrice())==0){
+            str = "单价：<font color=\"#FF6666\">"+item.getDeductIntegral()+"积分";
+        }
+        helper.setText(R.id.tv_name,item.getName()).setText(R.id.tv_spec,"规格："+item.getSkuName())
+                .setText(R.id.tv_shop_name,Html.fromHtml(str)).setText(R.id.tv_price,"x "+item.getRealNum());
     }
 
 

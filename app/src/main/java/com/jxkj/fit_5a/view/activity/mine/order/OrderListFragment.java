@@ -150,7 +150,8 @@ public class OrderListFragment extends BaseFragment {
         orderListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                IntentUtils.getInstence().intent(getActivity(), OrderDetailsActivity.class, "id", "");
+                IntentUtils.getInstence().intent(getActivity(), OrderDetailsActivity.class, "id",
+                        orderListAdapter.getData().get(position).getId());
             }
         });
 
