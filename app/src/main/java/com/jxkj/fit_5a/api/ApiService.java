@@ -174,7 +174,6 @@ public interface ApiService {
     /**
      * 礼物赠送记录
      * flag:true只显示余额false只显示收到的礼物余额
-     * 我猜你现在肯定是在太阳下面
      * @return
      */
 
@@ -408,7 +407,7 @@ public interface ApiService {
 //
 
 
-    /**3728
+    /**
      * 商品列表
      */
     @GET(ConstValues.PORT_3 + "api/v1/product/list")
