@@ -53,7 +53,7 @@ public class ConstValues {
      */
 //    public static final String BASE_URL = "http://api.zjduon.com/zulin/";
 //    public static final String BASE_URL = "http://192.168.2.130:8087/gtbl/";
-    public static final String BASE_URL = "http://192.168.2.21";
+    public static final String BASE_URL = "https://5afit.nbqichen.com";
     public static final String BASE_URL_DETAIL = "http://admin.zjduon.com/";
 
     public static final String WX_APP_ID = "wxf2824afc51ad69a0";
@@ -74,7 +74,6 @@ public class ConstValues {
 //    public static final String PORT_21 = "http://192.168.2.145:9021/";//社群
     public static final String POPT_LS = "";//没有
 
-//api/v1/user/getQrCode?url=pages/start/start&scene=page-authorize,code-17774004352
     //默认连接超时时间
     public static final int DEFAULT_TIMEOUT = 30;
     public static final int PAGE_SIZE =10;
