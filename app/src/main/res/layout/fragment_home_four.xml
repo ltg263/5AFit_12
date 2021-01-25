@@ -81,6 +81,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/dimen_15dp"
             android:layout_marginTop="@dimen/dimen_30dp"
             android:orientation="vertical">
 
@@ -92,7 +93,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ll"
-                    android:layout_marginHorizontal="@dimen/dimen_15dp"
                     android:layout_marginTop="-20dp"
                     android:background="@mipmap/ic_ming_ka">
 
@@ -137,7 +137,6 @@
                     android:id="@+id/ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dimen_15dp"
                     android:layout_marginTop="@dimen/dimen_25dp"
                     android:background="@drawable/bj_circle_fff_10"
                     android:orientation="vertical">
@@ -323,7 +322,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_15dp"
                 android:layout_marginTop="@dimen/dimen_25dp"
                 android:background="@drawable/bj_circle_fff_10"
                 android:orientation="horizontal">
@@ -458,7 +456,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_15dp"
                 android:layout_marginTop="@dimen/dimen_25dp"
                 android:background="@drawable/bj_circle_fff_10"
                 android:orientation="vertical">
@@ -561,7 +558,7 @@
                 android:id="@+id/rl_jfsc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_15dp">
+                android:paddingVertical="@dimen/dimen_15dp">
 
                 <ImageView
                     android:id="@+id/iv_4"
@@ -587,7 +584,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_15dp">
+                android:paddingVertical="@dimen/dimen_15dp">
 
                 <TextView
                     android:id="@+id/tv1"
@@ -624,7 +621,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_15dp"
                 android:layout_marginBottom="@dimen/dimen_50dp"
                 android:background="@drawable/bj_circle_fff_10"
                 android:orientation="vertical">
