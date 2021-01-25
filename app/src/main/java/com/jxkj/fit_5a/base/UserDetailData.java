@@ -46,35 +46,35 @@ public class UserDetailData {
     private String bannedReason;
     private String bannedStartTime;
     private String birthDay;
-    private int cityId;
+    private String cityId;
     private String createTime;
     private String deleteTime;
-    private int districtId;
+    private String districtId;
     private String explain;
-    private int gender;
+    private String gender;
     private boolean hasAutoRenew;
-    private int hasDel;
-    private int height;
-    private int id;
+    private String hasDel;
+    private String height;
+    private String id;
     private String interest;
-    private int level;
+    private String level;
     private String levelExpireTime;
     private String levelImgUrl;
     private String levelName;
     private String levelNo;
-    private int loginType;
+    private String loginType;
     private String mobile;
     private String nickName;
     private String password;
     private String personMail;
-    private int provinceId;
+    private String provinceId;
     private String region;
     private String saltValue;
-    private int status;
+    private String status;
     private String statusStr;
     private String updateTime;
     private String userNo;
-    private int weight;
+    private String weight;
 
     public String getAvatar() {
         return avatar;
@@ -124,11 +124,11 @@ public class UserDetailData {
         this.birthDay = birthDay;
     }
 
-    public int getCityId() {
+    public String getCityId() {
         return cityId;
     }
 
-    public void setCityId(int cityId) {
+    public void setCityId(String cityId) {
         this.cityId = cityId;
     }
 
@@ -148,11 +148,11 @@ public class UserDetailData {
         this.deleteTime = deleteTime;
     }
 
-    public int getDistrictId() {
+    public String getDistrictId() {
         return districtId;
     }
 
-    public void setDistrictId(int districtId) {
+    public void setDistrictId(String districtId) {
         this.districtId = districtId;
     }
 
@@ -164,11 +164,11 @@ public class UserDetailData {
         this.explain = explain;
     }
 
-    public int getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -180,27 +180,27 @@ public class UserDetailData {
         this.hasAutoRenew = hasAutoRenew;
     }
 
-    public int getHasDel() {
+    public String getHasDel() {
         return hasDel;
     }
 
-    public void setHasDel(int hasDel) {
+    public void setHasDel(String hasDel) {
         this.hasDel = hasDel;
     }
 
-    public int getHeight() {
+    public String getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -212,11 +212,11 @@ public class UserDetailData {
         this.interest = interest;
     }
 
-    public int getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 
@@ -252,11 +252,11 @@ public class UserDetailData {
         this.levelNo = levelNo;
     }
 
-    public int getLoginType() {
+    public String getLoginType() {
         return loginType;
     }
 
-    public void setLoginType(int loginType) {
+    public void setLoginType(String loginType) {
         this.loginType = loginType;
     }
 
@@ -292,11 +292,11 @@ public class UserDetailData {
         this.personMail = personMail;
     }
 
-    public int getProvinceId() {
+    public String getProvinceId() {
         return provinceId;
     }
 
-    public void setProvinceId(int provinceId) {
+    public void setProvinceId(String provinceId) {
         this.provinceId = provinceId;
     }
 
@@ -316,11 +316,11 @@ public class UserDetailData {
         this.saltValue = saltValue;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -348,11 +348,11 @@ public class UserDetailData {
         this.userNo = userNo;
     }
 
-    public int getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 }
