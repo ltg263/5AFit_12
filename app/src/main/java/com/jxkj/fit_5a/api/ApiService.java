@@ -56,8 +56,12 @@ import com.jxkj.fit_5a.entity.TaskCircleQueryBean;
 import com.jxkj.fit_5a.entity.TemplateBean;
 import com.jxkj.fit_5a.entity.TopicAllBean;
 import com.jxkj.fit_5a.entity.UserOwnInfo;
+import com.jxkj.fit_5a.entity.VideoInfoBean;
+import com.jxkj.fit_5a.entity.VideoPlayAuthBean;
+import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
 import com.jxkj.fit_5a.entity.WalletDetailsBean;
 
+import java.io.File;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -380,6 +384,18 @@ public interface ApiService {
                                           @Query("password") String password);
 
     /**
+     *获取视频上传地址和凭证
+     */
+    @GET(ConstValues.PORT_5 + "api/v1/video/upload")
+    Observable<Result<VideoInfoBean>> getUploadVideo(@Query("fileName") String fileName, @Query("title") String title, @Query("coverUrl") String coverUrl);
+
+    /**
+     *上传视频文件
+     */
+    @POST(ConstValues.PORT_5 + "api/v1/video/upload_video")
+    Observable<Result> getUpload_Video(@Query("file") File file, @Query("fileName") String fileName, @Query("title") String title, @Query("coverUrl") String coverUrl);
+
+    /**
      * 账号绑定 未完善
      *
      * @return clientType:客户端1web2ios3安卓4微信】
@@ -391,6 +407,17 @@ public interface ApiService {
                                      @Query("portraitUri") String portraitUri);
 
 
+    /**
+     * 获取视频播放凭证
+     */
+    @GET(ConstValues.PORT_5 + "api/v1/video/play_auth")
+    Observable<Result<VideoPlayAuthBean>> getPlay_auth(@Query("videoId") String videoId);
+
+    /**
+     * 获取视频播放地址
+     */
+    @GET(ConstValues.PORT_5 + "api/v1/video/play_info")
+    Observable<Result<VideoPlayInfoBean>> getPlay_info(@Query("definition") String definition, @Query("videoId") String videoId);
 
     /**
      * app授权登录
@@ -946,4 +973,5 @@ public interface ApiService {
                                                                     @Query("momentId") String momentId,
                                                                     @Query("momentPublisherId")String momentPublisherId,
                                                                     @Query("page")int page, @Query("pageSize")int pageSize);
+
 }

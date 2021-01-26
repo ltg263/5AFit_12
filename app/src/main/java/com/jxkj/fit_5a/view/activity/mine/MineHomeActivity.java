@@ -160,7 +160,7 @@ public class MineHomeActivity extends BaseActivity {
         mHomeThreeSqAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                VideoActivity.startActivity(MineHomeActivity.this,"");
+                VideoActivity.startActivity(MineHomeActivity.this,"6d6368afb0294943b60c17c77bedc715");
             }
         });
         getUserProfileOwn();

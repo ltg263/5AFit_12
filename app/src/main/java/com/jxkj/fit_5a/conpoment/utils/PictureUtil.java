@@ -3,6 +3,7 @@ package com.jxkj.fit_5a.conpoment.utils;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Base64;
@@ -156,7 +158,8 @@ public class PictureUtil {
     }
 
     /**
-     *  获取保存 隐患检查的图片文件夹名称
+     * 获取保存 隐患检查的图片文件夹名称
+     *
      * @return
      */
 
@@ -165,6 +168,7 @@ public class PictureUtil {
         return "sheguantong";
 
     }
+
     /**
      * 压缩图片到目标大小以下
      *
@@ -210,6 +214,7 @@ public class PictureUtil {
         Log.d("ltg_263", String.format("compressBmpFileToTargetSize end file.length():%d", file.length()));
         return file;
     }
+
     /**
      * 图片缩小一半
      *
@@ -230,5 +235,54 @@ public class PictureUtil {
         }
         result.compress(Bitmap.CompressFormat.JPEG, quality, baos);
         return result;
+    }
+
+    /**
+     * 获取视频文件截图
+     *
+     * @param path 视频文件的路径
+     * @return Bitmap 返回获取的Bitmap
+     */
+
+    public static String getVideoThumb(String path) {
+
+        MediaMetadataRetriever media = new MediaMetadataRetriever();
+
+        media.setDataSource(path);
+        String pathF = saveBitmap(media.getFrameAtTime(),100);
+        return pathF;
+    }
+    /**
+     * 保存bitmap到本地
+     *
+     * @param bitmap
+     * @return
+     */
+    public static String saveBitmap(Bitmap bitmap,int position) {
+        String savePath;
+        File filePic;
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            savePath = "/sdcard/dskqxt/pic/";
+        } else {
+            Log.d("xxx", "saveBitmap: 1return");
+            return null;
+        }
+        try {
+            filePic = new File(savePath + position + ".jpg");
+            if (!filePic.exists()) {
+                filePic.getParentFile().mkdirs();
+                filePic.createNewFile();
+            }
+            FileOutputStream fos = new FileOutputStream(filePic);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d("xxx", "saveBitmap: 2return");
+            return null;
+        }
+        Log.d("xxx", "saveBitmap: " + filePic.getAbsolutePath());
+        return filePic.getAbsolutePath();
     }
 }

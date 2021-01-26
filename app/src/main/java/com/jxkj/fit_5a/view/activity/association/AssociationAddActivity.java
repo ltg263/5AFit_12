@@ -2,7 +2,9 @@ package com.jxkj.fit_5a.view.activity.association;
 
 import android.content.Intent;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +21,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.utils.PictureUtil;
@@ -26,7 +29,11 @@ import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils_Map;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowTy;
 import com.jxkj.fit_5a.entity.TopicAllBean;
+import com.jxkj.fit_5a.entity.VideoInfoBean;
+import com.jxkj.fit_5a.view.activity.exercise.landscape.MapExerciseActivity;
 import com.jxkj.fit_5a.view.adapter.SpPhotoAdapter;
 import com.jxkj.fit_5a.view.map.LocationSelectActivity;
 import com.luck.picture.lib.PictureSelector;
@@ -71,8 +78,16 @@ public class AssociationAddActivity extends BaseActivity {
     TextView mTvTopics;
     @BindView(R.id.tv_position)
     TextView mTvPosition;
+    @BindView(R.id.rl_v)
+    RelativeLayout rl_v;
+    @BindView(R.id.iv_close)
+    ImageView iv_close;
+    @BindView(R.id.iv_v)
+    ImageView iv_v;
+    List<String> list = new ArrayList<>();
     private SpPhotoAdapter mSpPhotoAdapter;
     int shareType = 1;
+    int type = -1;//2:图片;3:视频)
     @Override
     protected int getContentView() {
         return R.layout.activity_community_add;
@@ -102,7 +117,15 @@ public class AssociationAddActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (mSpPhotoAdapter.getData().get(position).getPath().equals("-1")) {
-                    MatisseUtils.gotoSelectPhoto(AssociationAddActivity.this, 10 - mSpPhotoAdapter.getData().size(), false);
+                    if(mSpPhotoAdapter.getData().size()==1 || type==-1){
+                        initPopupWindow();
+                        return;
+                    }
+                    if(type==2){
+                        MatisseUtils.gotoSelectPhoto(AssociationAddActivity.this, 10 - mSpPhotoAdapter.getData().size(), false);
+                    }else {
+                        MatisseUtils.gotoSelectVideo(AssociationAddActivity.this);
+                    }
                 }
             }
         });
@@ -129,7 +152,12 @@ public class AssociationAddActivity extends BaseActivity {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    setIMaaa(selectList);
+                    if(type==2){
+                        setIMaaa(selectList);
+                    }
+                    if(type==3){
+                        setVideo(selectList);
+                    }
                     break;
                 case 2:
                     double latitude=data.getDoubleExtra("latitude",0.0);
@@ -143,10 +171,58 @@ public class AssociationAddActivity extends BaseActivity {
             }
         }
     }
+
+    private void setVideo(List<LocalMedia> selectList){
+        String path = PictureUtil.getVideoThumb(selectList.get(0).getPath());
+        if(StringUtil.isNotBlank(path)){
+            HttpRequestUtils.postOSSFile(1,new HttpRequestUtils.OSSClientInterface() {
+                @Override
+                public void succeed(double pos) {
+                    if(pos==0){
+                        ToastUtils.showShort("获取oss信息错误");
+                        return;
+                    }
+                    String fileImgName = StringUtil.stringToMD5(path);
+                    HttpRequestUtils.initOSSClient(AssociationAddActivity.this, fileImgName+".jpg",path, new HttpRequestUtils.OSSClientInterface() {
+                        @Override
+                        public void succeed(double pos) {
+                            if(pos==101){
+                                String imgpath= SharedUtils.singleton().get(ConstValues.host,"")
+                                        +"/"+SharedUtils.singleton().get(ConstValues.dir,"")+"/"+fileImgName+".jpg";
+                                Log.w("listUrls","imgpath:"+imgpath);
+                                String fileVideoName = StringUtil.stringToMD5(selectList.get(0).getPath());
+                                HttpRequestUtils.initOSSClient(AssociationAddActivity.this, fileVideoName+".mp4",selectList.get(0).getPath(), new HttpRequestUtils.OSSClientInterface() {
+                                    @Override
+                                    public void succeed(double pos) {
+                                        if(pos==101){
+                                            String videopath= SharedUtils.singleton().get(ConstValues.host,"")
+                                                    +"/"+SharedUtils.singleton().get(ConstValues.dir,"")+"/"+fileVideoName+".mp4";
+                                            Log.w("listUrls","videopath:"+videopath);
+                                            HttpRequestUtils.getUploadVideo(videopath, fileVideoName, imgpath, new HttpRequestUtils.VideoInterface() {
+                                                @Override
+                                                public void succeed(VideoInfoBean result) {
+                                                    listUrls.add(imgpath);
+                                                    mRvListZp.setVisibility(View.GONE);
+                                                    rl_v.setVisibility(View.VISIBLE);
+                                                    media = imgpath+","+result.getVideoId();
+                                                    GlideImageUtils.setGlideImage(AssociationAddActivity.this,imgpath,iv_v);
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    }
+
     List <String> listUrls= new ArrayList<>();
 
     private void setIMaaa(List<LocalMedia> selectList) {
-        HttpRequestUtils.postOSSFile(2,new HttpRequestUtils.OSSClientInterface() {
+        HttpRequestUtils.postOSSFile(1,new HttpRequestUtils.OSSClientInterface() {
             @Override
             public void succeed(double pos) {
                 if(pos==0){
@@ -187,14 +263,44 @@ public class AssociationAddActivity extends BaseActivity {
             }
         });
     }
+    PopupWindowTy window;
 
+    private void initPopupWindow() {
+        list.clear();
+        list.add("相册");
+        list.add("视频");
+        if (window == null) {
+            window = new PopupWindowTy(this, list,new PopupWindowTy.GiveDialogInterface() {
+                @Override
+                public void btnConfirm(int position) {
+                    type = 3;
+                    if(position==0){
+                        type = 2;
+                    }
+                    if(type==2){
+                        MatisseUtils.gotoSelectPhoto(AssociationAddActivity.this, 10 - mSpPhotoAdapter.getData().size(), false);
+                    }else {
+                        MatisseUtils.gotoSelectVideo(AssociationAddActivity.this);
+                    }
+                }
+            });
+
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        }
+
+        window.showAtLocation(mTvPosition, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置
+    }
 
     private List<String> mFeedTypeList = new ArrayList<>();
 
-    @OnClick({R.id.ll_back, R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_gk,R.id.tv_topics,R.id.tv_position})
+    @OnClick({R.id.ll_back, R.id.iv_close,R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_gk,R.id.tv_topics,R.id.tv_position})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
+                break;
+            case R.id.iv_close:
+                rl_v.setVisibility(View.GONE);
+                mRvListZp.setVisibility(View.VISIBLE);
                 break;
             case R.id.iv_rightimg:
             case R.id.tv_righttext:
@@ -259,17 +365,20 @@ public class AssociationAddActivity extends BaseActivity {
                 });
 
     }
+    String media;
     private void postPublishMoment() {
         String content = mEtContent.getText().toString();
         mTvPosition.getText().toString();
         if (StringUtil.isBlank(content)) {
             ToastUtils.showShort("内容不能为空");
         }
-        String imgs = listUrls.toString().replace("[","").replace("]","");
+        if(type==2){
+            media = listUrls.toString().replace("[","").replace("]","");
+        }
         show();
         RetrofitUtil.getInstance().apiService()
-                .postPublishMoment(content,"2",shareType+"",
-                        imgs,
+                .postPublishMoment(content,type+"",shareType+"",
+                        media,
                         position,location,null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

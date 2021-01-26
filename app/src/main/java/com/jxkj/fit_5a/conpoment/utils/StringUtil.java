@@ -479,6 +479,7 @@ public class StringUtil {
         return doc.toString();
     }
 
+
     public static String stringToMD5(String plainText) {
         byte[] secretBytes = null;
         try {
@@ -493,5 +494,4 @@ public class StringUtil {
         }
         return md5code;
     }
-
 }

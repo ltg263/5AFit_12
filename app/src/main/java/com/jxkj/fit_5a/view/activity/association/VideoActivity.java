@@ -10,14 +10,22 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.view.MyVideoPlayer;
+import com.jxkj.fit_5a.entity.VideoPlayAuthBean;
+import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
 import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 import com.jxkj.fit_5a.view.adapter.ListVideoAdapter;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class VideoActivity extends BaseActivity {
     @BindView(R.id.rv_list)
@@ -27,7 +35,8 @@ public class VideoActivity extends BaseActivity {
     private ListVideoAdapter videoAdapter;
     private LinearLayoutManager layoutManager;
     private int currentPosition;
-
+    String videoId;
+    ArrayList<String> urlList = new ArrayList<>();
     @Override
     protected int getContentView() {
         return R.layout.activity_video;
@@ -35,29 +44,92 @@ public class VideoActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-
-        ArrayList<String> urlList = new ArrayList<>();
-        urlList.add("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318214226685784.mp4");
-        urlList.add("http://vfx.mtime.cn/Video/2019/03/19/mp4/190319104618910544.mp4");
-        urlList.add("http://vfx.mtime.cn/Video/2019/03/17/mp4/190317150237409904.mp4");
-        urlList.add("http://vfx.mtime.cn/Video/2019/03/14/mp4/190314102306987969.mp4");
-        urlList.add("http://vfx.mtime.cn/Video/2019/03/12/mp4/190312143927981075.mp4");
-        urlList.add("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318214226685784.mp4");
-        urlList.add("http://vfx.mtime.cn/Video/2019/03/19/mp4/190319104618910544.mp4");
-        urlList.add("http://vfx.mtime.cn/Video/2019/03/17/mp4/190317150237409904.mp4");
-        urlList.add("http://vfx.mtime.cn/Video/2019/03/14/mp4/190314102306987969.mp4");
-        urlList.add("http://vfx.mtime.cn/Video/2019/03/12/mp4/190312143927981075.mp4");
+        videoId = getIntent().getStringExtra("videoId");
+//
+//        urlList.add("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318214226685784.mp4");
+//        urlList.add("http://vfx.mtime.cn/Video/2019/03/19/mp4/190319104618910544.mp4");
+//        urlList.add("http://vfx.mtime.cn/Video/2019/03/17/mp4/190317150237409904.mp4");
+//        urlList.add("http://vfx.mtime.cn/Video/2019/03/14/mp4/190314102306987969.mp4");
+//        urlList.add("http://vfx.mtime.cn/Video/2019/03/12/mp4/190312143927981075.mp4");
+//        urlList.add("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318214226685784.mp4");
+//        urlList.add("http://vfx.mtime.cn/Video/2019/03/19/mp4/190319104618910544.mp4");
+//        urlList.add("http://vfx.mtime.cn/Video/2019/03/17/mp4/190317150237409904.mp4");
+//        urlList.add("http://vfx.mtime.cn/Video/2019/03/14/mp4/190314102306987969.mp4");
+//        urlList.add("http://vfx.mtime.cn/Video/2019/03/12/mp4/190312143927981075.mp4");
 
         snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(rvPage2);
 
 
-        videoAdapter = new ListVideoAdapter(urlList);
+        videoAdapter = new ListVideoAdapter(null);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvPage2.setLayoutManager(layoutManager);
         rvPage2.setAdapter(videoAdapter);
         addListener();
+//        getPlay_auth();
+        getPlay_info();
     }
+
+    private void getPlay_auth(){
+        RetrofitUtil.getInstance().apiService()
+                .getPlay_auth(videoId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<VideoPlayAuthBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<VideoPlayAuthBean> result) {
+                        if(isDataInfoSucceed(result)) {
+                            getPlay_info();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void getPlay_info(){
+        RetrofitUtil.getInstance().apiService()
+                .getPlay_info(null,videoId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<VideoPlayInfoBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<VideoPlayInfoBean> result) {
+                        if(isDataInfoSucceed(result)) {
+                            urlList.add(result.getData().getPlayInfoList().get(0).getPlayURL());
+                            videoAdapter.setNewData(urlList);
+                            videoAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
 
     private void addListener() {
 
@@ -101,9 +173,9 @@ public class VideoActivity extends BaseActivity {
         MyVideoPlayer.releaseAllVideos();
     }
 
-    public static void startActivity(Context mContext, String userId) {
+    public static void startActivity(Context mContext, String videoId) {
         Intent intent = new Intent(mContext, VideoActivity.class);
-        intent.putExtra("userId", userId);
+        intent.putExtra("videoId", videoId);
         mContext.startActivity(intent);
     }
 }

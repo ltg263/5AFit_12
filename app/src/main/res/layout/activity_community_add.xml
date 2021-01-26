@@ -19,6 +19,33 @@
         android:overScrollMode="never"
         android:padding="@dimen/dp_10" />
 
+    <RelativeLayout
+        android:id="@+id/rl_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_v"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_180dp"
+            android:layout_marginStart="@dimen/dimen_15dp"
+            android:adjustViewBounds="true"
+            android:overScrollMode="never" />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/iv_v"
+            android:layout_marginTop="@dimen/dimen_15dp"
+            android:layout_marginEnd="@dimen/dimen_15dp"
+            android:src="@drawable/icon_close" />
+
+    </RelativeLayout>
+
+
     <EditText
         android:id="@+id/et_content"
         android:layout_width="match_parent"
@@ -51,11 +78,11 @@
         <TextView
             android:id="@+id/tv_topics"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="end"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:drawableEnd="@drawable/icon_jiantou_you_99"
             android:drawablePadding="10dp"
+            android:gravity="end"
             android:text="合适的话题会有更多赞~"
             android:textColor="@color/color_999999"
             android:textSize="13sp" />
@@ -91,8 +118,8 @@
             android:layout_weight="1"
             android:drawableEnd="@drawable/icon_jiantou_you_99"
             android:drawablePadding="10dp"
-            android:text=" "
             android:gravity="end"
+            android:text=" "
             android:textColor="@color/color_999999"
             android:textSize="13sp" />
 

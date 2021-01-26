@@ -12,6 +12,7 @@ import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.OssInfoBean;
 import com.jxkj.fit_5a.entity.StsTokenBean;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
+import com.jxkj.fit_5a.entity.VideoInfoBean;
 import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
 
 import java.io.File;
@@ -806,7 +807,9 @@ public class HttpRequestUtils {
     /**
      *
      * @param mResultInterface
-     * @param type
+     * @param type :0 用户相关 1动态相关 2圈子相关 3商城商品相关 4商城商品评论相关
+     *             5商品封面(商品列表) 6商品轮播图 7商城商品详情 8商城商品规格封面 9商城商品分类
+     *             10礼物 11任务 12勋章 13兴趣 14帮助 15广告 16运动
      */
     public static void postOSSFile(int type,OSSClientInterface mResultInterface){
         RetrofitUtil.getInstance().apiService()
@@ -878,6 +881,67 @@ public class HttpRequestUtils {
                 });
     }
 
+    public static void getUploadVideo(String fileName,String title,String coverUrl,VideoInterface videoInterface){
+        RetrofitUtil.getInstance().apiService()
+                .getUploadVideo(fileName,title,coverUrl)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<VideoInfoBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<VideoInfoBean> result) {
+                        if(result.getCode()==0) {
+                            videoInterface.succeed(result.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+    public interface VideoInterface {
+        void succeed(VideoInfoBean result);
+//        void failure();
+    }
+    public static void getUpload_Video(File file,String fileName,String title,String coverUrl){
+        RetrofitUtil.getInstance().apiService()
+                .getUpload_Video(file,fileName,title,coverUrl)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0) {
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
 
     public static void initOSSClient(Context mContext,  String fileName,String filePath, OSSClientInterface mResultInterface){
         //初始化OssService类，参数分别是Content，accessKeyId，accessKeySecret，endpoint，bucketName（后4个参数是您自己阿里云Oss中参数）
@@ -892,7 +956,6 @@ public class HttpRequestUtils {
         ossService.setProgressCallback(new OssService.ProgressCallback() {
             @Override
             public void onProgressCallback(final double progress) {
-                LogUtil.d("上传进度："+progress);
                 mResultInterface.succeed(progress);
             }
         });

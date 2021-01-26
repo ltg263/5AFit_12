@@ -71,7 +71,6 @@ public class OssService {
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
             @Override
             public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
-                LogUtil.d("currentSize: " + currentSize + " totalSize: " + totalSize);
                 double progress = currentSize * 1.0 / totalSize * 100.f;
                 if (progressCallback != null) {
                     progressCallback.onProgressCallback(progress);
