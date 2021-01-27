@@ -2,7 +2,6 @@ package com.jxkj.fit_5a.view.activity.association;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,10 +12,10 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.view.MyVideoPlayer;
-import com.jxkj.fit_5a.entity.VideoPlayAuthBean;
+import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
-import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 import com.jxkj.fit_5a.view.adapter.ListVideoAdapter;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class VideoActivity extends BaseActivity {
     private ListVideoAdapter videoAdapter;
     private LinearLayoutManager layoutManager;
     private int currentPosition;
-    String videoId;
+    //    String videoId;
     ArrayList<String> urlList = new ArrayList<>();
     @Override
     protected int getContentView() {
@@ -44,7 +43,8 @@ public class VideoActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        videoId = getIntent().getStringExtra("videoId");
+//        videoId = getIntent().getStringExtra("videoId");
+        getQueryByPublisher();
 //
 //        urlList.add("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318214226685784.mp4");
 //        urlList.add("http://vfx.mtime.cn/Video/2019/03/19/mp4/190319104618910544.mp4");
@@ -66,40 +66,9 @@ public class VideoActivity extends BaseActivity {
         rvPage2.setLayoutManager(layoutManager);
         rvPage2.setAdapter(videoAdapter);
         addListener();
-//        getPlay_auth();
-        getPlay_info();
     }
 
-    private void getPlay_auth(){
-        RetrofitUtil.getInstance().apiService()
-                .getPlay_auth(videoId)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result<VideoPlayAuthBean>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Result<VideoPlayAuthBean> result) {
-                        if(isDataInfoSucceed(result)) {
-                            getPlay_info();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    private void getPlay_info(){
+    private void getPlay_info(String videoId){
         RetrofitUtil.getInstance().apiService()
                 .getPlay_info(null,videoId)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -113,9 +82,11 @@ public class VideoActivity extends BaseActivity {
                     @Override
                     public void onNext(Result<VideoPlayInfoBean> result) {
                         if(isDataInfoSucceed(result)) {
-                            urlList.add(result.getData().getPlayInfoList().get(0).getPlayURL());
-                            videoAdapter.setNewData(urlList);
-                            videoAdapter.notifyDataSetChanged();
+                            for(int i =0;i<5;i++){
+                                urlList.add(result.getData().getPlayInfoList().get(0).getPlayURL());
+                                videoAdapter.setNewData(urlList);
+                                videoAdapter.notifyDataSetChanged();
+                            }
                         }
                     }
 
@@ -167,6 +138,38 @@ public class VideoActivity extends BaseActivity {
             }
         });
     }
+
+    private void getQueryByPublisher() {
+        RetrofitUtil.getInstance().apiService()
+                .getQueryByPublisherOwn(0, 3)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<QueryPopularBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<QueryPopularBean> result) {
+                        if (result.getCode() == 0) {
+//                            for(int i=0;i<result.getData().size();i++){
+                            String[] strArr = result.getData().get(0).getMedia().split(",");
+                            getPlay_info(strArr[1]);
+//                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
     @Override
     public void onPause() {
         super.onPause();

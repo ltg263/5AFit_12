@@ -31,7 +31,7 @@ public class HomeThreeSqAdapter extends BaseQuickAdapter<QueryPopularBean, BaseV
         ViewGroup.LayoutParams layoutParams = helper.itemView.getLayoutParams();
         layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
         String[] strArr = item.getMedia().split(",");
-        GlideImageUtils.setGlideImage(mContext,strArr[0],helper.getView(R.id.iv_icon));
+        GlideImgLoader.loadImageAndDefault(mContext,strArr[0],helper.getView(R.id.iv_icon));
 
         helper.setText(R.id.tv_title,item.getSimpleContent()).setText(R.id.tv_name,item.getUser().getNickName())
         .setText(R.id.tv_num,item.getLikeCount()+"");

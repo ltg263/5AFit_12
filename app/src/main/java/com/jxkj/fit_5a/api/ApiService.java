@@ -391,9 +391,11 @@ public interface ApiService {
 
     /**
      *上传视频文件
+     * @Query("fileName") String fileName, @Query("title") String title, @Query("coverUrl") String coverUrl
      */
+    @Multipart
     @POST(ConstValues.PORT_5 + "api/v1/video/upload_video")
-    Observable<Result> getUpload_Video(@Query("file") File file, @Query("fileName") String fileName, @Query("title") String title, @Query("coverUrl") String coverUrl);
+    Observable<Result> getUpload_Video(@Part MultipartBody.Part file, @PartMap Map<String, RequestBody> map);
 
     /**
      * 账号绑定 未完善

@@ -2,6 +2,12 @@ package com.jxkj.fit_5a.conpoment.utils;
 
 import android.content.Context;
 
+import com.alibaba.sdk.android.oss.common.OSSLog;
+import com.alibaba.sdk.android.vod.upload.ResumableVODUploadCallback;
+import com.alibaba.sdk.android.vod.upload.VODUploadCallback;
+import com.alibaba.sdk.android.vod.upload.VODUploadClientImpl;
+import com.alibaba.sdk.android.vod.upload.model.UploadFileInfo;
+import com.alibaba.sdk.android.vod.upload.model.VodInfo;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
@@ -862,8 +868,8 @@ public class HttpRequestUtils {
                         if(result.getCode()==0) {
                             OssInfoBean data = result.getData();
                             SharedUtils.singleton().put(ConstValues.endpoint,data.getEndpoint());
-                            SharedUtils.singleton().put(ConstValues.bucketName,data.getBucket());
                             SharedUtils.singleton().put(ConstValues.host,data.getHost());
+                            SharedUtils.singleton().put(ConstValues.bucketName,data.getBucket());
                             SharedUtils.singleton().put(ConstValues.dir,data.getDirUnits().get(type).getDir());
                             mResultInterface.succeed(1);
                         }
@@ -913,9 +919,35 @@ public class HttpRequestUtils {
         void succeed(VideoInfoBean result);
 //        void failure();
     }
-    public static void getUpload_Video(File file,String fileName,String title,String coverUrl){
+    /**
+     * 创建请求体
+     *
+     * @param value
+     * @return
+     */
+    public static  RequestBody toRequestBody(String value) {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), value);
+        return requestBody;
+    }
+    public static void getUpload_Video(String filePath,String fileName,String title,String coverUrl){
+
+        File file = new File(filePath);
+        //String fileName, @Query("title") String title, @Query("coverUrl") String coverUrl
+        Map<String, RequestBody> map = new HashMap<>();
+        map.put("fileName", toRequestBody(fileName));
+        map.put("title", toRequestBody(title));
+        map.put("coverUrl", toRequestBody(coverUrl));//头像：3，申诉 ：2 ，收款码：1
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        // MultipartBody.Part  和后端约定好Key，这里的name是用file
+        MultipartBody.Part body = null;
+        try {
+            body = MultipartBody.Part.createFormData("file",  URLEncoder.encode(file.getName(), "UTF-8"), requestFile);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         RetrofitUtil.getInstance().apiService()
-                .getUpload_Video(file,fileName,title,coverUrl)
+                .getUpload_Video(body,map)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {
@@ -959,5 +991,80 @@ public class HttpRequestUtils {
                 mResultInterface.succeed(progress);
             }
         });
+    }
+
+    public static void initAcc(Context mContext,String filePath,String uploadAuth, String uploadAddress,String coverUrl) {
+        VODUploadClientImpl uploader = new VODUploadClientImpl(mContext);
+        VODUploadCallback callback = new VODUploadCallback() {
+
+            @Override
+            public void onUploadSucceed(UploadFileInfo info) {
+                super.onUploadSucceed(info);
+                System.out.println("onsucceed ------------------上传完成回调" + info.getFilePath());
+            }
+
+            @Override
+            public void onUploadFailed(UploadFileInfo info, String code, String message) {
+                super.onUploadFailed(info, code, message);
+                System.out.println("onfailed ------------------ 上传失败回调 " + info.getFilePath() + " " + code + " " + message);
+            }
+
+            @Override
+            public void onUploadProgress(UploadFileInfo info, long uploadedSize, long totalSize) {
+                super.onUploadProgress(info, uploadedSize, totalSize);
+                System.out.println("onProgress ------------------上传进度回调 " + info.getFilePath() + " " + uploadedSize + " " + totalSize);
+            }
+
+            @Override
+            public void onUploadTokenExpired() {
+                super.onUploadTokenExpired();
+                System.out.println("onExpired ------------- token过期回调");
+                //重新刷新上传凭证：RefreshUploadVideo
+//                uploadAuth = "此处需要设置重新刷新凭证之后的值";
+//                uploader.resumeWithAuth(uploadAuth);
+            }
+
+            @Override
+            public void onUploadRetry(String code, String message) {
+                super.onUploadRetry(code, message);
+                System.out.println("onUploadRetry ------------- 上传开始重试回调");
+            }
+
+            @Override
+            public void onUploadRetryResume() {
+                super.onUploadRetryResume();
+                System.out.println("onUploadRetryResume ------------- 上传结束重试，继续上传回调");
+            }
+
+            /**
+             *
+             * @param uploadFileInfo
+             */
+            @Override
+            public void onUploadStarted(UploadFileInfo uploadFileInfo) {
+                super.onUploadStarted(uploadFileInfo);
+                System.out.println("onUploadStarted ------------- 开始上传回调");
+                uploader.setUploadAuthAndAddress(uploadFileInfo, uploadAuth, uploadAddress);
+
+            }
+        };
+        //上传初始化
+        uploader.init(callback);
+
+        File file = new File(filePath);
+        System.out.println(file+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+        VodInfo vodInfo = new VodInfo();
+        vodInfo.setTitle("动态视频_Android");
+        vodInfo.setDesc("描述信息");
+        vodInfo.setCateId (0);
+        vodInfo.setCoverUrl(coverUrl);
+        vodInfo.setIsProcess(true);
+//        String endpoint = "http://"+SharedUtils.singleton().get(ConstValues.endpoint,"");
+//        String bucket = SharedUtils.singleton().get(ConstValues.bucketName,"");
+//        uploader.addFile(filePath,endpoint,bucket,"123",vodInfo);
+        uploader.addFile(filePath,vodInfo);
+        uploader.start();
+
     }
 }

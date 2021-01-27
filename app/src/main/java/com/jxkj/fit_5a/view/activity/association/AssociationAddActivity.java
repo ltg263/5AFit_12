@@ -88,6 +88,7 @@ public class AssociationAddActivity extends BaseActivity {
     private SpPhotoAdapter mSpPhotoAdapter;
     int shareType = 1;
     int type = -1;//2:图片;3:视频)
+
     @Override
     protected int getContentView() {
         return R.layout.activity_community_add;
@@ -117,13 +118,13 @@ public class AssociationAddActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (mSpPhotoAdapter.getData().get(position).getPath().equals("-1")) {
-                    if(mSpPhotoAdapter.getData().size()==1 || type==-1){
+                    if (mSpPhotoAdapter.getData().size() == 1 || type == -1) {
                         initPopupWindow();
                         return;
                     }
-                    if(type==2){
+                    if (type == 2) {
                         MatisseUtils.gotoSelectPhoto(AssociationAddActivity.this, 10 - mSpPhotoAdapter.getData().size(), false);
-                    }else {
+                    } else {
                         MatisseUtils.gotoSelectVideo(AssociationAddActivity.this);
                     }
                 }
@@ -143,8 +144,10 @@ public class AssociationAddActivity extends BaseActivity {
             }
         });
     }
+
     String position = null;
     String location = null;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -152,18 +155,19 @@ public class AssociationAddActivity extends BaseActivity {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    if(type==2){
+                    Log.w("selectList","selectList:"+selectList.size());
+                    if (type == 2) {
                         setIMaaa(selectList);
                     }
-                    if(type==3){
+                    if (type == 3) {
                         setVideo(selectList);
                     }
                     break;
                 case 2:
-                    double latitude=data.getDoubleExtra("latitude",0.0);
-                    double longitude=data.getDoubleExtra("longitude",0.0);
-                    location = "["+longitude+","+latitude+"]";
-                    position=data.getStringExtra("address");
+                    double latitude = data.getDoubleExtra("latitude", 0.0);
+                    double longitude = data.getDoubleExtra("longitude", 0.0);
+                    location = "[" + longitude + "," + latitude + "]";
+                    position = data.getStringExtra("address");
                     mTvPosition.setText(position);
 //                    mTvPosition.setText("详细地址："+address+"\n经度："+longitude+"\n纬度："+latitude);
 //                    Success/storage/emulated/0/DCIM/Camera/20210111_100058.jpg
@@ -172,42 +176,36 @@ public class AssociationAddActivity extends BaseActivity {
         }
     }
 
-    private void setVideo(List<LocalMedia> selectList){
+    private void setVideo(List<LocalMedia> selectList) {
         String path = PictureUtil.getVideoThumb(selectList.get(0).getPath());
-        if(StringUtil.isNotBlank(path)){
-            HttpRequestUtils.postOSSFile(1,new HttpRequestUtils.OSSClientInterface() {
+        if (StringUtil.isNotBlank(path)) {
+            HttpRequestUtils.postOSSFile(1, new HttpRequestUtils.OSSClientInterface() {
                 @Override
                 public void succeed(double pos) {
-                    if(pos==0){
+                    if (pos == 0) {
                         ToastUtils.showShort("获取oss信息错误");
                         return;
                     }
                     String fileImgName = StringUtil.stringToMD5(path);
-                    HttpRequestUtils.initOSSClient(AssociationAddActivity.this, fileImgName+".jpg",path, new HttpRequestUtils.OSSClientInterface() {
+                    HttpRequestUtils.initOSSClient(AssociationAddActivity.this, fileImgName + ".jpg", path, new HttpRequestUtils.OSSClientInterface() {
                         @Override
                         public void succeed(double pos) {
-                            if(pos==101){
-                                String imgpath= SharedUtils.singleton().get(ConstValues.host,"")
-                                        +"/"+SharedUtils.singleton().get(ConstValues.dir,"")+"/"+fileImgName+".jpg";
-                                Log.w("listUrls","imgpath:"+imgpath);
+                            if (pos == 101) {
+                                String coverUrl = SharedUtils.singleton().get(ConstValues.host, "")
+                                        + "/" + SharedUtils.singleton().get(ConstValues.dir, "") + "/" + fileImgName + ".jpg";
+                                Log.w("listUrls", "coverUrl:" + coverUrl);
                                 String fileVideoName = StringUtil.stringToMD5(selectList.get(0).getPath());
-                                HttpRequestUtils.initOSSClient(AssociationAddActivity.this, fileVideoName+".mp4",selectList.get(0).getPath(), new HttpRequestUtils.OSSClientInterface() {
+                                HttpRequestUtils.getUploadVideo(fileVideoName + ".mp4", "动态视频_Android", coverUrl, new HttpRequestUtils.VideoInterface() {
                                     @Override
-                                    public void succeed(double pos) {
-                                        if(pos==101){
-                                            String videopath= SharedUtils.singleton().get(ConstValues.host,"")
-                                                    +"/"+SharedUtils.singleton().get(ConstValues.dir,"")+"/"+fileVideoName+".mp4";
-                                            Log.w("listUrls","videopath:"+videopath);
-                                            HttpRequestUtils.getUploadVideo(videopath, fileVideoName, imgpath, new HttpRequestUtils.VideoInterface() {
-                                                @Override
-                                                public void succeed(VideoInfoBean result) {
-                                                    listUrls.add(imgpath);
-                                                    mRvListZp.setVisibility(View.GONE);
-                                                    rl_v.setVisibility(View.VISIBLE);
-                                                    media = imgpath+","+result.getVideoId();
-                                                    GlideImageUtils.setGlideImage(AssociationAddActivity.this,imgpath,iv_v);
-                                                }
-                                            });
+                                    public void succeed(VideoInfoBean result) {
+                                        if(result.getStatusCode()==200){
+                                            media = coverUrl + "," + result.getVideoId();
+                                            mRvListZp.setVisibility(View.GONE);
+                                            rl_v.setVisibility(View.VISIBLE);
+                                            GlideImageUtils.setGlideImage(AssociationAddActivity.this, coverUrl, iv_v);
+                                            HttpRequestUtils.initAcc(AssociationAddActivity.this,
+                                                    selectList.get(0).getPath(),result.getUploadAuth(),result.getUploadAddress(),coverUrl);
+
                                         }
                                     }
                                 });
@@ -219,50 +217,51 @@ public class AssociationAddActivity extends BaseActivity {
         }
     }
 
-    List <String> listUrls= new ArrayList<>();
+    List<String> listUrls = new ArrayList<>();
 
     private void setIMaaa(List<LocalMedia> selectList) {
-        HttpRequestUtils.postOSSFile(1,new HttpRequestUtils.OSSClientInterface() {
+        HttpRequestUtils.postOSSFile(1, new HttpRequestUtils.OSSClientInterface() {
             @Override
             public void succeed(double pos) {
-                if(pos==0){
+                if (pos == 0) {
                     ToastUtils.showShort("获取oss信息错误");
                     return;
                 }
-                if(selectList.size()>0){
-                    postImg(selectList,0);
+                if (selectList.size() > 0) {
+                    postImg(selectList, 0);
                 }
             }
         });
     }
 
     private void postImg(List<LocalMedia> selectList, int i) {
-        String path = PictureUtil.compressBmpFileToTargetSize(new File(selectList.get(i).getPath()),1024*1024).getPath();
+        String path = PictureUtil.compressBmpFileToTargetSize(new File(selectList.get(i).getPath()), 1024 * 1024).getPath();
 //        String path = selectList.get(i).getPath();
-        String fileName = StringUtil.stringToMD5(path)+".jpg";
+        String fileName = StringUtil.stringToMD5(path) + ".jpg";
         i++;
         int finalI = i;
-        HttpRequestUtils.initOSSClient(AssociationAddActivity.this, fileName,path, new HttpRequestUtils.OSSClientInterface() {
+        HttpRequestUtils.initOSSClient(AssociationAddActivity.this, fileName, path, new HttpRequestUtils.OSSClientInterface() {
             @Override
             public void succeed(double pos) {
-                if(pos==101){
-                    String urlpath= SharedUtils.singleton().get(ConstValues.host,"")
-                            +"/"+SharedUtils.singleton().get(ConstValues.dir,"")+"/"+fileName;
+                if (pos == 101) {
+                    String urlpath = SharedUtils.singleton().get(ConstValues.host, "")
+                            + "/" + SharedUtils.singleton().get(ConstValues.dir, "") + "/" + fileName;
                     listUrls.add(urlpath);
-                    mSpPhotoAdapter.addData(mSpPhotoAdapter.getData().size() - 1, selectList.get(finalI-1));
+                    mSpPhotoAdapter.addData(mSpPhotoAdapter.getData().size() - 1, selectList.get(finalI - 1));
                     if (mSpPhotoAdapter.getData().size() > 6 && mSpPhotoAdapter.getData().contains("-1")) {
                         mSpPhotoAdapter.remove(mSpPhotoAdapter.getData().size() - 1);
                     }
                     mSpPhotoAdapter.notifyDataSetChanged();
-                    if(selectList.size()>finalI){
+                    if (selectList.size() > finalI) {
                         postImg(selectList, finalI);
-                    }else{
-                        Log.w("listUrls","listUrls:"+listUrls.toString());
+                    } else {
+                        Log.w("listUrls", "listUrls:" + listUrls.toString());
                     }
                 }
             }
         });
     }
+
     PopupWindowTy window;
 
     private void initPopupWindow() {
@@ -270,16 +269,16 @@ public class AssociationAddActivity extends BaseActivity {
         list.add("相册");
         list.add("视频");
         if (window == null) {
-            window = new PopupWindowTy(this, list,new PopupWindowTy.GiveDialogInterface() {
+            window = new PopupWindowTy(this, list, new PopupWindowTy.GiveDialogInterface() {
                 @Override
                 public void btnConfirm(int position) {
                     type = 3;
-                    if(position==0){
+                    if (position == 0) {
                         type = 2;
                     }
-                    if(type==2){
+                    if (type == 2) {
                         MatisseUtils.gotoSelectPhoto(AssociationAddActivity.this, 10 - mSpPhotoAdapter.getData().size(), false);
-                    }else {
+                    } else {
                         MatisseUtils.gotoSelectVideo(AssociationAddActivity.this);
                     }
                 }
@@ -288,15 +287,21 @@ public class AssociationAddActivity extends BaseActivity {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         }
 
-        window.showAtLocation(mTvPosition, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置
+        window.showAtLocation(mTvPosition, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置10464.66
     }
 
     private List<String> mFeedTypeList = new ArrayList<>();
 
-    @OnClick({R.id.ll_back, R.id.iv_close,R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_gk,R.id.tv_topics,R.id.tv_position})
+    @OnClick({R.id.ll_back, R.id.iv_close, R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_gk, R.id.tv_topics, R.id.tv_position})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
+                HttpRequestUtils.postOSSFile(1, new HttpRequestUtils.OSSClientInterface() {
+                    @Override
+                    public void succeed(double pos) {
+
+                    }
+                });
                 break;
             case R.id.iv_close:
                 rl_v.setVisibility(View.GONE);
@@ -307,10 +312,10 @@ public class AssociationAddActivity extends BaseActivity {
                 postPublishMoment();
                 break;
             case R.id.tv_topics:
-                startActivityForResult(new Intent(AssociationAddActivity.this, TopicAllActivity.class),2);
+                startActivityForResult(new Intent(AssociationAddActivity.this, TopicAllActivity.class), 2);
                 break;
             case R.id.tv_position:
-                startActivityForResult(new Intent(AssociationAddActivity.this, LocationSelectActivity.class),2);
+                startActivityForResult(new Intent(AssociationAddActivity.this, LocationSelectActivity.class), 2);
                 break;
             case R.id.tv_gk:
                 mFeedTypeList.clear();
@@ -322,13 +327,13 @@ public class AssociationAddActivity extends BaseActivity {
                     @Override
                     public void setIndex(int pos) {
                         mTvGk.setText(mFeedTypeList.get(pos));
-                        if(pos ==0){
+                        if (pos == 0) {
                             shareType = 1;
-                        }else if(pos ==1){
+                        } else if (pos == 1) {
                             shareType = 3;
-                        }else if(pos ==2){
+                        } else if (pos == 2) {
                             shareType = 2;
-                        }else if(pos ==3){
+                        } else if (pos == 3) {
                             shareType = 2;
                         }
                     }
@@ -337,7 +342,7 @@ public class AssociationAddActivity extends BaseActivity {
         }
     }
 
-    private void getTopicAll(){
+    private void getTopicAll() {
         RetrofitUtil.getInstance().apiService()
                 .getTopicAll()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -365,21 +370,23 @@ public class AssociationAddActivity extends BaseActivity {
                 });
 
     }
+
     String media;
+
     private void postPublishMoment() {
         String content = mEtContent.getText().toString();
         mTvPosition.getText().toString();
         if (StringUtil.isBlank(content)) {
             ToastUtils.showShort("内容不能为空");
         }
-        if(type==2){
-            media = listUrls.toString().replace("[","").replace("]","");
+        if (type == 2) {
+            media = listUrls.toString().replace("[", "").replace("]", "");
         }
         show();
         RetrofitUtil.getInstance().apiService()
-                .postPublishMoment(content,type+"",shareType+"",
+                .postPublishMoment(content, type + "", shareType + "",
                         media,
-                        position,location,null)
+                        position, location, null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {
@@ -393,11 +400,11 @@ public class AssociationAddActivity extends BaseActivity {
                         if (isDataInfoSucceed(result)) {
                             DialogUtils.showDialogCgCircle(AssociationAddActivity.this, "发布成功", 1,
                                     new DialogUtils.DialogLyInterface() {
-                                @Override
-                                public void btnConfirm() {
-                                    AssociationAddActivity.this.finish();
-                                }
-                            });
+                                        @Override
+                                        public void btnConfirm() {
+                                            AssociationAddActivity.this.finish();
+                                        }
+                                    });
                         }
                     }
 

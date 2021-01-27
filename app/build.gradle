@@ -262,4 +262,5 @@ dependencies {
 //    implementation 'com.changyow:consolelib:1.1'
 
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
+    implementation 'com.aliyun.video.android:upload:+'
 }
