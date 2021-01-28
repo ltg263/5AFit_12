@@ -15,6 +15,6 @@ public interface BleUtil {
 
     interface CallBack{
         void StateChange(int state, int newState);
-        void ReadValue(String value);
+        void ReadValue(byte[] value);
     }
 }

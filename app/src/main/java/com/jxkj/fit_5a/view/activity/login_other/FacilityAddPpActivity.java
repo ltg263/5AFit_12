@@ -24,6 +24,7 @@ import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
+import com.jxkj.fit_5a.lanya.MainActivity2;
 import com.jxkj.fit_5a.view.adapter.FacilityAddAdapter;
 
 import java.util.List;
@@ -197,7 +198,8 @@ public class FacilityAddPpActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.ll_connect:
-                goConnect();
+                startActivity(new Intent(this,MainActivity2.class));
+//                goConnect();
                 break;
         }
     }

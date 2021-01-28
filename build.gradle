@@ -2,8 +2,16 @@
 
 buildscript {
     repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         jcenter()
+        maven { url "https://jitpack.io" }
+        maven { url "https://maven.google.com" }
+        maven { url "https://github.com/ChangYow/CYConsoleLib/raw/master" }
+        maven { url "https://maven.aliyun.com/nexus/content/repositories/releases" }
+        maven() {
+            url 'https://maven.aliyun.com/repository/releases'
+        }
 
     }
     dependencies {
@@ -16,6 +24,7 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         flatDir {
             dirs 'libs'
         }
@@ -24,6 +33,10 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven { url "https://maven.google.com" }
         maven { url "https://github.com/ChangYow/CYConsoleLib/raw/master" }
+        maven { url "https://maven.aliyun.com/nexus/content/repositories/releases" }
+        maven() {
+            url 'https://maven.aliyun.com/repository/releases'
+        }
     }
 }
 

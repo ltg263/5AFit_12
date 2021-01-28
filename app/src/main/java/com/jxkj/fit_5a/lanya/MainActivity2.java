@@ -5,8 +5,8 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -39,10 +39,13 @@ public class MainActivity2 extends AppCompatActivity {
             public void onClick(View view) {
                 if (flushText.getText().toString().equals("刷新中")){
                     ShowToast("正在刷新，请勿重复操作");
-                }else {
+                } else {
                     ble4Util.startScan(new BluetoothAdapter.LeScanCallback() {
                         @Override
                         public void onLeScan(BluetoothDevice bluetoothDevice, int i, byte[] bytes) {
+                            Log.w("bluetoothDevicetoStr:",""+bluetoothDevice.toString());
+                            Log.w("bluetoothDevicegetName:",""+bluetoothDevice.getName());
+                            Log.w("bluetoothDevicegetAdd:",""+bluetoothDevice.getAddress());
                             bleadapter.addDevice(bluetoothDevice);
                         }
                     });
@@ -57,6 +60,8 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ble4Util.stopScan();
+//                ble4Util.setServiceUUid("49535343-5d82-6099-9348-7aac4d5fbc51");
+
                 ble4Util.connect(bleadapter.getDevice(i).getAddress(), new BleUtil.CallBack() {
                     @Override
                     public void StateChange(int state, int newState) {
@@ -80,7 +85,7 @@ public class MainActivity2 extends AppCompatActivity {
                     }
 
                     @Override
-                    public void ReadValue(String value) {
+                    public void ReadValue(byte[] value) {
                         if ( LinkActivity2.linkHandler != null){
                             Message message = new Message();
                             message.what = 101;
@@ -97,8 +102,9 @@ public class MainActivity2 extends AppCompatActivity {
         ble4Util.init();
     }
 
+
     private void ShowToast(String msg){
-        Toast.makeText(MainActivity2.this,msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity2.this,msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override

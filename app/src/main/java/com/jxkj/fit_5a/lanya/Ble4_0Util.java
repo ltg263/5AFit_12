@@ -2,6 +2,7 @@ package com.jxkj.fit_5a.lanya;
 
 import android.Manifest;
 import android.app.Activity;
+import android.bluetooth.BluetoothA2dp;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -9,7 +10,9 @@ import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
+import android.bluetooth.BluetoothHeadset;
 import android.bluetooth.BluetoothManager;
+import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -117,7 +120,6 @@ public class Ble4_0Util implements BleUtil {
             return  false;
         }
         //连接蓝牙
-
         mBluetoothGatt = curConnectDev.connectGatt(context, false,new BluetoothGattCallback() {
             @Override
             public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
@@ -157,8 +159,7 @@ public class Ble4_0Util implements BleUtil {
                     gattServiceMain = gattService;
                     List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
                     for (final BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
-                        if (mDevReadCharacteristic == null &&  gattCharacteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_NOTIFY
-                        && gattCharacteristic.getUuid().toString().indexOf(readUUID) >= 0){
+                        if (mDevReadCharacteristic == null && gattCharacteristic.getUuid().toString().indexOf(readUUID) >= 0){
                             mDevReadCharacteristic = gattCharacteristic;
                             new Thread(new Runnable() {
                                 @Override
@@ -179,16 +180,15 @@ public class Ble4_0Util implements BleUtil {
                                 if (descriptor.getUuid().toString().indexOf(clientCharConfig) >= 0){
                                     descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                                     mBluetoothGatt.writeDescriptor(descriptor);
-                                    Log.w("TAG","++++++++");
                                     break lp;
                                 }
                             }
                         }
                         if (mDevWriteCharacteristic == null && (gattCharacteristic.getProperties() ==  BluetoothGattCharacteristic.PROPERTY_WRITE
                         || gattCharacteristic.getProperties() ==  BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE
-                                || gattCharacteristic.getProperties() ==  READ_NOTIFY_CODE)
+                                || gattCharacteristic.getProperties() ==  12)
                                 && gattCharacteristic.getUuid().toString().indexOf(readUUID) >= 0){
-                            Log.w("TAG","---------");
+                            Log.w("---》》》","++++++++");
                             mDevWriteCharacteristic = gattCharacteristic;
                         }
                     }
@@ -203,15 +203,21 @@ public class Ble4_0Util implements BleUtil {
             @Override
             public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
                 super.onCharacteristicWrite(gatt, characteristic, status);
-                Log.w("TAG","-->>");
             }
 
             @Override
-                public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+            public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
                 super.onCharacteristicChanged(gatt, characteristic);
-                Log.w("TAG","-->>");
                 // 处理解释反馈指令
-                callback.ReadValue(new String(characteristic.getValue()));
+//                try {
+//                    Log.w("---》》》",":::::1"+new String(characteristic.getValue(),"GBK"));
+//                    Log.w("---》》》",":::::2"+new String(characteristic.getValue(),"UTF-8"));
+//                    Log.w("---》》》",":::::3"+new String(characteristic.getValue(),"ISO8859-1"));
+//                } catch (UnsupportedEncodingException e) {
+//                    Log.w("---》》》",":::::4"+e.toString());
+//                    e.printStackTrace();
+//                }
+                callback.ReadValue(characteristic.getValue());
             }
 
 
@@ -266,7 +272,7 @@ public class Ble4_0Util implements BleUtil {
         if (mDevWriteCharacteristic == null){
              getService();
         }
-        return  sendStrToDev(str);
+        return sendStrToDev(str);
     }
 
     public boolean send(byte[] byteCmd) {
@@ -285,11 +291,9 @@ public class Ble4_0Util implements BleUtil {
         }
         if (gattServiceMain == null) return false;
 
-
         //获取写的特征值
         List<BluetoothGattCharacteristic> characteristicList = gattServiceMain.getCharacteristics();
         for (BluetoothGattCharacteristic characteristic : characteristicList){
-
             if ( (characteristic.getProperties() ==  BluetoothGattCharacteristic.PROPERTY_SIGNED_WRITE
                     || characteristic.getProperties() ==  BluetoothGattCharacteristic.PROPERTY_WRITE
                     || characteristic.getProperties() ==  BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) &&
@@ -348,7 +352,7 @@ public class Ble4_0Util implements BleUtil {
     }
 
     /*
-        校验蓝牙权限
+    校验蓝牙权限
    */
     private void checkBluetoothPermission() {
         if (Build.VERSION.SDK_INT  < 23) {
@@ -360,6 +364,45 @@ public class Ble4_0Util implements BleUtil {
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},PERMISSION_REQUEST_CODE );
         }
+
+    }
+    public static void OpenA2dp() {
+
+        BluetoothProfile.ServiceListener bs = new BluetoothProfile.ServiceListener() {
+            @Override
+            public void onServiceConnected(int profile, BluetoothProfile proxy) {
+                Log.e("Kavenir", "onServiceConnected");
+                List<BluetoothDevice> bluetoothDevices = proxy.getConnectedDevices();
+                if (bluetoothDevices.size() > 0) {
+                    Log.e("Kavenir", "onServiceConnected==" + bluetoothDevices.get(0).getName());
+                    if (profile == BluetoothProfile.HEADSET) {
+                        BluetoothHeadset bh = (BluetoothHeadset) proxy;
+                        if (bh.getConnectionState(bluetoothDevices.get(0)) == BluetoothProfile.STATE_CONNECTED) {
+                            try {
+                                bh.getClass().getMethod("connect", BluetoothDevice.class).invoke(bh, bluetoothDevices.get(0));
+                                Log.e("Kavenir", "onServiceConnected==" + "headset通道");
+                            } catch (Exception e) {
+                            }
+                        }
+                    } else if (profile == BluetoothProfile.A2DP) {
+                        BluetoothA2dp a2dp = (BluetoothA2dp) proxy;
+                        if (a2dp.getConnectionState(bluetoothDevices.get(0)) == BluetoothProfile.STATE_CONNECTED) {
+                            try {
+                                a2dp.getClass().getMethod("connect", BluetoothDevice.class).invoke(a2dp, bluetoothDevices.get(0));
+                                Log.e("Kavenir", "onServiceConnected==" + "a2dp通道");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onServiceDisconnected(int profile) {
+                Log.e("Kavenir", "未连接");
+            }
+        };
 
     }
 }
