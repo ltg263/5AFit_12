@@ -13,6 +13,7 @@ import com.jxkj.fit_5a.entity.QueryPopularBean;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -53,23 +54,41 @@ public class CircleDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, Bas
 
         if(StringUtil.isNotBlank(item.getMedia())){
             helper.setGone(R.id.rv_img_list,true);
-            String[] strArr = item.getMedia().split(",");
+            try {
+                //{
+                //        "imageUrl":"http://5a-fit-oss.nbqichen.com/video/cover/4450DBEBB7FD72852C8BAE1C5C8DBB99.jpg",
+                //        "type":"3",
+                //        "vedioId":"2900752ca76047ed8e3f195f5d8d7325",
+                //        "vedioDuration":1.8016666173934937
+                //    }
+                JSONArray jsonArray = new JSONArray(item.getMedia());
 
-            if(strArr.length==1){
-                helper.setGone(R.id.siv_1,false).setGone(R.id.siv_2,false)
-                        .setGone(R.id.siv_3,false).setGone(R.id.siv_4,true);
-                GlideImageUtils.setGlideImage(mContext,strArr[0],helper.getView(R.id.siv_4));
-            }else if(strArr.length==2){
-                helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
-                        .setVisible(R.id.siv_3,false).setGone(R.id.siv_4,false);
-                GlideImageUtils.setGlideImage(mContext,strArr[0],helper.getView(R.id.siv_1));
-                GlideImageUtils.setGlideImage(mContext,strArr[1],helper.getView(R.id.siv_2));
-            }else if(strArr.length>2){
-                helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
-                        .setVisible(R.id.siv_3,true).setGone(R.id.siv_4,false);
-                GlideImageUtils.setGlideImage(mContext,strArr[0],helper.getView(R.id.siv_1));
-                GlideImageUtils.setGlideImage(mContext,strArr[1],helper.getView(R.id.siv_2));
-                GlideImageUtils.setGlideImage(mContext,strArr[2],helper.getView(R.id.siv_3));
+                if(jsonArray.length()==1){
+                    String imageUrl = jsonArray.getJSONObject(0).getString("imageUrl");
+                    helper.setGone(R.id.siv_1,false).setGone(R.id.siv_2,false)
+                            .setGone(R.id.siv_3,false).setGone(R.id.siv_4,true);
+                    GlideImageUtils.setGlideImage(mContext,imageUrl,helper.getView(R.id.siv_4));
+                }else if(jsonArray.length()==2){
+                    String imageUrl1 = jsonArray.getJSONObject(0).getString("imageUrl");
+                    String imageUrl2 = jsonArray.getJSONObject(1).getString("imageUrl");
+                    helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
+                            .setVisible(R.id.siv_3,false).setGone(R.id.siv_4,false);
+                    GlideImageUtils.setGlideImage(mContext,imageUrl1,helper.getView(R.id.siv_1));
+                    GlideImageUtils.setGlideImage(mContext,imageUrl2,helper.getView(R.id.siv_2));
+                }else if(jsonArray.length()>2){
+                    String imageUrl1 = jsonArray.getJSONObject(0).getString("imageUrl");
+                    String imageUrl2 = jsonArray.getJSONObject(1).getString("imageUrl");
+                    String imageUrl3 = jsonArray.getJSONObject(2).getString("imageUrl");
+                    helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
+                            .setVisible(R.id.siv_3,true).setGone(R.id.siv_4,false);
+                    GlideImageUtils.setGlideImage(mContext,imageUrl1,helper.getView(R.id.siv_1));
+                    GlideImageUtils.setGlideImage(mContext,imageUrl2,helper.getView(R.id.siv_2));
+                    GlideImageUtils.setGlideImage(mContext,imageUrl3,helper.getView(R.id.siv_3));
+                }
+                JSONObject obj = jsonArray.getJSONObject(1);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
         }

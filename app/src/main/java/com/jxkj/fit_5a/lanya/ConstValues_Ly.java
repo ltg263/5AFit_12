@@ -1,7 +1,10 @@
 package com.jxkj.fit_5a.lanya;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,16 +17,30 @@ public class ConstValues_Ly {
     public static byte START = (byte) 0xF0;//Start
 
     //Message
-    public static byte MESSAGE_A0 = (byte) 0xA0;
-    public static byte MESSAGE_A1 = (byte) 0xA1;
-    public static byte MESSAGE_A2 = (byte) 0xA2;
-    public static byte MESSAGE_A3 = (byte) 0xA3;
-    public static byte MESSAGE_A4 = (byte) 0xA4;
-    public static byte MESSAGE_A5 = (byte) 0xA5;
+    public static byte MESSAGE_A0 = (byte) 0xA0;//Host Connect Check 连接检查
+    public static byte MESSAGE_A1 = (byte) 0xA1;//Host Ask Max Load 问最大负载
+    public static byte MESSAGE_A2 = (byte) 0xA2;//Host Ask Sport Data 问运动数据
+    public static byte MESSAGE_A3 = (byte) 0xA3;//Host Send Sport Mode 发送的运动模式
+    public static byte MESSAGE_A4 = (byte) 0xA4;//Host Send Sport Set Data 发送运动集数据
+    public static byte MESSAGE_A5 = (byte) 0xA5;//Host Send Key Command 发送关键命令
+    public static byte MESSAGE_A6 = (byte) 0xA6;//Host Send Ride Load 发送骑负载
+    public static byte MESSAGE_A8 = (byte) 0xA8;//Host Send Ride WATT 发送骑瓦特
 
     public static byte CLIENT_ID = 0x00;//Client ID
     public static byte METER_ID = 0x00;//Meter ID
 
+
+    /**
+     * [-16, -79, 56, 1, 33, -5]
+     * @return Checksum
+     */
+    public static byte getCHECKSUM(byte[] strData) {
+        byte Checksum = 0;
+        for(int i = 2;i<strData.length-1; i++ ){
+            Checksum+=strData[i];
+        }
+        return Checksum;
+    }
 
     /**
      * @param message
@@ -51,9 +68,8 @@ public class ConstValues_Ly {
     }
 
     public static byte[] getByteData(byte message, byte data) {
-        return new byte[]{START, message, CLIENT_ID, METER_ID, data, getCHECKSUM(message, data)};
+        return new byte[]{START, message, CLIENT_ID, METER_ID, (byte) (data+1), getCHECKSUM(message, (byte) (data+1))};
     }
-
 
     public static byte[] getByteData(byte message, byte[] data) {
         List<Byte> lists = new ArrayList<>();
@@ -65,7 +81,6 @@ public class ConstValues_Ly {
             lists.add(data[i]);
         }
         lists.add(getCHECKSUM(message, data));
-
         return listTobyte1(lists);
     }
 
@@ -85,13 +100,17 @@ public class ConstValues_Ly {
         }
         return bytes;
     }
-//              Time= 55
-//              Distance=156
-//              Calories=40
-//              Pulse=85
-//              Watt=120
-//              UNIT=KM
 
+    /**
+     *
+     * @param time 时间
+     * @param distance 距离
+     * @param calories 卡路里
+     * @param pulse 脉冲
+     * @param watt 脉冲
+     * @param unit 单位
+     * @return
+     */
     public static byte[] getA4Data(double time, double distance, double calories, double pulse, double watt, String unit){
 
         byte data2 = (byte) (time+1);
@@ -116,6 +135,41 @@ public class ConstValues_Ly {
         byte[] data = {data2,data3,data4,data5,data6,data7,data8,data9,data10,data11};
 
         return data;
+    }
+
+    /**
+     * 获取个十百小数点
+     * @param a
+     * @param b
+     * @return
+     */
+    public static String getTime(int a, int b){
+        if(b<10){
+            return a+":0"+b;
+        }
+        return a+":"+b;
+    }
+    /**
+     * 获取个十百小数点
+     * @param a
+     * @param b
+     * @return
+     */
+    public static double getBaiShiGeX(int a, int b){
+        return Double.valueOf(String.valueOf(a)+(b/10d));
+    }
+
+    /**
+     * 获取个十百千
+     * @param a
+     * @param b
+     * @return
+     */
+    public static int getQianBaiShiGe(int a, int b){
+        if(b<10){
+            return Integer.valueOf(a+"0"+b);
+        }
+        return Integer.valueOf(a+""+b);
     }
 
     /**

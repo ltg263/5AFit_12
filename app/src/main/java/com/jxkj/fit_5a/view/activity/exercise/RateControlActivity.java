@@ -18,6 +18,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.entity.TemplateBean;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
 import com.jxkj.fit_5a.view.adapter.FacilityManageAdapter;
@@ -144,7 +145,9 @@ public class RateControlActivity extends BaseActivity {
                 startActivity(new Intent(this, FacilityAddSbActivity.class));
                 break;
             case R.id.tv_ok:
-                startActivity(new Intent(this, RatePatternActivity.class));
+                if(PopupWindowLanYan.ble4Util.isConnect()){
+                    startActivity(new Intent(this, RatePatternActivity.class));
+                }
                 break;
             case R.id.rl_1:
                 listTime.clear();

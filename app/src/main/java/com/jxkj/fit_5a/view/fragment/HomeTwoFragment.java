@@ -13,6 +13,8 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.entity.RankListData;
 import com.jxkj.fit_5a.entity.RankStatsData;
 import com.jxkj.fit_5a.view.activity.home.RankListActivity;
@@ -42,6 +44,8 @@ public class HomeTwoFragment extends BaseFragment {
     TextView mTvTwoZhou;
     @BindView(R.id.tv_two_yue)
     TextView mTvTwoYue;
+    @BindView(R.id.tv_lianjie)
+    TextView tv_lianjie;
     @BindView(R.id.rv_two_list)
     RecyclerView mRvTwoList;
     private HomeTwoTopAdapter mHomeTwoTopAdapter;
@@ -90,6 +94,15 @@ public class HomeTwoFragment extends BaseFragment {
             }
         });
         getRankList(1);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tv_lianjie.setText("运动设备未连接");
+        if(StringUtil.isNotBlank(PopupWindowLanYan.BleName)){
+            tv_lianjie.setText(PopupWindowLanYan.BleName);
+        }
     }
 
     @Override

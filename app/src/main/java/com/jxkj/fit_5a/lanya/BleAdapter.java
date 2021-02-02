@@ -18,7 +18,7 @@ public class BleAdapter extends BaseAdapter {
     private ArrayList<BluetoothDevice> mLeDevices;
     private LayoutInflater mInflator;
     private Activity mContext;
-    private int								mSelected;		// 当前选中的item index
+    private int	mSelected;		// 当前选中的item index
     public static HashMap<String, Integer> RSISIMAp = new HashMap<String, Integer>();
     public static HashMap<String, BluetoothDevice> DevMap = new HashMap<String, BluetoothDevice>();
 

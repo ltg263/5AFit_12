@@ -178,6 +178,7 @@ public class TaskFinishActivity extends BaseActivity {
             case R.id.tv_go_ffhd:
                 break;
             case R.id.tv_go_xxyx:
+                finish();
                 break;
             case R.id.tv_xz:
                 String strXz = mTvXz.getText().toString();

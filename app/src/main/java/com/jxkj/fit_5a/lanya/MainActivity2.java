@@ -29,7 +29,6 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-
         ble4Util = new Ble4_0Util(this);
         progressBar = (ProgressBar)this.findViewById(R.id.progressBar);
         listView = (ListView)this.findViewById(R.id.listView1);
@@ -60,7 +59,6 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ble4Util.stopScan();
-//                ble4Util.setServiceUUid("49535343-5d82-6099-9348-7aac4d5fbc51");
 
                 ble4Util.connect(bleadapter.getDevice(i).getAddress(), new BleUtil.CallBack() {
                     @Override
@@ -75,7 +73,7 @@ public class MainActivity2 extends AppCompatActivity {
                         } else if(newState == BluetoothGatt.STATE_DISCONNECTING){
                             value = "断开连接中";
                         }
-                        if ( LinkActivity2.linkHandler != null && value != null){
+                        if (LinkActivity2.linkHandler != null && value != null){
                             //发送连接成功通知
                             Message message = new Message();
                             message.what = 99;

@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.lanya;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothA2dp;
 import android.bluetooth.BluetoothAdapter;
@@ -16,26 +17,36 @@ import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 
 
 public class Ble4_0Util implements BleUtil {
 
-    private String serviceUUid = "49535343-fe7d-4ae5-8fa9-9fafd205e455";		// 服务uuid
-    private String readUUID = "";			// 读数据uuid
-    private String writeUUID = "49535343-8841-43f4-a8d4-ecbe34729bb3";	// 写数据uuid
+    private String serviceUUid = "49535343-fe7d-4ae5-8fa9-9fafd205e455";        // 服务uuid
+    private String readUUID = "";            // 读数据uuid
+    private String writeUUID = "49535343-8841-43f4-a8d4-ecbe34729bb3";    // 写数据uuid
     private String clientCharConfig = "";
     private static final int PERMISSION_REQUEST_CODE = 0x114; // 系统权限管理页面的参数
-    public static  final  int READ_NOTIFY_CODE = 0x12;     //可读可通知
-    public static  final  int WRITE_READ_CODE = 0x0e;     //可写可读
-    public static  final  int WRITE_CODE = 0x04;     //可写可读
-    public static  final  int READ_CODE = 0x02;     //可写可读
-    public static  final  int WRITE_NOTIFY_CODE = 0x18;     //可写可通知
+    public static final int READ_NOTIFY_CODE = 0x12;     //可读可通知
+    public static final int WRITE_READ_CODE = 0x0e;     //可写可读
+    public static final int WRITE_CODE = 0x04;     //可写可读
+    public static final int READ_CODE = 0x02;     //可写可读
+    public static final int WRITE_NOTIFY_CODE = 0x18;     //可写可通知
 
     private Activity context;
     private BluetoothAdapter mBluetoothAdapter;
@@ -74,7 +85,7 @@ public class Ble4_0Util implements BleUtil {
         return true;
     }
 
-    public boolean isConnect(){
+    public boolean isConnect() {
         return mBluetoothGatt != null;
     }
 
@@ -107,8 +118,8 @@ public class Ble4_0Util implements BleUtil {
 
         curConnectDev = mBluetoothAdapter.getRemoteDevice(blemac);
         if (curConnectDev == null) {
-            Log.e("BLE","蓝牙" + blemac + "未找到");
-           return  false;
+            Log.e("BLE", "蓝牙" + blemac + "未找到");
+            return false;
         }
         //已连接 先断开连接
         if (null != mBluetoothGatt) {
@@ -117,10 +128,10 @@ public class Ble4_0Util implements BleUtil {
         }
         //不能拿到 名称和 蓝牙mac的按假连接处理
         if (null == curConnectDev.getName() && null == curConnectDev.getAddress()) {
-            return  false;
+            return false;
         }
         //连接蓝牙
-        mBluetoothGatt = curConnectDev.connectGatt(context, false,new BluetoothGattCallback() {
+        mBluetoothGatt = curConnectDev.connectGatt(context, false, new BluetoothGattCallback() {
             @Override
             public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
                 super.onPhyUpdate(gatt, txPhy, rxPhy, status);
@@ -134,17 +145,23 @@ public class Ble4_0Util implements BleUtil {
             @Override
             public void onConnectionStateChange(final BluetoothGatt gatt, int status, int newState) {
                 super.onConnectionStateChange(gatt, status, newState);
-                if (newState == BluetoothGatt.STATE_CONNECTED){
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        gatt.discoverServices();
+                if (newState == BluetoothGatt.STATE_CONNECTED) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    //设置接收数据长度，默认20
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        Log.w("---","++++"+status);
+                        mBluetoothGatt.requestMtu(512);//*********
+                    }
                 }
-                if(newState == BluetoothGatt.STATE_DISCONNECTED){
+                if (newState == BluetoothGatt.STATE_DISCONNECTED) {
                     disconnect();
                 }
+                Log.e("state", "连接成功");
                 callback.StateChange(status, newState);
             }
 
@@ -159,7 +176,7 @@ public class Ble4_0Util implements BleUtil {
                     gattServiceMain = gattService;
                     List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
                     for (final BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
-                        if (mDevReadCharacteristic == null && gattCharacteristic.getUuid().toString().indexOf(readUUID) >= 0){
+                        if (mDevReadCharacteristic == null && gattCharacteristic.getUuid().toString().indexOf(readUUID) >= 0) {
                             mDevReadCharacteristic = gattCharacteristic;
                             new Thread(new Runnable() {
                                 @Override
@@ -176,19 +193,20 @@ public class Ble4_0Util implements BleUtil {
 
                             List<BluetoothGattDescriptor> descriptorlist = gattCharacteristic.getDescriptors();
 
-                            lp: for ( BluetoothGattDescriptor descriptor: descriptorlist) {
-                                if (descriptor.getUuid().toString().indexOf(clientCharConfig) >= 0){
+                            lp:
+                            for (BluetoothGattDescriptor descriptor : descriptorlist) {
+                                if (descriptor.getUuid().toString().indexOf(clientCharConfig) >= 0) {
                                     descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                                     mBluetoothGatt.writeDescriptor(descriptor);
                                     break lp;
                                 }
                             }
                         }
-                        if (mDevWriteCharacteristic == null && (gattCharacteristic.getProperties() ==  BluetoothGattCharacteristic.PROPERTY_WRITE
-                        || gattCharacteristic.getProperties() ==  BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE
-                                || gattCharacteristic.getProperties() ==  12)
-                                && gattCharacteristic.getUuid().toString().indexOf(readUUID) >= 0){
-                            Log.w("---》》》","++++++++");
+                        if (mDevWriteCharacteristic == null && (gattCharacteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_WRITE
+                                || gattCharacteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE
+                                || gattCharacteristic.getProperties() == 12)
+                                && gattCharacteristic.getUuid().toString().indexOf(readUUID) >= 0) {
+                            Log.w("---》》》", "++++++++");
                             mDevWriteCharacteristic = gattCharacteristic;
                         }
                     }
@@ -244,6 +262,12 @@ public class Ble4_0Util implements BleUtil {
             @Override
             public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
                 super.onMtuChanged(gatt, mtu, status);
+                if (BluetoothGatt.GATT_SUCCESS == status) {
+                    Log.w("---》》》","onMtuChanged success MTU = " + mtu);
+                    gatt.discoverServices();
+                } else {
+                    Log.w("---》》》","onMtuChanged fail ");
+                }
             }
         });
 
@@ -263,41 +287,114 @@ public class Ble4_0Util implements BleUtil {
 
     @Override
     public boolean close() {
-         mBluetoothAdapter = null;
+        mBluetoothAdapter = null;
         return true;
     }
 
     @Override
     public boolean send(String str) {
-        if (mDevWriteCharacteristic == null){
-             getService();
+        if (mDevWriteCharacteristic == null) {
+            getService();
         }
         return sendStrToDev(str);
     }
 
+    public void sendDataA0() {
+        new Thread(new ThreadShowA0()).start();
+    }
+    public void sendDataA2() {
+        new Thread(new ThreadShowA2()).start();
+    }
+    // 线程类
+    class ThreadShowA0 implements Runnable {
+        // handler类接收数据
+        @SuppressLint("HandlerLeak")
+        Handler handler = new Handler() {
+            public void handleMessage(Message msg) {
+                if (msg.what == 1) {
+                    sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A0));
+                    System.out.println("receive....");
+                }
+            }
+        };
+        @Override
+        public void run() {
+            while (isConnect()) {
+                try {
+                    Thread.sleep(5000);
+                    Message msg = new Message();
+                    msg.what = 1;
+                    handler.sendMessage(msg);
+                    System.out.println("send...");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("thread error...");
+                }
+            }
+        }
+    }
+    // 线程类
+    class ThreadShowA2 implements Runnable {
+        // handler类接收数据
+        @SuppressLint("HandlerLeak")
+        Handler handler = new Handler() {
+            public void handleMessage(Message msg) {
+                if (msg.what == 1) {
+                    sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A2));
+                    System.out.println("receive....");
+                }
+            }
+        };
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                    Message msg = new Message();
+                    msg.what = 1;
+                    handler.sendMessage(msg);
+                    System.out.println("send...");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("thread error...");
+                }
+            }
+        }
+    }
+
     public boolean send(byte[] byteCmd) {
-        if (mDevWriteCharacteristic == null){
+        if (mDevWriteCharacteristic == null) {
             getService();
         }
-        return  sendByteToDev(byteCmd);
+        return sendByteToDev(byteCmd);
+    }
+
+    public void sendData(byte[] sendData) {
+        Log.w("---》》》", "sendData:" + Arrays.toString(sendData));
+        if (sendData.length > 0) {
+            send(sendData);
+//            ToastUtils.showShort("指令已发送");
+        } else {
+            ToastUtils.showShort("发送指令不能为空！");
+        }
     }
 
     private boolean getService() {
         if (null == mBluetoothGatt) {
             return false;
         }
-        if (mDevWriteCharacteristic != null){
-           return  true;
+        if (mDevWriteCharacteristic != null) {
+            return true;
         }
         if (gattServiceMain == null) return false;
 
         //获取写的特征值
         List<BluetoothGattCharacteristic> characteristicList = gattServiceMain.getCharacteristics();
-        for (BluetoothGattCharacteristic characteristic : characteristicList){
-            if ( (characteristic.getProperties() ==  BluetoothGattCharacteristic.PROPERTY_SIGNED_WRITE
-                    || characteristic.getProperties() ==  BluetoothGattCharacteristic.PROPERTY_WRITE
-                    || characteristic.getProperties() ==  BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) &&
-                    characteristic.getUuid().toString().indexOf(writeUUID) >= 0){
+        for (BluetoothGattCharacteristic characteristic : characteristicList) {
+            if ((characteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_SIGNED_WRITE
+                    || characteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_WRITE
+                    || characteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) &&
+                    characteristic.getUuid().toString().indexOf(writeUUID) >= 0) {
                 mDevWriteCharacteristic = characteristic;
                 break;
             }
@@ -307,29 +404,29 @@ public class Ble4_0Util implements BleUtil {
     }
 
 
-    private boolean sendStrToDev(String str){
-        if (mDevWriteCharacteristic == null){
+    private boolean sendStrToDev(String str) {
+        if (mDevWriteCharacteristic == null) {
             return false;
         }
-        byte[] value = new byte[20];
+        byte[] value = new byte[10];
         value[0] = (byte) 0x00;
         mDevWriteCharacteristic.setValue(value[0], BluetoothGattCharacteristic.FORMAT_UINT8, 0);
         mDevWriteCharacteristic.setValue(str);
-        return  mBluetoothGatt.writeCharacteristic(mDevWriteCharacteristic);
+        return mBluetoothGatt.writeCharacteristic(mDevWriteCharacteristic);
     }
 
-    private boolean sendByteToDev(byte[] byteCmd){
-        if (mDevWriteCharacteristic == null){
+    private boolean sendByteToDev(byte[] byteCmd) {
+        if (mDevWriteCharacteristic == null) {
             return false;
         }
         mDevWriteCharacteristic.setValue(byteCmd);
-        return  mBluetoothGatt.writeCharacteristic(mDevWriteCharacteristic);
+        return mBluetoothGatt.writeCharacteristic(mDevWriteCharacteristic);
     }
 
     @Override
     public boolean startScan(BluetoothAdapter.LeScanCallback callBack) {
 
-        if (mBluetoothAdapter == null){
+        if (mBluetoothAdapter == null) {
             return false;
         }
         if (mBluetoothAdapter.isDiscovering()) {
@@ -338,34 +435,35 @@ public class Ble4_0Util implements BleUtil {
 
         mBluetoothAdapter.startLeScan(callBack);
         this.leScanCallback = callBack;
-        return  true;
+        return true;
     }
 
     @Override
     public boolean stopScan() {
-        if (this.leScanCallback == null){
-            return  false;
+        if (this.leScanCallback == null) {
+            return false;
         }
         mBluetoothAdapter.stopLeScan(this.leScanCallback);
         this.leScanCallback = null;
-        return  true;
+        return true;
     }
 
     /*
     校验蓝牙权限
    */
     private void checkBluetoothPermission() {
-        if (Build.VERSION.SDK_INT  < 23) {
-          return;
+        if (Build.VERSION.SDK_INT < 23) {
+            return;
         }
         //校验是否已具有模糊定位权限
         if (ContextCompat.checkSelfPermission(context,
                 Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},PERMISSION_REQUEST_CODE );
+            ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_CODE);
         }
 
     }
+
     public static void OpenA2dp() {
 
         BluetoothProfile.ServiceListener bs = new BluetoothProfile.ServiceListener() {

@@ -1,11 +1,20 @@
 package com.jxkj.fit_5a.view.activity.login_other;
 
+import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
@@ -15,6 +24,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
@@ -24,7 +34,15 @@ import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils;
+import com.jxkj.fit_5a.lanya.Ble4_0Util;
+import com.jxkj.fit_5a.lanya.BleAdapter;
+import com.jxkj.fit_5a.lanya.BleUtil;
+import com.jxkj.fit_5a.lanya.ConstValues_Ly;
+import com.jxkj.fit_5a.lanya.LinkActivity2;
 import com.jxkj.fit_5a.lanya.MainActivity2;
+import com.jxkj.fit_5a.view.activity.exercise.landscape.ClassicExerciseActivity;
 import com.jxkj.fit_5a.view.adapter.FacilityAddAdapter;
 
 import java.util.List;
@@ -70,6 +88,21 @@ public class FacilityAddPpActivity extends BaseActivity {
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         queryDeviceBrandLists();
         initVvUi();
+
+
+    }
+    PopupWindowLanYan window;
+    private void initPopupWindw() {
+        if(window==null){
+            window = new PopupWindowLanYan(this, new PopupWindowLanYan.GiveDialogInterface() {
+                @Override
+                public void btnConfirm(String str) {
+                    showDialogUi(str);
+                }
+            });
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        }
+        window.showAtLocation(mTv, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置
     }
 
     private void queryDeviceBrandLists() {
@@ -198,8 +231,9 @@ public class FacilityAddPpActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.ll_connect:
-                startActivity(new Intent(this,MainActivity2.class));
+//                startActivity(new Intent(this,MainActivity2.class));
 //                goConnect();
+                initPopupWindw();
                 break;
         }
     }
@@ -228,7 +262,7 @@ public class FacilityAddPpActivity extends BaseActivity {
                     @Override
                     public void onNext(Result result) {
                         if(isDataInfoSucceed(result)){
-                            showDialogUi();
+//                            showDialogUi();
                         }
                     }
 
@@ -246,14 +280,19 @@ public class FacilityAddPpActivity extends BaseActivity {
 
     }
 
-    private void showDialogUi() {
+    private void showDialogUi(String str) {
+        window.dismiss();
         mIv.setVisibility(View.VISIBLE);
         mTv.setVisibility(View.VISIBLE);
         mIvD.setVisibility(View.GONE);
-        DialogUtils.showDialogLyState(FacilityAddPpActivity.this, "这是一个标题", 1, new DialogUtils.DialogLyInterface() {
+        DialogUtils.showDialogLyState(FacilityAddPpActivity.this, str, 1, new DialogUtils.DialogLyInterface() {
             @Override
             public void btnConfirm() {
-                startActivity(new Intent(FacilityAddPpActivity.this, InterestActivity.class));
+//                startActivity(new Intent(FacilityAddPpActivity.this, InterestActivity.class));
+                if(str.equals("连接成功")){
+                    PopupWindowLanYan.ble4Util.sendDataA2();
+                    startActivity(new Intent(FacilityAddPpActivity.this, MainActivity.class));
+                }
             }
         });
     }

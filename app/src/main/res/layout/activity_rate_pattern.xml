@@ -100,7 +100,7 @@
                     android:layout_marginStart="@dimen/dimen_80dp"
                     android:layout_marginTop="-10dp"
                     android:layout_marginEnd="-10dp"
-                    android:background="@mipmap/ic_bnt_bj"/>
+                    android:background="@mipmap/ic_bnt_bj" />
 
                 <ImageView
                     android:id="@+id/ll_zh"
@@ -118,9 +118,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="-10dp"
-                    android:visibility="invisible"
                     android:layout_marginTop="-10dp"
-                    android:layout_marginEnd="-10dp">
+                    android:layout_marginEnd="-10dp"
+                    android:visibility="invisible">
 
                     <ImageView
                         android:layout_width="0dp"
@@ -188,9 +188,8 @@
 
 
                 </LinearLayout>
-
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/lineChart1"
+                <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView
+                    android:id="@+id/AAChartView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/ll_top" />
@@ -289,6 +288,7 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_above="@id/tv_3"
@@ -314,6 +314,7 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/tv_distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_above="@id/tv_4"
@@ -340,6 +341,60 @@
                     android:textColor="@color/color_666666"
                     android:textSize="12sp" />
             </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:layout_marginHorizontal="@dimen/dimen_15dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/ic_shade_img"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_15dp"
+                    android:layout_weight="0.8"
+                    android:text="当前强度"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_jian"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_jiajian_jia" />
+
+                    <TextView
+                        android:id="@+id/tv_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_30dp"
+                        android:text="00/00"
+                        android:textColor="#212121"
+                        android:textSize="@dimen/dimen_20dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/iv_jia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_30dp"
+                        android:src="@drawable/ic_jiajian_jian" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="@dimen/dimen_0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_list"

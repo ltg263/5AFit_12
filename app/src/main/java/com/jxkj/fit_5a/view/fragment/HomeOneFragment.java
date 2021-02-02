@@ -17,8 +17,8 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAOptionsConstructor;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AASeriesElement;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartAnimationType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolStyleType;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartType;
-import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AADataElement;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAOptions;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAScrollablePlotArea;
 import com.jxkj.fit_5a.R;
@@ -83,6 +83,7 @@ public class HomeOneFragment extends BaseFragment {
     private HomeTopAdapter mHomeTopAdapter;
     private HomeShoppingAdapter mHomeShoppingAdapter;
     private HomeDynamicAdapter mHomeDynamicAdapter;
+    private AAChartModel aaChartModel;
 
     @Override
     protected int getContentView() {
@@ -99,7 +100,6 @@ public class HomeOneFragment extends BaseFragment {
     }
 
     private AAOptions aaOptions;
-    private AAChartModel aaChartModel;
     private void initAAChar() {
 
         AAChartModel aaChartModel = configureChartModel();
@@ -107,77 +107,79 @@ public class HomeOneFragment extends BaseFragment {
             aaOptions = AAOptionsConstructor.configureChartOptions(aaChartModel);
         }
 
+
         mAAChartView.aa_drawChartWithChartOptions(aaOptions);
     }
 
 
     private AAChartModel configureChartModel() {
 
-        AAChartModel aaChartModel = new AAChartModel()
-                .chartType(AAChartType.Spline)
+        aaChartModel = new AAChartModel()
+                .chartType(AAChartType.Areaspline)
                 .title("")
                 .yAxisTitle("")
+                .yAxisLabelsEnabled(false)
+                .categories(new String[]{"1","2","3","4","5","6","7"})
+                .yAxisGridLineWidth(0f)
                 .legendEnabled(false)
                 .yAxisGridLineWidth(0f)
+                .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)
+                .gradientColorEnable(true)
+                .markerRadius(0f)
+                .markerSymbol(AAChartSymbolType.Circle)
                 .scrollablePlotArea(
                         new AAScrollablePlotArea()
-                                .minWidth(500)
+//                                .minWidth(3000)
                                 .scrollPositionX(1f)
                 )
-                .series(new AASeriesElement[]{
-                        new AASeriesElement()
-                                .name("Tokyo")
-                                .data(configureSeriesDataArray())
-
-                });
-        this.aaChartModel = aaChartModel;
-
-        configureTheStyleForDifferentTypeChart();
+                .series(configureTheStyleForDifferentTypeChart());
         return aaChartModel;
     }
 
-    private void configureTheStyleForDifferentTypeChart() {
-        aaChartModel
-                .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)//设置折线连接点样式为:边缘白色
-                .markerRadius(2f);
-
+    private AASeriesElement[] configureTheStyleForDifferentTypeChart() {
 
         AASeriesElement element1 = new AASeriesElement()
                 .name("卡路里")
-                .lineWidth(3f)
-                .data(new Object[]{50, 320, 130, 370, 230, 400,});
+                .lineWidth(1f)
+                .color("#FFA1A1")
+                .data(new Object[]{50, 20, 30, 70, 30, 10, 10});
 
         AASeriesElement element2 = new AASeriesElement()
                 .name("总里程")
-                .lineWidth(3f)
-                .data(new Object[]{80, 190, 210, 340, 240, 350,});
+                .lineWidth(1f)
+                .color("#A1DFFF")
+                .data(new Object[]{80, 90, 10, 40, 40, 50, 10});
 
-        AASeriesElement element3 = new AASeriesElement()                                                                                                             
+        AASeriesElement element3 = new AASeriesElement()
                 .name("总时间")
-                .lineWidth(3f)
-                .data(new Object[]{120, 370, 180, 280, 260, 100,});
+                .lineWidth(1f)
+                .color("#FFB300")
+                .data(new Object[]{20, 30, 80, 80, 60, 99, 10});
 
-        aaChartModel
-                .animationType(AAChartAnimationType.SwingFromTo)
-                .series(new AASeriesElement[]{element1, element2, element3});
+        return new AASeriesElement[]{element1, element2, element3};
     }
 
-    private AADataElement[] configureSeriesDataArray() {
-        int maxRange = 388;
-        AADataElement[] numberArr1 = new AADataElement[maxRange];
+    private AASeriesElement[] configureTheStyleForDifferentTypeChart1() {
 
-        double y1;
-        int max = 38, min = 1;
-        int random = (int) (Math.random() * (max - min) + min);
-        for (int i = 0; i < maxRange; i++) {
-            y1 = Math.sin(random * (i * Math.PI / 180)) + i * 2 * 0.01;
-            AADataElement aaDataElement = new AADataElement()
-                    .y((float) y1);
+        AASeriesElement element1 = new AASeriesElement()
+                .name("卡路里")
+                .lineWidth(1f)
+                .color("#FFA1A1")
+                .data(new Object[]{50, 20, 30, 70, 30, 10, 10, 20, 30, 70, 30, 10, 10, 20, 30, 70, 30, 10, 10, 20, 30, 70, 30, 10, 10});
 
-            numberArr1[i] = aaDataElement;
-        }
+        AASeriesElement element2 = new AASeriesElement()
+                .name("总里程")
+                .lineWidth(1f)
+                .color("#A1DFFF")
+                .data(new Object[]{80, 90, 10, 40, 40, 50, 10, 90, 10, 40, 40, 50, 10, 90, 10, 40, 40, 50, 10, 90, 10, 40, 40, 50, 10});
 
-        return numberArr1;
+        AASeriesElement element3 = new AASeriesElement()
+                .name("总时间")
+                .lineWidth(1f)
+                .color("#FFB300")
+                .data(new Object[]{20, 30, 80, 80, 60, 99, 10, 30, 80, 80, 60, 99, 10, 30, 80, 80, 60, 99, 10, 30, 80, 80, 60, 99, 10});
+
+        return new AASeriesElement[]{element1, element2, element3};
     }
 
     private void initRvUi() {
@@ -240,7 +242,7 @@ public class HomeOneFragment extends BaseFragment {
     }
 
     @OnClick({R.id.tv_left_text,R.id.tv_right_text, R.id.tv_top_jyz,
-            R.id.tv_top_jyy, R.id.rv_top_list,R.id.on_rv_qd})
+            R.id.tv_top_jyy, R.id.on_rv_qd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_left_text:
@@ -254,22 +256,46 @@ public class HomeOneFragment extends BaseFragment {
                 mIvZ.setVisibility(View.VISIBLE);
                 mTvTopJyz.setTextColor(getResources().getColor(R.color.black));
                 mTvTopJyy.setTextColor(getResources().getColor(R.color.color_666666));
+
+                mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(configureTheStyleForDifferentTypeChart());
                 break;
             case R.id.tv_top_jyy:
                 mIvY.setVisibility(View.VISIBLE);
                 mIvZ.setVisibility(View.INVISIBLE);
                 mTvTopJyz.setTextColor(getResources().getColor(R.color.color_666666));
                 mTvTopJyy.setTextColor(getResources().getColor(R.color.black));
-                break;
-            case R.id.rv_top_list:
 
+                mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(configureTheStyleForDifferentTypeChart1());
                 break;
             case R.id.on_rv_qd:
                 startActivity(new Intent(getActivity(), TaskSignActivity.class));
+                mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(configureTheStyleForDifferentTypeChart3());
                 break;
         }
     }
 
+    private AASeriesElement[] configureTheStyleForDifferentTypeChart3() {
+
+        AASeriesElement element1 = new AASeriesElement()
+                .name("卡路里")
+                .lineWidth(1f)
+                .color("#FFA1A1")
+                .data(new Object[]{50, 20, 30, 70, 30, 10, 10,11});
+
+        AASeriesElement element2 = new AASeriesElement()
+                .name("总里程")
+                .lineWidth(1f)
+                .color("#A1DFFF")
+                .data(new Object[]{80, 90, 10, 40, 40, 50, 13,11});
+
+        AASeriesElement element3 = new AASeriesElement()
+                .name("总时间")
+                .lineWidth(1f)
+                .color("#FFB300")
+                .data(new Object[]{20, 30, 80, 80, 60, 99, 10,18});
+
+        return new AASeriesElement[]{element1, element2, element3};
+    }
 
     private void getProductList(Integer hasHot) {
         RetrofitUtil.getInstance().apiService()

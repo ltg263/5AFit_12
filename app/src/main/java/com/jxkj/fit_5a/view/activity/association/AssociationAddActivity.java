@@ -31,6 +31,7 @@ import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils_Map;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTy;
+import com.jxkj.fit_5a.entity.MediaInfoBean;
 import com.jxkj.fit_5a.entity.TopicAllBean;
 import com.jxkj.fit_5a.entity.VideoInfoBean;
 import com.jxkj.fit_5a.view.activity.exercise.landscape.MapExerciseActivity;
@@ -135,10 +136,10 @@ public class AssociationAddActivity extends BaseActivity {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 mSpPhotoAdapter.remove(position);
+                listUrls.remove(position);
                 if (!mSpPhotoAdapter.getData().get(mSpPhotoAdapter.getData().size() - 1).getPath().equals("-1")) {
                     LocalMedia mLocalMedia = new LocalMedia();
                     mLocalMedia.setPath("-1");
-                    listUrls.remove(position);
                     mSpPhotoAdapter.addData(mLocalMedia);
                 }
             }
@@ -199,7 +200,7 @@ public class AssociationAddActivity extends BaseActivity {
                                     @Override
                                     public void succeed(VideoInfoBean result) {
                                         if(result.getStatusCode()==200){
-                                            media = coverUrl + "," + result.getVideoId();
+                                            listUrls.add(new MediaInfoBean(coverUrl,"3",result.getVideoId(),StringUtil.getLocalVideoDuration(selectList.get(0).getPath())));
                                             mRvListZp.setVisibility(View.GONE);
                                             rl_v.setVisibility(View.VISIBLE);
                                             GlideImageUtils.setGlideImage(AssociationAddActivity.this, coverUrl, iv_v);
@@ -217,7 +218,7 @@ public class AssociationAddActivity extends BaseActivity {
         }
     }
 
-    List<String> listUrls = new ArrayList<>();
+    List<MediaInfoBean> listUrls = new ArrayList<>();
 
     private void setIMaaa(List<LocalMedia> selectList) {
         HttpRequestUtils.postOSSFile(1, new HttpRequestUtils.OSSClientInterface() {
@@ -246,7 +247,7 @@ public class AssociationAddActivity extends BaseActivity {
                 if (pos == 101) {
                     String urlpath = SharedUtils.singleton().get(ConstValues.host, "")
                             + "/" + SharedUtils.singleton().get(ConstValues.dir, "") + "/" + fileName;
-                    listUrls.add(urlpath);
+                    listUrls.add(new MediaInfoBean(urlpath,"2"));
                     mSpPhotoAdapter.addData(mSpPhotoAdapter.getData().size() - 1, selectList.get(finalI - 1));
                     if (mSpPhotoAdapter.getData().size() > 6 && mSpPhotoAdapter.getData().contains("-1")) {
                         mSpPhotoAdapter.remove(mSpPhotoAdapter.getData().size() - 1);
@@ -378,9 +379,12 @@ public class AssociationAddActivity extends BaseActivity {
         mTvPosition.getText().toString();
         if (StringUtil.isBlank(content)) {
             ToastUtils.showShort("内容不能为空");
+            return;
         }
-        if (type == 2) {
-            media = listUrls.toString().replace("[", "").replace("]", "");
+        media = listUrls.toString();
+        if(true){
+            Log.w("medila","media:"+media);
+            return;
         }
         show();
         RetrofitUtil.getInstance().apiService()

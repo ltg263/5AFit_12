@@ -16,7 +16,7 @@ public class DataManage {
 	private byte mMessage;
 	private byte mClientId;
 	private byte mMeterId;
-	private ArrayList<Byte> mDataPayload;
+	private ArrayList<Integer> mDataPayload;
 	private byte mChecksum;
 
 
@@ -26,7 +26,9 @@ public class DataManage {
 	 *
 	 */
 	public DataManage(byte[] bytes) {
-		newMessage(bytes);
+		if(bytes.length > 5){
+			newMessage(bytes);
+		}
 	}
 
 	private void newMessage(byte[] bytes) {
@@ -38,15 +40,15 @@ public class DataManage {
 		mChecksum = bytes[bytes.length-1];
 	}
 
-	private ArrayList<Byte> getDataPayloadbytes(byte[] bytes) {
+	private ArrayList<Integer> getDataPayloadbytes(byte[] bytes) {
 		if(bytes.length<=5){
 			return null;
 		}
 		int startPos = 4;
-		int endPos = bytes.length-2;
-		ArrayList<Byte> mDataNew = new ArrayList<>();
+		int endPos = bytes.length-1;
+		ArrayList<Integer> mDataNew = new ArrayList<>();
 		for(int i=startPos;i<endPos;i++){
-			mDataNew.add(bytes[i]);
+			mDataNew.add(bytes[i]-1);
 
 		}
 		return mDataNew;
@@ -68,7 +70,7 @@ public class DataManage {
 		return mMeterId;
 	}
 
-	public ArrayList<Byte> getDataPayload() {
+	public ArrayList<Integer> getDataPayload() {
 		return mDataPayload;
 	}
 
