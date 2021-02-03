@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
@@ -24,7 +25,7 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAOptions;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAScrollablePlotArea;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
-import com.jxkj.fit_5a.conpoment.utils.ChartHelper;
+import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.conpoment.view.StepArcView;
@@ -66,11 +67,11 @@ public class RatePatternActivity extends BaseActivity {
     @BindView(R.id.tv_distance)
     TextView tv_distance;
     int loadCurrent = 1;
-    int loadMax = 1;
+    int loadMax = ConstValues_Ly.maxLoad;
     private RatePatternAdapter mRatePatternAdapter;
 
     int currentPos = 1;
-
+    long time = 0;
     private List<Byte> mData1 = new ArrayList<>();
     private List<Byte> mData2 = new ArrayList<>();
     private List<Byte> mData3 = new ArrayList<>();
@@ -83,7 +84,17 @@ public class RatePatternActivity extends BaseActivity {
     @Override
     protected void initViews() {
         initAAChar();
+        if(PopupWindowLanYan.ble4Util==null || !PopupWindowLanYan.ble4Util.isConnect()){
+            ToastUtils.showShort("请先链接设备");
+            finish();
+            return;
+        }
         PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+        time = getIntent().getLongExtra("time",0);
+        if(time>0){
+            byte[] data =  getIntent().getByteArrayExtra("data");
+            TimeThreadUtils.sendDataA6(time,data);
+        }
         mSv.setCurrentCount(100, 80);
         mRatePatternAdapter = new RatePatternAdapter(null);
         mRvList.setLayoutManager(new GridLayoutManager(this, 2));
@@ -236,9 +247,6 @@ public class RatePatternActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.i("MyTag", "onReceive: 获取到YangLiWei!");
-            if(intent.getStringExtra("type").equals("b1")){
-                loadMax = intent.getIntExtra("maxLoad",0);
-            }
             if(intent.getStringExtra("type").equals("b2")){
                 ArrayList<Integer> dataList = intent.getIntegerArrayListExtra("data");
                 setData(dataList);
@@ -275,6 +283,7 @@ public class RatePatternActivity extends BaseActivity {
         double Watt = ConstValues_Ly.getBaiShiGeX(WattHi,WattLow);
 
         loadCurrent = dataList.get(14);//阻力
+        ConstValues_Ly.CURRENT_STATE = dataList.get(15);
 
         String Unit ="Stop";
         if(dataList.get(15)==1){

@@ -33,6 +33,7 @@ import com.jxkj.fit_5a.base.DeviceDrandData;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils;
@@ -290,7 +291,7 @@ public class FacilityAddPpActivity extends BaseActivity {
             public void btnConfirm() {
 //                startActivity(new Intent(FacilityAddPpActivity.this, InterestActivity.class));
                 if(str.equals("连接成功")){
-                    PopupWindowLanYan.ble4Util.sendDataA2();
+                    TimeThreadUtils.sendDataA2();
                     startActivity(new Intent(FacilityAddPpActivity.this, MainActivity.class));
                 }
             }

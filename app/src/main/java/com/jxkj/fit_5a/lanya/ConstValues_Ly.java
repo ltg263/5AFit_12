@@ -1,10 +1,7 @@
 package com.jxkj.fit_5a.lanya;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,6 +13,8 @@ public class ConstValues_Ly {
 
     public static byte START = (byte) 0xF0;//Start
 
+    public static Integer maxLoad = 32;
+
     //Message
     public static byte MESSAGE_A0 = (byte) 0xA0;//Host Connect Check 连接检查
     public static byte MESSAGE_A1 = (byte) 0xA1;//Host Ask Max Load 问最大负载
@@ -25,6 +24,8 @@ public class ConstValues_Ly {
     public static byte MESSAGE_A5 = (byte) 0xA5;//Host Send Key Command 发送关键命令
     public static byte MESSAGE_A6 = (byte) 0xA6;//Host Send Ride Load 发送骑负载
     public static byte MESSAGE_A8 = (byte) 0xA8;//Host Send Ride WATT 发送骑瓦特
+
+    public static int CURRENT_STATE = 0;
 
     public static byte CLIENT_ID = 0x00;//Client ID
     public static byte METER_ID = 0x00;//Meter ID

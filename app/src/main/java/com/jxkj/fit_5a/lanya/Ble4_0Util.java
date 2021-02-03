@@ -299,68 +299,6 @@ public class Ble4_0Util implements BleUtil {
         return sendStrToDev(str);
     }
 
-    public void sendDataA0() {
-        new Thread(new ThreadShowA0()).start();
-    }
-    public void sendDataA2() {
-        new Thread(new ThreadShowA2()).start();
-    }
-    // 线程类
-    class ThreadShowA0 implements Runnable {
-        // handler类接收数据
-        @SuppressLint("HandlerLeak")
-        Handler handler = new Handler() {
-            public void handleMessage(Message msg) {
-                if (msg.what == 1) {
-                    sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A0));
-                    System.out.println("receive....");
-                }
-            }
-        };
-        @Override
-        public void run() {
-            while (isConnect()) {
-                try {
-                    Thread.sleep(5000);
-                    Message msg = new Message();
-                    msg.what = 1;
-                    handler.sendMessage(msg);
-                    System.out.println("send...");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("thread error...");
-                }
-            }
-        }
-    }
-    // 线程类
-    class ThreadShowA2 implements Runnable {
-        // handler类接收数据
-        @SuppressLint("HandlerLeak")
-        Handler handler = new Handler() {
-            public void handleMessage(Message msg) {
-                if (msg.what == 1) {
-                    sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A2));
-                    System.out.println("receive....");
-                }
-            }
-        };
-        @Override
-        public void run() {
-            while (true) {
-                try {
-                    Thread.sleep(1000);
-                    Message msg = new Message();
-                    msg.what = 1;
-                    handler.sendMessage(msg);
-                    System.out.println("send...");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("thread error...");
-                }
-            }
-        }
-    }
 
     public boolean send(byte[] byteCmd) {
         if (mDevWriteCharacteristic == null) {

@@ -174,7 +174,7 @@ public class PopupWindowLanYan extends PopupWindow {
         }
         if (Integer.toHexString(data.getMessage() & 0xFF).equals("b1")) {
             Log.w("---》》》", "最大的阻力-------"+data.getDataPayload().get(0));
-            startBroadcast("b1",data.getDataPayload().get(0));
+            ConstValues_Ly.maxLoad =data.getDataPayload().get(0);
             return;
         }
         if (Integer.toHexString(data.getMessage() & 0xFF).equals("b5")) {
@@ -193,17 +193,6 @@ public class PopupWindowLanYan extends PopupWindow {
             startBroadcast("b2",data.getDataPayload());
             return;
         }
-    }
-
-    private void startBroadcast(String type ,Integer maxLoad){
-        //开启广播
-        //创建一个意图对象
-        Intent intent = new Intent("com.jxkj.fit_5a.view.activity.exercise.RatePatternActivity");
-        //发送广播的数据
-        intent.putExtra("type", type);
-        intent.putExtra("maxLoad", maxLoad);
-        //发送
-        MainApplication.getContext().sendBroadcast(intent);
     }
 
     private void startBroadcast(String type ,ArrayList<Integer> data){

@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAOptionsConstructor;
@@ -21,11 +22,15 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.DeviceCourseData;
 import com.jxkj.fit_5a.base.DeviceCourseTypeData;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 import com.jxkj.fit_5a.conpoment.view.VerticalSeekBar;
+import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,6 +49,8 @@ public class CoursePatternActivity extends BaseActivity {
     ImageView mIvBack;
     @BindView(R.id.tv)
     TextView mTv;
+    @BindView(R.id.tv_v)
+    TextView mTvV;
     @BindView(R.id.rl_actionbar)
     RelativeLayout mRlActionbar;
     @BindView(R.id.vertical_progressbar1)
@@ -73,8 +80,10 @@ public class CoursePatternActivity extends BaseActivity {
     @BindView(R.id.tv_ok)
     TextView mTvOk;
     AAOptions aaOptions;
-    private Integer[] a;
+    private Byte[] a;
     List<DeviceCourseData.ListBean.DetailsBean.ResistancesBean> resistances;
+    Integer currentLoad = 1;
+    Integer currentTime = 20;
 
     @Override
     protected int getContentView() {
@@ -83,7 +92,8 @@ public class CoursePatternActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        a = new Integer[]{0, 0, 0, 0, 0, 0,0, 0, 0, 0};
+        a = new Byte[]{0, 0, 0, 0, 0, 0,0, 0, 0, 0};
+        mTvV.setText(currentLoad+"/"+ConstValues_Ly.maxLoad);
         //模拟请求后台返回数据
         initData();
         ihnti();
@@ -119,7 +129,7 @@ public class CoursePatternActivity extends BaseActivity {
                 .xAxisLabelsEnabled(false)
                 .yAxisLabelsEnabled(false)
                 .legendEnabled(false)
-                .yAxisMax(10f)
+                .yAxisMax((float)ConstValues_Ly.maxLoad)
                 .yAxisGridLineWidth(0f)
                 .markerRadius(0f)
                 .scrollablePlotArea(
@@ -139,46 +149,72 @@ public class CoursePatternActivity extends BaseActivity {
         list.add("60");
         list.add("80");
         list.add("100");
-        WheelView wheelView = findViewById(R.id.wheelview);
-        wheelView.setWheelAdapter(new ArrayWheelAdapter(this)); // 文本数据源
-        wheelView.setSkin(WheelView.Skin.None); // common皮肤
-        wheelView.setWheelData(list);  // 数据集合
-        wheelView.setSelection(1);
-        wheelView.setWheelSize(3);
-        wheelView.setExtraText("min", getResources().getColor(R.color.color_999999), 30, 150);
+        mWheelview.setWheelAdapter(new ArrayWheelAdapter(this)); // 文本数据源
+        mWheelview.setSkin(WheelView.Skin.None); // common皮肤
+        mWheelview.setWheelData(list);  // 数据集合
+        mWheelview.setSelection(1);
+        mWheelview.setWheelSize(3);
+        mWheelview.setExtraText("min", getResources().getColor(R.color.color_999999), 30, 150);
 
         WheelView.WheelViewStyle style = new WheelView.WheelViewStyle();
         style.selectedTextSize = 20;
         style.textSize = 16;
         style.selectedTextZoom = 2;
-        wheelView.setStyle(style);
+        mWheelview.setStyle(style);
+
+        mWheelview.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
+            @Override
+            public void onItemSelected(int position, Object o) {
+                currentTime = Integer.valueOf(list.get(position));
+            }
+        });
 
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_ok,R.id.iv_hfmr})
+    @OnClick({R.id.iv_back, R.id.tv_ok,R.id.iv_hfmr,R.id.iv_jian,R.id.iv_jia})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.tv_ok:
-                startActivity(new Intent(this, RatePatternActivity.class));
+                long time = currentTime/10*60*1000;
+                Intent intent = new Intent(this, RatePatternActivity.class);
+                byte[] data = new byte[a.length];
+                for(int i=0;i<a.length;i++){
+                    data[i]=a[i];
+                }
+                intent.putExtra("data",data);
+                intent.putExtra("time",time);
+                startActivity(intent);
                 break;
             case R.id.iv_hfmr:
                 initProgress();
+                break;
+            case R.id.iv_jian:
+                if(currentLoad>0){
+                    currentLoad--;
+                    mTvV.setText(currentLoad+"/"+ConstValues_Ly.maxLoad);
+                }
+                break;
+            case R.id.iv_jia:
+                if(currentLoad<ConstValues_Ly.maxLoad){
+                    currentLoad++;
+                    mTvV.setText(currentLoad+"/"+ConstValues_Ly.maxLoad);
+                }
                 break;
         }
     }
     //设置值动画 progressbar动起来
 
     private void initProgressBar(int pos,VerticalSeekBar verticalProgressbar) {
-        verticalProgressbar.setMax(10);
+        verticalProgressbar.setMax(ConstValues_Ly.maxLoad);
         verticalProgressbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {//设置滑动监听
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 Log.w("123", "正在拖动" + progress + "\n");
 
-                a[pos] = progress;
+                a[pos] = (byte)progress;
                 AASeriesElement element1 = new AASeriesElement()
                         .lineWidth(1f)
                         .data(a);
@@ -233,7 +269,7 @@ public class CoursePatternActivity extends BaseActivity {
 
     private void initProgress() {
         for(int i=0;i<resistances.size();i++){
-            a[i] = Integer.valueOf(resistances.get(i).getValue());
+            a[i] = Byte.valueOf(resistances.get(i).getValue());
         }
         AASeriesElement element1 = new AASeriesElement()
                 .lineWidth(1f)

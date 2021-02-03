@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -105,7 +106,7 @@ public class LinkActivity2 extends Activity implements View.OnClickListener {
                         ConstValues_Ly.CLIENT_ID = resultData[2];//Client ID
                         ConstValues_Ly.METER_ID = resultData[3];//Meter ID
                         if(maxLoad==0){
-                            MainActivity2.ble4Util.sendDataA0();
+                            TimeThreadUtils.sendDataA0();
                             maxLoad = data.getDataPayload().get(0);
                             MainActivity2.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A3, (byte) 0X02));
 
