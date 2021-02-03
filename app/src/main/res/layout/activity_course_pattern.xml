@@ -140,6 +140,7 @@
                         android:src="@drawable/ic_jiajian_jian" />
 
                     <ImageView
+                        android:id="@+id/iv_hfmr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -167,7 +168,6 @@
                             android:layout_width="12dp"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:progress="80"
                             android:thumb="@color/transparent" />
 
                         <TextView
@@ -193,7 +193,6 @@
                             android:layout_width="12dp"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:progress="80"
                             android:thumb="@color/transparent" />
 
                         <TextView
@@ -219,7 +218,6 @@
                             android:layout_width="12dp"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:progress="80"
                             android:thumb="@color/transparent" />
 
                         <TextView
@@ -245,7 +243,6 @@
                             android:layout_width="12dp"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:progress="80"
                             android:thumb="@color/transparent" />
 
                         <TextView
@@ -271,7 +268,6 @@
                             android:layout_width="12dp"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:progress="80"
                             android:thumb="@color/transparent" />
 
                         <TextView
@@ -297,7 +293,6 @@
                             android:layout_width="12dp"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:progress="80"
                             android:thumb="@color/transparent" />
 
                         <TextView
@@ -323,7 +318,6 @@
                             android:layout_width="12dp"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:progress="80"
                             android:thumb="@color/transparent" />
 
                         <TextView
@@ -349,7 +343,6 @@
                             android:layout_width="12dp"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:progress="80"
                             android:thumb="@color/transparent" />
 
                         <TextView
@@ -375,7 +368,6 @@
                             android:layout_width="12dp"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:progress="80"
                             android:thumb="@color/transparent" />
 
                         <TextView
@@ -401,7 +393,6 @@
                             android:layout_width="12dp"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:progress="80"
                             android:thumb="@color/transparent" />
 
                         <TextView

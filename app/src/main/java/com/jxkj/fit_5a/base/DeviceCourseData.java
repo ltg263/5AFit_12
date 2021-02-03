@@ -9,14 +9,14 @@ public class DeviceCourseData {
      * totalCount : 10
      */
 
-    private String totalCount;
+    private int totalCount;
     private List<ListBean> list;
 
-    public String getTotalCount() {
+    public int getTotalCount() {
         return totalCount;
     }
 
-    public void setTotalCount(String totalCount) {
+    public void setTotalCount(int totalCount) {
         this.totalCount = totalCount;
     }
 
@@ -35,7 +35,7 @@ public class DeviceCourseData {
          * level : 1
          * name : 111
          * imgUrl :
-         * Stringroduct : 支持脚踏车，飞轮车。5AFit app需要接入您的器材
+         * introduct : 支持脚踏车，飞轮车。5AFit app需要接入您的器材
          * stage : 2
          * maxMultiple : 1
          * details : {"resistances":[{"value":1},{"value":2},{"value":3},{"value":5},{"value":4},{"value":6},{"value":10},{"value":4},{"value":2},{"value":1}]}
@@ -48,7 +48,7 @@ public class DeviceCourseData {
         private String level;
         private String name;
         private String imgUrl;
-        private String Stringroduct;
+        private String introduct;
         private String stage;
         private String maxMultiple;
         private DetailsBean details;
@@ -96,11 +96,11 @@ public class DeviceCourseData {
         }
 
         public String getIntroduct() {
-            return Stringroduct;
+            return introduct;
         }
 
-        public void setIntroduct(String Stringroduct) {
-            this.Stringroduct = Stringroduct;
+        public void setIntroduct(String introduct) {
+            this.introduct = introduct;
         }
 
         public String getStage() {

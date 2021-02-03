@@ -246,7 +246,7 @@ dependencies {
     implementation 'pub.devrel:easypermissions:2.0.1'
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.prolificinteractive:material-calendarview:1.4.3'
 
     //播放器

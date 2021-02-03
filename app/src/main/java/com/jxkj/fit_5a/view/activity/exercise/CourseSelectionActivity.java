@@ -80,7 +80,8 @@ public class CourseSelectionActivity extends BaseActivity {
         for (int i = 0; i < lists.size(); i++) {
             CourseSelectionFragment fragment = new CourseSelectionFragment();
             Bundle mBundle = new Bundle();
-            mBundle.putString("type",lists.get(i).getId()+"");
+            mBundle.putString("type",lists.get(i).getId());
+            mBundle.putString("introduct",lists.get(i).getIntroduct());
             fragment.setArguments(mBundle);
             fragments.add(fragment);
         }

@@ -5,8 +5,8 @@ import java.util.List;
 public class DeviceCourseTypeData {
 
     /**
-     * list : [{"id":1,"deviceId":0,"name":"设备课程类型一","sort":0},{"id":2,"deviceId":0,"name":"设备课程类型二","sort":0}]
-     * totalCount : 2
+     * list : [{"id":3,"deviceTypeId":0,"name":"有氧模式","sort":3,"introduct":"支持脚踏车，飞轮车。5AFit app需要接入您的器材"},{"id":1,"deviceTypeId":0,"name":"热身模式","sort":2,"introduct":"支持脚踏车，飞轮车。5AFit app需要接入您的器材"},{"id":2,"deviceTypeId":0,"name":"塑身模式","sort":1,"introduct":"支持脚踏车，飞轮车。5AFit app需要接入您的器材"},{"id":4,"deviceTypeId":0,"name":"减脂模式","sort":1,"introduct":"支持脚踏车，飞轮车。5AFit app需要接入您的器材"}]
+     * totalCount : 4
      */
 
     private int totalCount;
@@ -30,31 +30,33 @@ public class DeviceCourseTypeData {
 
     public static class ListBean {
         /**
-         * id : 1
-         * deviceId : 0
-         * name : 设备课程类型一
-         * sort : 0
+         * id : 3
+         * deviceTypeId : 0
+         * name : 有氧模式
+         * sort : 3
+         * introduct : 支持脚踏车，飞轮车。5AFit app需要接入您的器材
          */
 
-        private int id;
-        private int deviceId;
+        private String id;
+        private String deviceTypeId;
         private String name;
-        private int sort;
+        private String sort;
+        private String introduct;
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 
-        public int getDeviceId() {
-            return deviceId;
+        public String getDeviceTypeId() {
+            return deviceTypeId;
         }
 
-        public void setDeviceId(int deviceId) {
-            this.deviceId = deviceId;
+        public void setDeviceTypeId(String deviceTypeId) {
+            this.deviceTypeId = deviceTypeId;
         }
 
         public String getName() {
@@ -65,12 +67,20 @@ public class DeviceCourseTypeData {
             this.name = name;
         }
 
-        public int getSort() {
+        public String getSort() {
             return sort;
         }
 
-        public void setSort(int sort) {
+        public void setSort(String sort) {
             this.sort = sort;
+        }
+
+        public String getIntroduct() {
+            return introduct;
+        }
+
+        public void setIntroduct(String introduct) {
+            this.introduct = introduct;
         }
     }
 }

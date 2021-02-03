@@ -16,7 +16,11 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAOptions;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAScrollablePlotArea;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.DeviceCourseData;
+import com.jxkj.fit_5a.base.DeviceCourseTypeData;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.view.VerticalSeekBar;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
@@ -26,6 +30,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class CoursePatternActivity extends BaseActivity {
 
@@ -64,9 +72,9 @@ public class CoursePatternActivity extends BaseActivity {
     WheelView mWheelview;
     @BindView(R.id.tv_ok)
     TextView mTvOk;
-
     AAOptions aaOptions;
-    private Object[] a;
+    private Integer[] a;
+    List<DeviceCourseData.ListBean.DetailsBean.ResistancesBean> resistances;
 
     @Override
     protected int getContentView() {
@@ -75,30 +83,11 @@ public class CoursePatternActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        a = new Object[]{50, 32, 20, 37, 23, 40,50, 20, 30, 70};
+        a = new Integer[]{0, 0, 0, 0, 0, 0,0, 0, 0, 0};
         //模拟请求后台返回数据
         initData();
-        mVerticalProgressbar1.setProgress((Integer) a[0]);
-        initProgressBar(0,mVerticalProgressbar1);
-        mVerticalProgressbar2.setProgress((Integer) a[1]);
-        initProgressBar(1,mVerticalProgressbar2);
-        mVerticalProgressbar3.setProgress((Integer) a[2]);
-        initProgressBar(2,mVerticalProgressbar3);
-        mVerticalProgressbar4.setProgress((Integer) a[3]);
-        initProgressBar(3,mVerticalProgressbar4);
-        mVerticalProgressbar5.setProgress((Integer) a[4]);
-        initProgressBar(4,mVerticalProgressbar5);
-        mVerticalProgressbar6.setProgress((Integer) a[5]);
-        initProgressBar(5,mVerticalProgressbar6);
-        mVerticalProgressbar7.setProgress((Integer) a[6]);
-        initProgressBar(6,mVerticalProgressbar7);
-        mVerticalProgressbar8.setProgress((Integer) a[7]);
-        initProgressBar(7,mVerticalProgressbar8);
-        mVerticalProgressbar9.setProgress((Integer) a[8]);
-        initProgressBar(8,mVerticalProgressbar9);
-        mVerticalProgressbar10.setProgress((Integer) a[9]);
-        initProgressBar(9,mVerticalProgressbar10);
         ihnti();
+        queryDeviceCourseTypeDetails(getIntent().getStringExtra("id"));
     }
 
     private void ihnti() {
@@ -130,7 +119,7 @@ public class CoursePatternActivity extends BaseActivity {
                 .xAxisLabelsEnabled(false)
                 .yAxisLabelsEnabled(false)
                 .legendEnabled(false)
-                .yAxisMax(100f)
+                .yAxisMax(10f)
                 .yAxisGridLineWidth(0f)
                 .markerRadius(0f)
                 .scrollablePlotArea(
@@ -166,7 +155,7 @@ public class CoursePatternActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_ok})
+    @OnClick({R.id.iv_back, R.id.tv_ok,R.id.iv_hfmr})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -175,11 +164,15 @@ public class CoursePatternActivity extends BaseActivity {
             case R.id.tv_ok:
                 startActivity(new Intent(this, RatePatternActivity.class));
                 break;
+            case R.id.iv_hfmr:
+                initProgress();
+                break;
         }
     }
     //设置值动画 progressbar动起来
 
     private void initProgressBar(int pos,VerticalSeekBar verticalProgressbar) {
+        verticalProgressbar.setMax(10);
         verticalProgressbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {//设置滑动监听
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -204,5 +197,68 @@ public class CoursePatternActivity extends BaseActivity {
                 Log.w("123", "停止拖动+\n");
             }
         });
+    }
+
+
+    private void queryDeviceCourseTypeDetails(String id) {
+        RetrofitUtil.getInstance().apiService()
+                .queryDeviceCourseTypeDetails(id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<DeviceCourseData.ListBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<DeviceCourseData.ListBean> result) {
+                        if(isDataInfoSucceed(result)){
+                            resistances = result.getData().getDetails().getResistances();
+                            initProgress();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void initProgress() {
+        for(int i=0;i<resistances.size();i++){
+            a[i] = Integer.valueOf(resistances.get(i).getValue());
+        }
+        AASeriesElement element1 = new AASeriesElement()
+                .lineWidth(1f)
+                .data(a);
+        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(new AASeriesElement[]{element1});
+
+        mVerticalProgressbar1.setProgress( a[0]);
+        initProgressBar(0,mVerticalProgressbar1);
+        mVerticalProgressbar2.setProgress( a[1]);
+        initProgressBar(1,mVerticalProgressbar2);
+        mVerticalProgressbar3.setProgress( a[2]);
+        initProgressBar(2,mVerticalProgressbar3);
+        mVerticalProgressbar4.setProgress( a[3]);
+        initProgressBar(3,mVerticalProgressbar4);
+        mVerticalProgressbar5.setProgress( a[4]);
+        initProgressBar(4,mVerticalProgressbar5);
+        mVerticalProgressbar6.setProgress(a[5]);
+        initProgressBar(5,mVerticalProgressbar6);
+        mVerticalProgressbar7.setProgress(a[6]);
+        initProgressBar(6,mVerticalProgressbar7);
+        mVerticalProgressbar8.setProgress(a[7]);
+        initProgressBar(7,mVerticalProgressbar8);
+        mVerticalProgressbar9.setProgress( a[8]);
+        initProgressBar(8,mVerticalProgressbar9);
+        mVerticalProgressbar10.setProgress( a[9]);
+        initProgressBar(9,mVerticalProgressbar10);
     }
 }

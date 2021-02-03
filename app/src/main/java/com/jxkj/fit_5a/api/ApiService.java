@@ -314,6 +314,12 @@ public interface ApiService {
     @GET(ConstValues.PORT_2 + "api/v1/device/course/type/query")
     Observable<Result<DeviceCourseTypeData>> queryDeviceCourseTypeList(@Query("deviceId") String deviceId);
 
+    /**
+     * 设备课程详情
+     */
+    @GET(ConstValues.PORT_2 + "api/v1/device/course/details")
+    Observable<Result<DeviceCourseData.ListBean>> queryDeviceCourseTypeDetails(@Query("id") String id);
+
 
 
     /**
