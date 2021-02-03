@@ -21,7 +21,7 @@ public class CourseSelectionAdapter extends BaseQuickAdapter<DeviceCourseData.Li
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, DeviceCourseData.ListBean item) {
-        helper.setText(R.id.tv_name,item.getName()).setText(R.id.tv_sub_title,item.getSubTitle());
+        helper.setText(R.id.tv_name,item.getName()).setText(R.id.tv_sub_title,item.getIntroduct());
     }
 
 }
