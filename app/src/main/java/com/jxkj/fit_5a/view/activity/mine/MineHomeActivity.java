@@ -35,6 +35,9 @@ import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
 import com.jxkj.fit_5a.view.adapter.UserTopAdapter;
 import com.jxkj.fit_5a.view.adapter.UserTopXAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -158,10 +161,15 @@ public class MineHomeActivity extends BaseActivity {
         mRvDtListSp.setAdapter(mHomeThreeSqAdapter);
 
         mHomeThreeSqAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
+
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                String[] strArr = mHomeThreeSqAdapter.getData().get(position).getMedia().split(",");
-                VideoActivity.startActivity(MineHomeActivity.this,strArr[1]);
+                String media = mHomeThreeSqAdapter.getData().get(position).getMedia();
+                try {
+                    JSONArray jsonArray = new JSONArray(media);
+                    VideoActivity.startActivity(MineHomeActivity.this,jsonArray.getJSONObject(0).getString("vedioId"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
         getUserProfileOwn();

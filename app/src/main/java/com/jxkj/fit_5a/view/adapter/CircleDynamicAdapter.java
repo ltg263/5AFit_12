@@ -85,7 +85,6 @@ public class CircleDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, Bas
                     GlideImageUtils.setGlideImage(mContext,imageUrl2,helper.getView(R.id.siv_2));
                     GlideImageUtils.setGlideImage(mContext,imageUrl3,helper.getView(R.id.siv_3));
                 }
-                JSONObject obj = jsonArray.getJSONObject(1);
 
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -28,10 +28,14 @@ import com.jxkj.fit_5a.view.activity.association.MineCircleActivity;
 import com.jxkj.fit_5a.view.activity.association.MineTopicActivity;
 import com.jxkj.fit_5a.view.activity.association.TopicAllActivity;
 import com.jxkj.fit_5a.view.activity.association.VideoActivity;
+import com.jxkj.fit_5a.view.activity.mine.MineHomeActivity;
 import com.jxkj.fit_5a.view.adapter.HomeThreeRmhtAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeTopAdapter;
 import com.jxkj.fit_5a.view.search.SearchGoodsActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,7 +124,13 @@ public class HomeThreeFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if(mHomeThreeSqAdapter.getData().get(position).getContentType().equals("3")){
-                    VideoActivity.startActivity(getActivity(),"");
+                    String media = mHomeThreeSqAdapter.getData().get(position).getMedia();
+                    try {
+                        JSONArray jsonArray = new JSONArray(media);
+                        VideoActivity.startActivity(getActivity(),jsonArray.getJSONObject(0).getString("vedioId"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }else{
                     AssociationActivity.startActivity(getActivity(),
                             mHomeThreeSqAdapter.getData().get(position).getPublisherId(),

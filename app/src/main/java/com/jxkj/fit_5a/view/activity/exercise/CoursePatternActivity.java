@@ -1,22 +1,73 @@
 package com.jxkj.fit_5a.view.activity.exercise;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAOptionsConstructor;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AASeriesElement;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartType;
+import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAOptions;
+import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAScrollablePlotArea;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.view.VerticalSeekBar;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class CoursePatternActivity extends BaseActivity {
 
-
     List<String> list = new ArrayList<>();
+    @BindView(R.id.iv)
+    ImageView mIv;
+    @BindView(R.id.iv_back)
+    ImageView mIvBack;
+    @BindView(R.id.tv)
+    TextView mTv;
+    @BindView(R.id.rl_actionbar)
+    RelativeLayout mRlActionbar;
+    @BindView(R.id.vertical_progressbar1)
+    VerticalSeekBar mVerticalProgressbar1;
+    @BindView(R.id.vertical_progressbar2)
+    VerticalSeekBar mVerticalProgressbar2;
+    @BindView(R.id.vertical_progressbar3)
+    VerticalSeekBar mVerticalProgressbar3;
+    @BindView(R.id.vertical_progressbar4)
+    VerticalSeekBar mVerticalProgressbar4;
+    @BindView(R.id.vertical_progressbar5)
+    VerticalSeekBar mVerticalProgressbar5;
+    @BindView(R.id.vertical_progressbar6)
+    VerticalSeekBar mVerticalProgressbar6;
+    @BindView(R.id.vertical_progressbar7)
+    VerticalSeekBar mVerticalProgressbar7;
+    @BindView(R.id.vertical_progressbar8)
+    VerticalSeekBar mVerticalProgressbar8;
+    @BindView(R.id.vertical_progressbar9)
+    VerticalSeekBar mVerticalProgressbar9;
+    @BindView(R.id.vertical_progressbar10)
+    VerticalSeekBar mVerticalProgressbar10;
+    @BindView(R.id.AAChartView)
+    AAChartView mAAChartView;
+    @BindView(R.id.wheelview)
+    WheelView mWheelview;
+    @BindView(R.id.tv_ok)
+    TextView mTvOk;
+
+    AAOptions aaOptions;
+    private Object[] a;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_course_pattern;
@@ -24,24 +75,88 @@ public class CoursePatternActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        a = new Object[]{50, 32, 20, 37, 23, 40,50, 20, 30, 70};
         //模拟请求后台返回数据
         initData();
+        mVerticalProgressbar1.setProgress((Integer) a[0]);
+        initProgressBar(0,mVerticalProgressbar1);
+        mVerticalProgressbar2.setProgress((Integer) a[1]);
+        initProgressBar(1,mVerticalProgressbar2);
+        mVerticalProgressbar3.setProgress((Integer) a[2]);
+        initProgressBar(2,mVerticalProgressbar3);
+        mVerticalProgressbar4.setProgress((Integer) a[3]);
+        initProgressBar(3,mVerticalProgressbar4);
+        mVerticalProgressbar5.setProgress((Integer) a[4]);
+        initProgressBar(4,mVerticalProgressbar5);
+        mVerticalProgressbar6.setProgress((Integer) a[5]);
+        initProgressBar(5,mVerticalProgressbar6);
+        mVerticalProgressbar7.setProgress((Integer) a[6]);
+        initProgressBar(6,mVerticalProgressbar7);
+        mVerticalProgressbar8.setProgress((Integer) a[7]);
+        initProgressBar(7,mVerticalProgressbar8);
+        mVerticalProgressbar9.setProgress((Integer) a[8]);
+        initProgressBar(8,mVerticalProgressbar9);
+        mVerticalProgressbar10.setProgress((Integer) a[9]);
+        initProgressBar(9,mVerticalProgressbar10);
+        ihnti();
+    }
+
+    private void ihnti() {
+
+        AAChartModel aaChartModel = configureChartModel();
+        if (aaOptions == null) {
+            aaOptions = AAOptionsConstructor.configureChartOptions(aaChartModel);
+        }
+        mAAChartView.aa_drawChartWithChartOptions(aaOptions);
+        mAAChartView.setOnClick(false);
+        mAAChartView.setIsClearBackgroundColor(true);
 
     }
 
-    private void initData() {
-        for (int i = 0; i < 20; i++) {
-            String itemData = "" + i;
-            list.add(itemData);
-        }
+    private AAChartModel configureChartModel() {
 
-        WheelView wheelView =  findViewById(R.id.wheelview);
+
+        AASeriesElement element1 = new AASeriesElement()
+                .name("Tokyo")
+                .lineWidth(2f)
+                .color("#FF9933")
+                .data(a);
+
+        AAChartModel aaChartModel = new AAChartModel()
+                .chartType(AAChartType.Spline)
+                .title("")
+                .yAxisTitle("")
+                .xAxisVisible(false)
+                .xAxisLabelsEnabled(false)
+                .yAxisLabelsEnabled(false)
+                .legendEnabled(false)
+                .yAxisMax(100f)
+                .yAxisGridLineWidth(0f)
+                .markerRadius(0f)
+                .scrollablePlotArea(
+                        new AAScrollablePlotArea()
+//                                .minWidth(3000)
+                                .scrollPositionX(1f)
+                )
+                .series(new AASeriesElement[]{element1});
+
+        return aaChartModel;
+    }
+
+    private void initData() {
+
+        list.add("20");
+        list.add("40");
+        list.add("60");
+        list.add("80");
+        list.add("100");
+        WheelView wheelView = findViewById(R.id.wheelview);
         wheelView.setWheelAdapter(new ArrayWheelAdapter(this)); // 文本数据源
         wheelView.setSkin(WheelView.Skin.None); // common皮肤
         wheelView.setWheelData(list);  // 数据集合
         wheelView.setSelection(1);
         wheelView.setWheelSize(3);
-        wheelView.setExtraText("min",getResources().getColor(R.color.color_999999),30,150);
+        wheelView.setExtraText("min", getResources().getColor(R.color.color_999999), 30, 150);
 
         WheelView.WheelViewStyle style = new WheelView.WheelViewStyle();
         style.selectedTextSize = 20;
@@ -58,8 +173,36 @@ public class CoursePatternActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_ok:
-//                startActivity(new Intent(this, CourseStartActivity.class));
+                startActivity(new Intent(this, RatePatternActivity.class));
                 break;
         }
+    }
+    //设置值动画 progressbar动起来
+
+    private void initProgressBar(int pos,VerticalSeekBar verticalProgressbar) {
+        verticalProgressbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {//设置滑动监听
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                Log.w("123", "正在拖动" + progress + "\n");
+
+                a[pos] = progress;
+                AASeriesElement element1 = new AASeriesElement()
+                        .lineWidth(1f)
+                        .data(a);
+                mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(new AASeriesElement[]{element1});
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+//                stringBuffer=new StringBuffer();
+//                stringBuffer.append("开始拖动+\n");
+                Log.w("123", "开始拖动");
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Log.w("123", "停止拖动+\n");
+            }
+        });
     }
 }

@@ -34,7 +34,7 @@ public class VideoActivity extends BaseActivity {
     private ListVideoAdapter videoAdapter;
     private LinearLayoutManager layoutManager;
     private int currentPosition;
-    //    String videoId;
+        String videoId;
     ArrayList<String> urlList = new ArrayList<>();
     @Override
     protected int getContentView() {
@@ -43,8 +43,9 @@ public class VideoActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-//        videoId = getIntent().getStringExtra("videoId");
-        getQueryByPublisher();
+        videoId = getIntent().getStringExtra("videoId");
+//        getQueryByPublisher();
+        getPlay_info(videoId);
 //
 //        urlList.add("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318214226685784.mp4");
 //        urlList.add("http://vfx.mtime.cn/Video/2019/03/19/mp4/190319104618910544.mp4");

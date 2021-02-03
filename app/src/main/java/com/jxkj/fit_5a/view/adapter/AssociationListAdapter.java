@@ -86,8 +86,13 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
         Banner mBanner =  helper.getView(R.id.banner);
         mBanner.setVisibility(View.GONE);
         if(StringUtil.isNotBlank(item.getMedia())){
+
             mBanner.setVisibility(View.VISIBLE);
-            initBannerOne(mBanner,item.getMedia().split(","));
+            try {
+                initBannerOne(mBanner,new JSONArray(item.getMedia()));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         if(item.getCommentCount()>0){
@@ -166,10 +171,10 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
         }
     }
 
-    private void initBannerOne(Banner mBanner, String[] split) {
+    private void initBannerOne(Banner mBanner, JSONArray split) throws JSONException {
         ArrayList<String> list_path = new ArrayList<>();
-        for (int i = 0; i < split.length; i++) {
-            list_path.add(split[i]);
+        for (int i = 0; i < split.length(); i++) {
+            list_path.add(split.getJSONObject(i).getString("imageUrl"));
         }
         mBanner.setOnBannerListener(new OnBannerListener() {
             @Override

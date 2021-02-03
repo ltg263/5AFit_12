@@ -84,37 +84,361 @@
                 android:textColor="@color/color_ffffff"
                 android:textSize="14sp" />
 
-            <LinearLayout
+            <com.jxkj.fit_5a.conpoment.view.RelativeLayoutSv
                 android:layout_width="match_parent"
                 android:layout_height="270dp"
                 android:layout_marginHorizontal="@dimen/dimen_15dp"
-                android:layout_marginTop="@dimen/dimen_25dp"
                 android:background="@drawable/ic_shade_img">
 
-                <ProgressBar
-                    android:id="@+id/vertical_progressbar1"
-                    style="@style/Widget.ProgressBar.Vertical"
-                    android:layout_width="12dip"
-                    android:layout_height="270dp"
-                    android:progress="80" />
+                <RelativeLayout
+                    android:id="@+id/ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_15dp"
+                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:gravity="center_vertical">
 
-                <ProgressBar
-                    android:id="@+id/vertical_progressbar2"
-                    style="@style/Widget.ProgressBar.Vertical"
-                    android:layout_width="12dip"
-                    android:layout_height="270dp"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:progress="80" />
+                    <ImageView
+                        android:id="@+id/iv_jian"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/tv_v"
+                        android:layout_alignBottom="@id/tv_v"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_jiajian_jia" />
 
-                <ProgressBar
-                    android:id="@+id/vertical_progressbar3"
-                    style="@style/Widget.ProgressBar.Vertical"
-                    android:layout_width="12dip"
-                    android:layout_height="270dp"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:progress="80" />
+                    <TextView
+                        android:id="@+id/tv_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/iv_jian"
+                        android:paddingHorizontal="@dimen/dp_10"
+                        android:text="00/00"
+                        android:textColor="#212121"
+                        android:textSize="@dimen/dimen_20dp"
+                        android:textStyle="bold" />
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_v"
+                        android:layout_alignStart="@id/tv_v"
+                        android:layout_alignEnd="@id/tv_v"
+                        android:gravity="center"
+                        android:text="当前强度"
+                        android:textColor="@color/color_666666"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_jia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/tv_v"
+                        android:layout_alignBottom="@id/tv_v"
+                        android:layout_toEndOf="@id/tv_v"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_jiajian_jian" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:src="@drawable/ic_hfmr" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@id/tv1"
+                    android:layout_below="@id/ll">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.jxkj.fit_5a.conpoment.view.VerticalSeekBar
+                            android:id="@+id/vertical_progressbar1"
+                            style="@style/Widget.ProgressBar.Vertical"
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:progress="80"
+                            android:thumb="@color/transparent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:layout_marginTop="-5dp"
+                            android:textColor="@color/color_666666"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.jxkj.fit_5a.conpoment.view.VerticalSeekBar
+                            android:id="@+id/vertical_progressbar2"
+                            style="@style/Widget.ProgressBar.Vertical"
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:progress="80"
+                            android:thumb="@color/transparent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            android:layout_marginTop="-5dp"
+                            android:textColor="@color/color_666666"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.jxkj.fit_5a.conpoment.view.VerticalSeekBar
+                            android:id="@+id/vertical_progressbar3"
+                            style="@style/Widget.ProgressBar.Vertical"
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:progress="80"
+                            android:thumb="@color/transparent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3"
+                            android:layout_marginTop="-5dp"
+                            android:textColor="@color/color_666666"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.jxkj.fit_5a.conpoment.view.VerticalSeekBar
+                            android:id="@+id/vertical_progressbar4"
+                            style="@style/Widget.ProgressBar.Vertical"
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:progress="80"
+                            android:thumb="@color/transparent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4"
+                            android:layout_marginTop="-5dp"
+                            android:textColor="@color/color_666666"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.jxkj.fit_5a.conpoment.view.VerticalSeekBar
+                            android:id="@+id/vertical_progressbar5"
+                            style="@style/Widget.ProgressBar.Vertical"
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:progress="80"
+                            android:thumb="@color/transparent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5"
+                            android:layout_marginTop="-5dp"
+                            android:textColor="@color/color_666666"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.jxkj.fit_5a.conpoment.view.VerticalSeekBar
+                            android:id="@+id/vertical_progressbar6"
+                            style="@style/Widget.ProgressBar.Vertical"
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:progress="80"
+                            android:thumb="@color/transparent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="6"
+                            android:layout_marginTop="-5dp"
+                            android:textColor="@color/color_666666"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.jxkj.fit_5a.conpoment.view.VerticalSeekBar
+                            android:id="@+id/vertical_progressbar7"
+                            style="@style/Widget.ProgressBar.Vertical"
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:progress="80"
+                            android:thumb="@color/transparent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="7"
+                            android:layout_marginTop="-5dp"
+                            android:textColor="@color/color_666666"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.jxkj.fit_5a.conpoment.view.VerticalSeekBar
+                            android:id="@+id/vertical_progressbar8"
+                            style="@style/Widget.ProgressBar.Vertical"
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:progress="80"
+                            android:thumb="@color/transparent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="8"
+                            android:layout_marginTop="-5dp"
+                            android:textColor="@color/color_666666"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.jxkj.fit_5a.conpoment.view.VerticalSeekBar
+                            android:id="@+id/vertical_progressbar9"
+                            style="@style/Widget.ProgressBar.Vertical"
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:progress="80"
+                            android:thumb="@color/transparent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="9"
+                            android:layout_marginTop="-5dp"
+                            android:textColor="@color/color_666666"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.jxkj.fit_5a.conpoment.view.VerticalSeekBar
+                            android:id="@+id/vertical_progressbar10"
+                            style="@style/Widget.ProgressBar.Vertical"
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:progress="80"
+                            android:thumb="@color/transparent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10"
+                            android:layout_marginTop="-5dp"
+                            android:textColor="@color/color_666666"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView
+                    android:id="@+id/AAChartView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@id/tv1"
+                    android:layout_below="@id/ll"
+                    android:layout_marginVertical="@dimen/dimen_30dp"
+                    android:background="@color/color_ffffff" />
+
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:paddingTop="@dimen/dimen_5dp"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:text="时间/min"
+                    android:textColor="@color/color_333333"
+                    android:textSize="12sp" />
+
+            </com.jxkj.fit_5a.conpoment.view.RelativeLayoutSv>
+
 
             <TextView
                 android:layout_width="wrap_content"

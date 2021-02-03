@@ -26,7 +26,7 @@ public class ChartHelper {
         return Float.valueOf(mDecimalFormat.format(mRandom.nextFloat() * seed));
     }
 
-    private static int maxCount = 60; //集合最大存储数量
+    private static int maxCount = 10; //集合最大存储数量
 
     public static void addEntry(List<Entry> mData, LineChart lineChart, float yValues) {
         if (lineChart != null
@@ -63,8 +63,8 @@ public class ChartHelper {
     }
 
     public static void initChart(List<Entry> mData, LineChart lineChart, long maxYValue, String color1, String color2) {
-        int lineColor = Color.parseColor("#ebebeb");
-        int textColor = Color.parseColor("#999999");
+        int lineColor = Color.parseColor("#00ffffff");
+        int textColor = Color.parseColor("#00ffffff");
         if(StringUtil.isNotBlank(color1)){
             lineColor = Color.parseColor(color1);
             textColor = Color.parseColor(color2);
@@ -83,9 +83,9 @@ public class ChartHelper {
         if(maxYValue>0){
             axisLeft.setAxisMaximum(maxYValue);
         }
-        axisLeft.setGridColor(lineColor);
-        axisLeft.setTextColor(textColor);
-        axisLeft.setAxisLineColor(lineColor);
+//        axisLeft.setGridColor(lineColor);
+//        axisLeft.setTextColor(textColor);
+//        axisLeft.setAxisLineColor(lineColor);
 
         axisLeft.setDrawLabels(false);//不显示数值
         if(StringUtil.isNotBlank(color1)){

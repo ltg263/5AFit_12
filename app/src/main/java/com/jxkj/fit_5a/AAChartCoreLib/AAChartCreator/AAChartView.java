@@ -36,6 +36,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.ValueCallback;
@@ -54,6 +55,7 @@ import java.util.Map;
 
 public class AAChartView extends WebView {
 
+    public boolean isOnClick = true;
     public interface AAChartViewCallBack {
         void chartViewDidFinishLoad(AAChartView aaChartView);
         void chartViewMoveOverEventMessage(
@@ -73,6 +75,10 @@ public class AAChartView extends WebView {
         String jsStr = "setTheChartViewContentWidth('"
                 + this.contentWidth + "')";
         safeEvaluateJavaScriptString(jsStr);
+    }
+
+    public void setOnClick(boolean onClick) {
+        isOnClick = onClick;
     }
 
     public void setContentHeight(Float contentHeight) {
@@ -101,6 +107,13 @@ public class AAChartView extends WebView {
 
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(isOnClick){
+            return super.onTouchEvent(event);
+        }
+        return false;
+    }
 
     private String optionsJson;
 

@@ -31,6 +31,7 @@ import com.jxkj.fit_5a.entity.AdListData;
 import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
+import com.jxkj.fit_5a.view.activity.association.VideoActivity;
 import com.jxkj.fit_5a.view.activity.exercise.RateControlActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
@@ -38,6 +39,9 @@ import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeTopAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -224,9 +228,19 @@ public class HomeOneFragment extends BaseFragment {
         mHomeDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                AssociationActivity.startActivity(getActivity(),
-                        mHomeDynamicAdapter.getData().get(position).getPublisherId(),
-                        mHomeDynamicAdapter.getData().get(position).getMomentId());
+                if(mHomeDynamicAdapter.getData().get(position).getContentType().equals("3")){
+                    String media = mHomeDynamicAdapter.getData().get(position).getMedia();
+                    try {
+                        JSONArray jsonArray = new JSONArray(media);
+                        VideoActivity.startActivity(getActivity(),jsonArray.getJSONObject(0).getString("vedioId"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    AssociationActivity.startActivity(getActivity(),
+                            mHomeDynamicAdapter.getData().get(position).getPublisherId(),
+                            mHomeDynamicAdapter.getData().get(position).getMomentId());
+                }
             }
         });
     }
