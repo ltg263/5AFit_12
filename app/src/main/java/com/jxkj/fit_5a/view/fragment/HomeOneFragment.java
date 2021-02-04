@@ -15,21 +15,23 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAOptionsConstructor;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AASeriesElement;
-import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartAnimationType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolStyleType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAOptions;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAScrollablePlotArea;
+import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AATooltip;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.StringToUtil;
 import com.jxkj.fit_5a.entity.AdListData;
 import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
+import com.jxkj.fit_5a.entity.SportLogStatsBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.association.VideoActivity;
 import com.jxkj.fit_5a.view.activity.exercise.RateControlActivity;
@@ -44,6 +46,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -88,7 +92,8 @@ public class HomeOneFragment extends BaseFragment {
     private HomeShoppingAdapter mHomeShoppingAdapter;
     private HomeDynamicAdapter mHomeDynamicAdapter;
     private AAChartModel aaChartModel;
-
+    private boolean isDay7 = true;
+    String[] str7,str30;
     @Override
     protected int getContentView() {
         return R.layout.fragment_home_one;
@@ -96,103 +101,17 @@ public class HomeOneFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
+        str7 =  StringUtil.getDays(7,"dd").toArray(new String[7]);
+        str30 = StringUtil.getDays(30,"dd").toArray(new String[30]);
         initRvUi();
         getProductList(1);
         getAdList();
         getMomentQueryPopular();
-        initAAChar();
-    }
-
-    private AAOptions aaOptions;
-    private void initAAChar() {
-
-        AAChartModel aaChartModel = configureChartModel();
-        if (aaOptions == null) {
-            aaOptions = AAOptionsConstructor.configureChartOptions(aaChartModel);
-        }
-
-
-        mAAChartView.aa_drawChartWithChartOptions(aaOptions);
-    }
-
-
-    private AAChartModel configureChartModel() {
-
-        aaChartModel = new AAChartModel()
-                .chartType(AAChartType.Areaspline)
-                .title("")
-                .yAxisTitle("")
-                .yAxisLabelsEnabled(false)
-                .categories(new String[]{"1","2","3","4","5","6","7"})
-                .yAxisGridLineWidth(0f)
-                .legendEnabled(false)
-                .yAxisGridLineWidth(0f)
-                .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)
-                .gradientColorEnable(true)
-                .markerRadius(0f)
-                .markerSymbol(AAChartSymbolType.Circle)
-                .scrollablePlotArea(
-                        new AAScrollablePlotArea()
-//                                .minWidth(3000)
-                                .scrollPositionX(1f)
-                )
-                .series(configureTheStyleForDifferentTypeChart());
-        return aaChartModel;
-    }
-
-    private AASeriesElement[] configureTheStyleForDifferentTypeChart() {
-
-        AASeriesElement element1 = new AASeriesElement()
-                .name("卡路里")
-                .lineWidth(1f)
-                .color("#FFA1A1")
-                .data(new Object[]{50, 20, 30, 70, 30, 10, 10});
-
-        AASeriesElement element2 = new AASeriesElement()
-                .name("总里程")
-                .lineWidth(1f)
-                .color("#A1DFFF")
-                .data(new Object[]{80, 90, 10, 40, 40, 50, 10});
-
-        AASeriesElement element3 = new AASeriesElement()
-                .name("总时间")
-                .lineWidth(1f)
-                .color("#FFB300")
-                .data(new Object[]{20, 30, 80, 80, 60, 99, 10});
-
-        return new AASeriesElement[]{element1, element2, element3};
-    }
-
-    private AASeriesElement[] configureTheStyleForDifferentTypeChart1() {
-
-        AASeriesElement element1 = new AASeriesElement()
-                .name("卡路里")
-                .lineWidth(1f)
-                .color("#FFA1A1")
-                .data(new Object[]{50, 20, 30, 70, 30, 10, 10, 20, 30, 70, 30, 10, 10, 20, 30, 70, 30, 10, 10, 20, 30, 70, 30, 10, 10});
-
-        AASeriesElement element2 = new AASeriesElement()
-                .name("总里程")
-                .lineWidth(1f)
-                .color("#A1DFFF")
-                .data(new Object[]{80, 90, 10, 40, 40, 50, 10, 90, 10, 40, 40, 50, 10, 90, 10, 40, 40, 50, 10, 90, 10, 40, 40, 50, 10});
-
-        AASeriesElement element3 = new AASeriesElement()
-                .name("总时间")
-                .lineWidth(1f)
-                .color("#FFB300")
-                .data(new Object[]{20, 30, 80, 80, 60, 99, 10, 30, 80, 80, 60, 99, 10, 30, 80, 80, 60, 99, 10, 30, 80, 80, 60, 99, 10});
-
-        return new AASeriesElement[]{element1, element2, element3};
+        getSportLogStats(null);
     }
 
     private void initRvUi() {
-
-        List<String> list = new ArrayList<>();
-        list.add("卡路里");
-        list.add("总里程");
-        list.add("总时间");
-        mHomeTopAdapter = new HomeTopAdapter(list);
+        mHomeTopAdapter = new HomeTopAdapter(null);
         LinearLayoutManager ms = new LinearLayoutManager(getActivity());
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRvTopList.setLayoutManager(ms);
@@ -270,43 +189,166 @@ public class HomeOneFragment extends BaseFragment {
                 mIvZ.setVisibility(View.VISIBLE);
                 mTvTopJyz.setTextColor(getResources().getColor(R.color.black));
                 mTvTopJyy.setTextColor(getResources().getColor(R.color.color_666666));
-
-                mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(configureTheStyleForDifferentTypeChart());
+                isDay7 = true;
+                getSportLogStats(null);
                 break;
             case R.id.tv_top_jyy:
                 mIvY.setVisibility(View.VISIBLE);
                 mIvZ.setVisibility(View.INVISIBLE);
                 mTvTopJyz.setTextColor(getResources().getColor(R.color.color_666666));
                 mTvTopJyy.setTextColor(getResources().getColor(R.color.black));
-
-                mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(configureTheStyleForDifferentTypeChart1());
+                isDay7 = false;
+                getSportLogStats(null);
                 break;
             case R.id.on_rv_qd:
                 startActivity(new Intent(getActivity(), TaskSignActivity.class));
-                mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(configureTheStyleForDifferentTypeChart3());
                 break;
         }
     }
 
-    private AASeriesElement[] configureTheStyleForDifferentTypeChart3() {
+    private void getSportLogStats(String deviceType) {
+        Date nowDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(nowDate);
+        if(isDay7){
+            calendar.add(Calendar.DAY_OF_YEAR, -7);
+        }else{
+            calendar.add(Calendar.DAY_OF_YEAR, -30);
+        }
 
+        RetrofitUtil.getInstance().apiService()
+                .getSportLogStats(String.valueOf(System.currentTimeMillis()),String.valueOf(calendar.getTime().getTime()),deviceType)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<SportLogStatsBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<SportLogStatsBean> result) {
+                        if(isDataInfoSucceed(result)){
+                            List<SportLogStatsBean.ListBean> lists = result.getData().getList();
+                            initAAChar(lists);
+                            List<String> list = new ArrayList<>();
+                            list.add("卡路里");
+                            list.add("总里程");
+                            list.add("总计时间");
+                            list.add("平均时间");
+                            mHomeTopAdapter.setNewData(list,result.getData().getStats());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
+    }
+
+    private AAOptions aaOptions;
+    private void initAAChar(List<SportLogStatsBean.ListBean> lists) {
+        AAChartModel aaChartModel = configureChartModel(lists);
+        if (aaOptions == null) {
+            AATooltip aaTooltip = new AATooltip()
+                    .useHTML(true)
+                    .formatter("function () {\n" +
+                            "        var s = '' + '<b>' +  this.x + '</b>' + '日' + '<br/>';\n" +
+                            "        var colorDot1 = '<span style=\\\"' + 'color:#FFA1A1; font-size:13px\\\"' + '>◉</span> ';\n" +
+                            "        var colorDot2 = '<span style=\\\"' + 'color:#A1DFFF; font-size:13px\\\"' + '>◉</span> ';\n" +
+                            "        var colorDot3 = '<span style=\\\"' + 'color:#FFB300; font-size:13px\\\"' + '>◉</span> ';\n" +
+                            "        var s1 = colorDot1 + this.points[0].series.name + ': ' + this.points[0].y + '秒' + '<br/>';\n" +
+                            "        var s2 = colorDot2 + this.points[1].series.name + ': ' + this.points[1].y + 'cal' + '<br/>';\n" +
+                            "        var s3 = colorDot3 + this.points[2].series.name + ': ' + this.points[2].y + 'km';\n" +
+                            "        s += (s1 + s2+ s3);\n" +
+                            "        return s;\n" +
+                            "    }");
+
+            aaOptions = AAOptionsConstructor.configureChartOptions(aaChartModel);
+            aaOptions.tooltip(aaTooltip);
+        }
+        mAAChartView.aa_drawChartWithChartOptions(aaOptions);
+    }
+
+
+    private AAChartModel configureChartModel(List<SportLogStatsBean.ListBean> lists) {
+        String[] str = str7;
+        if(!isDay7){
+            str = str30;
+        }
+        aaChartModel = new AAChartModel()
+                .chartType(AAChartType.Areaspline)
+                .title("")
+                .yAxisTitle("")
+                .yAxisLabelsEnabled(false)
+                .categories(str)
+                .yAxisGridLineWidth(0f)
+                .xAxisGridLineWidth(0f)
+                .legendEnabled(false)
+                .yAxisGridLineWidth(0f)
+                .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)
+                .gradientColorEnable(true)
+                .markerRadius(0f)
+                .markerSymbol(AAChartSymbolType.Circle)
+                .scrollablePlotArea(
+                        new AAScrollablePlotArea()
+//                                .minWidth(1000)
+                                .scrollPositionX(1f)
+                )
+                .series(configureTheStyleForDifferentTypeChart(lists));
+        return aaChartModel;
+    }
+    private AASeriesElement[] configureTheStyleForDifferentTypeChart(List<SportLogStatsBean.ListBean> lists) {
+        ArrayList<String> a = StringUtil.getDays(7,"yyyyMMdd");
+        if(!isDay7){
+            a.clear();
+            a = StringUtil.getDays(7,"yyyyMMdd");
+        }
+        Object[] ydsc = new Object[a.size()];
+        Object[] kll = new Object[a.size()];
+        Object[] zlc = new Object[a.size()];
+        for(int i=0;i<a.size();i++){
+            if(lists==null || lists.size()==0){
+                ydsc[i] = 0;
+                kll[i] = 0;
+                zlc[i] = 0;
+                continue;
+            }
+            for(int j=0;i<lists.size();j++){
+                ydsc[i] = 0;
+                kll[i] = 0;
+                zlc[i] = 0;
+                if(a.get(i).equals(lists.get(j).getDatestr())){
+                    ydsc[i] = lists.get(j).getTotalDuration();
+                    kll[i] = lists.get(j).getTotalCalories();
+                    zlc[i] = lists.get(j).getTotalDistance();
+                    break;
+                }
+
+            }
+        }
         AASeriesElement element1 = new AASeriesElement()
-                .name("卡路里")
+                .name("运动时长")
                 .lineWidth(1f)
                 .color("#FFA1A1")
-                .data(new Object[]{50, 20, 30, 70, 30, 10, 10,11});
+                .data(ydsc);
 
         AASeriesElement element2 = new AASeriesElement()
-                .name("总里程")
+                .name("卡路里")
                 .lineWidth(1f)
                 .color("#A1DFFF")
-                .data(new Object[]{80, 90, 10, 40, 40, 50, 13,11});
+                .data(kll);
 
         AASeriesElement element3 = new AASeriesElement()
-                .name("总时间")
+                .name("总里程")
                 .lineWidth(1f)
                 .color("#FFB300")
-                .data(new Object[]{20, 30, 80, 80, 60, 99, 10,18});
+                .data(zlc);
 
         return new AASeriesElement[]{element1, element2, element3};
     }
@@ -339,8 +381,8 @@ public class HomeOneFragment extends BaseFragment {
                 });
 
     }
-    
-    
+
+
     private void getAdList() {
         RetrofitUtil.getInstance().apiService()
                 .getAdList()
