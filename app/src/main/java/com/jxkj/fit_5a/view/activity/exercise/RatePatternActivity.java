@@ -25,6 +25,7 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAOptions;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAScrollablePlotArea;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
@@ -64,6 +65,8 @@ public class RatePatternActivity extends BaseActivity {
     TextView tv_v;
     @BindView(R.id.tv_time)
     TextView tv_time;
+    @BindView(R.id.tv_movingTye)
+    TextView tv_movingTye;
     @BindView(R.id.tv_distance)
     TextView tv_distance;
     int loadCurrent = 1;
@@ -75,6 +78,7 @@ public class RatePatternActivity extends BaseActivity {
     private List<Byte> mData1 = new ArrayList<>();
     private List<Byte> mData2 = new ArrayList<>();
     private List<Byte> mData3 = new ArrayList<>();
+    private String movingTye;
 
     @Override
     protected int getContentView() {
@@ -88,6 +92,10 @@ public class RatePatternActivity extends BaseActivity {
             ToastUtils.showShort("请先链接设备");
             finish();
             return;
+        }
+        movingTye = getIntent().getStringExtra("movingTye");
+        if(StringUtil.isNotBlank(movingTye)){
+            tv_movingTye.setText(movingTye);
         }
         PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
         time = getIntent().getLongExtra("time",0);

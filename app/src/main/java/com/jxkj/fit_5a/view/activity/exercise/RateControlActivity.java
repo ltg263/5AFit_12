@@ -17,6 +17,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
@@ -68,12 +69,13 @@ public class RateControlActivity extends BaseActivity {
     TextView mTvYdsj;
     @BindView(R.id.tv_text)
     TextView mTvText;
-    int maxV = 210 - 33;
+    int maxV = 220;
     @BindView(R.id.tv_sj)
     TextView mTvSj;
     private FacilityManageAdapter mFacilityManageAdapter;
     private List<TemplateBean.ListBean> textList;
-
+    String movingTye = "";
+    double bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
     @Override
     protected int getContentView() {
         return R.layout.activity_rate_control;
@@ -87,6 +89,13 @@ public class RateControlActivity extends BaseActivity {
         mIvRightimg.setImageDrawable(getResources().getDrawable(R.drawable.icon_add_right));
         mTvRighttext.setText("新增");
         initRvUi();
+
+        bfb5 = (maxV-40)*0.5+40;
+        bfb6 = (maxV-40)*0.6+40;
+        bfb7 = (maxV-40)*0.7+40;
+        bfb8 = (maxV-40)*0.8+40;
+        bfb9 = (maxV-40)*0.9+40;
+        bfb  = (maxV-40)*1+40;
     }
 
     private void initRvUi() {
@@ -95,13 +104,13 @@ public class RateControlActivity extends BaseActivity {
         if(!SharedUtils.singleton().get(ConstValues.USER_AGE,"").equals("0")){
             age = SharedUtils.singleton().get(ConstValues.USER_AGE,"");
         }
-        String str = "亲, 您的年纪是<font color=\"#000000\"><big><big>"+age+"</big></big></font>" +
+        String str = "亲, 您的年纪是<font color=\"#000000\"><big><big>"+11+"</big></big></font>" +
                 "参考最大心跳值<font color=\"#000000\"><big><big>"+209+"</big></big></font>下/min";
         mTvXlzb.setText(Html.fromHtml(str));
         //0h0m表示无时间限制
         //(220-11)*131
         String str1 = "<font color=\"#000000\"><big><big>0</big></big></font>" +
-                "h<font color=\"#000000\"><big><big>0</big></big></font>m表示无时间限制";
+                "h<font color=\"#000000\"><big><big>0</big></ /font>m表示无时间限制";
         mTvYdsj.setText(Html.fromHtml(str1));
         List<String> list = new ArrayList<>();
         list.add("");
@@ -116,6 +125,19 @@ public class RateControlActivity extends BaseActivity {
 
         mRulerWeight.setOnValueChangeListener(value -> {
             mTvTz.setText(value + "");
+            if(value>0 && value<bfb5){
+                movingTye = "非运动区间(0~50%)(0bpm~"+(int) Math.ceil(bfb5)+"bpm)";
+            }else if(value>bfb5 && value<bfb6){
+                movingTye = "热身心率区间(50~60%)("+(int) Math.ceil(bfb5)+"bpm~"+(int) Math.ceil(bfb6)+"bpm)";
+            }else if(value>bfb6 && value<bfb7){
+                movingTye = "燃脂心率区间(60~70%)("+(int) Math.ceil(bfb6)+"bpm~"+(int) Math.ceil(bfb7)+"bpm)";
+            }else if(value>bfb7 && value<bfb8){
+                movingTye = "有氧耐力心率区间(70~80%)("+(int) Math.ceil(bfb7)+"bpm~"+(int) Math.ceil(bfb8)+"bpm)";
+            }else if(value>bfb8 && value<bfb9){
+                movingTye = "无氧耐力心率区间(80~90%)("+(int) Math.ceil(bfb8)+"bpm~"+(int) Math.ceil(bfb9)+"bpm)";
+            }else if(value>bfb9){
+                movingTye = "极限心率区间(90~100%)("+(int) Math.ceil(bfb9)+"bpm~"+(int) Math.ceil(bfb)+"bpm)";
+            }
             double ab = value / maxV;
             for (int i = 0; i < textList.size(); i++) {
                 TemplateBean.ListBean data = textList.get(i);
@@ -135,7 +157,7 @@ public class RateControlActivity extends BaseActivity {
          * @param maxValue   最小的数值
          * @param per   最小单位  如 1:表示 每2条刻度差为1.   0.1:表示 每2条刻度差为0.1 在demo中 身高mPerValue为1  体重mPerValue 为0.1
          */
-        mRulerWeight.setValue(60, 0, maxV, 1);
+        mRulerWeight.setValue(60, 40, 220, 1);
     }
 
     List<String> listTime = new ArrayList<>();
@@ -152,7 +174,7 @@ public class RateControlActivity extends BaseActivity {
                 break;
             case R.id.tv_ok:
                 if(PopupWindowLanYan.ble4Util.isConnect()){
-                    startActivity(new Intent(this, RatePatternActivity.class));
+                    IntentUtils.getInstence().intent(this, RatePatternActivity.class,"movingTye",movingTye);
                 }
                 break;
             case R.id.rl_1:

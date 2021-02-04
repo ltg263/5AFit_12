@@ -19,7 +19,18 @@ public class MianJavaDame {
 
 //        System.out.println("--->>"+ConstValues_Ly.getBaiShiGeX(12,2));
 //        Byte[] a = new Byte[]{1,25,55};
+//        10   220
 //        TimeThreadUtils.sendDataA6(10000,a);
+
+        int max = 209;
+        int min = 11;
+        System.out.println("--->>"+((max-min)*0.5+min));
+        System.out.println("--->>"+((max-min)*0.6+min));
+        System.out.println("--->>"+((max-min)*0.7+min));
+        System.out.println("--->>"+((max-min)*0.8+min));
+        System.out.println("--->>"+((max-min)*0.9+min));
+        System.out.println("--->>"+((max-min)*1+min));
+
     }
 
     /**

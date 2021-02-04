@@ -171,8 +171,8 @@
 
                 <RelativeLayout
                     android:id="@+id/rl"
-                    android:layout_width="90dp"
-                    android:layout_height="@dimen/dp_40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="@dimen/dp_10"
                     android:background="@drawable/bj_shape_line_theme_2">
@@ -181,12 +181,14 @@
                         android:id="@+id/tv_xz"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/dimen_5dp"
+                        android:layout_marginHorizontal="@dimen/dp_10"
                         android:layout_centerInParent="true"
                         android:drawableEnd="@drawable/icon_jiantou_xia_theme"
                         android:drawablePadding="@dimen/dimen_5dp"
                         android:text="饼状图"
                         android:textColor="@color/color_text_theme"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </RelativeLayout>
 
 
@@ -200,9 +202,9 @@
                     android:id="@+id/ll_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_below="@id/rl"
-                    android:layout_marginTop="@dimen/dimen_20dp"
-                    android:visibility="gone">
+                    android:layout_marginTop="@dimen/dimen_20dp">
 
                     <RelativeLayout
                         android:layout_width="0dp"
@@ -212,7 +214,7 @@
 
                         <ProgressBar
                             android:id="@+id/vertical_progressbar1"
-                            style="@style/Widget.ProgressBar.Vertical"
+                            style="@style/Widget.ProgressBar.VerticalJs"
                             android:layout_width="8dp"
                             android:layout_height="130dp"
                             android:progress="80" />
@@ -266,7 +268,7 @@
 
                         <ProgressBar
                             android:id="@+id/vertical_progressbar2"
-                            style="@style/Widget.ProgressBar.Vertical"
+                            style="@style/Widget.ProgressBar.VerticalJs"
                             android:layout_width="8dp"
                             android:layout_height="130dp"
                             android:progress="40" />
@@ -320,7 +322,7 @@
 
                         <ProgressBar
                             android:id="@+id/vertical_progressbar3"
-                            style="@style/Widget.ProgressBar.Vertical"
+                            style="@style/Widget.ProgressBar.VerticalJs"
                             android:layout_width="8dp"
                             android:layout_height="130dp"
                             android:progress="80" />
@@ -374,7 +376,7 @@
 
                         <ProgressBar
                             android:id="@+id/vertical_progressbar4"
-                            style="@style/Widget.ProgressBar.Vertical"
+                            style="@style/Widget.ProgressBar.VerticalJs"
                             android:layout_width="8dp"
                             android:layout_height="130dp"
                             android:progress="40" />
@@ -428,7 +430,7 @@
 
                         <ProgressBar
                             android:id="@+id/vertical_progressbar5"
-                            style="@style/Widget.ProgressBar.Vertical"
+                            style="@style/Widget.ProgressBar.VerticalJs"
                             android:layout_width="8dp"
                             android:layout_height="130dp"
                             android:progress="40" />
