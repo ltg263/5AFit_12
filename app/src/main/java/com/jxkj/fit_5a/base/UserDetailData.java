@@ -41,6 +41,7 @@ public class UserDetailData {
      */
 
     private String avatar;
+    private String age;
     private String backImg;
     private String bannedEndTime;
     private String bannedReason;
@@ -75,6 +76,14 @@ public class UserDetailData {
     private String updateTime;
     private String userNo;
     private String weight;
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
 
     public String getAvatar() {
         return avatar;

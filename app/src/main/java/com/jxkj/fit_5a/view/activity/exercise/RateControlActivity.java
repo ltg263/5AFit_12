@@ -2,7 +2,6 @@ package com.jxkj.fit_5a.view.activity.exercise;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +16,8 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.entity.TemplateBean;
@@ -90,10 +91,15 @@ public class RateControlActivity extends BaseActivity {
 
     private void initRvUi() {
         //亲, 您的年纪是30岁, 参考最大心跳值110下/min
-        String str = "亲, 您的年纪是<font color=\"#000000\"><big><big>30</big></big></font>" +
-                "参考最大心跳值<font color=\"#000000\"><big><big>110</big></big></font>下/min";
+        String age = "11";
+        if(!SharedUtils.singleton().get(ConstValues.USER_AGE,"").equals("0")){
+            age = SharedUtils.singleton().get(ConstValues.USER_AGE,"");
+        }
+        String str = "亲, 您的年纪是<font color=\"#000000\"><big><big>"+age+"</big></big></font>" +
+                "参考最大心跳值<font color=\"#000000\"><big><big>"+209+"</big></big></font>下/min";
         mTvXlzb.setText(Html.fromHtml(str));
         //0h0m表示无时间限制
+        //(220-11)*131
         String str1 = "<font color=\"#000000\"><big><big>0</big></big></font>" +
                 "h<font color=\"#000000\"><big><big>0</big></big></font>m表示无时间限制";
         mTvYdsj.setText(Html.fromHtml(str1));

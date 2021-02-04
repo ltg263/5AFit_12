@@ -23,7 +23,7 @@ public class ConstValues {
     public static final String USER_PHONE = "user_phone";
     public static final String USER_PASSWORD = "user_password";
     public static final String USER_NAME = "user_name";
-    public static final String USER_CREATETIME = "user_createtime";
+    public static final String USER_AGE = "user_age";
     public static final String USER_PORTRAIT = "user_portrait";
     public static final String PHONE = "phone";
     public static final String LAT = "lat";
@@ -33,7 +33,7 @@ public class ConstValues {
     public static final String IS_REALNAME = "is_realname";
     public static final String INTEGRALJUMP = "integral_jump";
     public static final String OPENSTART = "openstart";
-    public static final String AGREEMENT = "agreement";
+    public static final String USER_DETAIL = "user_detail";
 
     public static final String MY_BALANCE = "balance";//金豆
     public static final String MY_GIFTCOUNT = "giftCount";//礼物

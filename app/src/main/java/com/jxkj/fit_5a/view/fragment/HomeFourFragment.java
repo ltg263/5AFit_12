@@ -295,6 +295,7 @@ public class HomeFourFragment extends BaseFragment {
         GlideImageUtils.setGlideImage(getActivity(),data.getAvatar(),mIvAvatar);
         mTvNickName.setText(data.getNickName());
         mTvExplain.setText(data.getExplain());
+        SharedUtils.singleton().put(ConstValues.USER_AGE,data.getAge());
 
         if(StringUtil.isBlank(data.getLevelExpireTime())){
             return;

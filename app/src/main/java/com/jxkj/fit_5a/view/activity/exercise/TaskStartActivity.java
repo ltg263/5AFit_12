@@ -12,6 +12,7 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.view.activity.exercise.landscape.MotorPatternActivity;
+import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,6 +45,7 @@ public class TaskStartActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.rl_sbgl:
+                startActivity(new Intent(this, FacilityManageActivity.class));
                 break;
             case R.id.btn_start:
                 if(tv_lianjie.getText().toString().equals("运动设备未连接")){
