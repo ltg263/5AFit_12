@@ -27,8 +27,7 @@ public class HomeTwoTaskSelect extends BaseQuickAdapter<CircleTaskData, BaseView
             helper.setGone(R.id.rl_select_no,true).setGone(R.id.rl_select_yes,false);
         }
         helper.setText(R.id.tv_title,item.getName()).setText(R.id.tv_title1,item.getName())
-                .setText(R.id.tv_explain,item.getExplain()).setText(R.id.tv_explain1,item.getExplain())
-                .setText(R.id.tv_day,item.getExplain()).setText(R.id.tv_day1,item.getExplain())
+                .setText(R.id.tv_day,item.getHasDisplay()).setText(R.id.tv_day1,item.getHasDisplay())
                 .setText(R.id.tv_explain,item.getExplain()).setText(R.id.tv_explain1,item.getExplain());
     }
 
