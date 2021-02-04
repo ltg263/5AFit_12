@@ -524,4 +524,30 @@ public class StringUtil {
         return String.valueOf(duration);
     }
 
+    /**
+     * 获取过去7天内的日期数组
+     * @param intervals      intervals天内
+     * @return              日期数组
+     */
+    public static ArrayList<String> getDays(int intervals,String type) {
+        ArrayList<String> pastDaysList = new ArrayList<>();
+        for (int i = intervals -1; i >= 0; i--) {
+            pastDaysList.add(getPastDate(i,type));
+        }
+        return pastDaysList;
+    }
+    /**
+     * 获取过去第几天的日期
+     * @param past
+     * @param type
+     * @return
+     */
+    public static String getPastDate(int past, String type) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - past);
+        Date today = calendar.getTime();
+        SimpleDateFormat format = new SimpleDateFormat(type);
+        String result = format.format(today);
+        return result;
+    }
 }

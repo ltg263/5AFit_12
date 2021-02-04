@@ -50,6 +50,7 @@ import com.jxkj.fit_5a.entity.ShowOrderInfo;
 import com.jxkj.fit_5a.entity.SignatureBean;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 import com.jxkj.fit_5a.entity.SportLogBean;
+import com.jxkj.fit_5a.entity.SportLogStatsBean;
 import com.jxkj.fit_5a.entity.StsTokenBean;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
 import com.jxkj.fit_5a.entity.TaskCircleQueryBean;
@@ -563,6 +564,13 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_4 + "api/v1/user/sport/map/details")
     Observable<Result<MapDetailsBean>> getMapDetails(@Query("id") String id);
+
+    /**
+     * 运动记录统计
+     */
+    @GET(ConstValues.PORT_4 + "api/v1/user/sport/log/stats")
+    Observable<Result<SportLogStatsBean>> getSportLogStats(@Query("beignCreateTimestamp") String beignCreateTimestamp,
+                                                           @Query("endCreateTimestamp") String endCreateTimestamp, @Query("deviceType") String deviceType);
 
     /**
      * 宝箱领取
