@@ -32,6 +32,7 @@
                 android:drawableEnd="@drawable/icon_gywm_bz"
                 android:drawablePadding="@dimen/dp_10"
                 android:text="历史设备"
+                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -40,6 +41,7 @@
                 android:layout_width="@dimen/dimen_60dp"
                 android:layout_height="@dimen/dimen_2dp"
                 android:layout_marginTop="-5dp"
+                android:visibility="gone"
                 android:background="@drawable/line_shape_bj_select" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -47,13 +49,13 @@
                 android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/dimen_15dp" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_30dp"
                 android:text="心率指标"
                 android:textColor="@color/black"
                 android:textSize="18sp"
