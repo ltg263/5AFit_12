@@ -289,8 +289,9 @@ public class FacilityAddPpActivity extends BaseActivity {
         DialogUtils.showDialogLyState(FacilityAddPpActivity.this, str, 1, new DialogUtils.DialogLyInterface() {
             @Override
             public void btnConfirm() {
-//                startActivity(new Intent(FacilityAddPpActivity.this, InterestActivity.class));
+//                startActivity(new Intent(FacilityAddPpActivity. this, InterestActivity.class));
                 if(str.equals("连接成功")){
+                    dismiss();
                     TimeThreadUtils.sendDataA2();
                     startActivity(new Intent(FacilityAddPpActivity.this, MainActivity.class));
                 }

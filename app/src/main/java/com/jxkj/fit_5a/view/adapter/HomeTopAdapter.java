@@ -34,10 +34,10 @@ public class HomeTopAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
             helper.setText(R.id.tv_v,stats.getTotalDistance()+"km")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.icon_task_3));
         }else if(item.equals("总计时间")){
-            helper.setText(R.id.tv_v,stats.getTotalCalories()+"min")
+            helper.setText(R.id.tv_v,stats.getTotalDuration()+"min")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.icon_task_4));
         }else if(item.equals("平均时间")){
-            helper.setText(R.id.tv_v,stats.getTotalDuration()+"min")
+            helper.setText(R.id.tv_v,stats.getAvgDuration()+"min")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.icon_task_4));
         }
     }

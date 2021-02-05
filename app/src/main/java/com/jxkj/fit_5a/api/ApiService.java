@@ -44,6 +44,7 @@ import com.jxkj.fit_5a.entity.PostOrderInfo;
 import com.jxkj.fit_5a.entity.ProductDetailsBean;
 import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
+import com.jxkj.fit_5a.entity.RankDetailsData;
 import com.jxkj.fit_5a.entity.RankListData;
 import com.jxkj.fit_5a.entity.RankStatsData;
 import com.jxkj.fit_5a.entity.ShowOrderInfo;
@@ -220,6 +221,12 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_1 + "api/v1/rank/list")
     Observable<Result<RankListData>> getRankList(@Query("type") int type);
+
+    /**
+     * 排行榜详情
+     */
+    @GET(ConstValues.PORT_1 + "api/v1/rank/details")
+    Observable<Result<RankDetailsData>> getRankDetails(@Query("rankId") Integer rankId);
 
     /**
      * 排行榜排名
