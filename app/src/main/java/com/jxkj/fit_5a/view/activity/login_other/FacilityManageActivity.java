@@ -127,6 +127,7 @@ public class FacilityManageActivity extends BaseActivity {
     }
     public static void intentActivity(Context mContext){
 
-        mContext.startActivity(new Intent(mContext,FacilityManageActivity.class));
+        mContext.startActivity(new Intent(mContext, FacilityAddSbActivity.class));
+//        mContext.startActivity(new Intent(mContext,FacilityManageActivity.class));
     }
 }

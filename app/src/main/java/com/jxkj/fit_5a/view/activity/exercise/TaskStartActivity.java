@@ -45,7 +45,7 @@ public class TaskStartActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.rl_sbgl:
-                startActivity(new Intent(this, FacilityManageActivity.class));
+                FacilityManageActivity.intentActivity(this);
                 break;
             case R.id.btn_start:
                 if(tv_lianjie.getText().toString().equals("运动设备未连接")){

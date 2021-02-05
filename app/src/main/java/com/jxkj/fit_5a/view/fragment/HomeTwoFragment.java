@@ -120,8 +120,7 @@ public class HomeTwoFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_sbgl:
-                startActivity(new Intent(getActivity(),FacilityManageActivity.class));
-//                FacilityManageActivity.intentActivity(getActivity());
+                FacilityManageActivity.intentActivity(getActivity());
                 break;
             case R.id.tv_two_ri:
                 getRankList(3);
@@ -136,7 +135,6 @@ public class HomeTwoFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), RankListActivity.class));
                 break;
             case R.id.tv_ydjl:
-
                 startActivity(new Intent(getActivity(), ExerciseRecordActivity.class));
                 break;
         }

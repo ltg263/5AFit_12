@@ -45,11 +45,11 @@ public class SplashScreenActivity extends BaseActivity {
     }
 
     private void startUi() {
-        if (StringUtil.isBlank(SharedUtils.getToken()) || !isLogin()) {
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-            return;
-        }
+//        if (StringUtil.isBlank(SharedUtils.getToken()) || !isLogin()) {
+//            startActivity(new Intent(this, LoginActivity.class));
+//            finish();
+//            return;
+//        }
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
