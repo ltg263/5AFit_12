@@ -254,7 +254,7 @@ public class HomeOneFragment extends BaseFragment {
     private AAOptions aaOptions;
     private void initAAChar(List<SportLogStatsBean.ListBean> lists) {
         AAChartModel aaChartModel = configureChartModel(lists);
-        if (aaOptions == null) {
+//        if (aaOptions == null) {
             AATooltip aaTooltip = new AATooltip()
                     .useHTML(true)
                     .formatter("function () {\n" +
@@ -271,15 +271,17 @@ public class HomeOneFragment extends BaseFragment {
 
             aaOptions = AAOptionsConstructor.configureChartOptions(aaChartModel);
             aaOptions.tooltip(aaTooltip);
-        }
+//        }
         mAAChartView.aa_drawChartWithChartOptions(aaOptions);
     }
 
 
     private AAChartModel configureChartModel(List<SportLogStatsBean.ListBean> lists) {
-        String[] str = str7;
+        String[] str;
         if(!isDay7){
             str = str30;
+        }else{
+            str = str7;
         }
         aaChartModel = new AAChartModel()
                 .chartType(AAChartType.Areaspline)
@@ -307,7 +309,7 @@ public class HomeOneFragment extends BaseFragment {
         ArrayList<String> a = StringUtil.getDays(7,"yyyyMMdd");
         if(!isDay7){
             a.clear();
-            a = StringUtil.getDays(7,"yyyyMMdd");
+            a = StringUtil.getDays(30,"yyyyMMdd");
         }
         Object[] ydsc = new Object[a.size()];
         Object[] kll = new Object[a.size()];

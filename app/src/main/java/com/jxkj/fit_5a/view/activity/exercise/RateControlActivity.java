@@ -173,7 +173,7 @@ public class RateControlActivity extends BaseActivity {
                 startActivity(new Intent(this, FacilityAddSbActivity.class));
                 break;
             case R.id.tv_ok:
-                if(PopupWindowLanYan.ble4Util.isConnect()){
+                if(PopupWindowLanYan.ble4Util!=null && PopupWindowLanYan.ble4Util.isConnect()){
                     IntentUtils.getInstence().intent(this, RatePatternActivity.class,"movingTye",movingTye);
                 }
                 break;

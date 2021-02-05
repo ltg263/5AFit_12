@@ -98,7 +98,11 @@
                 android:layout_marginHorizontal="@dimen/dimen_15dp"
                 android:layout_marginTop="-50dp"
                 android:background="@drawable/ic_shade_img">
-
+                <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView
+                    android:id="@+id/AAChartView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/ll_top" />
                 <ImageView
                     android:id="@+id/iv_z"
                     android:layout_width="wrap_content"
@@ -146,13 +150,6 @@
 
 
                 </LinearLayout>
-<!--                https://github.com/AAChartModel/AAChartCore/blob/master/CHINESE-README.md-->
-                <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView
-                    android:id="@+id/AAChartView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/ll_top" />
-
 
             </RelativeLayout>
 
@@ -499,7 +496,8 @@
         android:layout_width="@dimen/dimen_50dp"
         android:layout_height="@dimen/dimen_50dp"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dimen_50dp"
         android:layout_marginEnd="@dimen/dimen_20dp"
         android:gravity="center">
 
