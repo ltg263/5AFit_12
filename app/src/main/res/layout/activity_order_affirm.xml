@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/iv_1"
-                android:text="收件人姓名  15888088888"
+                android:text="请选择收件人  "
                 android:textColor="@color/color_000000"
                 android:textSize="12sp" />
 
@@ -48,7 +48,7 @@
                 android:layout_below="@id/tv_name"
                 android:layout_marginTop="@dimen/common_margin_6"
                 android:layout_toEndOf="@id/iv_1"
-                android:text="浙江省 宁波市 鄞州区 XXX路XXX号 "
+                android:text=" "
                 android:textColor="@color/color_000000"
                 android:textSize="12sp" />
 

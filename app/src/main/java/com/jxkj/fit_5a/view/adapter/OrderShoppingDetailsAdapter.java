@@ -30,7 +30,7 @@ public class OrderShoppingDetailsAdapter extends BaseQuickAdapter<OrderInfoData.
     protected void convert(@NonNull BaseViewHolder helper, OrderInfoData.ListBean.ProductListBean item) {
         GlideImgLoader.loadImageViewRadius(activity, item.getImgUrl(),10, helper.getView(R.id.iv_img));
         String str = "单价：<font color=\"#FF6666\">"+item.getDeductIntegral()+"积分 + "+item.getPrice()+"元</font>";
-        if(Integer.valueOf(item.getPrice())==0){
+        if(Double.valueOf(item.getPrice())==0){
             str = "单价：<font color=\"#FF6666\">"+item.getDeductIntegral()+"积分";
         }
         helper.setText(R.id.tv_name,item.getName()).setText(R.id.tv_spec,"规格："+item.getSkuName())

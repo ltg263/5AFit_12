@@ -1,8 +1,6 @@
 package com.jxkj.fit_5a.view.activity.mine.order;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
@@ -21,14 +20,9 @@ import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.AddressData;
 import com.jxkj.fit_5a.entity.PostOrderInfo;
 import com.jxkj.fit_5a.entity.ShowOrderInfo;
-import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.OrderAffirmAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -155,7 +149,7 @@ public class OrderAffirmActivity extends BaseActivity {
                     @Override
                     public void onNext(Result result) {
                         if(isDataInfoSucceed(result)){
-
+                            ToastUtils.showShort("创建成功");
                         }
                     }
 
