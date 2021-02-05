@@ -55,17 +55,17 @@ public class TaskStartActivity extends BaseActivity {
                 startActivity(new Intent(this, CourseStartActivity.class));
                 break;
             case R.id.ll_kcxz:
-//                if(tv_lianjie.getText().toString().equals("运动设备未连接")){
-//                    ToastUtils.showShort("请先链接运动设备");
-//                    return;
-//                }
+                if(tv_lianjie.getText().toString().equals("运动设备未连接")){
+                    ToastUtils.showShort("请先链接运动设备");
+                    return;
+                }
                 startActivity(new Intent(this, CourseSelectionActivity.class));
                 break;
             case R.id.ll_xlkz:
-//                if(tv_lianjie.getText().toString().equals("运动设备未连接")){
-//                    ToastUtils.showShort("请先链接运动设备");
-//                    return;
-//                }
+                if(tv_lianjie.getText().toString().equals("运动设备未连接")){
+                    ToastUtils.showShort("请先链接运动设备");
+                    return;
+                }
                 RateControlActivity.intentActivity(this);
                 break;
         }
