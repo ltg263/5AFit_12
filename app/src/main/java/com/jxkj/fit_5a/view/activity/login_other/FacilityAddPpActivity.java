@@ -85,12 +85,7 @@ public class FacilityAddPpActivity extends BaseActivity {
             window = new PopupWindowLanYan(this, new PopupWindowLanYan.GiveDialogInterface() {
                 @Override
                 public void btnConfirm(String str) {
-                    if(StringUtil.isNotBlank(ConstValues_Ly.BRAND_ID)){
-                        dismiss();
-                        showDialogUi(str);
-                        return;
-                    }
-                    ToastUtils.showShort("请选择设备品牌");
+                    showDialogUi(str);
                 }
             });
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -227,6 +222,11 @@ public class FacilityAddPpActivity extends BaseActivity {
             case R.id.ll_connect:
 //                startActivity(new Intent(this,MainActivity2.class));
 //                goConnect();
+
+                if(StringUtil.isBlank(ConstValues_Ly.BRAND_ID)){
+                    ToastUtils.showShort("请选择设备品牌");
+                    return;
+                }
                 initPopupWindw();
                 break;
         }

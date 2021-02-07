@@ -48,8 +48,11 @@ public class DataManage {
 		int endPos = bytes.length-1;
 		ArrayList<Integer> mDataNew = new ArrayList<>();
 		for(int i=startPos;i<endPos;i++){
-			mDataNew.add(bytes[i]-1);
-
+			if(ConstValues_Ly.METER_ID==-56){
+				mDataNew.add((int) bytes[i]);
+			}else{
+				mDataNew.add(bytes[i]-1);
+			}
 		}
 		return mDataNew;
 	}

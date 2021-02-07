@@ -13,9 +13,9 @@ public class ConstValues_Ly {
 
     public static byte START = (byte) 0xF0;//Start
 
-    public static Integer maxLoad = 32;
+    public static Integer maxLoad = 0;
 
-    //Message
+    //Message動車錶
     public static byte MESSAGE_A0 = (byte) 0xA0;//Host Connect Check 连接检查
     public static byte MESSAGE_A1 = (byte) 0xA1;//Host Ask Max Load 问最大负载
     public static byte MESSAGE_A2 = (byte) 0xA2;//Host Ask Sport Data 问运动数据

@@ -99,7 +99,11 @@ public class RatePatternActivity extends BaseActivity {
         if(StringUtil.isNotBlank(movingTye)){
             tv_movingTye.setText(movingTye);
         }
-        PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+        if(ConstValues_Ly.METER_ID==-56){
+            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5));
+        }else {
+            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+        }
         startTimestamp = System.currentTimeMillis();
         time = getIntent().getLongExtra("time",0);
         if(time>0){
@@ -296,6 +300,14 @@ public class RatePatternActivity extends BaseActivity {
     double Distance;
     int duration;
     long startTimestamp;
+//    Data0：Client ID  Data8：Rpm2 Hi Byte(千,佰 00~99)
+//    Data1：Meter ID  Data9：Rpm2 Low Byte(拾,個00~99)
+//    Data2：Time Minute (分00~99)  Data10：Distance Hi Byte (佰,拾 00~99)
+//    Data3：Time Second (秒 00~59)  Data11：Distance Low Byte (個,小數點以下一位 0.0~9.9)
+//    Data4：Speed Hi Byte (佰,拾 00~99)  Data12：Calories Hi Byte(千,佰 00~99)
+//    Data5：Speed Low Byte (個,小數點以下一位 0.0~9.9)  Data13：Calories Low Byte(拾,個00~99)
+//    Data6：Rpm1 Hi Byte(千,佰 00~99)  Data14：Pulse Hi Byte(千,佰 00~99)
+//    Data7：Rpm1 Low Byte(拾,個00~99)  Data15：Pulse Low Byte(拾,個00~99)
 
     List<PostUser.SportLogInfo.DetailsBean.LogsBean> logs = new ArrayList<>();
     private void setData(ArrayList<Integer> dataList) {
@@ -323,18 +335,22 @@ public class RatePatternActivity extends BaseActivity {
         int PulseHi = dataList.get(10);//跳动 千,佰
         int PulseLow = dataList.get(11);//跳动 千,佰 -个十
         int Pulse = ConstValues_Ly.getQianBaiShiGe(PulseHi,PulseLow);
+        String Unit = "";
+        double Watt = 0;
+        if(ConstValues_Ly.METER_ID!=-56){
+            int WattHi = dataList.get(12);//瓦特--佰,拾
+            int WattLow = dataList.get(13);//瓦特--佰,拾个小数点下一位
+            Watt = ConstValues_Ly.getBaiShiGeX(WattHi,WattLow);
 
-        int WattHi = dataList.get(12);//瓦特--佰,拾
-        int WattLow = dataList.get(13);//瓦特--佰,拾个小数点下一位
-        double Watt = ConstValues_Ly.getBaiShiGeX(WattHi,WattLow);
+            loadCurrent = dataList.get(14);//阻力
+            ConstValues_Ly.CURRENT_STATE = dataList.get(15);
 
-        loadCurrent = dataList.get(14);//阻力
-        ConstValues_Ly.CURRENT_STATE = dataList.get(15);
-
-        String Unit ="Stop";
-        if(dataList.get(15)==1){
-            Unit ="Start";
+            Unit ="Stop";
+            if(dataList.get(15)==1){
+                Unit ="Start";
+            }
         }
+
         String re = "A2--->>>:时间："+time+",速度："+speed+",转数："+rpm+",距离："+Distance+",卡路里："+Calories
                 +",脉跳："+Pulse+",瓦特："+Watt+",阻力："+loadCurrent+",状态："+Unit;
         Log.w("---》》》", re);

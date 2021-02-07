@@ -169,6 +169,7 @@ public class PopupWindowLanYan extends PopupWindow {
             return;
         }
         if (Integer.toHexString(resultData[1] & 0xFF).equals("b0")) {
+            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A1));
             Log.w("---》》》", "连接中-------"+resultData_0xff);
             return;
         }
@@ -179,7 +180,6 @@ public class PopupWindowLanYan extends PopupWindow {
         }
         if (Integer.toHexString(data.getMessage() & 0xFF).equals("b5")) {
             Log.w("---》》》", "开始-------"+resultData_0xff);
-            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A1));
             return;
         }
 
