@@ -1,16 +1,8 @@
 package com.jxkj.fit_5a.view.activity.login_other;
 
-import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -23,6 +15,7 @@ import android.widget.VideoView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
@@ -33,17 +26,11 @@ import com.jxkj.fit_5a.base.DeviceDrandData;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
-import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils;
-import com.jxkj.fit_5a.lanya.Ble4_0Util;
-import com.jxkj.fit_5a.lanya.BleAdapter;
-import com.jxkj.fit_5a.lanya.BleUtil;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
-import com.jxkj.fit_5a.lanya.LinkActivity2;
-import com.jxkj.fit_5a.lanya.MainActivity2;
-import com.jxkj.fit_5a.view.activity.exercise.landscape.ClassicExerciseActivity;
 import com.jxkj.fit_5a.view.adapter.FacilityAddAdapter;
 
 import java.util.List;
@@ -83,8 +70,8 @@ public class FacilityAddPpActivity extends BaseActivity {
     @Override
     protected void initViews() {
         Bundle bundle = getIntent().getBundleExtra("bundle");
-        type = bundle.getString("id");//分类的ID
-
+        type = bundle.getString("id");//设备类型id
+        ConstValues_Ly.DEVICE_TYPE_ID = type;
         mTvTitle.setText(bundle.getString("name"));
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         queryDeviceBrandLists();
@@ -98,7 +85,12 @@ public class FacilityAddPpActivity extends BaseActivity {
             window = new PopupWindowLanYan(this, new PopupWindowLanYan.GiveDialogInterface() {
                 @Override
                 public void btnConfirm(String str) {
-                    showDialogUi(str);
+                    if(StringUtil.isNotBlank(ConstValues_Ly.BRAND_ID)){
+                        dismiss();
+                        showDialogUi(str);
+                        return;
+                    }
+                    ToastUtils.showShort("请选择设备品牌");
                 }
             });
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -221,7 +213,8 @@ public class FacilityAddPpActivity extends BaseActivity {
                 list.get(position).setSelect(true);
                 mFacilityAddAdapter.notifyDataSetChanged();
                 id = list.get(position).getId()+"";
-                queryDeviceLists(list.get(position).getId());
+                ConstValues_Ly.BRAND_ID = id;
+//                queryDeviceLists(list.get(position).getId());
             }
         });
     }
@@ -291,7 +284,6 @@ public class FacilityAddPpActivity extends BaseActivity {
             public void btnConfirm() {
 //                startActivity(new Intent(FacilityAddPpActivity. this, InterestActivity.class));
                 if(str.equals("连接成功")){
-                    dismiss();
                     TimeThreadUtils.sendDataA2();
                     startActivity(new Intent(FacilityAddPpActivity.this, MainActivity.class));
                 }

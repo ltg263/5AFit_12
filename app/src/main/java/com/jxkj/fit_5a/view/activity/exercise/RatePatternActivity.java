@@ -221,15 +221,20 @@ public class RatePatternActivity extends BaseActivity {
                             finish();
                             PostUser.SportLogInfo sportLogInfo= new PostUser.SportLogInfo();
                             sportLogInfo.setBai("11");
-                            sportLogInfo.setBrandId("72");
+                            sportLogInfo.setBrandId(ConstValues_Ly.BRAND_ID);
                             sportLogInfo.setCalories(String.valueOf(Calories));
-                            sportLogInfo.setDeviceType("230");
+                            sportLogInfo.setDeviceType(ConstValues_Ly.DEVICE_TYPE_ID);
                             sportLogInfo.setDistance(String.valueOf(Distance));
                             sportLogInfo.setDuration(String.valueOf(duration));
                             sportLogInfo.setEndTimestamp(String.valueOf(System.currentTimeMillis()));
                             sportLogInfo.setStartTimestamp(String.valueOf(startTimestamp));
                             sportLogInfo.setHeartRateSource("2");//1=器材;2=藍牙心跳;3=Apple Watch
-                            sportLogInfo.setTrainingMode("HeartRate");//目前只有HeartRate(心率)、Program(课程)
+
+                            if(StringUtil.isNotBlank(movingTye)){
+                                sportLogInfo.setTrainingMode("HeartRate");//目前只有HeartRate(心率)、Program(课程)
+                            }else{
+                                sportLogInfo.setTrainingMode("Program");
+                            }
                             PostUser.SportLogInfo.DetailsBean deleteDatabase = new PostUser.SportLogInfo.DetailsBean();
                             deleteDatabase.setLogs(logs);
                             sportLogInfo.setDetails(deleteDatabase);

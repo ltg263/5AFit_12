@@ -30,6 +30,9 @@ public class ConstValues_Ly {
     public static byte CLIENT_ID = 0x00;//Client ID
     public static byte METER_ID = 0x00;//Meter ID
 
+    public static String BRAND_ID = null;//	品牌id
+    public static String DEVICE_TYPE_ID = null;//设备类型id
+
 
     /**
      * [-16, -79, 56, 1, 33, -5]
