@@ -69,7 +69,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
         switch (item.getStatus()) {
             case "1"://待支付
                 btn0.setVisibility(View.VISIBLE);
-                btn0.setText("联系商家");
+//                btn0.setText("联系商家");
                 btn1.setVisibility(View.VISIBLE);
                 btn1.setText("取消订单");
                 btn2.setVisibility(View.VISIBLE);
@@ -77,13 +77,13 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
                 break;
             case "2"://待发货
                 btn0.setVisibility(View.VISIBLE);
-                btn0.setText("联系商家");
+//                btn0.setText("联系商家");
                 btn1.setVisibility(View.VISIBLE);
                 btn1.setText("提醒发货");
                 break;
             case "3"://待收货
                 btn0.setVisibility(View.VISIBLE);
-                btn0.setText("联系商家");
+//                btn0.setText("联系商家");
                 btn1.setVisibility(View.VISIBLE);
                 btn1.setText("查看物流");
                 btn2.setVisibility(View.VISIBLE);
@@ -91,7 +91,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
                 break;
             case "4"://待评价
                 btn0.setVisibility(View.VISIBLE);
-                btn0.setText("联系商家");
+//                btn0.setText("联系商家");
                 btn1.setVisibility(View.VISIBLE);
                 btn1.setText("删除订单");
                 btn2.setVisibility(View.VISIBLE);
@@ -107,7 +107,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
             case "7"://已过期
             case "8"://已超时
                 btn0.setVisibility(View.VISIBLE);
-                btn0.setText("联系商家");
+//                btn0.setText("联系商家");
                 btn1.setVisibility(View.VISIBLE);
                 btn1.setText("删除订单");
                 break;
