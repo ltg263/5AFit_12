@@ -25,6 +25,8 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAOptions;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAScrollablePlotArea;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.PostUser;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
@@ -98,6 +100,7 @@ public class RatePatternActivity extends BaseActivity {
             tv_movingTye.setText(movingTye);
         }
         PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+        startTimestamp = System.currentTimeMillis();
         time = getIntent().getLongExtra("time",0);
         if(time>0){
             byte[] data =  getIntent().getByteArrayExtra("data");
@@ -119,10 +122,18 @@ public class RatePatternActivity extends BaseActivity {
         /**
          * 广播动态注册
          */
-        MyReceiver mMyReceiver = new MyReceiver();//集成广播的类
+        mMyReceiver = new MyReceiver();//集成广播的类
         IntentFilter filter = new IntentFilter("com.jxkj.fit_5a.view.activity.exercise.RatePatternActivity");// 创建IntentFilter对象
         registerReceiver(mMyReceiver, filter);// 注册Broadcast Receive
 
+    }
+    MyReceiver mMyReceiver;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mMyReceiver!=null){
+            unregisterReceiver(mMyReceiver);
+        }
     }
 
     private AAOptions aaOptions;
@@ -208,6 +219,21 @@ public class RatePatternActivity extends BaseActivity {
                             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x03));
                             startActivity(new Intent(RatePatternActivity.this, TaskFinishActivity.class));
                             finish();
+                            PostUser.SportLogInfo sportLogInfo= new PostUser.SportLogInfo();
+                            sportLogInfo.setBai("11");
+                            sportLogInfo.setBrandId("72");
+                            sportLogInfo.setCalories(String.valueOf(Calories));
+                            sportLogInfo.setDeviceType("230");
+                            sportLogInfo.setDistance(String.valueOf(Distance));
+                            sportLogInfo.setDuration(String.valueOf(duration));
+                            sportLogInfo.setEndTimestamp(String.valueOf(System.currentTimeMillis()));
+                            sportLogInfo.setStartTimestamp(String.valueOf(startTimestamp));
+                            sportLogInfo.setHeartRateSource("2");//1=器材;2=藍牙心跳;3=Apple Watch
+                            sportLogInfo.setTrainingMode("HeartRate");//目前只有HeartRate(心率)、Program(课程)
+                            PostUser.SportLogInfo.DetailsBean deleteDatabase = new PostUser.SportLogInfo.DetailsBean();
+                            deleteDatabase.setLogs(logs);
+                            sportLogInfo.setDetails(deleteDatabase);
+                            HttpRequestUtils.psotUserSportLog(sportLogInfo);
                         }else{
                             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
                             dismiss();
@@ -261,9 +287,16 @@ public class RatePatternActivity extends BaseActivity {
             }
         }
     }
+    int Calories;
+    double Distance;
+    int duration;
+    long startTimestamp;
+
+    List<PostUser.SportLogInfo.DetailsBean.LogsBean> logs = new ArrayList<>();
     private void setData(ArrayList<Integer> dataList) {
         int timeMinute =  dataList.get(0);//时间-分
         int timeSecond =  dataList.get(1);//时间-秒
+        duration = timeMinute*60+timeSecond;
         String time = ConstValues_Ly.getTime(timeMinute,timeSecond);
 
         int speedHi = dataList.get(2);//速度-百十
@@ -276,15 +309,15 @@ public class RatePatternActivity extends BaseActivity {
 
         int DistanceHi = dataList.get(6);//距离-百十
         int DistanceLow = dataList.get(7);//距离-个小数点下一位
-        double Distance = ConstValues_Ly.getBaiShiGeX(DistanceHi,DistanceLow);
+        Distance = ConstValues_Ly.getBaiShiGeX(DistanceHi,DistanceLow);
 
         int CaloriesHi = dataList.get(8);// 卡路里 -千,佰
         int CaloriesLow = dataList.get(9);// 卡路里 -个十
-        double Calories = ConstValues_Ly.getQianBaiShiGe(CaloriesHi,CaloriesLow);
+        Calories = ConstValues_Ly.getQianBaiShiGe(CaloriesHi,CaloriesLow);
 
         int PulseHi = dataList.get(10);//跳动 千,佰
         int PulseLow = dataList.get(11);//跳动 千,佰 -个十
-        double Pulse = ConstValues_Ly.getQianBaiShiGe(PulseHi,PulseLow);
+        int Pulse = ConstValues_Ly.getQianBaiShiGe(PulseHi,PulseLow);
 
         int WattHi = dataList.get(12);//瓦特--佰,拾
         int WattLow = dataList.get(13);//瓦特--佰,拾个小数点下一位
@@ -317,6 +350,11 @@ public class RatePatternActivity extends BaseActivity {
         mData2.add((byte) rpm);
         mData3.add((byte) Watt);
         mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(getDataList(mData1,mData2,mData3));
+
+        logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
+                String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
+                null,String.valueOf(loadCurrent),String.valueOf(loadCurrent),
+                String.valueOf(rpm),String.valueOf(speed),String.valueOf(System.currentTimeMillis()),String.valueOf(Watt)));
         return;
     }
 }

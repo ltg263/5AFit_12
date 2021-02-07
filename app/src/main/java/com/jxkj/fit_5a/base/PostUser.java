@@ -1,5 +1,7 @@
 package com.jxkj.fit_5a.base;
 
+import java.util.List;
+
 public class PostUser {
 
 
@@ -302,197 +304,249 @@ public class PostUser {
 
     public static class SportLogInfo{
 
-
         /**
-         * cal : {}
-         * datestr : 0
-         * deviceId : 0
-         * deviceImg :
-         * deviceName :
-         * deviceNo :
+         * bai : 0
+         * brandId : 0
+         * calories : 0
+         * details : {"logs":[{"calories":0,"distance":0,"heartRate":0,"incline":0,"intensity":0,"resistanceLevel":0,"rpm":0,"speed":0,"timeStamp":0,"watt":0}]}
          * deviceType : 0
+         * distance : 0
          * duration : 0
-         * heartRate : {}
-         * id :
-         * journey : {}
-         * logDetails :
-         * maxHeartRate : {}
-         * minHeartRate : {}
-         * pai : {}
-         * type : 0
-         * uploadTime :
+         * endTimestamp : 0
+         * heartRateSource : 0
+         * startTimestamp : 0
+         * trainingMode :
          */
 
-        private CalBean cal;
-        private int datestr;
-        private int deviceId;
-        private String deviceImg;
-        private String deviceName;
-        private String deviceNo;
-        private int deviceType;
-        private int duration;
-        private HeartRateBean heartRate;
-        private String id;
-        private JourneyBean journey;
-        private String logDetails;
-        private MaxHeartRateBean maxHeartRate;
-        private MinHeartRateBean minHeartRate;
-        private PaiBean pai;
-        private int type;
-        private String uploadTime;
+        private String bai;
+        private String brandId;
+        private String calories;
+        private DetailsBean details;
+        private String deviceType;
+        private String distance;
+        private String duration;
+        private String endTimestamp;
+        private String heartRateSource;
+        private String startTimestamp;
+        private String trainingMode;
 
-        public CalBean getCal() {
-            return cal;
+        public String getBai() {
+            return bai;
         }
 
-        public void setCal(CalBean cal) {
-            this.cal = cal;
+        public void setBai(String bai) {
+            this.bai = bai;
         }
 
-        public int getDatestr() {
-            return datestr;
+        public String getBrandId() {
+            return brandId;
         }
 
-        public void setDatestr(int datestr) {
-            this.datestr = datestr;
+        public void setBrandId(String brandId) {
+            this.brandId = brandId;
         }
 
-        public int getDeviceId() {
-            return deviceId;
+        public String getCalories() {
+            return calories;
         }
 
-        public void setDeviceId(int deviceId) {
-            this.deviceId = deviceId;
+        public void setCalories(String calories) {
+            this.calories = calories;
         }
 
-        public String getDeviceImg() {
-            return deviceImg;
+        public DetailsBean getDetails() {
+            return details;
         }
 
-        public void setDeviceImg(String deviceImg) {
-            this.deviceImg = deviceImg;
+        public void setDetails(DetailsBean details) {
+            this.details = details;
         }
 
-        public String getDeviceName() {
-            return deviceName;
-        }
-
-        public void setDeviceName(String deviceName) {
-            this.deviceName = deviceName;
-        }
-
-        public String getDeviceNo() {
-            return deviceNo;
-        }
-
-        public void setDeviceNo(String deviceNo) {
-            this.deviceNo = deviceNo;
-        }
-
-        public int getDeviceType() {
+        public String getDeviceType() {
             return deviceType;
         }
 
-        public void setDeviceType(int deviceType) {
+        public void setDeviceType(String deviceType) {
             this.deviceType = deviceType;
         }
 
-        public int getDuration() {
+        public String getDistance() {
+            return distance;
+        }
+
+        public void setDistance(String distance) {
+            this.distance = distance;
+        }
+
+        public String getDuration() {
             return duration;
         }
 
-        public void setDuration(int duration) {
+        public void setDuration(String duration) {
             this.duration = duration;
         }
 
-        public HeartRateBean getHeartRate() {
-            return heartRate;
+        public String getEndTimestamp() {
+            return endTimestamp;
         }
 
-        public void setHeartRate(HeartRateBean heartRate) {
-            this.heartRate = heartRate;
+        public void setEndTimestamp(String endTimestamp) {
+            this.endTimestamp = endTimestamp;
         }
 
-        public String getId() {
-            return id;
+        public String getHeartRateSource() {
+            return heartRateSource;
         }
 
-        public void setId(String id) {
-            this.id = id;
+        public void setHeartRateSource(String heartRateSource) {
+            this.heartRateSource = heartRateSource;
         }
 
-        public JourneyBean getJourney() {
-            return journey;
+        public String getStartTimestamp() {
+            return startTimestamp;
         }
 
-        public void setJourney(JourneyBean journey) {
-            this.journey = journey;
+        public void setStartTimestamp(String startTimestamp) {
+            this.startTimestamp = startTimestamp;
         }
 
-        public String getLogDetails() {
-            return logDetails;
+        public String getTrainingMode() {
+            return trainingMode;
         }
 
-        public void setLogDetails(String logDetails) {
-            this.logDetails = logDetails;
+        public void setTrainingMode(String trainingMode) {
+            this.trainingMode = trainingMode;
         }
 
-        public MaxHeartRateBean getMaxHeartRate() {
-            return maxHeartRate;
-        }
+        public static class DetailsBean {
+            private List<LogsBean> logs;
 
-        public void setMaxHeartRate(MaxHeartRateBean maxHeartRate) {
-            this.maxHeartRate = maxHeartRate;
-        }
+            public List<LogsBean> getLogs() {
+                return logs;
+            }
 
-        public MinHeartRateBean getMinHeartRate() {
-            return minHeartRate;
-        }
+            public void setLogs(List<LogsBean> logs) {
+                this.logs = logs;
+            }
 
-        public void setMinHeartRate(MinHeartRateBean minHeartRate) {
-            this.minHeartRate = minHeartRate;
-        }
+            public static class LogsBean {
+                /**
+                 * calories : 0
+                 * distance : 0
+                 * heartRate : 0
+                 * incline : 0
+                 * intensity : 0
+                 * resistanceLevel : 0
+                 * rpm : 0
+                 * speed : 0
+                 * timeStamp : 0
+                 * watt : 0
+                 */
 
-        public PaiBean getPai() {
-            return pai;
-        }
+                private String calories;
+                private String distance;
+                private String heartRate;
+                private String incline;
+                private String intensity;
+                private String resistanceLevel;
+                private String rpm;
+                private String speed;
+                private String timeStamp;
+                private String watt;
 
-        public void setPai(PaiBean pai) {
-            this.pai = pai;
-        }
+                public LogsBean(String calories, String distance, String heartRate, String incline, String intensity, String resistanceLevel, String rpm, String speed, String timeStamp, String watt) {
+                    this.calories = calories;
+                    this.distance = distance;
+                    this.heartRate = heartRate;
+                    this.incline = incline;
+                    this.intensity = intensity;
+                    this.resistanceLevel = resistanceLevel;
+                    this.rpm = rpm;
+                    this.speed = speed;
+                    this.timeStamp = timeStamp;
+                    this.watt = watt;
+                }
 
-        public int getType() {
-            return type;
-        }
+                public String getCalories() {
+                    return calories;
+                }
 
-        public void setType(int type) {
-            this.type = type;
-        }
+                public void setCalories(String calories) {
+                    this.calories = calories;
+                }
 
-        public String getUploadTime() {
-            return uploadTime;
-        }
+                public String getDistance() {
+                    return distance;
+                }
 
-        public void setUploadTime(String uploadTime) {
-            this.uploadTime = uploadTime;
-        }
+                public void setDistance(String distance) {
+                    this.distance = distance;
+                }
 
-        public static class CalBean {
-        }
+                public String getHeartRate() {
+                    return heartRate;
+                }
 
-        public static class HeartRateBean {
-        }
+                public void setHeartRate(String heartRate) {
+                    this.heartRate = heartRate;
+                }
 
-        public static class JourneyBean {
-        }
+                public String getIncline() {
+                    return incline;
+                }
 
-        public static class MaxHeartRateBean {
-        }
+                public void setIncline(String incline) {
+                    this.incline = incline;
+                }
 
-        public static class MinHeartRateBean {
-        }
+                public String getIntensity() {
+                    return intensity;
+                }
 
-        public static class PaiBean {
+                public void setIntensity(String intensity) {
+                    this.intensity = intensity;
+                }
+
+                public String getResistanceLevel() {
+                    return resistanceLevel;
+                }
+
+                public void setResistanceLevel(String resistanceLevel) {
+                    this.resistanceLevel = resistanceLevel;
+                }
+
+                public String getRpm() {
+                    return rpm;
+                }
+
+                public void setRpm(String rpm) {
+                    this.rpm = rpm;
+                }
+
+                public String getSpeed() {
+                    return speed;
+                }
+
+                public void setSpeed(String speed) {
+                    this.speed = speed;
+                }
+
+                public String getTimeStamp() {
+                    return timeStamp;
+                }
+
+                public void setTimeStamp(String timeStamp) {
+                    this.timeStamp = timeStamp;
+                }
+
+                public String getWatt() {
+                    return watt;
+                }
+
+                public void setWatt(String watt) {
+                    this.watt = watt;
+                }
+            }
         }
     }
 

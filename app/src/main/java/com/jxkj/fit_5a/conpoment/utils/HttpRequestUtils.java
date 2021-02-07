@@ -163,9 +163,7 @@ public class HttpRequestUtils {
                 });
     }
 
-    public static void psotUserSportLog() {
-        PostUser.SportLogInfo sportLogInfo= new PostUser.SportLogInfo();
-//        sportLogInfo.setCal();
+    public static void psotUserSportLog(PostUser.SportLogInfo sportLogInfo) {
         RetrofitUtil.getInstance().apiService()
                 .psotUserSportLog(sportLogInfo)
                 .observeOn(AndroidSchedulers.mainThread())
