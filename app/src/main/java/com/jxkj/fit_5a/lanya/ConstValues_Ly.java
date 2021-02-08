@@ -33,6 +33,8 @@ public class ConstValues_Ly {
     public static String BRAND_ID = null;//	品牌id
     public static String DEVICE_TYPE_ID = null;//设备类型id
 
+    public static byte[] METER_ID_S = new byte[]{1,-56};
+
 
     /**
      * [-16, -79, 56, 1, 33, -5]
@@ -224,7 +226,7 @@ public class ConstValues_Ly {
 
     /**
      * int 转byte
-     * @param n
+     * @param
      * @return
      */
     public static String byteToHex(int n) {

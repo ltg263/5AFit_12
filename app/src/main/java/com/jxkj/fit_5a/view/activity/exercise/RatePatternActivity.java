@@ -99,7 +99,7 @@ public class RatePatternActivity extends BaseActivity {
         if(StringUtil.isNotBlank(movingTye)){
             tv_movingTye.setText(movingTye);
         }
-        if(ConstValues_Ly.METER_ID==-56){
+        if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5));
         }else {
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
@@ -337,7 +337,7 @@ public class RatePatternActivity extends BaseActivity {
         int Pulse = ConstValues_Ly.getQianBaiShiGe(PulseHi,PulseLow);
         String Unit = "";
         double Watt = 0;
-        if(ConstValues_Ly.METER_ID!=-56){
+        if(ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[0]){
             int WattHi = dataList.get(12);//瓦特--佰,拾
             int WattLow = dataList.get(13);//瓦特--佰,拾个小数点下一位
             Watt = ConstValues_Ly.getBaiShiGeX(WattHi,WattLow);
