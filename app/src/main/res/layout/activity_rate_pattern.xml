@@ -91,6 +91,13 @@
                 android:layout_marginTop="@dimen/dimen_25dp"
                 android:background="@drawable/ic_shade_img">
 
+                <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView
+                    android:id="@+id/AAChartView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/ll_top" />
+
+
                 <ImageView
                     android:id="@+id/ll_xl"
                     android:layout_width="match_parent"
@@ -188,12 +195,6 @@
 
 
                 </LinearLayout>
-                <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView
-                    android:id="@+id/AAChartView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/ll_top" />
-
             </RelativeLayout>
 
             <TextView
