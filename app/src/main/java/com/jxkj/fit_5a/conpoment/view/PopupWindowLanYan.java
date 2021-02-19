@@ -87,6 +87,12 @@ public class PopupWindowLanYan extends PopupWindow {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                dismiss();
+                ble4Util.setServiceUUid("49535343-fe7d-4ae5-8fa9-9fafd205e455");
+                BluetoothDevice mBluetoothDevice = (BluetoothDevice) bleadapter.getItem(i);
+                if(mBluetoothDevice.getName().equals("i-Console+1357")){
+                    ble4Util.setServiceUUid("0000fff0-0000-1000-8000-00805f9b34fb");
+                }
                 ble4Util.stopScan();
 
                 ble4Util.connect(bleadapter.getDevice(i).getAddress(), new BleUtil.CallBack() {
@@ -98,6 +104,7 @@ public class PopupWindowLanYan extends PopupWindow {
                             BleName = bleadapter.getDevice(i).getName();
                             value = "连接成功";
                         } else if (newState == BluetoothGatt.STATE_DISCONNECTED){
+                            BleName = bleadapter.getDevice(i).getName();
                             value = "连接失败";
                         } else if(newState == BluetoothGatt.STATE_CONNECTING){
                             value = "连接设备中";
@@ -164,6 +171,7 @@ public class PopupWindowLanYan extends PopupWindow {
         for (int i = 0; i < resultData.length; i++) {
             resultData_0xff += Integer.toHexString(resultData[i] & 0xFF)+",";
         }
+        Log.w("---》》》","接收resultData_0xff："+resultData_0xff);
         if(resultData.length > 2 && Integer.toHexString(resultData[1] & 0xFF).equals("b7")){
             Log.w("---》》》","接收：错误信息");
             return;

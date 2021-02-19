@@ -48,10 +48,12 @@ public class DataManage {
 		int endPos = bytes.length-1;
 		ArrayList<Integer> mDataNew = new ArrayList<>();
 		for(int i=startPos;i<endPos;i++){
-			if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
-				mDataNew.add((int) bytes[i]);
-			}else{
+			if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]) ){
 				mDataNew.add(bytes[i]-1);
+			}else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
+				mDataNew.add((int) bytes[i]);
+			}else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2]){
+				mDataNew.add((int) bytes[i]);
 			}
 		}
 		return mDataNew;

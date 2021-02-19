@@ -61,7 +61,7 @@ public class TopicAllActivity extends BaseActivity {
         mTopicListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                MineTopicActivity.startActivity(TopicAllActivity.this,mTopicListAdapter.getData().get(position).getId()+"");
+//                MineTopicActivity.startActivity(TopicAllActivity.this,mTopicListAdapter.getData().get(position).getId()+"");
             }
         });
         getAllTopic();
@@ -75,7 +75,7 @@ public class TopicAllActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_search_topic:
-                IntentUtils.getInstence().intent(this, SearchGoodsActivity.class,"searchType",2);
+//                IntentUtils.getInstence().intent(this, SearchGoodsActivity.class,"searchType",2);
                 break;
             case R.id.rl1:
                 getAllTopic();

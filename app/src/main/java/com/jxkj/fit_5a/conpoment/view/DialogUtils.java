@@ -151,7 +151,7 @@ public class DialogUtils {
      * @param state
      * @param dialogLyInterface
      */
-    public static void showDialogLyState(Activity context,String title, int state, final DialogLyInterface dialogLyInterface) {
+    public static void showDialogLyState(Activity context,String title, String state, final DialogLyInterface dialogLyInterface) {
 
         final Dialog dialog = new Dialog(context, R.style.Dialog_Fullscreen);
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_lanyan_state, null);
@@ -166,12 +166,12 @@ public class DialogUtils {
         ImageView iv_close = view.findViewById(R.id.iv_close);
         tv_name.setText(title);
 //        Glide.with(context).load(imgUrl).into(iv_icon);
-        if(state==1){
-            tv_state.setText("蓝牙连接成功");
-            tv_ok.setText("OK");
+        if(state.equals("连接成功")){
+            tv_state.setText(state);
+            tv_ok.setText("确定");
         }else{
-            tv_state.setText("蓝牙连接失败");
-            tv_ok.setText("重新连接");
+            tv_state.setText(state);
+            tv_ok.setText("确定");
         }
         iv_close.setOnClickListener(new View.OnClickListener() {
 

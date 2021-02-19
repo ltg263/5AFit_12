@@ -33,7 +33,7 @@ public class ConstValues_Ly {
     public static String BRAND_ID = null;//	品牌id
     public static String DEVICE_TYPE_ID = null;//设备类型id
 
-    public static byte[] METER_ID_S = new byte[]{1,-56};
+    public static byte[] METER_ID_S = new byte[]{1,-56,-76,-26};//0X00+1  0XC8  0XB4  0XE6+1
 
 
     /**
@@ -74,6 +74,10 @@ public class ConstValues_Ly {
     }
 
     public static byte[] getByteData(byte message, byte data) {
+        return new byte[]{START, message, CLIENT_ID, METER_ID,  data, getCHECKSUM(message, data)};
+    }
+
+    public static byte[] getByteDataJia(byte message, byte data) {
         return new byte[]{START, message, CLIENT_ID, METER_ID, (byte) (data+1), getCHECKSUM(message, (byte) (data+1))};
     }
 

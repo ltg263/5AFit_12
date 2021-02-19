@@ -56,6 +56,7 @@ public class Ble4_0Util implements BleUtil {
     private BluetoothGattCharacteristic mDevReadCharacteristic; // 读服务
     private BluetoothAdapter.LeScanCallback leScanCallback;
     private BluetoothDevice curConnectDev;
+    int newStates = -1;
 
     public Ble4_0Util(Activity context) {
         this.context = context;
@@ -115,7 +116,7 @@ public class Ble4_0Util implements BleUtil {
 
     @Override
     public boolean connect(String blemac, final CallBack callback) {
-
+        callback.StateChange(0, BluetoothGatt.STATE_CONNECTING);
         curConnectDev = mBluetoothAdapter.getRemoteDevice(blemac);
         if (curConnectDev == null) {
             Log.e("BLE", "蓝牙" + blemac + "未找到");
@@ -145,6 +146,8 @@ public class Ble4_0Util implements BleUtil {
             @Override
             public void onConnectionStateChange(final BluetoothGatt gatt, int status, int newState) {
                 super.onConnectionStateChange(gatt, status, newState);
+                Log.w("---》》》","onConnectionStateChange"+newState);
+                newStates = newState;
                 if (newState == BluetoothGatt.STATE_CONNECTED) {
                     try {
                         Thread.sleep(1000);
@@ -154,15 +157,13 @@ public class Ble4_0Util implements BleUtil {
 
                     //设置接收数据长度，默认20
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        Log.w("---","++++"+status);
-                        mBluetoothGatt.requestMtu(512);//*********
+                        mBluetoothGatt.requestMtu(512);
                     }
                 }
                 if (newState == BluetoothGatt.STATE_DISCONNECTED) {
+                    callback.StateChange(status, newStates);
                     disconnect();
                 }
-                Log.e("state", "连接成功");
-                callback.StateChange(status, newState);
             }
 
             @Override
@@ -206,8 +207,9 @@ public class Ble4_0Util implements BleUtil {
                                 || gattCharacteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE
                                 || gattCharacteristic.getProperties() == 12)
                                 && gattCharacteristic.getUuid().toString().indexOf(readUUID) >= 0) {
-                            Log.w("---》》》", "++++++++");
                             mDevWriteCharacteristic = gattCharacteristic;
+                            Log.e("---》》》", "连接成功");
+                            callback.StateChange(status, newStates);
                         }
                     }
                 }
@@ -227,14 +229,6 @@ public class Ble4_0Util implements BleUtil {
             public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
                 super.onCharacteristicChanged(gatt, characteristic);
                 // 处理解释反馈指令
-//                try {
-//                    Log.w("---》》》",":::::1"+new String(characteristic.getValue(),"GBK"));
-//                    Log.w("---》》》",":::::2"+new String(characteristic.getValue(),"UTF-8"));
-//                    Log.w("---》》》",":::::3"+new String(characteristic.getValue(),"ISO8859-1"));
-//                } catch (UnsupportedEncodingException e) {
-//                    Log.w("---》》》",":::::4"+e.toString());
-//                    e.printStackTrace();
-//                }
                 callback.ReadValue(characteristic.getValue());
             }
 
@@ -329,6 +323,7 @@ public class Ble4_0Util implements BleUtil {
         //获取写的特征值
         List<BluetoothGattCharacteristic> characteristicList = gattServiceMain.getCharacteristics();
         for (BluetoothGattCharacteristic characteristic : characteristicList) {
+            Log.w("---》》》","writeUUID:"+characteristic.getUuid().toString());
             if ((characteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_SIGNED_WRITE
                     || characteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_WRITE
                     || characteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) &&

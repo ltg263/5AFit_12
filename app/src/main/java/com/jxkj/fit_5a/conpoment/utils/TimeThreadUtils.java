@@ -98,7 +98,7 @@ public class TimeThreadUtils {
             public void handleMessage(Message msg) {
                 if (msg.what == 1 && load.length>pos) {
                     System.out.println("receive....");
-                    lanyan1.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A6,load[pos]));
+                    lanyan1.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A6,load[pos]));
                     pos++;
                 }
             }

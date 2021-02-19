@@ -85,6 +85,11 @@ public class FacilityAddPpActivity extends BaseActivity {
             window = new PopupWindowLanYan(this, new PopupWindowLanYan.GiveDialogInterface() {
                 @Override
                 public void btnConfirm(String str) {
+                    if(str.equals("连接设备中")){
+                        show();
+                        return;
+                    }
+                    dismiss();
                     showDialogUi(str);
                 }
             });
@@ -275,16 +280,16 @@ public class FacilityAddPpActivity extends BaseActivity {
     }
 
     private void showDialogUi(String str) {
-        window.dismiss();
         mIv.setVisibility(View.VISIBLE);
         mTv.setVisibility(View.VISIBLE);
         mIvD.setVisibility(View.GONE);
-        DialogUtils.showDialogLyState(FacilityAddPpActivity.this, str, 1, new DialogUtils.DialogLyInterface() {
+        if(str.equals("连接成功")){
+            TimeThreadUtils.sendDataA2();
+        }
+        DialogUtils.showDialogLyState(FacilityAddPpActivity.this, PopupWindowLanYan.BleName, str, new DialogUtils.DialogLyInterface() {
             @Override
             public void btnConfirm() {
-//                startActivity(new Intent(FacilityAddPpActivity. this, InterestActivity.class));
                 if(str.equals("连接成功")){
-                    TimeThreadUtils.sendDataA2();
                     startActivity(new Intent(FacilityAddPpActivity.this, MainActivity.class));
                 }
             }

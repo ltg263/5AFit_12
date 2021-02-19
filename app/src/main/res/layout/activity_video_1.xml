@@ -7,9 +7,15 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never" />
+
+    <SurfaceView
+        android:id="@+id/playview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <RelativeLayout
         android:id="@+id/rl_actionbar"

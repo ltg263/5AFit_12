@@ -99,9 +99,11 @@ public class RatePatternActivity extends BaseActivity {
         if(StringUtil.isNotBlank(movingTye)){
             tv_movingTye.setText(movingTye);
         }
-        if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
+        if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]) ){
+            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+        }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5));
-        }else {
+        }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2]){
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
         }
         startTimestamp = System.currentTimeMillis();
@@ -205,24 +207,26 @@ public class RatePatternActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_jian:
-                if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] && loadCurrent>1){
-                    PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A6, (byte)(loadCurrent-1)));
+                if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3])
+                        && loadCurrent>1){
+                    PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A6, (byte)(loadCurrent-1)));
                 }
                 break;
             case R.id.iv_jia:
-                if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] && loadCurrent<loadMax){
-                    PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A6, (byte)(loadCurrent+1)));
+                if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3])
+                        && loadCurrent<loadMax){
+                    PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A6, (byte)(loadCurrent+1)));
                 }
                 break;
             case R.id.view:
-                if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]){
-                    PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x02));
+                if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]) ){
+                    PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x02));
                 }
                 DialogUtils.showDialogStartYd(this, new DialogUtils.DialogInterfaceS() {
                     @Override
                     public void btnType(int pos) {
                         if (pos == 2) {
-                            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x03));
+                            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x03));
                             startActivity(new Intent(RatePatternActivity.this, TaskFinishActivity.class));
                             finish();
                             PostUser.SportLogInfo sportLogInfo= new PostUser.SportLogInfo();
@@ -246,8 +250,8 @@ public class RatePatternActivity extends BaseActivity {
                             sportLogInfo.setDetails(deleteDatabase);
                             HttpRequestUtils.psotUserSportLog(sportLogInfo);
                         }else{
-                            if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]){
-                                PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+                            if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]) ){
+                                PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
                             }
                             dismiss();
                         }
@@ -302,6 +306,12 @@ public class RatePatternActivity extends BaseActivity {
                 if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1] && dataList.size()==14){
                     setData56(dataList);
                 }
+                if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2] && dataList.size()==14){
+//                    setData76(dataList);
+                }
+                if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3] && dataList.size()==18){
+                    setData26(dataList);
+                }
             }
         }
     }
@@ -309,14 +319,6 @@ public class RatePatternActivity extends BaseActivity {
     double Distance;
     int duration;
     long startTimestamp;
-//    Data0：Client ID  Data8：Rpm2 Hi Byte(千,佰 00~99)
-//    Data1：Meter ID  Data9：Rpm2 Low Byte(拾,個00~99)
-//    Data2：Time Minute (分00~99)  Data10：Distance Hi Byte (佰,拾 00~99)
-//    Data3：Time Second (秒 00~59)  Data11：Distance Low Byte (個,小數點以下一位 0.0~9.9)
-//    Data4：Speed Hi Byte (佰,拾 00~99)  Data12：Calories Hi Byte(千,佰 00~99)
-//    Data5：Speed Low Byte (個,小數點以下一位 0.0~9.9)  Data13：Calories Low Byte(拾,個00~99)
-//    Data6：Rpm1 Hi Byte(千,佰 00~99)  Data14：Pulse Hi Byte(千,佰 00~99)
-//    Data7：Rpm1 Low Byte(拾,個00~99)  Data15：Pulse Low Byte(拾,個00~99)
 
     List<PostUser.SportLogInfo.DetailsBean.LogsBean> logs = new ArrayList<>();
     private void setData1(ArrayList<Integer> dataList) {
@@ -375,7 +377,28 @@ public class RatePatternActivity extends BaseActivity {
         mData1.add((byte) Pulse);
         mData2.add((byte) rpm);
         mData3.add((byte) Watt);
-        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(getDataList(mData1,mData2,mData3));
+        List<Byte> mData11= new ArrayList<>();
+        if(mData1.size()>10){
+            mData11.addAll(mData1.subList(Math.max(mData1.size() - 10, 0), mData1.size()));
+        }else{
+            mData11.addAll(mData1);
+        }
+
+        List<Byte> mData22= new ArrayList<>();
+        if(mData2.size()>10){
+            mData22.addAll(mData2.subList(Math.max(mData2.size() - 10, 0), mData2.size()));
+        }else{
+            mData22.addAll(mData2);
+        }
+
+        List<Byte> mData33= new ArrayList<>();
+        if(mData3.size()>10){
+            mData33.addAll(mData3.subList(Math.max(mData3.size() - 10, 0), mData3.size()));
+        }else{
+            mData33.addAll(mData3);
+        }
+
+        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(getDataList(mData11,mData22,mData33));
 
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
                 String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
@@ -434,12 +457,119 @@ public class RatePatternActivity extends BaseActivity {
         mData1.add((byte) Pulse);
         mData2.add((byte) rpm1);
         mData3.add((byte) rpm2);
-        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(getDataList(mData1,mData2,mData3));
+        List<Byte> mData11= new ArrayList<>();
+        if(mData1.size()>10){
+            mData11.addAll(mData1.subList(Math.max(mData1.size() - 10, 0), mData1.size()));
+        }else{
+            mData11.addAll(mData1);
+        }
+
+        List<Byte> mData22= new ArrayList<>();
+        if(mData2.size()>10){
+            mData22.addAll(mData2.subList(Math.max(mData2.size() - 10, 0), mData2.size()));
+        }else{
+            mData22.addAll(mData2);
+        }
+
+        List<Byte> mData33= new ArrayList<>();
+        if(mData3.size()>10){
+            mData33.addAll(mData3.subList(Math.max(mData3.size() - 10, 0), mData3.size()));
+        }else{
+            mData33.addAll(mData3);
+        }
+
+        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(getDataList(mData11,mData22,mData33));
 
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
                 String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
                 null,String.valueOf(loadCurrent),String.valueOf(loadCurrent),
                 String.valueOf(rpm1),String.valueOf(speed),String.valueOf(System.currentTimeMillis()),null));
+        return;
+    }
+
+    private void setData26(ArrayList<Integer> dataList) {
+        int timeMinute =  dataList.get(0);//时间-分
+        int timeSecond =  dataList.get(1);//时间-秒
+        duration = timeMinute*60+timeSecond;
+        String time = ConstValues_Ly.getTime(timeMinute,timeSecond);
+
+        int speedHi = dataList.get(2);//速度-百十
+        int speedLow = dataList.get(3);//速度-个小数点下一位
+        double speed = ConstValues_Ly.getBaiShiGeX(speedHi,speedLow);
+
+        int rpmHi = dataList.get(4);//每分钟转数 -千百
+        int rpmLow = dataList.get(5);//每分钟转数 -十个
+        int rpm = ConstValues_Ly.getQianBaiShiGe(rpmHi,rpmLow);
+
+        int DistanceHi = dataList.get(6);//距离-百十
+        int DistanceLow = dataList.get(7);//距离-个小数点下一位
+        Distance = ConstValues_Ly.getBaiShiGeX(DistanceHi,DistanceLow);
+
+        int CaloriesHi = dataList.get(8);// 卡路里 -千,佰
+        int CaloriesLow = dataList.get(9);// 卡路里 -个十
+        Calories = ConstValues_Ly.getQianBaiShiGe(CaloriesHi,CaloriesLow);
+
+        int PulseHi = dataList.get(10);//跳动 千,佰
+        int PulseLow = dataList.get(11);//跳动 千,佰 -个十
+        int Pulse = ConstValues_Ly.getQianBaiShiGe(PulseHi,PulseLow);
+        int WattHi = dataList.get(12);//瓦特--佰,拾
+        int WattLow = dataList.get(13);//瓦特--佰,拾个小数点下一位
+        double Watt = ConstValues_Ly.getBaiShiGeX(WattHi,WattLow);
+
+        loadCurrent = dataList.get(14);//阻力
+        ConstValues_Ly.CURRENT_STATE = dataList.get(15);
+
+        String Unit ="Stop";
+        if(dataList.get(15)==1){
+            Unit ="Start";
+        }
+
+        String re = "A2--->>>:时间："+time+",速度："+speed+",转数："+rpm+",距离："+Distance+",卡路里："+Calories
+                +",脉跳："+Pulse+",瓦特："+Watt+",阻力："+loadCurrent+",状态："+Unit;
+        Log.w("---》》》", re);
+        tv_v.setText(loadCurrent+"/"+loadMax);
+        tv_time.setText(time);
+        tv_distance.setText(Distance+"KM");
+        List<RatePatternBean> list = new ArrayList<>();
+        list.add(new RatePatternBean("卡路里",Calories+"cal"));
+        list.add(new RatePatternBean("当前速度",speed+"km/h"));
+        list.add(new RatePatternBean("当前功率",Watt+"w"));
+        list.add(new RatePatternBean("当前段位",loadCurrent+""));
+        list.add(new RatePatternBean("RPM/SPM","--"));
+
+        mRatePatternAdapter.setNewData(list);
+        mRatePatternAdapter.notifyDataSetChanged();
+
+        mData1.add((byte) Pulse);
+        mData2.add((byte) rpm);
+        mData3.add((byte) Watt);
+        List<Byte> mData11= new ArrayList<>();
+        if(mData1.size()>10){
+            mData11.addAll(mData1.subList(Math.max(mData1.size() - 10, 0), mData1.size()));
+        }else{
+            mData11.addAll(mData1);
+        }
+
+        List<Byte> mData22= new ArrayList<>();
+        if(mData2.size()>10){
+            mData22.addAll(mData2.subList(Math.max(mData2.size() - 10, 0), mData2.size()));
+        }else{
+            mData22.addAll(mData2);
+        }
+
+        List<Byte> mData33= new ArrayList<>();
+        if(mData3.size()>10){
+            mData33.addAll(mData3.subList(Math.max(mData3.size() - 10, 0), mData3.size()));
+        }else{
+            mData33.addAll(mData3);
+        }
+
+        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(getDataList(mData11,mData22,mData33));
+
+        logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
+                String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
+                null,String.valueOf(loadCurrent),String.valueOf(loadCurrent),
+                String.valueOf(rpm),String.valueOf(speed),String.valueOf(System.currentTimeMillis()),String.valueOf(Watt)));
         return;
     }
 }
