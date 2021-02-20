@@ -6,6 +6,9 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.SportLogBean;
 
 import java.util.List;
@@ -21,7 +24,12 @@ public class TwoJlxqAdapter extends BaseQuickAdapter<SportLogBean.ListBean, Base
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, SportLogBean.ListBean item) {
-
+        GlideImageUtils.setGlideImage(mContext, item.getDeviceImg(), helper.getView(R.id.iv_imgUrl));
+        helper.setText(R.id.tv_name, item.getDeviceName())
+                .setText(R.id.tv_time, StringUtil.getTimeToYMD(item.getStartTimestamp(), "MM-dd HH:mm"))
+                .setText(R.id.tv_distance, item.getDistance())
+                .setText(R.id.tv_calories, item.getCalories())
+                .setText(R.id.tv_duration, String.valueOf(Long.valueOf(item.getDuration())/60));
     }
 
 }

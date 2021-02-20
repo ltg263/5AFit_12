@@ -47,6 +47,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tv_sb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -72,20 +73,36 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="270dp"
                 android:layout_marginHorizontal="@dimen/dimen_15dp"
                 android:layout_marginTop="@dimen/dimen_75dp"
                 android:background="@drawable/ic_shade_img">
+
+                <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView
+                    android:id="@+id/AAChartView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/ll_top" />
+
                 <ImageView
+                    android:id="@+id/iv_z"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dimen_100dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="-10dp"
                     android:layout_marginTop="-10dp"
+                    android:layout_marginEnd="-10dp"
                     android:background="@mipmap/ic_bnt_bj" />
+
+                <ImageView
+                    android:id="@+id/iv_y"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_100dp"
+                    android:layout_marginStart="-10dp"
+                    android:layout_marginTop="-10dp"
+                    android:background="@mipmap/ic_bnt_bj_y"
+                    android:visibility="invisible" />
 
                 <LinearLayout
                     android:id="@+id/ll_top"
@@ -117,20 +134,13 @@
 
                 </LinearLayout>
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/lineChart1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/ll_top" />
-
-
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_top_list"
-                android:overScrollMode="never"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:overScrollMode="never" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -172,9 +182,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_jlxq_list"
                 android:layout_width="match_parent"
-                android:overScrollMode="never"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_50dp" />
+                android:layout_marginBottom="@dimen/dimen_50dp"
+                android:overScrollMode="never" />
 
         </LinearLayout>
 
