@@ -18,6 +18,11 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartType;
+import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AADataLabels;
+import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAPie;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.view.adapter.TaskFinishListAdapter;
@@ -32,19 +37,19 @@ import butterknife.OnClick;
 
 
 public class TaskFinishActivity extends BaseActivity {
+    @BindView(R.id.AAChartView)
+    AAChartView mAAChartView;
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
     @BindView(R.id.rv_list_xl)
     RecyclerView mRvListXl;
     @BindView(R.id.viewpager)
     ViewPager mViewpager;
-    @BindView(R.id.chart1)
-    BarChart chart;
     @BindView(R.id.ll_txt)
     LinearLayout mLlTet;
     @BindView(R.id.tv_xz)
     TextView mTvXz;
-
+    private AAChartModel aaChartModel;
     @Override
     protected int getContentView() {
         return R.layout.activity_task_finish;
@@ -52,40 +57,42 @@ public class TaskFinishActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        initPC();
         initVP();
         initRv();
-
+        aaChartModel = configurePieChart();
+        mAAChartView.aa_drawChartWithChartModel(aaChartModel);
     }
 
-    private void initPC() {
-        chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
-
-        chart.setDrawBarShadow(false);
-        chart.setDrawValueAboveBar(true);
-
-        chart.getDescription().setEnabled(false);
-
-        // if more than 60 entries are displayed in the chart, no values will be
-        // drawn
-        chart.setMaxVisibleValueCount(60);
-
-        // scaling can now only be done on x- and y-axis separately
-        chart.setPinchZoom(false);
-
-        chart.setDrawGridBackground(false);
-        // chart.setDrawYLabels(false);
+    AAChartModel configurePieChart() {
+        return new AAChartModel()
+                .chartType(AAChartType.Pie)
+                .title("")
+                .yAxisTitle("")
+                .backgroundColor("#ffffff")
+                .dataLabelsEnabled(true)//是否直接显示扇形图数据
+                .legendEnabled(false)
+                .series(new AAPie[] {
+                                new AAPie()
+                                        .name("name")
+                                        .innerSize("20%")
+                                        .size(150f)
+                                        .dataLabels(new AADataLabels()
+                                                .enabled(true)
+                                                .useHTML(true)
+                                                .distance(5f)
+                                                .format("<b>{point.name}</b>: <br> {point.percentage:.1f} %"))
+                                        .data(new Object[][] {
+                                        {"Java"  ,67},
+                                        {"Swift",999},
+                                        {"Python",83},
+                                        {"OC"    ,11},
+                                        {"Go"    ,30},
+                                })
+                                ,
+                        }
+                );
     }
+
 
     List<Fragment> fragments = new ArrayList<>();
     private List<Fragment> getFragments() {
@@ -184,11 +191,11 @@ public class TaskFinishActivity extends BaseActivity {
                 String strXz = mTvXz.getText().toString();
                 if(strXz.equals("条形图")){
                     mTvXz.setText("饼状图");
-                    chart.setVisibility(View.VISIBLE);
+                    mAAChartView.setVisibility(View.VISIBLE);
                     mLlTet.setVisibility(View.GONE);
                 }else{
                     mTvXz.setText("条形图");
-                    chart.setVisibility(View.GONE);
+                    mAAChartView.setVisibility(View.GONE);
                     mLlTet.setVisibility(View.VISIBLE);
                 }
                 break;
