@@ -175,10 +175,13 @@ public class HomeOneFragment extends BaseFragment {
                     String media = mHomeDynamicAdapter.getData().get(position).getMedia();
                     try {
                         JSONArray jsonArray = new JSONArray(media);
-                        VideoActivity.startActivity(getActivity(), jsonArray.getJSONObject(0).getString("vedioId"));
+//                        VideoActivity.startActivity(getActivity(), jsonArray.getJSONObject(0).getString("vedioId"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    VideoActivity.startActivity(getActivity(),
+                            mHomeDynamicAdapter.getData().get(position).getPublisherId(),
+                            mHomeDynamicAdapter.getData().get(position).getMomentId());
                 } else {
                     AssociationActivity.startActivity(getActivity(),
                             mHomeDynamicAdapter.getData().get(position).getPublisherId(),

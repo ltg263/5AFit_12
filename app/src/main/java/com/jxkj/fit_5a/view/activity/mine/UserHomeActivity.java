@@ -182,7 +182,9 @@ public class UserHomeActivity extends BaseActivity {
         mHomeThreeSqAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                VideoActivity.startActivity(UserHomeActivity.this,"");
+                VideoActivity.startActivity(UserHomeActivity.this,
+                        mHomeThreeSqAdapter.getData().get(position).getPublisherId(),
+                        mHomeThreeSqAdapter.getData().get(position).getMomentId());
             }
         });
     }

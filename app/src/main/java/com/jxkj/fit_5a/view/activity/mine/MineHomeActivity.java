@@ -164,12 +164,15 @@ public class MineHomeActivity extends BaseActivity {
 
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 String media = mHomeThreeSqAdapter.getData().get(position).getMedia();
-                try {
-                    JSONArray jsonArray = new JSONArray(media);
-                    VideoActivity.startActivity(MineHomeActivity.this,jsonArray.getJSONObject(0).getString("vedioId"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    JSONArray jsonArray = new JSONArray(media);
+//                    VideoActivity.startActivity(MineHomeActivity.this,jsonArray.getJSONObject(0).getString("vedioId"));
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+                VideoActivity.startActivity(MineHomeActivity.this,
+                        mHomeThreeSqAdapter.getData().get(position).getPublisherId(),
+                        mHomeThreeSqAdapter.getData().get(position).getMomentId());
             }
         });
         getUserProfileOwn();

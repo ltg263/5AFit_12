@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@mipmap/ic_14">
+    android:layout_height="match_parent">
 
     <com.jxkj.fit_5a.conpoment.view.MyVideoPlayer
         android:id="@+id/mp_video"
@@ -65,6 +64,7 @@
             android:drawableStart="@drawable/ic_topic_jin1"
             android:paddingHorizontal="@dimen/dp_10"
             android:paddingVertical="@dimen/dimen_3dp"
+            android:visibility="gone"
             android:text="话题深圳"
             android:textColor="@color/color_ffffff"
             android:textSize="13sp" />
@@ -77,6 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
         android:layout_above="@id/ll_x"
+        android:visibility="invisible"
         android:max="100"
         android:progressDrawable="@drawable/jz_bottom_progress" />
 
@@ -105,28 +106,46 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <TextView
-            android:id="@+id/tv_xihuan"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/icon_xin_99_d"
-            android:drawablePadding="@dimen/dimen_5dp"
-            android:gravity="center_vertical"
-            android:padding="@dimen/dp_10"
-            android:text="1358"
-            android:textColor="@color/color_999999" />
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/tv_shoucang"
+            <ImageView
+                android:id="@+id/iv_xihuan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_xin_99_d" />
+
+            <TextView
+                android:id="@+id/tv_xihuan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dp_10"
+                android:text="0"
+                android:textColor="@color/color_999999" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/icon_share_sc_d"
-            android:drawablePadding="@dimen/dimen_5dp"
-            android:gravity="center_vertical"
-            android:padding="@dimen/dp_10"
-            android:text="1358"
-            android:textColor="@color/color_999999" />
+            android:gravity="center">
 
+            <ImageView
+                android:id="@+id/iv_shoucang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_share_sc_d" />
+
+            <TextView
+                android:id="@+id/tv_shoucang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dp_10"
+                android:text="0"
+                android:textColor="@color/color_999999" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_liuyan"
@@ -138,7 +157,7 @@
             android:drawablePadding="@dimen/dimen_5dp"
             android:gravity="center_vertical"
             android:padding="@dimen/dp_10"
-            android:text="1358"
+            android:text="0"
             android:textColor="@color/color_999999" />
 
     </LinearLayout>

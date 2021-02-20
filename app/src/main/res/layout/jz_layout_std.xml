@@ -279,8 +279,8 @@
         android:layout_height="1.5dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="65dp"
+        android:progress="10"
         android:max="100"
-        android:progressDrawable="@drawable/jz_bottom_progress"
-        android:visibility="gone" />
+        android:progressDrawable="@drawable/jz_bottom_progress" />
 
 </RelativeLayout>

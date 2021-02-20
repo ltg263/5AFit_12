@@ -3,20 +3,26 @@ package com.jxkj.fit_5a.view.activity.association;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.view.MyVideoPlayer;
+import com.jxkj.fit_5a.entity.MomentDetailsBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
 import com.jxkj.fit_5a.view.adapter.ListVideoAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -29,12 +35,13 @@ import io.reactivex.schedulers.Schedulers;
 public class VideoActivity extends BaseActivity {
     @BindView(R.id.rv_list)
     RecyclerView rvPage2;
+    @BindView(R.id.iv)
+    ImageView mImageView;
 
     private PagerSnapHelper snapHelper;
     private ListVideoAdapter videoAdapter;
     private LinearLayoutManager layoutManager;
     private int currentPosition;
-        String videoId;
     ArrayList<String> urlList = new ArrayList<>();
     @Override
     protected int getContentView() {
@@ -43,33 +50,53 @@ public class VideoActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        videoId = getIntent().getStringExtra("videoId");
-//        getQueryByPublisher();
-        getPlay_info(videoId);
-//
-//        urlList.add("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318214226685784.mp4");
-//        urlList.add("http://vfx.mtime.cn/Video/2019/03/19/mp4/190319104618910544.mp4");
-//        urlList.add("http://vfx.mtime.cn/Video/2019/03/17/mp4/190317150237409904.mp4");
-//        urlList.add("http://vfx.mtime.cn/Video/2019/03/14/mp4/190314102306987969.mp4");
-//        urlList.add("http://vfx.mtime.cn/Video/2019/03/12/mp4/190312143927981075.mp4");
-//        urlList.add("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318214226685784.mp4");
-//        urlList.add("http://vfx.mtime.cn/Video/2019/03/19/mp4/190319104618910544.mp4");
-//        urlList.add("http://vfx.mtime.cn/Video/2019/03/17/mp4/190317150237409904.mp4");
-//        urlList.add("http://vfx.mtime.cn/Video/2019/03/14/mp4/190314102306987969.mp4");
-//        urlList.add("http://vfx.mtime.cn/Video/2019/03/12/mp4/190312143927981075.mp4");
-
         snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(rvPage2);
-
-
         videoAdapter = new ListVideoAdapter(null);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvPage2.setLayoutManager(layoutManager);
         rvPage2.setAdapter(videoAdapter);
         addListener();
+        getMomentDetails();
+    }
+    private void getMomentDetails(){
+        RetrofitUtil.getInstance().apiService()
+                .getMomentDetails(getIntent().getStringExtra("momentId")
+                        ,getIntent().getStringExtra("publisherId"))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<MomentDetailsBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result<MomentDetailsBean> result) {
+                        if(isDataInfoSucceed(result)){
+                            String media = result.getData().getMedia();
+                            try {
+                                JSONArray jsonArray = new JSONArray(media);
+                                getPlay_info(result.getData(),jsonArray.getJSONObject(0).getString("vedioId")
+                                        ,jsonArray.getJSONObject(0).getString("imageUrl"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
-    private void getPlay_info(String videoId){
+    private void getPlay_info(MomentDetailsBean data, String videoId,String imageUrl){
+        Glide.with(this).load(imageUrl).into(mImageView);
         RetrofitUtil.getInstance().apiService()
                 .getPlay_info(null,videoId)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -85,8 +112,10 @@ public class VideoActivity extends BaseActivity {
                         if(isDataInfoSucceed(result)) {
                             for(int i =0;i<5;i++){
                                 urlList.add(result.getData().getPlayInfoList().get(0).getPlayURL());
+                                videoAdapter.setData(data,imageUrl);
                                 videoAdapter.setNewData(urlList);
                                 videoAdapter.notifyDataSetChanged();
+
                             }
                         }
                     }
@@ -156,7 +185,7 @@ public class VideoActivity extends BaseActivity {
                         if (result.getCode() == 0) {
 //                            for(int i=0;i<result.getData().size();i++){
                             String[] strArr = result.getData().get(0).getMedia().split(",");
-                            getPlay_info(strArr[1]);
+//                            getPlay_info(result.getData(), strArr[1]);
 //                            }
                         }
                     }
@@ -177,9 +206,10 @@ public class VideoActivity extends BaseActivity {
         MyVideoPlayer.releaseAllVideos();
     }
 
-    public static void startActivity(Context mContext, String videoId) {
+    public static void startActivity(Context mContext, String publisherId,String momentId) {
         Intent intent = new Intent(mContext, VideoActivity.class);
-        intent.putExtra("videoId", videoId);
+        intent.putExtra("publisherId", publisherId);
+        intent.putExtra("momentId", momentId);
         mContext.startActivity(intent);
     }
 }

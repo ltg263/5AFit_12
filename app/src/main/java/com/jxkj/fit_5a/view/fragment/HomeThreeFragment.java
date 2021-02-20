@@ -124,13 +124,9 @@ public class HomeThreeFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if(mHomeThreeSqAdapter.getData().get(position).getContentType().equals("3")){
-                    String media = mHomeThreeSqAdapter.getData().get(position).getMedia();
-                    try {
-                        JSONArray jsonArray = new JSONArray(media);
-                        VideoActivity.startActivity(getActivity(),jsonArray.getJSONObject(0).getString("vedioId"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    VideoActivity.startActivity(getActivity(),
+                            mHomeThreeSqAdapter.getData().get(position).getPublisherId(),
+                            mHomeThreeSqAdapter.getData().get(position).getMomentId());
                 }else{
                     AssociationActivity.startActivity(getActivity(),
                             mHomeThreeSqAdapter.getData().get(position).getPublisherId(),
