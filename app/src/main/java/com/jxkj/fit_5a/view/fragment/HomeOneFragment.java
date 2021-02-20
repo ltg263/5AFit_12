@@ -209,7 +209,7 @@ public class HomeOneFragment extends BaseFragment {
                 FacilityManageActivity.intentActivity(getActivity());
                 break;
             case R.id.tv_right_text:
-                RateControlActivity.intentActivity(getActivity());
+//                RateControlActivity.intentActivity(getActivity());
                 break;
             case R.id.tv_top_jyz:
                 mIvY.setVisibility(View.INVISIBLE);

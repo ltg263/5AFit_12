@@ -171,6 +171,7 @@ public class Ble4_0Util implements BleUtil {
                 super.onServicesDiscovered(gatt, status);
                 List<BluetoothGattService> serviceList = gatt.getServices();
                 for (BluetoothGattService gattService : serviceList) {
+                    Log.w("---》》》:",gattService.getUuid().toString());
                     if (gattService.getUuid().toString().indexOf(serviceUUid) < 0) {
                         continue;
                     }
@@ -274,6 +275,11 @@ public class Ble4_0Util implements BleUtil {
             mBluetoothGatt.disconnect();
             mBluetoothGatt.close();
             mBluetoothGatt = null;
+            PopupWindowLanYan.BleName = "";
+            ConstValues_Ly.METER_ID = 0x00;
+            ConstValues_Ly.CLIENT_ID = 0x00;
+            ConstValues_Ly.CURRENT_STATE = 0;
+            ConstValues_Ly.maxLoad = 0;
         }
         mDevWriteCharacteristic = null;
         return true;

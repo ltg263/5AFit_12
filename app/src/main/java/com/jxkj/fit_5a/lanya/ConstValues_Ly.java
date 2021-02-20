@@ -33,7 +33,7 @@ public class ConstValues_Ly {
     public static String BRAND_ID = null;//	品牌id
     public static String DEVICE_TYPE_ID = null;//设备类型id
 
-    public static byte[] METER_ID_S = new byte[]{1,-56,-76,-26};//0X00+1  0XC8  0XB4  0XE6+1
+    public static byte[] METER_ID_S = new byte[]{1,-56,-76,-25};//0X00+1  0XC8  0XB4  0XE6+1
 
 
     /**

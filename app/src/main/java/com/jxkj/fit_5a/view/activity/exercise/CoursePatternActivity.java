@@ -187,6 +187,7 @@ public class CoursePatternActivity extends BaseActivity {
                 intent.putExtra("data",data);
                 intent.putExtra("time",time);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.iv_hfmr:
                 initProgress();
