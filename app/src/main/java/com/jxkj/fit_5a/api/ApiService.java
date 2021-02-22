@@ -30,6 +30,7 @@ import com.jxkj.fit_5a.entity.CircleTaskData;
 import com.jxkj.fit_5a.entity.CommentListBean;
 import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.CommunityHomeInfoBean;
+import com.jxkj.fit_5a.entity.CreateOrderBean;
 import com.jxkj.fit_5a.entity.FavoriteQueryList;
 import com.jxkj.fit_5a.entity.FollowFansList;
 import com.jxkj.fit_5a.entity.HotTopicBean;
@@ -522,7 +523,7 @@ public interface ApiService {
      * @return
      */
     @POST(ConstValues.PORT_3 +"api/v1/user/order/createOrder")
-    Observable<Result> postcreateOrder(@Body PostOrderInfo data);
+    Observable<Result<CreateOrderBean>> postcreateOrder(@Body PostOrderInfo data);
 
     /**
      * 发货提醒
@@ -532,11 +533,25 @@ public interface ApiService {
     Observable<Result> postExpediting(@Body PostUser.Expediting expediting);
 
     /**
+     * 取消订单
+     * @return
+     */
+    @POST(ConstValues.PORT_3 +"api/v1/user/order/cancelOrder")
+    Observable<Result> postCancelOrder(@Body PostUser.Expediting expediting);
+
+    /**
      * 发货提醒
      * @return
      */
     @POST(ConstValues.PORT_3 +"api/v1/user/order/delete")
     Observable<Result> postDelete(@Body PostUser.Expediting expediting);
+
+    /**
+     * 完成订单
+     * @return
+     */
+    @POST(ConstValues.PORT_3 +"api/v1/user/order/finishOrder")
+    Observable<Result> postFinishOrder(@Body PostUser.Expediting expediting);
 
 
     /**

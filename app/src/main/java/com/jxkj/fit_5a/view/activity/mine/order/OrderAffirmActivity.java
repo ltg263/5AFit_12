@@ -18,6 +18,7 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.AddressData;
+import com.jxkj.fit_5a.entity.CreateOrderBean;
 import com.jxkj.fit_5a.entity.PostOrderInfo;
 import com.jxkj.fit_5a.entity.ShowOrderInfo;
 import com.jxkj.fit_5a.view.adapter.OrderAffirmAdapter;
@@ -140,16 +141,17 @@ public class OrderAffirmActivity extends BaseActivity {
                 .postcreateOrder(info)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result>() {
+                .subscribe(new Observer<Result<CreateOrderBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result result) {
+                    public void onNext(Result<CreateOrderBean> result) {
                         if(isDataInfoSucceed(result)){
                             ToastUtils.showShort("创建成功");
+
                         }
                     }
 

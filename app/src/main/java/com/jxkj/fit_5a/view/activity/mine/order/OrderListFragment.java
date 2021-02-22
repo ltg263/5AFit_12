@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.activity.mine.order;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -97,21 +98,21 @@ public class OrderListFragment extends BaseFragment {
 
             @Override
             public void setQxdd(int position) {
-//                getCancelOrder(orderDataList.get(position).getId()+"");
+                getCancelOrder(orderDataList.get(position).getId()+"");
             }
 
             @Override
             public void setQzf(int position) {
                 Bundle bundle1 = new Bundle();
-//                bundle1.putString("id", orderDataList.get(position).getId() + "");
-//                bundle1.putString("price", orderDataList.get(position).getRealAmount() + "");
-//                bundle1.putString("time", orderDataList.get(position).getExpireTime() + "");
+                bundle1.putString("id", orderDataList.get(position).getId() + "");
+                bundle1.putString("price", orderDataList.get(position).getRealAmount() + "");
+                bundle1.putString("time", orderDataList.get(position).getExpireTime() + "");
 //                IntentUtils.getInstence().intent(getActivity(), ShoppingPaymentActivity.class, "order", bundle1);
             }
 
             @Override
             public void setQrsh(int position) {
-//                getTakeOverOrder(orderDataList.get(position).getId()+"");
+                postFinishOrder(orderDataList.get(position).getId()+"");
             }
 
             @Override
@@ -128,8 +129,8 @@ public class OrderListFragment extends BaseFragment {
 //                }
 //
 //                bundle.putParcelableArrayList("listGoods", (ArrayList<? extends Parcelable>) listGoods);
-//
-//                IntentUtils.getInstence().intent(getActivity(), MineOrderEvaluateGoodsActivity.class, "OrderInfoData", bundle);
+
+                IntentUtils.getInstence().intent(getActivity(), MineOrderEvaluateGoodsActivity.class, "OrderInfoData", bundle);
             }
 
             @Override
@@ -156,6 +157,38 @@ public class OrderListFragment extends BaseFragment {
         });
 
         getData();
+    }
+
+    private void getCancelOrder(String id) {
+        PostUser.Expediting expediting = new PostUser.Expediting();
+        expediting.setOrderId(id);
+        RetrofitUtil.getInstance().apiService()
+                .postCancelOrder(expediting)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result result) {
+                        if (isDataInfoSucceed(result)) {
+                            getData();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dismiss();
+                    }
+                });
     }
 
     private void getAgainOrder(String id) {
@@ -195,6 +228,38 @@ public class OrderListFragment extends BaseFragment {
         expediting.setOrderId(id);
         RetrofitUtil.getInstance().apiService()
                 .postDelete(expediting)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result result) {
+                        if (isDataInfoSucceed(result)) {
+                            ToastUtils.showShort("已通知卖家");
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dismiss();
+                    }
+                });
+    }
+
+    private void postFinishOrder(String id) {
+        PostUser.Expediting expediting = new PostUser.Expediting();
+        expediting.setOrderId(id);
+        RetrofitUtil.getInstance().apiService()
+                .postFinishOrder(expediting)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {
