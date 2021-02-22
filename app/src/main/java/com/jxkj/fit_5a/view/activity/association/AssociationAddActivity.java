@@ -297,12 +297,7 @@ public class AssociationAddActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
-                HttpRequestUtils.postOSSFile(1, new HttpRequestUtils.OSSClientInterface() {
-                    @Override
-                    public void succeed(double pos) {
-
-                    }
-                });
+                finish();
                 break;
             case R.id.iv_close:
                 rl_v.setVisibility(View.GONE);
