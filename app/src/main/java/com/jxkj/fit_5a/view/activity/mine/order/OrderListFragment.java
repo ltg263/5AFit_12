@@ -117,20 +117,7 @@ public class OrderListFragment extends BaseFragment {
 
             @Override
             public void setQpj(int position) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("id", orderDataList.get(position).getId()+"");
-//                bundle.putString("businessId", orderDataList.get(position).getBusinessId()+"");
-//                bundle.putString("businessImgUrl", orderDataList.get(position).getBusinessImgUrl());
-//                bundle.putString("businessName", orderDataList.get(position).getBusinessName());
-//                List<OrderInfoData.ListBean.ProductsBean> list = orderDataList.get(position).getProducts();
-//                List<EvaluteGoodsInfo> listGoods = new ArrayList<>();
-//                for (int i= 0;i<list.size();i++){
-//                    listGoods.add(new EvaluteGoodsInfo(list.get(i).getProductId()+"",list.get(i).getImgUrl(),list.get(i).getName(),1));
-//                }
-//
-//                bundle.putParcelableArrayList("listGoods", (ArrayList<? extends Parcelable>) listGoods);
-
-                IntentUtils.getInstence().intent(getActivity(), MineOrderEvaluateGoodsActivity.class, "OrderInfoData", bundle);
+                IntentUtils.getInstence().intent(getActivity(), MineOrderEvaluateGoodsActivity.class, "orderId", orderDataList.get(position).getId());
             }
 
             @Override

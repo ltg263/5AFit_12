@@ -553,6 +553,13 @@ public interface ApiService {
     @POST(ConstValues.PORT_3 +"api/v1/user/order/finishOrder")
     Observable<Result> postFinishOrder(@Body PostUser.Expediting expediting);
 
+    /**
+     * 订单评论
+     * @return
+     */
+    @POST(ConstValues.PORT_3 +"api/v1/user/order/comment")
+    Observable<Result> postCommentOrder(@Body PostUser.Comment comment);
+
 
     /**
      * 订单列表

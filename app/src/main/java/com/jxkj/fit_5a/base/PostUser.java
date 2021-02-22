@@ -551,6 +551,170 @@ public class PostUser {
     }
 
 
+    public static class Comment {
+
+        /**
+         * orderId : 0
+         * productComments : [{"content":"","deductIntegral":0,"imgStr":"","isShow":0,"productContent":"","productId":0,"productImg":"","productName":"","productPrice":0,"productQuantity":0,"productScore":0,"specText":""}]
+         * userId : 0
+         */
+
+        private String orderId;
+        private String userId;
+        private List<ProductCommentsBean> productComments;
+
+        public String getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
+        }
+
+        public List<ProductCommentsBean> getProductComments() {
+            return productComments;
+        }
+
+        public void setProductComments(List<ProductCommentsBean> productComments) {
+            this.productComments = productComments;
+        }
+
+        public static class ProductCommentsBean {
+            /**
+             * content :
+             * deductIntegral : 0
+             * imgStr :
+             * isShow : 0
+             * productContent :
+             * productId : 0
+             * productImg :
+             * productName :
+             * productPrice : 0
+             * productQuantity : 0
+             * productScore : 0
+             * specText :
+             */
+
+            private String content;
+            private String deductIntegral;
+            private String imgStr;
+            private String isShow;
+            private String productContent;
+            private String productId;
+            private String productImg;
+            private String productName;
+            private String productPrice;
+            private String productQuantity;
+            private String productScore;
+            private String specText;
+
+            public String getContent() {
+                return content;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
+            }
+
+            public String getDeductIntegral() {
+                return deductIntegral;
+            }
+
+            public void setDeductIntegral(String deductIntegral) {
+                this.deductIntegral = deductIntegral;
+            }
+
+            public String getImgStr() {
+                return imgStr;
+            }
+
+            public void setImgStr(String imgStr) {
+                this.imgStr = imgStr;
+            }
+
+            public String getIsShow() {
+                return isShow;
+            }
+
+            public void setIsShow(String isShow) {
+                this.isShow = isShow;
+            }
+
+            public String getProductContent() {
+                return productContent;
+            }
+
+            public void setProductContent(String productContent) {
+                this.productContent = productContent;
+            }
+
+            public String getProductId() {
+                return productId;
+            }
+
+            public void setProductId(String productId) {
+                this.productId = productId;
+            }
+
+            public String getProductImg() {
+                return productImg;
+            }
+
+            public void setProductImg(String productImg) {
+                this.productImg = productImg;
+            }
+
+            public String getProductName() {
+                return productName;
+            }
+
+            public void setProductName(String productName) {
+                this.productName = productName;
+            }
+
+            public String getProductPrice() {
+                return productPrice;
+            }
+
+            public void setProductPrice(String productPrice) {
+                this.productPrice = productPrice;
+            }
+
+            public String getProductQuantity() {
+                return productQuantity;
+            }
+
+            public void setProductQuantity(String productQuantity) {
+                this.productQuantity = productQuantity;
+            }
+
+            public String getProductScore() {
+                return productScore;
+            }
+
+            public void setProductScore(String productScore) {
+                this.productScore = productScore;
+            }
+
+            public String getSpecText() {
+                return specText;
+            }
+
+            public void setSpecText(String specText) {
+                this.specText = specText;
+            }
+        }
+    }
+
+
     public static class Expediting {
         String orderId;
 
