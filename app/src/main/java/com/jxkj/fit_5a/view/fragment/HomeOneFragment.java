@@ -27,9 +27,7 @@ import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
-import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
-import com.jxkj.fit_5a.conpoment.view.StringToUtil;
 import com.jxkj.fit_5a.entity.AdListData;
 import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
@@ -38,13 +36,14 @@ import com.jxkj.fit_5a.entity.RankListData;
 import com.jxkj.fit_5a.entity.SportLogStatsBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.association.VideoActivity;
-import com.jxkj.fit_5a.view.activity.exercise.RateControlActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeTopAdapter;
+import com.xiaosu.view.text.DataSetAdapter;
+import com.xiaosu.view.text.VerticalRollingTextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,7 +66,7 @@ public class HomeOneFragment extends BaseFragment {
     @BindView(R.id.tv_left_text)
     TextView mTvLeftText;
     @BindView(R.id.tv_message_content)
-    TextView mTvMessageContent;
+    VerticalRollingTextView mTvMessageContent;
     @BindView(R.id.tv_right_text)
     TextView mTvRightText;
     @BindView(R.id.rl_actionbar)
@@ -522,8 +521,19 @@ public class HomeOneFragment extends BaseFragment {
                     @Override
                     public void onNext(Result<AdListData> result) {
                         if (isDataInfoSucceed(result)) {
-                            mTvMessageContent.setText(
-                                    StringToUtil.getStringAll(result.getData().getList()));
+//                            mTvMessageContent.setText(
+//                                    StringToUtil.getStringAll(result.getData().getList()));
+
+                            List<AdListData.ListBean> data = result.getData().getList();
+                            if(data!=null && data.size()>0){
+                                mTvMessageContent.setDataSetAdapter(new DataSetAdapter<AdListData.ListBean>(data) {
+                                    @Override
+                                    protected CharSequence text(AdListData.ListBean s) {
+                                        return s.getTitle();
+                                    }
+                                });
+                                mTvMessageContent.run();
+                            }
                         }
                     }
 
