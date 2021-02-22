@@ -13,6 +13,7 @@ import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
 import com.jxkj.fit_5a.entity.ProductListBean;
+import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
 import com.jxkj.fit_5a.view.adapter.ShoppingRmAdapter;
 import com.youth.banner.Banner;
@@ -90,10 +91,10 @@ public class ShoppingFragment extends BaseFragment {
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mShoppingRmAdapter);
 
-        mShoppingRmAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mShoppingRmAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ShoppingDetailsActivity.startActivity(getActivity(), mHomeShoppingAdapter.getData().get(position).getId());
             }
         });
 
@@ -103,10 +104,10 @@ public class ShoppingFragment extends BaseFragment {
         mRvListAll.setHasFixedSize(true);
         mRvListAll.setAdapter(mHomeShoppingAdapter);
 
-        mHomeShoppingAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mHomeShoppingAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ShoppingDetailsActivity.startActivity(getActivity(), mHomeShoppingAdapter.getData().get(position).getId());
             }
         });
     }
