@@ -115,7 +115,7 @@ public class HomeThreeFragment extends BaseFragment {
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         //解决item跳动
 //        manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        mRvSqList.setLayoutManager(manager);
+        mRvSqList.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mHomeThreeSqAdapter = new HomeThreeSqAdapter(null);
         mRvSqList.setHasFixedSize(true);
         mRvSqList.setAdapter(mHomeThreeSqAdapter);

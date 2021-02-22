@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
@@ -24,6 +25,7 @@ import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.utils.ToastUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogChoicePackage;
 import com.jxkj.fit_5a.conpoment.view.JudgeNestedScrollView;
 import com.jxkj.fit_5a.conpoment.view.SquareBannerLayout;
@@ -136,7 +138,11 @@ public class ShoppingDetailsActivity extends BaseActivity {
                 break;
             case R.id.ll_gg:
             case R.id.tv_gui_ge:
-                ShowChoicePackageDialog();
+                if(specsLis!=null &&specsLis.size()>0 &&skuList!=null && skuList.size()>0){
+                    ShowChoicePackageDialog();
+                }else{
+                    ToastUtils.showShort("无规格");
+                }
                 break;
             case R.id.tv_address:
                 AddressActivity.startActivity(ShoppingDetailsActivity.this,2);
