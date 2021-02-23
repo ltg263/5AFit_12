@@ -180,11 +180,11 @@ public class TaskSignActivity extends BaseActivity {
                 if(month<10){
                     singDate = year+"0"+month+str;
                 }
-                if((listData.get(j).getSignDate()+"").equals(singDate)){
+                if((listData.get(j).getSignDate()).equals(singDate)){
                     listBean = listData.get(j);
                     listBean.setSig(true);
                 }
-                if((listData.get(j).getSignDate()+"").equals(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyyMMdd"))){
+                if((listData.get(j).getSignDate()).equals(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyyMMdd"))){
                     mTvGoSign.setText("已签到");
                 }
 
@@ -197,7 +197,6 @@ public class TaskSignActivity extends BaseActivity {
         mRvRlList.setLayoutManager(new GridLayoutManager(this,7));
         mRvRlList.setHasFixedSize(true);
         mRvRlList.setAdapter(mHomeSignRlAdapter);
-
         mHomeSignRlAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -205,7 +204,23 @@ public class TaskSignActivity extends BaseActivity {
             }
         });
 
-        HomeSignTopAdapter mHomeSignTopAdapter = new HomeSignTopAdapter(StringUtil.getDayMonth7());
+
+        List<SignLogData.ListBean> listRl7 = new ArrayList<>();
+        ArrayList<String> currentDays = StringUtil.getDayMonth7();
+        for(int i=0;i<currentDays.size();i++){
+            SignLogData.ListBean listBean = new SignLogData.ListBean();
+            for (int j= 0;j<listData.size();j++){
+                if(listData.get(j).getSignDate().equals(currentDays.get(i))){
+                    listBean = listData.get(j);
+                    listBean.setSig(true);
+
+                }
+            }
+            listBean.setSj(currentDays.get(i).substring(6,8));
+            listRl7.add(listBean);
+        }
+
+        HomeSignTopAdapter mHomeSignTopAdapter = new HomeSignTopAdapter(listRl7);
         mRvTopList.setLayoutManager(new GridLayoutManager(this,7));
         mRvTopList.setHasFixedSize(true);
         mRvTopList.setAdapter(mHomeSignTopAdapter);

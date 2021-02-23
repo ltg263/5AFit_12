@@ -50,7 +50,7 @@ public class MianJavaDame {
 
 /////////////////////////
         System.out.println("到");
-        cal.add(Calendar.DATE, 6);
+        cal.add(Calendar.DATE, 9);
 ///////////////////////
         System.out.println("" + cal.get(Calendar.YEAR)
                 + (cal.get(Calendar.MONTH) + 1)//Month 值是基于 0 的。例如，0 表示 January

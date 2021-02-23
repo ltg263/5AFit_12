@@ -38,10 +38,10 @@ public class SignLogData {
          */
 
         private String createTime;
-        private int id;
-        private int integral;
-        private int signDate;
-        private int userId;
+        private String id;
+        private String integral;
+        private String signDate;
+        private String userId;
         private String sj;
         private boolean isSig;
 
@@ -69,35 +69,35 @@ public class SignLogData {
             this.createTime = createTime;
         }
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 
-        public int getIntegral() {
+        public String getIntegral() {
             return integral;
         }
 
-        public void setIntegral(int integral) {
+        public void setIntegral(String integral) {
             this.integral = integral;
         }
 
-        public int getSignDate() {
+        public String getSignDate() {
             return signDate;
         }
 
-        public void setSignDate(int signDate) {
+        public void setSignDate(String signDate) {
             this.signDate = signDate;
         }
 
-        public int getUserId() {
+        public String getUserId() {
             return userId;
         }
 
-        public void setUserId(int userId) {
+        public void setUserId(String userId) {
             this.userId = userId;
         }
     }

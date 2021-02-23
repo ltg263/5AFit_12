@@ -556,20 +556,26 @@ public class StringUtil {
         Calendar cal = Calendar.getInstance();
         int flag = cal.get(Calendar.DAY_OF_WEEK);
         cal.add(Calendar.DATE, 1-flag);
-        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
+        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         cal.add(Calendar.DATE, 1);
-        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
+        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         cal.add(Calendar.DATE, 1);
-        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
+        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         cal.add(Calendar.DATE, 1);
-        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
+        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         cal.add(Calendar.DATE, 1);
-        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
+        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         cal.add(Calendar.DATE, 1);
-        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
+        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         cal.add(Calendar.DATE, 1);
-        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
-        cal.add(Calendar.DATE, 1);
+        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         return lists;
+    }
+    public static String getDayMonth7(int day){
+        String str = String.valueOf(day);
+        if(str.length()==1){
+            str = "0"+str;
+        }
+        return str;
     }
 }
