@@ -377,10 +377,6 @@ public class AssociationAddActivity extends BaseActivity {
             return;
         }
         media = listUrls.toString();
-        if(true){
-            Log.w("medila","media:"+media);
-            return;
-        }
         show();
         RetrofitUtil.getInstance().apiService()
                 .postPublishMoment(content, type + "", shareType + "",
