@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/color_ffffff"
     android:orientation="vertical">
 
@@ -52,7 +52,9 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rl_actionbar">
+        android:layout_below="@id/rl_actionbar"
+        android:overScrollMode="never"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,11 +101,13 @@
                 android:layout_marginHorizontal="@dimen/dimen_15dp"
                 android:layout_marginTop="-50dp"
                 android:background="@drawable/ic_shade_img">
+
                 <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView
                     android:id="@+id/AAChartView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/ll_top" />
+
                 <ImageView
                     android:id="@+id/iv_z"
                     android:layout_width="wrap_content"
@@ -200,10 +204,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="“"
-                    android:visibility="invisible"
                     android:textColor="@color/color_text_theme"
                     android:textSize="@dimen/dimen_30dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
 
                 <com.xiaosu.view.text.VerticalRollingTextView
                     android:id="@+id/tv_message_content"
@@ -213,18 +217,19 @@
                     android:background="@color/white"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textSize="12sp"
                     android:textColor="@color/color_333333"
+                    android:textSize="12sp"
                     app:animInterval="3000"
                     app:itemCount="1" />
+
                 <TextView
                     android:layout_width="@dimen/dimen_20dp"
                     android:layout_height="wrap_content"
                     android:text="”"
-                    android:visibility="invisible"
                     android:textColor="@color/color_text_theme"
                     android:textSize="@dimen/dimen_30dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -506,8 +511,8 @@
         android:layout_height="@dimen/dimen_50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dimen_50dp"
         android:layout_marginEnd="@dimen/dimen_20dp"
+        android:layout_marginBottom="@dimen/dimen_50dp"
         android:gravity="center">
 
         <ImageView
