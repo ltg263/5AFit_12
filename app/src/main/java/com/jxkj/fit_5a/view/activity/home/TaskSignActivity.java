@@ -23,6 +23,7 @@ import com.jxkj.fit_5a.view.adapter.HomeSignRcrwAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeSignRlAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeSignTopAdapter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -204,11 +205,7 @@ public class TaskSignActivity extends BaseActivity {
             }
         });
 
-        List<String> list = new ArrayList<>();
-        for(int i = 0;i<7;i++){
-            list.add("");
-        }
-        HomeSignTopAdapter mHomeSignTopAdapter = new HomeSignTopAdapter(list);
+        HomeSignTopAdapter mHomeSignTopAdapter = new HomeSignTopAdapter(StringUtil.getDayMonth7());
         mRvTopList.setLayoutManager(new GridLayoutManager(this,7));
         mRvTopList.setHasFixedSize(true);
         mRvTopList.setAdapter(mHomeSignTopAdapter);
@@ -281,3 +278,4 @@ public class TaskSignActivity extends BaseActivity {
                 });
     }
 }
+//

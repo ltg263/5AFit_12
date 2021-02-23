@@ -550,4 +550,26 @@ public class StringUtil {
         String result = format.format(today);
         return result;
     }
+
+    public static ArrayList<String> getDayMonth7(){
+        ArrayList<String> lists = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        int flag = cal.get(Calendar.DAY_OF_WEEK);
+        cal.add(Calendar.DATE, 1-flag);
+        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
+        cal.add(Calendar.DATE, 1);
+        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
+        cal.add(Calendar.DATE, 1);
+        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
+        cal.add(Calendar.DATE, 1);
+        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
+        cal.add(Calendar.DATE, 1);
+        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
+        cal.add(Calendar.DATE, 1);
+        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
+        cal.add(Calendar.DATE, 1);
+        lists.add(cal.get(Calendar.DAY_OF_MONTH)+"");
+        cal.add(Calendar.DATE, 1);
+        return lists;
+    }
 }

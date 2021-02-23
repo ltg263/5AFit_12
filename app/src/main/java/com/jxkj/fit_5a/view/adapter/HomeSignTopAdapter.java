@@ -20,7 +20,7 @@ public class HomeSignTopAdapter extends BaseQuickAdapter<String, BaseViewHolder>
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, String item) {
-
+        helper.setText(R.id.tv_day,item);
     }
 
 }
