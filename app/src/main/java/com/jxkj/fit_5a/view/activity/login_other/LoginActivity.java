@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
@@ -62,7 +63,7 @@ public class LoginActivity extends BaseActivity {
     LinearLayout mLl2;
     @BindView(R.id.ll3)
     LinearLayout mLl3;
-    int loginType = 1;//密码登录
+    int loginType = 2;//密码登录
     private TimeCounter mTimeCounter;
 
     @Override
@@ -73,10 +74,11 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        mTvLoginYzm.setText("验证码登录");
-        mLl2.setVisibility(View.VISIBLE);
-        mLl3.setVisibility(View.INVISIBLE);
-        mTvLoginWjmm.setVisibility(View.VISIBLE);
+        loginType = 2;
+        mTvLoginYzm.setText("密码登录");
+        mLl2.setVisibility(View.INVISIBLE);
+        mLl3.setVisibility(View.VISIBLE);
+        mTvLoginWjmm.setVisibility(View.INVISIBLE);
     }
 
     @OnClick({R.id.tv_login_yzm, R.id.tv_login_wjmm, R.id.iv_login_wx,R.id.tv_go_login, R.id.ll_go_zc,R.id.tv_go_yzm})
@@ -115,8 +117,6 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.tv_go_login:
                 userVerifyLogin();
-
-//                startActivity(new Intent(LoginActivity.this,WelcomeLoginActivity.class));
                 break;
             case R.id.ll_go_zc:
                 startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
@@ -166,7 +166,7 @@ public class LoginActivity extends BaseActivity {
                             SharedUtils.singleton().put(ConstValues.TOKEN,"Bearer "+result.getData().getTokenId());
                             SharedUtils.singleton().put(ConstValues.USER_PASSWORD, finalMm);
                             saveUserInfo(result.getData());
-                            startActivity(new Intent(LoginActivity.this, WelcomeLoginActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         }
                     }
 

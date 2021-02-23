@@ -12,9 +12,12 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeCounter;
 import com.jxkj.fit_5a.conpoment.utils.ToastUtil;
+import com.jxkj.fit_5a.entity.LoginInfo;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -88,18 +91,21 @@ public class RegisterActivity extends BaseActivity {
                 .userVerifyRegister(3,sjh,mm,yzm)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result>() {
+                .subscribe(new Observer<Result<LoginInfo>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result result) {
+                    public void onNext(Result<LoginInfo> result) {
                         dismiss();
                         if(isDataInfoSucceed(result)){
-                            ToastUtils.showShort("注册成功");
+                            SharedUtils.singleton().put(ConstValues.TOKEN,"Bearer "+result.getData().getTokenId());
+                            SharedUtils.singleton().put(ConstValues.USER_PASSWORD, mm);
+                            LoginActivity.saveUserInfo(result.getData());
                             startActivity(new Intent(RegisterActivity.this, SetUserXbActivity.class));
+                            finish();
                         }
                     }
 

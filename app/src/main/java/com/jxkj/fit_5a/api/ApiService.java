@@ -364,7 +364,7 @@ public interface ApiService {
      * @return type:类型0注册1修改密码2登录
      */
     @POST(ConstValues.PORT_5 + "api/v1/user/verify/register")
-    Observable<Result> userVerifyRegister(@Query("clientType") int clientType,
+    Observable<Result<LoginInfo>> userVerifyRegister(@Query("clientType") int clientType,
                                           @Query("phone") String phone, @Query("password") String password,
                                           @Query("verify") String verify);
 

@@ -59,10 +59,7 @@
                 app:lineMinHeight="15dp"
                 app:lineSpaceWidth="7dp"
                 app:lineWidth="1dip"
-                app:maxValue="300.0"
-                app:minValue="40.0"
                 app:perValue="1"
-                app:selectorValue="60.0"
                 app:textColor="#AAAAAA"
                 app:textSize="12sp" />
 
@@ -145,10 +142,7 @@
             app:lineMinHeight="15dp"
             app:lineSpaceWidth="7dp"
             app:lineWidth="1dip"
-            app:maxValue="300.0"
-            app:minValue="40.0"
             app:perValue="1"
-            app:selectorValue="60.0"
             app:textColor="#AAAAAA"
             app:textSize="12sp" />
 

@@ -133,6 +133,10 @@ public class RulerView_xz extends View {
     }
 
 
+    public void setOnValueChangeListener(OnValueChangeListener listener) {
+        mListener = listener;
+    }
+
     /**
      *
      * @param selectorValue 未选择时 默认的值 滑动后表示当前中间指针正在指着的值
@@ -151,13 +155,9 @@ public class RulerView_xz extends View {
         mMaxOffset = (int) (-(mTotalLine - 1) * mLineSpaceWidth);
         mOffset = (mMinValue - mSelectorValue) / mPerValue * mLineSpaceWidth * 10;
         Log.d("zkk===","mOffset--           "+mOffset  +"         =====mMaxOffset    "+mMaxOffset
-        +"  mTotalLine  " +mTotalLine);
+                +"  mTotalLine  " +mTotalLine);
         invalidate();
         setVisibility(VISIBLE);
-    }
-
-    public void setOnValueChangeListener(OnValueChangeListener listener) {
-        mListener = listener;
     }
 
     @Override

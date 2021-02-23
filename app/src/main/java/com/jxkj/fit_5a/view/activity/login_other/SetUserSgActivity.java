@@ -5,13 +5,22 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.PostUser;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.view.RulerView_xz;
+import com.jxkj.fit_5a.view.activity.mine.MineInfoActivity;
 import com.zkk.view.rulerview.RulerView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class SetUserSgActivity extends BaseActivity {
 
@@ -26,7 +35,8 @@ public class SetUserSgActivity extends BaseActivity {
     RulerView mRulerWeight;
     @BindView(R.id.ruler_height)
     RulerView_xz mRulerHeight;
-
+    int sbType;
+    String csrq;
     @Override
     protected int getContentView() {
         isShowTitle();
@@ -35,6 +45,11 @@ public class SetUserSgActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        sbType = getIntent().getIntExtra("sbType",0);
+        csrq = getIntent().getStringExtra("csrq");
+        if(sbType==1){
+            mIvXb.setImageDrawable(getResources().getDrawable(R.mipmap.ic_ren_nan));
+        }
         mRulerWeight.setOnValueChangeListener(value -> mTvTz.setText(value + ""));
         /**
          *
@@ -43,7 +58,7 @@ public class SetUserSgActivity extends BaseActivity {
          * @param maxValue   最小的数值
          * @param per   最小单位  如 1:表示 每2条刻度差为1.   0.1:表示 每2条刻度差为0.1 在demo中 身高mPerValue为1  体重mPerValue 为0.1
          */
-        mRulerWeight.setValue(80, 40, 300, 0.1f);
+        mRulerWeight.setValue(60.0f, 40, 300, 0.1f);
 
         mRulerHeight.setOnValueChangeListener(value -> mTvSg.setText((int) value + "cm"));
         /**
@@ -53,7 +68,7 @@ public class SetUserSgActivity extends BaseActivity {
          * @param maxValue   最小的数值
          * @param per   最小单位  如 1:表示 每2条刻度差为1.   0.1:表示 每2条刻度差为0.1 在demo中 身高mPerValue为1  体重mPerValue 为0.1
          */
-        mRulerHeight.setValue(165, 40, 250, 1f);
+        mRulerHeight.setValue(130, 40, 250, 1f);
     }
 
     @OnClick({R.id.tv_go_xyb})
@@ -61,7 +76,12 @@ public class SetUserSgActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.tv_go_xyb:
                 // 日期格式为yyyy-MM-dd
-                startActivity(new Intent(SetUserSgActivity.this,WelcomeLoginActivity.class));
+                Intent intent = new Intent(SetUserSgActivity.this, InterestActivity.class);
+                intent.putExtra("sbType",sbType+"");
+                intent.putExtra("csrq",csrq+"");
+                intent.putExtra("sg",mTvSg.getText().toString().replace("cm",""));
+                intent.putExtra("tz",mTvTz.getText().toString());
+                startActivity(intent);
                 break;
         }
     }

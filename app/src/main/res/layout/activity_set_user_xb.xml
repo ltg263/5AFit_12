@@ -43,6 +43,7 @@
             android:layout_margin="@dimen/dimen_30dp">
 
             <RelativeLayout
+                android:id="@+id/rl_nan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dimen_20dp"
@@ -78,11 +79,12 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_nv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_weight="1"
-                android:background="@drawable/bj_shape_line_theme_6"
+                android:background="@drawable/bj_shape_line_66_6"
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
 

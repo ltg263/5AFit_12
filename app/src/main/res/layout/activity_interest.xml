@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_30dp"
             android:layout_marginTop="@dimen/dimen_60dp"
-            android:text="你的兴趣"
+            android:text="您的兴趣"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />

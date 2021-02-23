@@ -40,7 +40,9 @@ public class SplashScreenActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        getUserDetail();
+        if(StringUtil.isNotBlank(SharedUtils.getToken()) && isLogin()){
+            getUserDetail();
+        }
         new Handler().postDelayed(() -> startUi(),2000);
     }
 

@@ -60,7 +60,7 @@ public class MyInterceptor implements Interceptor {
         String resultLog = "api url = "+ request.url() +" http response = "+ result;
         Log.d(TAG,resultLog);
         if(!result.contains("\"code\":\"000000\",\"mesg\":\"处理成功\",\"sub_code\":\"000000\",\"sub_mesg\":\"处理成功\"")){
-            ToastUtils.showShort(resultLog);
+//            ToastUtils.showShort(resultLog);
         }
         return response;
     }

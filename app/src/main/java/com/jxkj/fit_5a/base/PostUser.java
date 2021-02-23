@@ -204,6 +204,24 @@ public class PostUser {
         private String personMail;
         private String provinceId;
         private String region;
+        private String height;
+        private String weight;
+
+        public void setWeight(String weight) {
+            this.weight = weight;
+        }
+
+        public void setHeight(String height) {
+            this.height = height;
+        }
+
+        public String getHeight() {
+            return height;
+        }
+
+        public String getWeight() {
+            return weight;
+        }
 
         public String getAvatar() {
             return avatar;
