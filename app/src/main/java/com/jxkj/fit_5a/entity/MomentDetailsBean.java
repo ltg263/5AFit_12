@@ -26,7 +26,7 @@ public class MomentDetailsBean {
      */
 
     private int publisherId;
-    private long momentId;
+    private String momentId;
     private UserBean user;
     private boolean isLike;
     private boolean isFavorite;
@@ -67,11 +67,11 @@ public class MomentDetailsBean {
         this.publisherId = publisherId;
     }
 
-    public long getMomentId() {
+    public String getMomentId() {
         return momentId;
     }
 
-    public void setMomentId(long momentId) {
+    public void setMomentId(String momentId) {
         this.momentId = momentId;
     }
 

@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.adapter;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,40 +13,40 @@ import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.view.MyVideoPlayer;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
+import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
 
 import java.util.List;
 
-public class ListVideoAdapter extends VideoBaseAdapter<String, ListVideoAdapter.VideoViewHolder> {
+public class ListVideoAdapter extends VideoBaseAdapter<VideoPlayInfoBean.PlayInfoListBean, ListVideoAdapter.VideoViewHolder> {
     MomentDetailsBean data;
-    String imageUrl;
     VideoInterface videoInterface;
-    public ListVideoAdapter(List<String> list,VideoInterface videoInterface) {
+    public ListVideoAdapter(List<VideoPlayInfoBean.PlayInfoListBean> list,VideoInterface videoInterface) {
         super(list);
         this.videoInterface = videoInterface;
     }
 
-    public void setData(MomentDetailsBean data, String imageUrl){
-        this.data = data;
-        this.imageUrl = imageUrl;
-    }
 
     public interface VideoInterface {
         /**
          * 留言
          */
         public void btnLiuYan(MomentDetailsBean data);
+
+        public void position(int position);
     }
     @Override
-    public void onHolder(VideoViewHolder holder, String bean, int position) {
+    public void onHolder(VideoViewHolder holder, VideoPlayInfoBean.PlayInfoListBean bean, int position) {
         ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
         layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        data = bean.getData();
         Glide.with(context).load(data.getUser().getAvatar()).into(holder.iv_head);
 
-        holder.mp_video.setUp(bean, data.getContent(), MyVideoPlayer.STATE_NORMAL);
+        holder.mp_video.setUp(bean.getPlayURL(), data.getContent(), MyVideoPlayer.STATE_NORMAL);
         if (position == 0) {
             holder.mp_video.startVideo();
         }
-        Glide.with(context).load(imageUrl).into(holder.mp_video.thumbImageView);
+        videoInterface.position(position);
+        Glide.with(context).load(bean.getImageUrl()).into(holder.mp_video.thumbImageView);
         holder.tv_name.setText(data.getUser().getNickName());
         holder.tv_content.setText(data.getContent());
         holder.tv_xihuan.setText(data.getLikeCount()+"");

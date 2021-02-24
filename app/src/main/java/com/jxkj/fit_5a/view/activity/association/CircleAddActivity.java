@@ -28,6 +28,7 @@ import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
+import com.jxkj.fit_5a.entity.MediaInfoBean;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.SpPhotoAdapter;
 import com.jxkj.fit_5a.view.map.LocationSelectActivity;
@@ -115,7 +116,7 @@ public class CircleAddActivity extends BaseActivity {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 mSpPhotoAdapter.remove(position);
-//                mPicList.remove(position);
+                listUrls.remove(position);
                 LocalMedia mLocalMedia = new LocalMedia();
                 mLocalMedia.setPath("-1");
                 if (!mSpPhotoAdapter.getData().contains(mLocalMedia)) {
@@ -148,7 +149,7 @@ public class CircleAddActivity extends BaseActivity {
     }
 
 
-    List <String> listUrls= new ArrayList<>();
+    List<MediaInfoBean> listUrls = new ArrayList<>();
 
     private void setIMaaa(List<LocalMedia> selectList) {
         HttpRequestUtils.postOSSFile(2,new HttpRequestUtils.OSSClientInterface() {
@@ -174,9 +175,9 @@ public class CircleAddActivity extends BaseActivity {
             @Override
             public void succeed(double pos) {
                 if(pos==101){
-                    String urlpath= SharedUtils.singleton().get(ConstValues.host,"")
-                            +"/"+SharedUtils.singleton().get(ConstValues.dir,"")+"/"+fileName;
-                    listUrls.add(urlpath);
+                    String urlpath = SharedUtils.singleton().get(ConstValues.host, "")
+                            + "/" + SharedUtils.singleton().get(ConstValues.dir, "") + "/" + fileName;
+                    listUrls.add(new MediaInfoBean(urlpath,"2"));
                     mSpPhotoAdapter.addData(mSpPhotoAdapter.getData().size() - 1, selectList.get(finalI-1));
                     if (mSpPhotoAdapter.getData().size() > 6 && mSpPhotoAdapter.getData().contains("-1")) {
                         mSpPhotoAdapter.remove(mSpPhotoAdapter.getData().size() - 1);
@@ -245,17 +246,26 @@ public class CircleAddActivity extends BaseActivity {
         mContext.startActivity(intent);
     }
 
+    String media;
     private void postPublishMoment() {
         String content = mEtContent.getText().toString();
         mTvPosition.getText().toString();
         if (StringUtil.isBlank(content)) {
             ToastUtils.showShort("内容不能为空");
         }
-        String imgs = listUrls.toString().replace("[","").replace("]","");
+        media = listUrls.toString();
 
+        show();
+        Log.w("-->>:","id:"+id);
+        Log.w("-->>:","content:"+content);
+        Log.w("-->>:","contentType:"+2);
+        Log.w("-->>:","shareType:"+shareType);
+        Log.w("-->>:","location:"+location);
+        Log.w("-->>:","media:"+media);
+        Log.w("-->>:","position:"+position);
         RetrofitUtil.getInstance().apiService()
                 .postPublishMomentCircle(id,content,"2",shareType+"",
-                        location,imgs,
+                        location,media,
                         position,null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -284,6 +294,7 @@ public class CircleAddActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
+                        dismiss();
                     }
                 });
 

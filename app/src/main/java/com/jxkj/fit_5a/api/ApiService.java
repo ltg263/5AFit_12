@@ -39,6 +39,7 @@ import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
+import com.jxkj.fit_5a.entity.MomentDetailsBean_X;
 import com.jxkj.fit_5a.entity.OrderDetailsData;
 import com.jxkj.fit_5a.entity.OssInfoBean;
 import com.jxkj.fit_5a.entity.PostOrderInfo;
@@ -950,6 +951,18 @@ public interface ApiService {
     @GET(ConstValues.PORT_21+"api/v1/moment/details")
     Observable<Result<MomentDetailsBean>> getMomentDetails(@Query("momentId") String momentId,@Query("publisherId") String publisherId);
 
+    /**
+     * 获取下几条图文信息
+     */
+    @GET(ConstValues.PORT_21+"api/v1/moment/query_next_graphic")
+    Observable<Result<MomentDetailsBean_X>> getQuery_next_graphic(@Query("currMomentId") String currMomentId, @Query("nextParam") String nextParam);
+
+    /**
+     * 获取下几条小视频信息
+     */
+    @GET(ConstValues.PORT_21+"api/v1/moment/query_next_simple_video")
+    Observable<Result<MomentDetailsBean_X>> query_next_simple_video(@Query("currMomentId") String currMomentId,@Query("nextParam") String nextParam);
+
 
     /**
      *获取动态信息--圈子
@@ -960,6 +973,17 @@ public interface ApiService {
     @GET(ConstValues.PORT_21+"api/v1/circle/moment/details")
     Observable<Result<MomentDetailsBean>> getMomentDetailsCircle(@Query("circleId") String circleId,@Query("momentId") String momentId,@Query("publisherId") String publisherId);
 
+    /**
+     * 获取下几条图文信息
+     */
+    @GET(ConstValues.PORT_21+"api/v1/circle/moment/query_next_graphic")
+    Observable<Result<MomentDetailsBean_X>> getQuery_next_graphic_circle(@Query("circleId") String circleId,@Query("currMomentId") String currMomentId,@Query("nextParam") String nextParam);
+
+    /**
+     * 获取下几条小视频信息
+     */
+    @GET(ConstValues.PORT_21+"api/v1/circle/moment/query_next_simple_video")
+    Observable<Result<MomentDetailsBean_X>> query_next_simple_video_circle(@Query("circleId") String circleId,@Query("currMomentId") String currMomentId,@Query("nextParam") String nextParam);
     /**
      * 用户发布动态评论
      * @param content

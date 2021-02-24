@@ -21,6 +21,7 @@ import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogCommentPackage;
 import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
+import com.jxkj.fit_5a.entity.MomentDetailsBean_X;
 import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 import com.jxkj.fit_5a.view.adapter.AssociationListAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -54,6 +55,7 @@ public class AssociationActivity extends BaseActivity {
     RecyclerView mRvList;
     int type;
     String circleId = "0";
+    String nextParam = null;
     private AssociationListAdapter mAssociationListAdapter;
 
     @Override
@@ -79,7 +81,7 @@ public class AssociationActivity extends BaseActivity {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if(type==1){
-                    getMomentDetails();
+                    getQuery_next_graphic(mMomentDetailsBeans.get(mMomentDetailsBeans.size()-1).getMomentId());
                 }else if(type==2){
                     getMomentDetailsCircle();
                 }
@@ -110,7 +112,7 @@ public class AssociationActivity extends BaseActivity {
                     case R.id.ll_xihuan:
                         show();
                         if(data.isIsLike()){
-                            HttpRequestUtils.postLikeCancel1(circleId,data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                            HttpRequestUtils.postLikeCancel1(circleId,data.getMomentId(), data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
                                 @Override
                                 public void succeed(String path) {
                                     dismiss();
@@ -124,7 +126,7 @@ public class AssociationActivity extends BaseActivity {
                                 }
                             });
                         }else{
-                            HttpRequestUtils.postLike1(circleId,data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                            HttpRequestUtils.postLike1(circleId,data.getMomentId(), data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
                                 @Override
                                 public void succeed(String path) {
                                     dismiss();
@@ -145,7 +147,7 @@ public class AssociationActivity extends BaseActivity {
                     case R.id.ll_shoucang:
                         show();
                         if(data.isIsFavorite()){
-                            HttpRequestUtils.postFavoritCancel(circleId, data.getMomentId() + "", new HttpRequestUtils.LoginInterface() {
+                            HttpRequestUtils.postFavoritCancel(circleId, data.getMomentId(), new HttpRequestUtils.LoginInterface() {
                                         @Override
                                         public void succeed(String path) {
                                             dismiss();
@@ -159,7 +161,7 @@ public class AssociationActivity extends BaseActivity {
                                         }
                                     });
                         }else {
-                            HttpRequestUtils.postFavorit(circleId, data.getMomentId() + "",
+                            HttpRequestUtils.postFavorit(circleId, data.getMomentId(),
                                     data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
                                         @Override
                                         public void succeed(String path) {
@@ -217,7 +219,7 @@ public class AssociationActivity extends BaseActivity {
     }
     private void ShowCommentPackageDialog(MomentDetailsBean data) {
         DialogCommentPackage choicePackageDialog = new DialogCommentPackage(this,circleId);
-        HttpRequestUtils.getCommentMoment1(circleId,data.getMomentId() + "", data.getPublisherId() + "",1,100,
+        HttpRequestUtils.getCommentMoment1(circleId,data.getMomentId(), data.getPublisherId() + "",1,100,
                 new HttpRequestUtils.ResultInterface() {
             @Override
             public void succeed(ResultList<CommentMomentBean> result) {
@@ -229,12 +231,12 @@ public class AssociationActivity extends BaseActivity {
             @Override
             public void addListener(String context, String commentId) {
                 show();
-                HttpRequestUtils.postCommentMoment1(circleId,context, data.getMomentId()+"", data.getPublisherId()+"",
+                HttpRequestUtils.postCommentMoment1(circleId,context, data.getMomentId(), data.getPublisherId()+"",
                         commentId, new HttpRequestUtils.LoginInterface() {
                     @Override
                     public void succeed(String path) {
                         dismiss();
-                        HttpRequestUtils.getCommentMoment1(circleId,data.getMomentId() + "", data.getPublisherId() + "",1,100,
+                        HttpRequestUtils.getCommentMoment1(circleId,data.getMomentId(), data.getPublisherId() + "",1,100,
                                 new HttpRequestUtils.ResultInterface() {
                                     @Override
                                     public void succeed(ResultList<CommentMomentBean> result) {
@@ -283,6 +285,8 @@ public class AssociationActivity extends BaseActivity {
                     public void onNext(Result<MomentDetailsBean> result) {
                         if(isDataInfoSucceed(result)){
                             mMomentDetailsBeans.add(result.getData());
+                            nextParam=null;
+                            getQuery_next_graphic(result.getData().getMomentId());
                             mAssociationListAdapter.setNewData(mMomentDetailsBeans);
                         }
                     }
@@ -332,6 +336,37 @@ public class AssociationActivity extends BaseActivity {
                 });
     }
 
+    private void getQuery_next_graphic(String momentId){
+        RetrofitUtil.getInstance().apiService()
+                .getQuery_next_graphic(momentId,nextParam)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<MomentDetailsBean_X>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result<MomentDetailsBean_X> result) {
+                        if(isDataInfoSucceed(result)){
+                            nextParam = result.getData().getNextParam();
+                            mMomentDetailsBeans.addAll(result.getData().getList());
+                            mAssociationListAdapter.setNewData(mMomentDetailsBeans);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        refreshLayout.finishLoadMore();
+                        dismiss();
+                    }
+                });
+    }
     /**
      * 获取动态信息 社群
      */

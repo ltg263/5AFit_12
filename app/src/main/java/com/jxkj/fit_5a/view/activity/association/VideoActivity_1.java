@@ -64,12 +64,12 @@ public class VideoActivity_1 extends BaseActivity {
         snapHelper.attachToRecyclerView(rvPage2);
 
 
-        videoAdapter = new ListVideoAdapter(null, new ListVideoAdapter.VideoInterface() {
-            @Override
-            public void btnLiuYan(MomentDetailsBean data) {
-
-            }
-        });
+//        videoAdapter = new ListVideoAdapter(null, new ListVideoAdapter.VideoInterface() {
+//            @Override
+//            public void btnLiuYan(MomentDetailsBean data) {
+//
+//            }
+//        });
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvPage2.setLayoutManager(layoutManager);
         rvPage2.setAdapter(videoAdapter);
@@ -158,7 +158,7 @@ public class VideoActivity_1 extends BaseActivity {
                         if(isDataInfoSucceed(result)) {
                             for(int i =0;i<5;i++){
                                 urlList.add(result.getData().getPlayInfoList().get(0).getPlayURL());
-                                videoAdapter.setNewData(urlList);
+//                                videoAdapter.setNewData(urlList);
                                 videoAdapter.notifyDataSetChanged();
                             }
                         }

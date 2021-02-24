@@ -3,23 +3,23 @@ package com.jxkj.fit_5a.view.activity.association;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogCommentPackage;
 import com.jxkj.fit_5a.conpoment.view.MyVideoPlayer;
 import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
+import com.jxkj.fit_5a.entity.MomentDetailsBean_X;
 import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
 import com.jxkj.fit_5a.view.adapter.ListVideoAdapter;
 
@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,16 +39,14 @@ import io.reactivex.schedulers.Schedulers;
 public class VideoActivity extends BaseActivity {
     @BindView(R.id.rv_list)
     RecyclerView rvPage2;
-    @BindView(R.id.iv)
-    ImageView mImageView;
 
     private PagerSnapHelper snapHelper;
     private ListVideoAdapter videoAdapter;
     private LinearLayoutManager layoutManager;
     private int currentPosition;
-    ArrayList<String> urlList = new ArrayList<>();
     String circleId = "0";
     int type = 1;
+    String nextParam = null;
     @Override
     protected int getContentView() {
         return R.layout.activity_video;
@@ -61,6 +60,15 @@ public class VideoActivity extends BaseActivity {
             @Override
             public void btnLiuYan(MomentDetailsBean data) {
                 ShowCommentPackageDialog(data);
+            }
+
+            @Override
+            public void position(int position) {
+                if(position==infoList.size()-1 && jobId.equals(infoList.get(infoList.size()-1).getJobId())){
+                    jobId = "";
+                    getQuery_next_graphic(getIntent().getStringExtra("momentId"));
+                }
+
             }
         });
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -95,8 +103,9 @@ public class VideoActivity extends BaseActivity {
                         if (isDataInfoSucceed(result)) {
                             String media = result.getData().getMedia();
                             try {
+                                nextParam = null;
                                 JSONArray jsonArray = new JSONArray(media);
-                                getPlay_info(result.getData(), jsonArray.getJSONObject(0).getString("vedioId")
+                                getPlay_info(result.getData(),jsonArray.getJSONObject(0).getString("vedioId")
                                         , jsonArray.getJSONObject(0).getString("imageUrl"));
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -133,7 +142,7 @@ public class VideoActivity extends BaseActivity {
                             String media = result.getData().getMedia();
                             try {
                                 JSONArray jsonArray = new JSONArray(media);
-                                getPlay_info(result.getData(), jsonArray.getJSONObject(0).getString("vedioId")
+                                getPlay_info(result.getData(),jsonArray.getJSONObject(0).getString("vedioId")
                                         , jsonArray.getJSONObject(0).getString("imageUrl"));
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -153,8 +162,49 @@ public class VideoActivity extends BaseActivity {
                 });
     }
 
-    private void getPlay_info(MomentDetailsBean data, String videoId, String imageUrl) {
-        Glide.with(this).load(imageUrl).into(mImageView);
+
+    private void getQuery_next_graphic(String momentId){
+        RetrofitUtil.getInstance().apiService()
+                .query_next_simple_video(momentId+"",nextParam)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<MomentDetailsBean_X>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result<MomentDetailsBean_X> result) {
+                        if(isDataInfoSucceed(result)){
+                            nextParam = result.getData().getNextParam();
+                            List<MomentDetailsBean> lists = result.getData().getList();
+                            for(int i=0;i<lists.size();i++){
+                                String media = lists.get(i).getMedia();
+                                try {
+                                    JSONArray jsonArray = new JSONArray(media);
+                                    getPlay_info(lists.get(i),jsonArray.getJSONObject(0).getString("vedioId")
+                                            , jsonArray.getJSONObject(0).getString("imageUrl"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dismiss();
+                    }
+                });
+    }
+    String jobId = "";
+    List<VideoPlayInfoBean.PlayInfoListBean> infoList = new ArrayList<>();
+    private void getPlay_info(MomentDetailsBean data,String videoId, String imageUrl) {
         RetrofitUtil.getInstance().apiService()
                 .getPlay_info(null, videoId)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -168,13 +218,16 @@ public class VideoActivity extends BaseActivity {
                     @Override
                     public void onNext(Result<VideoPlayInfoBean> result) {
                         if (isDataInfoSucceed(result)) {
-                            for (int i = 0; i < 5; i++) {
-                                urlList.add(result.getData().getPlayInfoList().get(0).getPlayURL());
-                                videoAdapter.setData(data, imageUrl);
-                                videoAdapter.setNewData(urlList);
-                                videoAdapter.notifyDataSetChanged();
-
+                            if(StringUtil.isBlank(nextParam)){
+                                getQuery_next_graphic(getIntent().getStringExtra("momentId"));
                             }
+                            List<VideoPlayInfoBean.PlayInfoListBean> info = result.getData().getPlayInfoList();
+                            info.get(0).setImageUrl(imageUrl);
+                            info.get(0).setData(data);
+                            jobId = info.get(0).getJobId();
+                            infoList.addAll(info);
+                            videoAdapter.setNewData(infoList);
+                            videoAdapter.notifyDataSetChanged();
                         }
                     }
 

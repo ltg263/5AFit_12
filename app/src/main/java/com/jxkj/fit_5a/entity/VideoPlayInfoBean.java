@@ -184,6 +184,24 @@ public class VideoPlayInfoBean {
         private String encryptType;
         private String narrowBandType;
         private String specification;
+        private String imageUrl;
+        private MomentDetailsBean data;
+
+        public void setData(MomentDetailsBean data) {
+            this.data = data;
+        }
+
+        public MomentDetailsBean getData() {
+            return data;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
 
         public int getWidth() {
             return width;
