@@ -66,7 +66,7 @@ public class VideoActivity extends BaseActivity {
             public void position(int position) {
                 if(position==infoList.size()-1 && jobId.equals(infoList.get(infoList.size()-1).getJobId())){
                     jobId = "";
-                    getQuery_next_graphic(getIntent().getStringExtra("momentId"));
+                    getQuery_next_graphic(videoAdapter.getData().get(position).getData().getMomentId());
                 }
 
             }
@@ -188,6 +188,10 @@ public class VideoActivity extends BaseActivity {
                                     e.printStackTrace();
                                 }
                             }
+                            if(lists.size()==0){
+                                nextParam = null;
+                                getQuery_next_graphic(getIntent().getStringExtra("momentId"));
+                            }
                         }
                     }
 
@@ -219,7 +223,7 @@ public class VideoActivity extends BaseActivity {
                     public void onNext(Result<VideoPlayInfoBean> result) {
                         if (isDataInfoSucceed(result)) {
                             if(StringUtil.isBlank(nextParam)){
-                                getQuery_next_graphic(getIntent().getStringExtra("momentId"));
+                                getQuery_next_graphic(data.getMomentId());
                             }
                             List<VideoPlayInfoBean.PlayInfoListBean> info = result.getData().getPlayInfoList();
                             info.get(0).setImageUrl(imageUrl);
