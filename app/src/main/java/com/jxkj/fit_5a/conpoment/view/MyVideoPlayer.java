@@ -12,7 +12,6 @@ import com.danikula.videocache.HttpProxyCacheServer;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.app.MainApplication;
 
-import cn.jzvd.JzvdStd;
 
 
 /**

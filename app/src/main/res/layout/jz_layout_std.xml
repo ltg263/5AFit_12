@@ -180,8 +180,8 @@
 
     <ProgressBar
         android:id="@+id/loading"
-        android:layout_width="@dimen/jz_start_button_w_h_normal"
-        android:layout_height="@dimen/jz_start_button_w_h_normal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:indeterminateDrawable="@drawable/jz_loading"
