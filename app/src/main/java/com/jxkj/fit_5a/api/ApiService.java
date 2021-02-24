@@ -730,6 +730,14 @@ public interface ApiService {
                                                @Query("position") String position, @Query("topics") String topics);
 
     /**
+     * 用户发布动态--删除圈子
+     *
+     * @return
+     */
+    @POST(ConstValues.PORT_21 + "api/v1/circle/moment/delete")
+    Observable<Result> postDeleteMomentCircle(@Query("circleId") int circleId,  @Query("momentId") String momentId);
+
+    /**
      * 获取热门(推荐)动态信息
      */
     @GET(ConstValues.PORT_21 + "api/v1/moment/query_popular")

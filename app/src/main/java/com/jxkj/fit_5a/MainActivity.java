@@ -169,7 +169,7 @@ public class MainActivity extends BaseActivity {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 200);
         } else {
             //开始定位
-//            getCurrentLocationLatLng();
+//          getCurrentLocationLatLng();
         }
     }
 
