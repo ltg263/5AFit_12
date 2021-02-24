@@ -15,9 +15,11 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
+import com.jxkj.fit_5a.conpoment.view.DialogCommentPackage;
 import com.jxkj.fit_5a.conpoment.view.MyVideoPlayer;
+import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
-import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
 import com.jxkj.fit_5a.view.adapter.ListVideoAdapter;
 
@@ -27,6 +29,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -43,6 +46,8 @@ public class VideoActivity extends BaseActivity {
     private LinearLayoutManager layoutManager;
     private int currentPosition;
     ArrayList<String> urlList = new ArrayList<>();
+    String circleId = "0";
+    int type = 1;
     @Override
     protected int getContentView() {
         return R.layout.activity_video;
@@ -52,17 +57,31 @@ public class VideoActivity extends BaseActivity {
     protected void initViews() {
         snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(rvPage2);
-        videoAdapter = new ListVideoAdapter(null);
+        videoAdapter = new ListVideoAdapter(null, new ListVideoAdapter.VideoInterface() {
+            @Override
+            public void btnLiuYan(MomentDetailsBean data) {
+                ShowCommentPackageDialog(data);
+            }
+        });
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvPage2.setLayoutManager(layoutManager);
         rvPage2.setAdapter(videoAdapter);
         addListener();
-        getMomentDetails();
+        type = getIntent().getIntExtra("type",0);
+        if(type==2){
+            circleId = getIntent().getStringExtra("circleId");
+        }
+        if(type==1){
+            getMomentDetails();
+        }else if(type==2){
+            getMomentDetailsCircle();
+        }
     }
-    private void getMomentDetails(){
+
+    private void getMomentDetails() {
         RetrofitUtil.getInstance().apiService()
                 .getMomentDetails(getIntent().getStringExtra("momentId")
-                        ,getIntent().getStringExtra("publisherId"))
+                        , getIntent().getStringExtra("publisherId"))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<MomentDetailsBean>>() {
@@ -70,14 +89,15 @@ public class VideoActivity extends BaseActivity {
                     public void onSubscribe(Disposable d) {
 
                     }
+
                     @Override
                     public void onNext(Result<MomentDetailsBean> result) {
-                        if(isDataInfoSucceed(result)){
+                        if (isDataInfoSucceed(result)) {
                             String media = result.getData().getMedia();
                             try {
                                 JSONArray jsonArray = new JSONArray(media);
-                                getPlay_info(result.getData(),jsonArray.getJSONObject(0).getString("vedioId")
-                                        ,jsonArray.getJSONObject(0).getString("imageUrl"));
+                                getPlay_info(result.getData(), jsonArray.getJSONObject(0).getString("vedioId")
+                                        , jsonArray.getJSONObject(0).getString("imageUrl"));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -95,10 +115,48 @@ public class VideoActivity extends BaseActivity {
                 });
     }
 
-    private void getPlay_info(MomentDetailsBean data, String videoId,String imageUrl){
+
+    private void getMomentDetailsCircle(){
+        RetrofitUtil.getInstance().apiService()
+                .getMomentDetailsCircle(getIntent().getStringExtra("circleId"),getIntent().getStringExtra("momentId")
+                        ,getIntent().getStringExtra("publisherId"))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<MomentDetailsBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result<MomentDetailsBean> result) {
+                        if(isDataInfoSucceed(result)){
+                            String media = result.getData().getMedia();
+                            try {
+                                JSONArray jsonArray = new JSONArray(media);
+                                getPlay_info(result.getData(), jsonArray.getJSONObject(0).getString("vedioId")
+                                        , jsonArray.getJSONObject(0).getString("imageUrl"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dismiss();
+                    }
+                });
+    }
+
+    private void getPlay_info(MomentDetailsBean data, String videoId, String imageUrl) {
         Glide.with(this).load(imageUrl).into(mImageView);
         RetrofitUtil.getInstance().apiService()
-                .getPlay_info(null,videoId)
+                .getPlay_info(null, videoId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<VideoPlayInfoBean>>() {
@@ -109,10 +167,10 @@ public class VideoActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result<VideoPlayInfoBean> result) {
-                        if(isDataInfoSucceed(result)) {
-                            for(int i =0;i<5;i++){
+                        if (isDataInfoSucceed(result)) {
+                            for (int i = 0; i < 5; i++) {
                                 urlList.add(result.getData().getPlayInfoList().get(0).getPlayURL());
-                                videoAdapter.setData(data,imageUrl);
+                                videoAdapter.setData(data, imageUrl);
                                 videoAdapter.setNewData(urlList);
                                 videoAdapter.notifyDataSetChanged();
 
@@ -169,35 +227,45 @@ public class VideoActivity extends BaseActivity {
         });
     }
 
-    private void getQueryByPublisher() {
-        RetrofitUtil.getInstance().apiService()
-                .getQueryByPublisherOwn(0, 3)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<ResultList<QueryPopularBean>>() {
+    private void ShowCommentPackageDialog(MomentDetailsBean data) {
+        DialogCommentPackage choicePackageDialog = new DialogCommentPackage(this,circleId);
+        HttpRequestUtils.getCommentMoment1(circleId,data.getMomentId() + "", data.getPublisherId() + "",1,100,
+                new HttpRequestUtils.ResultInterface() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(ResultList<QueryPopularBean> result) {
-                        if (result.getCode() == 0) {
-//                            for(int i=0;i<result.getData().size();i++){
-                            String[] strArr = result.getData().get(0).getMedia().split(",");
-//                            getPlay_info(result.getData(), strArr[1]);
-//                            }
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onComplete() {
+                    public void succeed(ResultList<CommentMomentBean> result) {
+                        isDataInfoSucceed(result);
+                        choicePackageDialog.setNewData(result.getData(),data.getCommentCount()+"");
                     }
                 });
+        choicePackageDialog.setOnCommentPackageDialogListener(new DialogCommentPackage.OnCommentPackageDialogListener() {
+            @Override
+            public void addListener(String context, String commentId) {
+                show();
+                HttpRequestUtils.postCommentMoment1(circleId,context, data.getMomentId()+"", data.getPublisherId()+"",
+                        commentId, new HttpRequestUtils.LoginInterface() {
+                            @Override
+                            public void succeed(String path) {
+                                dismiss();
+                                HttpRequestUtils.getCommentMoment1(circleId,data.getMomentId() + "", data.getPublisherId() + "",1,100,
+                                        new HttpRequestUtils.ResultInterface() {
+                                            @Override
+                                            public void succeed(ResultList<CommentMomentBean> result) {
+                                                isDataInfoSucceed(result);
+                                                data.setCommentCount(data.getCommentCount()+1);
+                                                choicePackageDialog.setNewData(result.getData(),data.getCommentCount()+"");
+                                            }
+                                        });
+                            }
+                        });
+            }
+
+            @Override
+            public void buyListener(String skuId, int num) {
+
+            }
+
+        });
+        choicePackageDialog.showDialog();
     }
 
     @Override
@@ -206,10 +274,37 @@ public class VideoActivity extends BaseActivity {
         MyVideoPlayer.releaseAllVideos();
     }
 
-    public static void startActivity(Context mContext, String publisherId,String momentId) {
+    /**
+     * 获取动态信息
+     */
+    public static void startActivity(Context mContext, String publisherId, String momentId) {
         Intent intent = new Intent(mContext, VideoActivity.class);
         intent.putExtra("publisherId", publisherId);
         intent.putExtra("momentId", momentId);
+        intent.putExtra("type", 1);
         mContext.startActivity(intent);
+    }
+
+    /**
+     * 获取动态信息 圈子
+     */
+    public static void startActivity(Context mContext, String circleId,String publisherId, String momentId) {
+        Intent intent = new Intent(mContext, AssociationActivity.class);
+        intent.putExtra("circleId", circleId);
+        intent.putExtra("publisherId", publisherId);
+        intent.putExtra("momentId", momentId);
+        intent.putExtra("type", 2);
+        mContext.startActivity(intent);
+    }
+
+    @OnClick({R.id.iv_back, R.id.tv_share})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.tv_share:
+                break;
+        }
     }
 }

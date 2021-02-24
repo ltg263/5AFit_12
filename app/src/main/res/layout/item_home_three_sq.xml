@@ -16,12 +16,24 @@
             android:background="@color/color_ffffff"
             android:orientation="vertical">
 
-            <com.jxkj.fit_5a.conpoment.view.SquareImageView
-                android:id="@+id/iv_icon"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_13" />
+                android:layout_height="wrap_content">
+
+                <com.jxkj.fit_5a.conpoment.view.SquareImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_13" />
+
+                <ImageView
+                    android:id="@+id/iv_baofang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_baofang" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tv_title"

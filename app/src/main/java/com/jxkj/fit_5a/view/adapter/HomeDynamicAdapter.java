@@ -34,6 +34,7 @@ public class HomeDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, BaseV
                 .setText(R.id.tv_content,item.getSimpleContent())
                 .setGone(R.id.tv_topic,false)
                 .setGone(R.id.rv_img_list,false)
+                .setGone(R.id.iv_baofang,false)
                 .setText(R.id.tv_browse_num,"浏览 "+item.getPageviews()+" 次");
 
         GlideImageUtils.setGlideImage(mContext,item.getUser().getAvatar(),helper.getView(R.id.iv_head_img));
@@ -58,6 +59,9 @@ public class HomeDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, BaseV
                     helper.setGone(R.id.siv_1,false).setGone(R.id.siv_2,false)
                             .setGone(R.id.siv_3,false).setGone(R.id.siv_4,true);
                     GlideImageUtils.setGlideImage(mContext,imageUrl,helper.getView(R.id.siv_4));
+                    if(item.getContentType().equals("3")){
+                        helper.setGone(R.id.iv_baofang,true);
+                    }
                 }else if(jsonArray.length()==2){
                     String imageUrl1 = jsonArray.getJSONObject(0).getString("imageUrl");
                     String imageUrl2 = jsonArray.getJSONObject(1).getString("imageUrl");

@@ -21,6 +21,7 @@ import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.MyVideoPlayer;
+import com.jxkj.fit_5a.entity.MomentDetailsBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.StsTokenBean;
 import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
@@ -63,7 +64,12 @@ public class VideoActivity_1 extends BaseActivity {
         snapHelper.attachToRecyclerView(rvPage2);
 
 
-        videoAdapter = new ListVideoAdapter(null);
+        videoAdapter = new ListVideoAdapter(null, new ListVideoAdapter.VideoInterface() {
+            @Override
+            public void btnLiuYan(MomentDetailsBean data) {
+
+            }
+        });
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvPage2.setLayoutManager(layoutManager);
         rvPage2.setAdapter(videoAdapter);

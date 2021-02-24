@@ -267,9 +267,9 @@
 
         <ImageView
             android:id="@+id/iv_start"
-            android:layout_width="16dp"
-            android:layout_height="18dp"
-            android:background="@mipmap/stop" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_baofang" />
     </LinearLayout>
 
     <ProgressBar

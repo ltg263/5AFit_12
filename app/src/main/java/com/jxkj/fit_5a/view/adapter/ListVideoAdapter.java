@@ -10,9 +10,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogCommentPackage;
 import com.jxkj.fit_5a.conpoment.view.MyVideoPlayer;
+import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
 
 import java.util.List;
@@ -20,9 +23,10 @@ import java.util.List;
 public class ListVideoAdapter extends VideoBaseAdapter<String, ListVideoAdapter.VideoViewHolder> {
     MomentDetailsBean data;
     String imageUrl;
-
-    public ListVideoAdapter(List<String> list) {
+    VideoInterface videoInterface;
+    public ListVideoAdapter(List<String> list,VideoInterface videoInterface) {
         super(list);
+        this.videoInterface = videoInterface;
     }
 
     public void setData(MomentDetailsBean data, String imageUrl){
@@ -30,6 +34,12 @@ public class ListVideoAdapter extends VideoBaseAdapter<String, ListVideoAdapter.
         this.imageUrl = imageUrl;
     }
 
+    public interface VideoInterface {
+        /**
+         * 确定
+         */
+        public void btnLiuYan(MomentDetailsBean data);
+    }
     @Override
     public void onHolder(VideoViewHolder holder, String bean, int position) {
         ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
@@ -63,27 +73,12 @@ public class ListVideoAdapter extends VideoBaseAdapter<String, ListVideoAdapter.
         holder.tv_liuyan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowChoicePackageDialog();
+                videoInterface.btnLiuYan(data);
             }
         });
     }
 
-    private void ShowChoicePackageDialog() {
-        DialogCommentPackage choicePackageDialog = new DialogCommentPackage((Activity) context,"");
-        choicePackageDialog.setOnCommentPackageDialogListener(new DialogCommentPackage.OnCommentPackageDialogListener() {
-            @Override
-            public void addListener(String skuId, String num) {
 
-            }
-
-            @Override
-            public void buyListener(String skuId, int num) {
-
-            }
-
-        });
-        choicePackageDialog.showDialog();
-    }
     @Override
     public VideoViewHolder onCreateHolder() {
         return new VideoViewHolder(getViewByRes(R.layout.item_page2));
