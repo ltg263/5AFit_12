@@ -100,10 +100,25 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/tv_topic"
+            android:id="@+id/tv_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/banner_home_one"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:drawableStart="@drawable/icon_dw1"
+            android:drawablePadding="@dimen/dimen_5dp"
+            android:paddingHorizontal="@dimen/dimen_15dp"
+            android:paddingVertical="@dimen/dimen_5dp"
+            android:textColor="@color/color_333333"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/tv_topic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_address"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dimen_5dp"
             android:background="@drawable/btn_shape_bj_theme_99"
@@ -113,18 +128,19 @@
             android:paddingVertical="@dimen/dimen_5dp"
             android:text="来自话题：晒出话题话题"
             android:textColor="@color/color_333333"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/ll_pl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_below="@id/tv_topic"
             android:layout_marginTop="@dimen/dimen_20dp"
             android:background="@drawable/btn_shape_bj_7f7_10"
             android:orientation="vertical"
-            android:padding="@dimen/dimen_15dp">
+            android:padding="@dimen/dimen_15dp"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/rl_pl_1"

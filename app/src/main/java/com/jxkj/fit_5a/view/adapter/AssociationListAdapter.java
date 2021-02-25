@@ -48,7 +48,7 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
                 .addOnClickListener(R.id.tv_wgz).addOnClickListener(R.id.tv_liuyan);
         helper.setText(R.id.tv_name,item.getUser().getNickName())
                 .setText(R.id.tv_time, StringUtil.getTimeToYMD(item.getTimestamp(),"yyyy-MM-dd HH:mm:ss"))
-                .setVisible(R.id.tv_topic,false)
+                .setGone(R.id.tv_topic,false)
                 .setGone(R.id.ll_pl,false)
                 .setText(R.id.banner_home_one,item.getContent()+"")
                 .setText(R.id.tv_shoucang,item.getFavoriteCount()+"")
@@ -56,10 +56,13 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
                 .setText(R.id.tv_liuyan,item.getCommentCount()+"")
                 .setText(R.id.tv_all,"全部评论("+item.getCommentCount()+")")
                 .setText(R.id.tv_fenxiang,"0")
+                .setGone(R.id.tv_address,true)
                 .setImageDrawable(R.id.iv_xihuan,mContext.getResources().getDrawable(R.drawable.icon_xin_99_d))
                 .setImageDrawable(R.id.iv_shoucang,mContext.getResources().getDrawable(R.drawable.icon_share_sc_d));
         GlideImageUtils.setGlideImage(mContext,item.getUser().getAvatar(),helper.getView(R.id.iv_head_img));
-
+        if(StringUtil.isNotBlank(item.getPosition())){
+            helper.setText(R.id.tv_address,item.getPosition()).setGone(R.id.tv_address,true);
+        }
         if(item.isIsLike()){
             helper.setImageDrawable(R.id.iv_xihuan,mContext.getResources().getDrawable(R.drawable.ic_celect_xh_yes));
         }
@@ -78,7 +81,7 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
         if(StringUtil.isNotBlank(item.getTopicArr())){
             try {
                 JSONArray array = new JSONArray(item.getTopicArr());
-                helper.setVisible(R.id.tv_topic,true).setText(R.id.tv_topic,"来自话题："+array.getString(0));
+                helper.setGone(R.id.tv_topic,true).setText(R.id.tv_topic,"来自话题："+array.getString(0));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
