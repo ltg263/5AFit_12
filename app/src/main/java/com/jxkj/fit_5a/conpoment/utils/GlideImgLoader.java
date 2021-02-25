@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.jxkj.fit_5a.R;
 import com.youth.banner.loader.ImageLoader;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -82,7 +83,8 @@ public class GlideImgLoader extends ImageLoader {
 
     //加载圆角
     public static void loadImageViewRadius(Context mContext, String path, int r, ImageView mImageView) {
-        Glide.with(mContext).load(path).apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(r))).into(mImageView);
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.mipmap.icon_app_logo).centerCrop().transform(new CenterCrop(), new RoundedCorners(r));
+        Glide.with(mContext).load(path).apply(requestOptions).into(mImageView);
     }
 
     //加载圆角

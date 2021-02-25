@@ -1,5 +1,7 @@
 package com.jxkj.fit_5a.entity;
 
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+
 import java.util.List;
 
 public class CircleTaskData {
@@ -397,6 +399,9 @@ public class CircleTaskData {
         }
 
         public String getTarget() {
+            if(target.contains(".00")){
+                return target.replace(".00","");
+            }
             return target;
         }
 
