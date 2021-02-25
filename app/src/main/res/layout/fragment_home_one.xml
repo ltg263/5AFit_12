@@ -169,18 +169,18 @@
                 android:layout_height="@dimen/dimen_50dp"
                 android:layout_marginHorizontal="@dimen/dimen_15dp"
                 android:layout_marginVertical="@dimen/dp_10"
-                android:background="@drawable/ic_shade_img"
+                android:background="@drawable/shape_yy_ff_all_6"
                 android:gravity="center_vertical">
 
                 <View
-                    android:layout_width="@dimen/common_margin_3"
+                    android:layout_width="@dimen/dp_10"
                     android:layout_height="match_parent"
-                    android:background="@color/color_text_theme" />
+                    android:background="@drawable/jb_shape_theme_zx" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_15dp"
+                    android:layout_marginStart="@dimen/dp_10"
                     android:text="健身"
                     android:textColor="@color/color_text_theme"
                     android:textSize="@dimen/sp_14"
@@ -453,6 +453,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:visibility="invisible"
                     android:drawableEnd="@drawable/icon_jiantou_you_99"
                     android:paddingStart="@dimen/dimen_5dp"
                     android:text="更多"
