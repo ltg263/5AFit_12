@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.view.adapter.ShoppingIntegralJlAdapter;
 import com.jxkj.fit_5a.view.adapter.ShoppingIntegralRmAdapter;
 
@@ -19,6 +22,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MineIntegralActivity extends BaseActivity {
     @BindView(R.id.rv_rmdh_list)
@@ -39,17 +46,10 @@ public class MineIntegralActivity extends BaseActivity {
     protected void initViews() {
         mTvJifenNum.setText(SharedUtils.singleton().get(ConstValues.MY_INTEGRAL,""));
         initRv();
+        getProductList();
     }
     private void initRv() {
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        mShoppingIntegralRmAdapter = new ShoppingIntegralRmAdapter(list);
+        mShoppingIntegralRmAdapter = new ShoppingIntegralRmAdapter(null);
         LinearLayoutManager ms1 = new LinearLayoutManager(this);
         ms1.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRvRmdhList.setLayoutManager(ms1);
@@ -63,7 +63,7 @@ public class MineIntegralActivity extends BaseActivity {
             }
         });
 
-        mShoppingIntegralJlAdapter = new ShoppingIntegralJlAdapter(list);
+        mShoppingIntegralJlAdapter = new ShoppingIntegralJlAdapter(null);
         mRvLsjlList.setLayoutManager(new LinearLayoutManager(this));
         mRvLsjlList.setHasFixedSize(true);
         mRvLsjlList.setAdapter(mShoppingIntegralJlAdapter);
@@ -88,5 +88,35 @@ public class MineIntegralActivity extends BaseActivity {
                 ShoppingActivity.intentStartActivity(this);
                 break;
         }
+    }
+
+
+    private void getProductList() {
+        RetrofitUtil.getInstance().apiService()
+                .getProductList(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<ProductListBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<ProductListBean> result) {
+                        if(isDataInfoSucceed(result)){
+                            mShoppingIntegralRmAdapter.setNewData(result.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
     }
 }

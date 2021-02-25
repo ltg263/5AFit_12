@@ -15,6 +15,7 @@
         android:src="@mipmap/ic_10" />
 
     <TextView
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/iv"
@@ -39,13 +40,13 @@
             android:src="@drawable/icon_home_jq" />
 
         <TextView
-            android:id="@+id/tv_user"
+            android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dimen_5dp"
             android:layout_toEndOf="@id/icon_head"
-            android:text="4890"
+            android:text="0"
             android:textColor="@color/color_333333"
             android:textSize="14sp" />
 
