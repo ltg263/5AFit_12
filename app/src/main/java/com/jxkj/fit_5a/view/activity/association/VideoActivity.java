@@ -54,6 +54,7 @@ public class VideoActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        postBrows();
         snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(rvPage2);
         videoAdapter = new ListVideoAdapter(null, new ListVideoAdapter.VideoInterface() {
@@ -84,6 +85,34 @@ public class VideoActivity extends BaseActivity {
         }else if(type==2){
             getMomentDetailsCircle();
         }
+
+    }
+
+
+    private void postBrows(){
+        RetrofitUtil.getInstance().apiService()
+                .postBrows(circleId,getIntent().getStringExtra("momentId")
+                        ,getIntent().getStringExtra("publisherId"))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result result) {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dismiss();
+                    }
+                });
     }
 
     private void getMomentDetails() {

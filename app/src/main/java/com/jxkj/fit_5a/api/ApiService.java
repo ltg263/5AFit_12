@@ -606,6 +606,12 @@ public interface ApiService {
      * 宝箱领取
      * @param
      */
+    @GET(ConstValues.PORT_4 + "api/v1/user/sport/log/user_sync_iconsole")
+    Observable<Result> getBoxReceive();
+    /**
+     * 宝箱领取
+     * @param
+     */
     @GET(ConstValues.PORT_4 + "api/v1/user/box/receive")
     Observable<Result> getBoxReceive(@Query("boxId") String boxId, @Query("mapId") String mapId);
 
@@ -963,6 +969,8 @@ public interface ApiService {
     @GET(ConstValues.PORT_21+"api/v1/moment/query_next_simple_video")
     Observable<Result<MomentDetailsBean_X>> query_next_simple_video(@Query("currMomentId") String currMomentId,@Query("nextParam") String nextParam);
 
+    @POST(ConstValues.PORT_21+"api/v1/browse")
+    Observable<Result> postBrows(@Query("circleId")String circleId,@Query("momentId")String momentId,@Query("momentPublisherId")String momentPublisherId);
 
     /**
      *获取动态信息--圈子

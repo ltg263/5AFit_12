@@ -87,7 +87,7 @@ public class AssociationActivity extends BaseActivity {
                 }
             }
         });
-
+        postBrows();
         type = getIntent().getIntExtra("type",0);
         if(type==2){
             circleId = getIntent().getStringExtra("circleId");
@@ -95,6 +95,31 @@ public class AssociationActivity extends BaseActivity {
         initRv();
     }
 
+    private void postBrows(){
+        RetrofitUtil.getInstance().apiService()
+                .postBrows(circleId,getIntent().getStringExtra("momentId")
+                        ,getIntent().getStringExtra("publisherId"))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result result) {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dismiss();
+                    }
+                });
+    }
     private void initRv() {
         mAssociationListAdapter = new AssociationListAdapter(null);
         mRvList.setLayoutManager(new LinearLayoutManager(this));

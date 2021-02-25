@@ -160,7 +160,7 @@ public class RatePatternActivity extends BaseActivity {
                 .title("")
                 .yAxisTitle("")
                 .yAxisLabelsEnabled(false)
-                .xAxisLabelsEnabled(false)
+                .xAxisLabelsEnabled(true)
                 .yAxisGridLineWidth(0f)
                 .xAxisVisible(false)
                 .legendEnabled(false)

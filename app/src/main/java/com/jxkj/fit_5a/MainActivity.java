@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.GiftListData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.OssService;
 import com.jxkj.fit_5a.entity.SpecListBaen;
@@ -171,6 +172,37 @@ public class MainActivity extends BaseActivity {
             //开始定位
 //          getCurrentLocationLatLng();
         }
+//        getBoxReceive();
+    }
+
+
+    private void getBoxReceive() {
+        RetrofitUtil.getInstance().apiService()
+                .getBoxReceive()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(isDataInfoSucceed(result)){
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 }
