@@ -510,6 +510,7 @@
                     android:layout_marginTop="@dimen/dimen_30dp"
                     android:background="@drawable/bj_shape_line_f2_25"
                     android:gravity="center"
+                    android:visibility="invisible"
                     android:text="查看更多"
                     android:textColor="@color/color_999999"
                     android:textSize="12sp" />
