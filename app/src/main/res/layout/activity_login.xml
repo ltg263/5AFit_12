@@ -21,23 +21,24 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@id/iv_icon"
-                android:layout_alignBottom="@id/iv_icon"
                 android:layout_marginStart="@dimen/common_margin_26"
+                android:layout_marginTop="@dimen/dp_40"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="@dimen/dimen_20dp"
                 android:text="您好！\n欢迎来到"
                 android:textColor="@color/color_333333"
-                android:textSize="@dimen/dimen_25dp"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/iv_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tv_title"
+                android:layout_alignBottom="@id/tv_title"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/dimen_50dp"
                 android:layout_marginEnd="@dimen/common_margin_26"
+                android:adjustViewBounds="true"
                 android:src="@mipmap/icon_app_logo" />
 
 
@@ -47,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/iv_icon"
                 android:layout_marginHorizontal="@dimen/common_margin_26"
-                android:layout_marginTop="@dimen/dimen_80dp">
+                android:layout_marginTop="@dimen/dimen_50dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
