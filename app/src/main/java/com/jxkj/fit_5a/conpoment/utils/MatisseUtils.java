@@ -3,9 +3,14 @@ package com.jxkj.fit_5a.conpoment.utils;
 import android.Manifest;
 import android.app.Activity;
 
+import com.jxkj.fit_5a.R;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -103,5 +108,18 @@ public class MatisseUtils {
                 .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
                 .forResult(PictureConfig.REQUEST_CAMERA);//结果回调onActivityResult code
 
+    }
+
+    public static void oPenUrlImg(Activity mActivity,List<String> lists,int pos){
+
+        List<LocalMedia> list=new ArrayList<>();
+        for (int i=0;i<lists.size();i++){
+            LocalMedia media=new LocalMedia();
+            media.setPath(lists.get(i));
+            list.add(media);
+        }
+
+        PictureSelector.create(mActivity).themeStyle(R.style.picture_default_style)
+                .openExternalPreview(pos, list);
     }
 }

@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.adapter;
 
+import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 
@@ -13,9 +14,12 @@ import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
+import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -181,7 +185,8 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
         mBanner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-//                Log.i("tag", "你点了第" + position + "张轮播图:" + lists.get(position).getId());
+                Log.i("tag", "你点了第" + position + "张轮播图:" + list_path.get(position));
+                MatisseUtils.oPenUrlImg((Activity) mContext,list_path,position);
             }
         });
 

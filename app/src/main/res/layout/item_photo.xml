@@ -21,13 +21,12 @@
         android:background="@drawable/line_stroke_f"
         android:padding="1dp"
         android:scaleType="center"
-        android:src="@drawable/icon_add_theme"
-        android:visibility="gone" />
+        android:src="@drawable/icon_add_theme" />
 
     <ImageView
         android:id="@+id/iv_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dimen_30dp"
+        android:layout_height="@dimen/dimen_30dp"
         android:layout_alignParentEnd="true"
         android:padding="@dimen/dp_10"
         android:scaleType="center"
