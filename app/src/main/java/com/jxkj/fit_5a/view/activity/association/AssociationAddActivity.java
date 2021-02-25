@@ -43,6 +43,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -88,7 +89,7 @@ public class AssociationAddActivity extends BaseActivity {
     List<String> list = new ArrayList<>();
     private SpPhotoAdapter mSpPhotoAdapter;
     int shareType = 1;
-    int type = -1;//2:图片;3:视频)
+    int type = 2;//2:图片;3:视频)
 
     @Override
     protected int getContentView() {
@@ -173,10 +174,17 @@ public class AssociationAddActivity extends BaseActivity {
 //                    mTvPosition.setText("详细地址："+address+"\n经度："+longitude+"\n纬度："+latitude);
 //                    Success/storage/emulated/0/DCIM/Camera/20210111_100058.jpg
                     break;
+                case 3:
+                    topics = data.getStringExtra("topics");
+                    mTvTopics.setText("");
+                    if(StringUtil.isNotBlank(topics)){
+                        mTvTopics.setText(topics);
+                    }
+                    break;
             }
         }
     }
-
+    String topics = null;
     private void setVideo(List<LocalMedia> selectList) {
         String path = PictureUtil.getVideoThumb(selectList.get(0).getPath());
         if (StringUtil.isNotBlank(path)) {
@@ -308,7 +316,7 @@ public class AssociationAddActivity extends BaseActivity {
                 postPublishMoment();
                 break;
             case R.id.tv_topics:
-                startActivityForResult(new Intent(AssociationAddActivity.this, TopicAllActivity.class), 2);
+                startActivityForResult(new Intent(AssociationAddActivity.this, TopicAllActivity.class), 3);
                 break;
             case R.id.tv_position:
                 startActivityForResult(new Intent(AssociationAddActivity.this, LocationSelectActivity.class), 2);
@@ -377,11 +385,16 @@ public class AssociationAddActivity extends BaseActivity {
             return;
         }
         media = listUrls.toString();
+        String[] str = null;
+        if(StringUtil.isNotBlank(topics)){
+           str = new String[1];
+            str[0]=topics;
+        }
         show();
         RetrofitUtil.getInstance().apiService()
                 .postPublishMoment(content, type + "", shareType + "",
                         media,
-                        position, location, null)
+                        position, location, str)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {

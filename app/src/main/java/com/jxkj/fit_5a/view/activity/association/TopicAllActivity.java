@@ -61,7 +61,10 @@ public class TopicAllActivity extends BaseActivity {
         mTopicListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                MineTopicActivity.startActivity(TopicAllActivity.this,mTopicListAdapter.getData().get(position).getId()+"");
+                Intent intent=new Intent();
+                intent.putExtra("topics",mTopicListAdapter.getData().get(position).getName());
+                setResult(RESULT_OK,intent);
+                finish();
             }
         });
         getAllTopic();

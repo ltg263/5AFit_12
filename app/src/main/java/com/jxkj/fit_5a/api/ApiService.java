@@ -723,7 +723,7 @@ public interface ApiService {
     Observable<Result> postPublishMoment(@Query("content") String content, @Query("contentType") String contentType,
                                          @Query("shareType") String shareType, @Query("media") String media,
                                          @Query("position") String position, @Query("location") String location,
-                                         @Query("topics") String topics);
+                                         @Query("topics") String[] topics);
 
     /**
      * 用户发布动态--圈子

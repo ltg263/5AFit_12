@@ -37,6 +37,9 @@ public class CircleDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, Bas
                 .setText(R.id.tv_liuyan,item.getCommentCount()+"")
                 .setText(R.id.tv_browse_num,"浏览 "+item.getPageviews()+" 次");
 
+        helper.setGone(R.id.siv_1,false).setGone(R.id.siv_2,false)
+                .setGone(R.id.siv_3,false).setGone(R.id.siv_4,false);
+
         if(item.getUser().getRelation()==4){
             helper.setVisible(R.id.tv_wgz,false).setVisible(R.id.tv_ygz,false);
         }else if(item.getUser().getRelation()==1||item.getUser().getRelation()==3){

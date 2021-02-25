@@ -4,59 +4,21 @@ package com.jxkj.fit_5a;
 import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
 public class MianJavaDame {
     public static void main(String[] args) {
 //
-        System.out.println("--->>"+ getDays(7));
-        System.out.println("--->>"+ getDays(30));
-//        System.out.println("--->>"+ (int)getCHECKSUM(b));
+        String[] a = new String[1];
+        a[0]="哈哈";
+//        System.out.println("--->>"+ );
 
 
-//        System.out.println("--->>"+ConstValues_Ly.getBaiShiGeX(12,2));
-//        Byte[] a = new Byte[]{1,25,55};
-//        10   220
-//        TimeThreadUtils.sendDataA6(10000,a);
-
-        int max = 209;
-        int min = 11;
-        System.out.println("--->>"+((max-min)*0.5+min));
-        System.out.println("--->>"+((max-min)*0.6+min));
-        System.out.println("--->>"+((max-min)*0.7+min));
-        System.out.println("--->>"+((max-min)*0.8+min));
-        System.out.println("--->>"+((max-min)*0.9+min));
-        System.out.println("--->>"+((max-min)*1+min));
-
-
-
-        Calendar cal = Calendar.getInstance();
-//cal.set(2002, 2, 28);// 2002-03-28 星期四
-        System.out.println("今天是：" + cal.get(Calendar.YEAR)
-                + (cal.get(Calendar.MONTH) + 1)//Month 值是基于 0 的。例如，0 表示bai January
-                + cal.get(Calendar.DAY_OF_MONTH));
-        System.out.println("星期" + getBigWeek(cal.get(Calendar.DAY_OF_WEEK)));
-        int flag = cal.get(Calendar.DAY_OF_WEEK);
-        cal.add(Calendar.DATE, 1-flag);
-/////////////////////
-        System.out.println("本周从");
-        System.out.println("" + cal.get(Calendar.YEAR)
-                + (cal.get(Calendar.MONTH) + 1)//Month 值是基于 0 的。例如，0 表示 January
-                + cal.get(Calendar.DAY_OF_MONTH));
-        System.out.println("星期" + getBigWeek(cal.get(Calendar.DAY_OF_WEEK)));
-
-/////////////////////////
-        System.out.println("到");
-        cal.add(Calendar.DATE, 9);
-///////////////////////
-        System.out.println("" + cal.get(Calendar.YEAR)
-                + (cal.get(Calendar.MONTH) + 1)//Month 值是基于 0 的。例如，0 表示 January
-                + cal.get(Calendar.DAY_OF_MONTH));
-        System.out.println("星期" + getBigWeek(cal.get(Calendar.DAY_OF_WEEK)));
-        aa();
     }
 
     public static String getBigWeek(int dayofweek) {

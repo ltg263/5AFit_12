@@ -37,6 +37,8 @@ public class HomeDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, BaseV
                 .setGone(R.id.iv_baofang,false)
                 .setText(R.id.tv_browse_num,"浏览 "+item.getPageviews()+" 次");
 
+        helper.setGone(R.id.siv_1,false).setGone(R.id.siv_2,false)
+                .setGone(R.id.siv_3,false).setGone(R.id.siv_4,false);
         GlideImageUtils.setGlideImage(mContext,item.getUser().getAvatar(),helper.getView(R.id.iv_head_img));
 
         if(StringUtil.isNotBlank(item.getTopicArr())){

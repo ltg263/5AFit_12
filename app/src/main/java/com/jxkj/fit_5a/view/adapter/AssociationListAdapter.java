@@ -56,7 +56,7 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
                 .setText(R.id.tv_liuyan,item.getCommentCount()+"")
                 .setText(R.id.tv_all,"全部评论("+item.getCommentCount()+")")
                 .setText(R.id.tv_fenxiang,"0")
-                .setGone(R.id.tv_address,true)
+                .setGone(R.id.tv_address,false)
                 .setImageDrawable(R.id.iv_xihuan,mContext.getResources().getDrawable(R.drawable.icon_xin_99_d))
                 .setImageDrawable(R.id.iv_shoucang,mContext.getResources().getDrawable(R.drawable.icon_share_sc_d));
         GlideImageUtils.setGlideImage(mContext,item.getUser().getAvatar(),helper.getView(R.id.iv_head_img));
@@ -88,8 +88,7 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
         }
         Banner mBanner =  helper.getView(R.id.banner);
         mBanner.setVisibility(View.GONE);
-        if(StringUtil.isNotBlank(item.getMedia())){
-
+        if(StringUtil.isNotBlank(item.getMedia())&& !item.getMedia().equals("[]")){
             mBanner.setVisibility(View.VISIBLE);
             try {
                 initBannerOne(mBanner,new JSONArray(item.getMedia()));
