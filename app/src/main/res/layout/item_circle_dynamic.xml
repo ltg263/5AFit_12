@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/dp_10"
     android:orientation="vertical">
 
     <com.jxkj.fit_5a.conpoment.view.RoundImageView
         android:id="@+id/iv_head_img"
-        app:type="circle"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_margin="@dimen/dp_10"
-        android:src="@mipmap/ic_6" />
+        android:src="@mipmap/ic_6"
+        app:type="circle" />
 
     <TextView
         android:id="@+id/tv_name"
