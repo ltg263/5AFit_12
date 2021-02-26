@@ -142,6 +142,7 @@ public class AssociationActivity extends BaseActivity {
         pagerSnapHelper.attachToRecyclerView(mRvList);
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mAssociationListAdapter);
+        mRvList.setNestedScrollingEnabled(true);
         mAssociationListAdapter.setCircleId(circleId);
         mAssociationListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
