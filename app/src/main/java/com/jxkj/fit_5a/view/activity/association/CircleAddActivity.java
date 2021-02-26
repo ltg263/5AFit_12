@@ -253,16 +253,12 @@ public class CircleAddActivity extends BaseActivity {
         if (StringUtil.isBlank(content)) {
             ToastUtils.showShort("内容不能为空");
         }
+        if (content.length()>500) {
+            ToastUtils.showShort("内容不能大于500字");
+            return;
+        }
         media = listUrls.toString();
-
         show();
-        Log.w("-->>:","id:"+id);
-        Log.w("-->>:","content:"+content);
-        Log.w("-->>:","contentType:"+2);
-        Log.w("-->>:","shareType:"+shareType);
-        Log.w("-->>:","location:"+location);
-        Log.w("-->>:","media:"+media);
-        Log.w("-->>:","position:"+position);
         RetrofitUtil.getInstance().apiService()
                 .postPublishMomentCircle(id,content,"2",shareType+"",
                         location,media,

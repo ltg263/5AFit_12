@@ -384,6 +384,10 @@ public class AssociationAddActivity extends BaseActivity {
             ToastUtils.showShort("内容不能为空");
             return;
         }
+        if (content.length()>500) {
+            ToastUtils.showShort("内容不能大于500字");
+            return;
+        }
         media = listUrls.toString();
         String[] str = null;
         if(StringUtil.isNotBlank(topics)){
