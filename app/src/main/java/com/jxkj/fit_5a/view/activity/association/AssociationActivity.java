@@ -91,6 +91,7 @@ public class AssociationActivity extends BaseActivity {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                refreshLayout.finishLoadMore();
                 if(type==1){
                     getQuery_next_graphic(mMomentDetailsBeans.get(mMomentDetailsBeans.size()-1).getMomentId());
                 }else if(type==2){
@@ -98,6 +99,7 @@ public class AssociationActivity extends BaseActivity {
                 }
             }
         });
+        refreshLayout.setEnableScrollContentWhenLoaded(false);
         postBrows();
         type = getIntent().getIntExtra("type",0);
         if(type==2){
@@ -131,9 +133,11 @@ public class AssociationActivity extends BaseActivity {
                     }
                 });
     }
+    LinearLayoutManager manager;
     private void initRv() {
         mAssociationListAdapter = new AssociationListAdapter(null);
-        mRvList.setLayoutManager(new LinearLayoutManager(this));
+        manager = new LinearLayoutManager(this);
+        mRvList.setLayoutManager(manager);
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(mRvList);
         mRvList.setHasFixedSize(true);
@@ -322,9 +326,9 @@ public class AssociationActivity extends BaseActivity {
                     @Override
                     public void onNext(Result<MomentDetailsBean> result) {
                         if(isDataInfoSucceed(result)){
-                            mMomentDetailsBeans.add(result.getData());
                             nextParam=null;
-                            mAssociationListAdapter.setNewData(mMomentDetailsBeans);
+                            mMomentDetailsBeans.clear();
+                            mMomentDetailsBeans.add(result.getData());
                             if(type==1){
                                 getQuery_next_graphic(mMomentDetailsBeans.get(mMomentDetailsBeans.size()-1).getMomentId());
                             }else if(type==2){
@@ -340,8 +344,8 @@ public class AssociationActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
-                        refreshLayout.finishLoadMore();
-                        dismiss();
+                        refreshLayout.finishRefresh();
+
                     }
                 });
     }
@@ -360,8 +364,14 @@ public class AssociationActivity extends BaseActivity {
                     @Override
                     public void onNext(Result<MomentDetailsBean> result) {
                         if(isDataInfoSucceed(result)){
+                            nextParam=null;
+                            mMomentDetailsBeans.clear();
                             mMomentDetailsBeans.add(result.getData());
-                            mAssociationListAdapter.setNewData(mMomentDetailsBeans);
+                            if(type==1){
+                                getQuery_next_graphic(mMomentDetailsBeans.get(mMomentDetailsBeans.size()-1).getMomentId());
+                            }else if(type==2){
+                                getQuery_next_graphic_circle(mMomentDetailsBeans.get(mMomentDetailsBeans.size()-1).getMomentId());
+                            }
                         }
                     }
 
@@ -372,7 +382,7 @@ public class AssociationActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
-                        refreshLayout.finishLoadMore();
+                        refreshLayout.finishRefresh();
                         dismiss();
                     }
                 });
@@ -403,7 +413,6 @@ public class AssociationActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
-                        refreshLayout.finishLoadMore();
                     }
                 });
     }
@@ -432,7 +441,6 @@ public class AssociationActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
-                        refreshLayout.finishLoadMore();
                     }
                 });
     }

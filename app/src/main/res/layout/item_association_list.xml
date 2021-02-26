@@ -109,7 +109,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/banner_home_one"
-            android:layout_marginTop="@dimen/dimen_5dp"
             android:drawableStart="@drawable/icon_dw1"
             android:drawablePadding="@dimen/dimen_5dp"
             android:paddingHorizontal="@dimen/dimen_15dp"
