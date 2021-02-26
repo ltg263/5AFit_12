@@ -199,6 +199,7 @@ public class CircleAddActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
+                finish();
                 break;
             case R.id.tv_righttext:
                 postPublishMoment();

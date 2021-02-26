@@ -2,11 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/dp_10"
     android:orientation="vertical">
 
-    <ImageView
+    <com.jxkj.fit_5a.conpoment.view.RoundImageView
         android:id="@+id/iv_head_img"
+        app:type="circle"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_margin="@dimen/dp_10"
@@ -117,8 +119,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_220dp"
             android:scaleType="center"
-            android:visibility="gone"
-            android:src="@mipmap/ic_7" />
+            android:src="@mipmap/ic_7"
+            android:visibility="gone" />
 
     </LinearLayout>
 
