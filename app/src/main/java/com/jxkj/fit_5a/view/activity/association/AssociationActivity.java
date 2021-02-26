@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -27,6 +28,7 @@ import com.jxkj.fit_5a.view.adapter.AssociationListAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,14 +78,23 @@ public class AssociationActivity extends BaseActivity {
                 finish();
             }
         });
-        refreshLayout.setEnableRefresh(false);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                if(type==1){
+                    getMomentDetails();
+                }else if(type==2){
+                    getMomentDetailsCircle();
+                }
+            }
+        });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if(type==1){
                     getQuery_next_graphic(mMomentDetailsBeans.get(mMomentDetailsBeans.size()-1).getMomentId());
                 }else if(type==2){
-                    getMomentDetailsCircle();
+                    getQuery_next_graphic_circle(mMomentDetailsBeans.get(mMomentDetailsBeans.size()-1).getMomentId());
                 }
             }
         });
@@ -123,6 +134,8 @@ public class AssociationActivity extends BaseActivity {
     private void initRv() {
         mAssociationListAdapter = new AssociationListAdapter(null);
         mRvList.setLayoutManager(new LinearLayoutManager(this));
+        PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
+        pagerSnapHelper.attachToRecyclerView(mRvList);
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mAssociationListAdapter);
         mAssociationListAdapter.setCircleId(circleId);
@@ -311,8 +324,12 @@ public class AssociationActivity extends BaseActivity {
                         if(isDataInfoSucceed(result)){
                             mMomentDetailsBeans.add(result.getData());
                             nextParam=null;
-                            getQuery_next_graphic(result.getData().getMomentId());
                             mAssociationListAdapter.setNewData(mMomentDetailsBeans);
+                            if(type==1){
+                                getQuery_next_graphic(mMomentDetailsBeans.get(mMomentDetailsBeans.size()-1).getMomentId());
+                            }else if(type==2){
+                                getQuery_next_graphic_circle(mMomentDetailsBeans.get(mMomentDetailsBeans.size()-1).getMomentId());
+                            }
                         }
                     }
 
@@ -361,6 +378,35 @@ public class AssociationActivity extends BaseActivity {
                 });
     }
 
+    private void getQuery_next_graphic_circle(String momentId){
+        RetrofitUtil.getInstance().apiService()
+                .getQuery_next_graphic_circle(circleId,momentId,nextParam)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<MomentDetailsBean_X>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result<MomentDetailsBean_X> result) {
+                        if(isDataInfoSucceed(result)){
+                            nextParam = result.getData().getNextParam();
+                            mMomentDetailsBeans.addAll(result.getData().getList());
+                            mAssociationListAdapter.setNewData(mMomentDetailsBeans);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        refreshLayout.finishLoadMore();
+                    }
+                });
+    }
     private void getQuery_next_graphic(String momentId){
         RetrofitUtil.getInstance().apiService()
                 .getQuery_next_graphic(momentId,nextParam)
@@ -382,13 +428,11 @@ public class AssociationActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        dismiss();
                     }
 
                     @Override
                     public void onComplete() {
                         refreshLayout.finishLoadMore();
-                        dismiss();
                     }
                 });
     }
