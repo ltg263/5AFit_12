@@ -708,10 +708,10 @@ public interface ApiService {
 
 
     /**
-     * 创建圈子
+     * 获取所有分类以及话题
      */
     @GET(ConstValues.PORT_21 + "api/v1/topic/all")
-    Observable<Result<TopicAllBean>> getTopicAll();
+    Observable<ResultList<TopicAllBean>> getTopicAll();
 
 
     /**

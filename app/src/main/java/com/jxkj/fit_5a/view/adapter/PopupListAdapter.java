@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class PopupListAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     public PopupListAdapter(@Nullable List<String> data) {
-        super(R.layout.item_topic_list, data);
+        super(R.layout.item_popup_list, data);
     }
 
     @Override

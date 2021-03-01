@@ -10,6 +10,7 @@ import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.entity.HotTopicBean;
+import com.jxkj.fit_5a.entity.TopicAllBean;
 
 import java.util.List;
 
@@ -17,14 +18,14 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/5/2914:03
  */
-public class TopicListAdapter extends BaseQuickAdapter<HotTopicBean, BaseViewHolder> {
-    public TopicListAdapter(@Nullable List<HotTopicBean> data) {
+public class TopicListAdapter extends BaseQuickAdapter<TopicAllBean.ChildrenBean, BaseViewHolder> {
+    public TopicListAdapter(@Nullable List<TopicAllBean.ChildrenBean> data) {
         super(R.layout.item_topic_all, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, HotTopicBean item) {
-        helper.setText(R.id.tv1,item.getName()).setText(R.id.tv2,item.getIntroduction());
+    protected void convert(@NonNull BaseViewHolder helper, TopicAllBean.ChildrenBean item) {
+        helper.setText(R.id.tv_1,item.getName()).setText(R.id.tv_2,item.getIntroduction());
         GlideImgLoader.loadImageViewRadius(mContext,item.getImgUrl(),10,helper.getView(R.id.iv));
     }
 

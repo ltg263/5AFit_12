@@ -192,7 +192,7 @@ public class MineTopicActivity extends BaseActivity {
     public static void startActivity(Context mContext, String id) {
         Intent intent = new Intent(mContext, MineTopicActivity.class);
         intent.putExtra("id", id);
-        mContext.startActivity(intent);
+//        mContext.startActivity(intent);
     }
 
 }

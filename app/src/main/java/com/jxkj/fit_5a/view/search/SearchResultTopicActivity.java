@@ -92,7 +92,7 @@ public class SearchResultTopicActivity extends BaseActivity {
                             if(result.getData()!=null && result.getData().size()>0){
                                 llNoData.setVisibility(View.GONE);
                                 mRefreshLayout.setVisibility(View.VISIBLE);
-                                mTopicListAdapter.setNewData(result.getData());
+//                                mTopicListAdapter.setNewData(result.getData());
                             }
                         }
                     }

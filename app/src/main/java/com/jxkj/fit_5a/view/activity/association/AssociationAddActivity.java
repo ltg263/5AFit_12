@@ -316,7 +316,9 @@ public class AssociationAddActivity extends BaseActivity {
                 postPublishMoment();
                 break;
             case R.id.tv_topics:
-                startActivityForResult(new Intent(AssociationAddActivity.this, TopicAllActivity.class), 3);
+                Intent intent = new Intent(AssociationAddActivity.this, TopicAllActivity.class);
+                intent.putExtra("type","1");
+                startActivityForResult(intent, 3);
                 break;
             case R.id.tv_position:
                 startActivityForResult(new Intent(AssociationAddActivity.this, LocationSelectActivity.class), 2);
@@ -346,34 +348,6 @@ public class AssociationAddActivity extends BaseActivity {
         }
     }
 
-    private void getTopicAll() {
-        RetrofitUtil.getInstance().apiService()
-                .getTopicAll()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result<TopicAllBean>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Result<TopicAllBean> result) {
-                        if (isDataInfoSucceed(result)) {
-                            result.getData().getChildren();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-
-    }
 
     String media;
 

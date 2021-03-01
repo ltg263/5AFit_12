@@ -5,22 +5,26 @@ import java.util.List;
 public class TopicAllBean {
 
     /**
-     * articlesCount : 0
-     * children : [{"articlesCount":0,"children":[{}],"name":""}]
-     * name :
+     * name : 热门
+     * articlesCount : 28
+     * pageviews : 927
+     * introduction :
+     * hot : false
+     * sortWeights : 0
+     * imgUrl :
+     * children : [{"name":"如何减肥","articlesCount":17,"pageviews":641,"introduction":"简单介绍","hot":true,"sortWeights":811,"imgUrl":"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201604%2F02%2F20160402173031_JYyrn.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1611215862&t=17cb6319866f942f465a4eaab2995496","children":[]},{"name":"每日健身计划","articlesCount":11,"pageviews":286,"introduction":"简介","hot":true,"sortWeights":396,"imgUrl":"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201604%2F02%2F20160402173031_JYyrn.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1611215862&t=17cb6319866f942f465a4eaab2995496","children":[]}]
      */
 
-    private int articlesCount;
     private String name;
-    private List<ChildrenBeanX> children;
+    private String articlesCount;
+    private String pageviews;
+    private String introduction;
+    private boolean hot;
+    private boolean isSele;
 
-    public int getArticlesCount() {
-        return articlesCount;
-    }
-
-    public void setArticlesCount(int articlesCount) {
-        this.articlesCount = articlesCount;
-    }
+    private String sortWeights;
+    private String imgUrl;
+    private List<ChildrenBean> children;
 
     public String getName() {
         return name;
@@ -30,32 +34,90 @@ public class TopicAllBean {
         this.name = name;
     }
 
-    public List<ChildrenBeanX> getChildren() {
+    public String getArticlesCount() {
+        return articlesCount;
+    }
+
+    public void setArticlesCount(String articlesCount) {
+        this.articlesCount = articlesCount;
+    }
+
+    public String getPageviews() {
+        return pageviews;
+    }
+
+    public void setPageviews(String pageviews) {
+        this.pageviews = pageviews;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public boolean isSele() {
+        return isSele;
+    }
+
+    public void setSele(boolean sele) {
+        isSele = sele;
+    }
+
+    public boolean isHot() {
+        return hot;
+    }
+
+    public void setHot(boolean hot) {
+        this.hot = hot;
+    }
+
+    public String getSortWeights() {
+        return sortWeights;
+    }
+
+    public void setSortWeights(String sortWeights) {
+        this.sortWeights = sortWeights;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public List<ChildrenBean> getChildren() {
         return children;
     }
 
-    public void setChildren(List<ChildrenBeanX> children) {
+    public void setChildren(List<ChildrenBean> children) {
         this.children = children;
     }
 
-    public static class ChildrenBeanX {
+    public static class ChildrenBean {
         /**
-         * articlesCount : 0
-         * children : [{}]
-         * name :
+         * name : 如何减肥
+         * articlesCount : 17
+         * pageviews : 641
+         * introduction : 简单介绍
+         * hot : true
+         * sortWeights : 811
+         * imgUrl : https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201604%2F02%2F20160402173031_JYyrn.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1611215862&t=17cb6319866f942f465a4eaab2995496
+         * children : []
          */
 
-        private int articlesCount;
         private String name;
-        private List<ChildrenBean> children;
-
-        public int getArticlesCount() {
-            return articlesCount;
-        }
-
-        public void setArticlesCount(int articlesCount) {
-            this.articlesCount = articlesCount;
-        }
+        private String articlesCount;
+        private String pageviews;
+        private String introduction;
+        private boolean hot;
+        private String sortWeights;
+        private String imgUrl;
+        private List<?> children;
 
         public String getName() {
             return name;
@@ -65,15 +127,60 @@ public class TopicAllBean {
             this.name = name;
         }
 
-        public List<ChildrenBean> getChildren() {
+        public String getArticlesCount() {
+            return articlesCount;
+        }
+
+        public void setArticlesCount(String articlesCount) {
+            this.articlesCount = articlesCount;
+        }
+
+        public String getPageviews() {
+            return pageviews;
+        }
+
+        public void setPageviews(String pageviews) {
+            this.pageviews = pageviews;
+        }
+
+        public String getIntroduction() {
+            return introduction;
+        }
+
+        public void setIntroduction(String introduction) {
+            this.introduction = introduction;
+        }
+
+        public boolean isHot() {
+            return hot;
+        }
+
+        public void setHot(boolean hot) {
+            this.hot = hot;
+        }
+
+        public String getSortWeights() {
+            return sortWeights;
+        }
+
+        public void setSortWeights(String sortWeights) {
+            this.sortWeights = sortWeights;
+        }
+
+        public String getImgUrl() {
+            return imgUrl;
+        }
+
+        public void setImgUrl(String imgUrl) {
+            this.imgUrl = imgUrl;
+        }
+
+        public List<?> getChildren() {
             return children;
         }
 
-        public void setChildren(List<ChildrenBean> children) {
+        public void setChildren(List<?> children) {
             this.children = children;
-        }
-
-        public static class ChildrenBean {
         }
     }
 }
