@@ -71,6 +71,8 @@ public class RatePatternActivity extends BaseActivity {
     TextView tv_movingTye;
     @BindView(R.id.tv_distance)
     TextView tv_distance;
+    @BindView(R.id.ll_lat)
+    LinearLayout ll_lat;
     int loadCurrent = 1;
     int loadMax = ConstValues_Ly.maxLoad;
     private RatePatternAdapter mRatePatternAdapter;
@@ -102,6 +104,7 @@ public class RatePatternActivity extends BaseActivity {
         if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]) ){
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
         }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
+            ll_lat.setVisibility(View.GONE);
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5));
         }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2]){
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
@@ -447,9 +450,9 @@ public class RatePatternActivity extends BaseActivity {
         List<RatePatternBean> list = new ArrayList<>();
         list.add(new RatePatternBean("卡路里",Calories+"cal"));
         list.add(new RatePatternBean("当前速度",speed+"km/h"));
-        list.add(new RatePatternBean("1每分钟",rpm1+"转"));
-        list.add(new RatePatternBean("2每分钟",rpm2+"转"));
-        list.add(new RatePatternBean("心率",Pulse+""));
+        list.add(new RatePatternBean("当前功率","0w"));
+        list.add(new RatePatternBean("当前段位","0"));
+        list.add(new RatePatternBean("RPM/SPM","0"));
 
         mRatePatternAdapter.setNewData(list);
         mRatePatternAdapter.notifyDataSetChanged();

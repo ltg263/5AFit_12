@@ -290,6 +290,7 @@ public class FacilityAddPpActivity extends BaseActivity {
             @Override
             public void btnConfirm() {
                 if(str.equals("连接成功")){
+                    dismiss();
                     startActivity(new Intent(FacilityAddPpActivity.this, MainActivity.class));
                 }
             }

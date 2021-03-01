@@ -28,6 +28,7 @@ import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.lanya.DataManage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class PopupWindowLanYan extends PopupWindow {
@@ -149,7 +150,11 @@ public class PopupWindowLanYan extends PopupWindow {
                 case 101:
 //                    dialogInterface.btnConfirm(message.obj.toString());
                     byte[] resultData = (byte[]) message.obj;
-                    setData(resultData);
+                    if(resultData.length>4){
+                        setData(resultData);
+                    }else{
+                        Log.w("---》》》","错误："+ Arrays.toString(resultData));
+                    }
                     break;
             }
             return false;

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_white50_5dp"
     android:gravity="center"
     android:minWidth="100dp"
     android:minHeight="35dp"
@@ -22,6 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="7dp"
         android:text="加载中..."
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/color_text_theme"
         android:textSize="14dp" />
 </LinearLayout>
