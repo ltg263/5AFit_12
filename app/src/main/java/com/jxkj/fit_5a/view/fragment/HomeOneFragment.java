@@ -262,6 +262,7 @@ public class HomeOneFragment extends BaseFragment {
                             list.add("总里程");
                             list.add("总计时间");
                             list.add("平均时间");
+                            list.add("BAI");
                             mHomeTopAdapter.setNewData(list, result.getData().getStats());
                         }
                     }

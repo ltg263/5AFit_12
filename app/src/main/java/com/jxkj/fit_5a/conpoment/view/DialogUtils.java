@@ -190,7 +190,9 @@ public class DialogUtils {
         });
         dialog.setCancelable(false);
         dialog.setContentView(view);
-        dialog.show();
+        if(!dialog.isShowing()){
+            dialog.show();
+        }
     }
 
     /**

@@ -29,16 +29,24 @@ public class HomeTopAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
         helper.setText(R.id.tv_name,item);
         if(item.equals("卡路里")){
             helper.setText(R.id.tv_v,stats.getTotalCalories()+"cal")
-                    .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.icon_task_2));
+                    .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_1))
+                    .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fde5e5);
         }else if(item.equals("总里程")){
             helper.setText(R.id.tv_v,stats.getTotalDistance()+"km")
-                    .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.icon_task_3));
+                    .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_2))
+                    .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_1091e7);
         }else if(item.equals("总计时间")){
-            helper.setText(R.id.tv_v,stats.getTotalDuration()+"min")
-                    .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.icon_task_4));
+            helper.setText(R.id.tv_v,stats.getTotalDuration()+"s")
+                    .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_4))
+                    .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fde5e5);
         }else if(item.equals("平均时间")){
-            helper.setText(R.id.tv_v,stats.getAvgDuration()+"min")
-                    .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.icon_task_4));
+            helper.setText(R.id.tv_v,stats.getAvgDuration()+"s")
+                    .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_4))
+                    .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
+        }else if(item.equals("BAI")){
+            helper.setText(R.id.tv_v,stats.getBai()+"BAI")
+                    .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_1))
+                    .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fde5e5);
         }
     }
 
