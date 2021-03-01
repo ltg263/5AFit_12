@@ -25,6 +25,7 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AADataLabels;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAPie;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.view.adapter.TaskFinishListAdapter;
 import com.jxkj.fit_5a.view.adapter.TaskFinishPjAdapter;
 import com.jxkj.fit_5a.view.fragment.TaskFinishViewFragment;
@@ -50,6 +51,7 @@ public class TaskFinishActivity extends BaseActivity {
     @BindView(R.id.tv_xz)
     TextView mTvXz;
     private AAChartModel aaChartModel;
+    private ArrayList<BpmDataBean> mBpmDataBeans;
     @Override
     protected int getContentView() {
         return R.layout.activity_task_finish;
@@ -57,6 +59,7 @@ public class TaskFinishActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        mBpmDataBeans = getIntent().getParcelableArrayListExtra("mBpmDataBeans");
         initVP();
         initRv();
         aaChartModel = configurePieChart();
@@ -82,11 +85,12 @@ public class TaskFinishActivity extends BaseActivity {
                                                 .distance(5f)
                                                 .format("<b>{point.name}</b>: <br> {point.percentage:.1f} %"))
                                         .data(new Object[][] {
-                                        {"Java"  ,67},
-                                        {"Swift",999},
-                                        {"Python",83},
-                                        {"OC"    ,11},
-                                        {"Go"    ,30},
+                                        {mBpmDataBeans.get(0).getName(),67},
+                                        {mBpmDataBeans.get(1).getName(),999},
+                                        {mBpmDataBeans.get(2).getName(),83},
+                                        {mBpmDataBeans.get(3).getName(),11},
+                                        {mBpmDataBeans.get(4).getName(),30},
+                                        {mBpmDataBeans.get(5).getName(),30},
                                 })
                                 ,
                         }
@@ -161,7 +165,7 @@ public class TaskFinishActivity extends BaseActivity {
         });
 
 
-        TaskFinishListAdapter mTaskFinishListAdapter = new TaskFinishListAdapter(list);
+        TaskFinishListAdapter mTaskFinishListAdapter = new TaskFinishListAdapter(mBpmDataBeans);
         mRvListXl.setLayoutManager(new LinearLayoutManager(this));
         mRvListXl.setHasFixedSize(true);
         mRvListXl.setAdapter(mTaskFinishListAdapter);

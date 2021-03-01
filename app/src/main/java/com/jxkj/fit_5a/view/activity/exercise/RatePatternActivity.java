@@ -32,6 +32,7 @@ import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.conpoment.view.StepArcView;
+import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.entity.RatePatternBean;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.adapter.RatePatternAdapter;
@@ -83,6 +84,7 @@ public class RatePatternActivity extends BaseActivity {
     private List<Byte> mData2 = new ArrayList<>();
     private List<Byte> mData3 = new ArrayList<>();
     private String movingTye;
+    private ArrayList<BpmDataBean> mBpmDataBeans;
 
     @Override
     protected int getContentView() {
@@ -98,6 +100,7 @@ public class RatePatternActivity extends BaseActivity {
             return;
         }
         movingTye = getIntent().getStringExtra("movingTye");
+        mBpmDataBeans = getIntent().getParcelableArrayListExtra("mBpmDataBeans");
         if(StringUtil.isNotBlank(movingTye)){
             tv_movingTye.setText(movingTye);
         }
@@ -226,11 +229,14 @@ public class RatePatternActivity extends BaseActivity {
                     PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x02));
                 }
                 DialogUtils.showDialogStartYd(this, new DialogUtils.DialogInterfaceS() {
+
                     @Override
                     public void btnType(int pos) {
                         if (pos == 2) {
                             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x03));
-                            startActivity(new Intent(RatePatternActivity.this, TaskFinishActivity.class));
+                            Intent mIntent = new Intent(RatePatternActivity.this, TaskFinishActivity.class);
+                            mIntent.putParcelableArrayListExtra("mBpmDataBeans",mBpmDataBeans);
+                            startActivity(mIntent);
                             finish();
                             PostUser.SportLogInfo sportLogInfo= new PostUser.SportLogInfo();
                             sportLogInfo.setBai("11");
@@ -400,7 +406,7 @@ public class RatePatternActivity extends BaseActivity {
         }else{
             mData33.addAll(mData3);
         }
-
+        setBpmDataBeanTime(Pulse);
         mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(getDataList(mData11,mData22,mData33));
 
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
@@ -454,6 +460,7 @@ public class RatePatternActivity extends BaseActivity {
         list.add(new RatePatternBean("当前段位","0"));
         list.add(new RatePatternBean("RPM/SPM","0"));
 
+        setBpmDataBeanTime(Pulse);
         mRatePatternAdapter.setNewData(list);
         mRatePatternAdapter.notifyDataSetChanged();
 
@@ -546,6 +553,7 @@ public class RatePatternActivity extends BaseActivity {
         list.add(new RatePatternBean("当前段位",loadCurrent+""));
         list.add(new RatePatternBean("RPM/SPM","--"));
 
+        setBpmDataBeanTime(Pulse);
         mRatePatternAdapter.setNewData(list);
         mRatePatternAdapter.notifyDataSetChanged();
 
@@ -581,4 +589,34 @@ public class RatePatternActivity extends BaseActivity {
                 String.valueOf(spm),String.valueOf(stroke),String.valueOf(System.currentTimeMillis()),String.valueOf(Watt)));
         return;
     }
+
+    private void setBpmDataBeanTime(int pulse){
+        Log.w("-->>","pulse:"+pulse);
+        Log.w("-->>","mBpmDataBeans"+mBpmDataBeans.toString());
+        if(pulse>=mBpmDataBeans.get(0).getStartV() && pulse<mBpmDataBeans.get(0).getEndV()){
+            mBpmDataBeans.get(0).setTime(mBpmDataBeans.get(0).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(1).getStartV() && pulse<mBpmDataBeans.get(1).getEndV()){
+            mBpmDataBeans.get(1).setTime(mBpmDataBeans.get(1).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(2).getStartV() && pulse<mBpmDataBeans.get(2).getEndV()){
+            mBpmDataBeans.get(2).setTime(mBpmDataBeans.get(2).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(3).getStartV() && pulse<mBpmDataBeans.get(3).getEndV()){
+            mBpmDataBeans.get(3).setTime(mBpmDataBeans.get(3).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(4).getStartV() && pulse<mBpmDataBeans.get(4).getEndV()){
+            mBpmDataBeans.get(4).setTime(mBpmDataBeans.get(4).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(5).getStartV() && pulse<mBpmDataBeans.get(5).getEndV()){
+            mBpmDataBeans.get(5).setTime(mBpmDataBeans.get(5).getTime()+1);
+            return;
+        }
+    }
+
 }

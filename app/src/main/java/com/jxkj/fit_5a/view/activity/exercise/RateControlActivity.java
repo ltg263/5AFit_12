@@ -2,6 +2,7 @@ package com.jxkj.fit_5a.view.activity.exercise;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,12 +22,14 @@ import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
+import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.entity.TemplateBean;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
 import com.jxkj.fit_5a.view.adapter.FacilityManageAdapter;
 import com.zkk.view.rulerview.RulerView;
 
 import java.util.ArrayList;
+import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -74,7 +77,9 @@ public class RateControlActivity extends BaseActivity {
     TextView mTvSj;
     private FacilityManageAdapter mFacilityManageAdapter;
     private List<TemplateBean.ListBean> textList;
+    private List<BpmDataBean> mBpmDataBeans = new ArrayList<>();
     String movingTye = "";
+    int age = 40;
     double bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
     @Override
     protected int getContentView() {
@@ -90,21 +95,30 @@ public class RateControlActivity extends BaseActivity {
         mTvRighttext.setText("新增");
         initRvUi();
 
-        bfb5 = (maxV-40)*0.5+40;
-        bfb6 = (maxV-40)*0.6+40;
-        bfb7 = (maxV-40)*0.7+40;
-        bfb8 = (maxV-40)*0.8+40;
-        bfb9 = (maxV-40)*0.9+40;
-        bfb  = (maxV-40)*1+40;
+        bfb5 = (maxV-age)*0.5+40;
+        bfb6 = (maxV-age)*0.6+40;
+        bfb7 = (maxV-age)*0.7+40;
+        bfb8 = (maxV-age)*0.8+40;
+        bfb9 = (maxV-age)*0.9+40;
+        bfb  = (maxV-age)*1+40;
+        initBpmData();
+    }
+
+    private void initBpmData() {
+        mBpmDataBeans.add(new BpmDataBean("非运动区间(0~50%)",0,bfb5,0));
+        mBpmDataBeans.add(new BpmDataBean("热身心率区间(50~60%)",bfb5,bfb6,0));
+        mBpmDataBeans.add(new BpmDataBean("燃脂心率区间(60~70%)",bfb6,bfb7,0));
+        mBpmDataBeans.add(new BpmDataBean("有氧耐力心率区间(70~80%)",bfb7,bfb8,0));
+        mBpmDataBeans.add(new BpmDataBean("无氧耐力心率区间(80~90%)",bfb8,bfb9,0));
+        mBpmDataBeans.add(new BpmDataBean("极限心率区间(90~100%)",bfb9,bfb,0));
     }
 
     private void initRvUi() {
         //亲, 您的年纪是30岁, 参考最大心跳值110下/min
-        String age = "11";
         if(!SharedUtils.singleton().get(ConstValues.USER_AGE,"").equals("0")){
-            age = SharedUtils.singleton().get(ConstValues.USER_AGE,"");
+//            age = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_AGE,""));
         }
-        String str = "亲, 您的年纪是<font color=\"#000000\"><big><big>"+11+"</big></big></font>" +
+        String str = "亲, 您的年纪是<font color=\"#000000\"><big><big>"+age+"</big></big></font>" +
                 "参考最大心跳值<font color=\"#000000\"><big><big>"+209+"</big></big></font>下/min";
         mTvXlzb.setText(Html.fromHtml(str));
         //0h0m表示无时间限制
@@ -174,7 +188,10 @@ public class RateControlActivity extends BaseActivity {
                 break;
             case R.id.tv_ok:
                 if(PopupWindowLanYan.ble4Util!=null && PopupWindowLanYan.ble4Util.isConnect()){
-                    IntentUtils.getInstence().intent(this, RatePatternActivity.class,"movingTye",movingTye);
+                    Intent mIntent = new Intent(this, RatePatternActivity.class);
+                    mIntent.putExtra("movingTye",movingTye);
+                    mIntent.putParcelableArrayListExtra("mBpmDataBeans", (ArrayList<? extends Parcelable>) mBpmDataBeans);
+                    startActivity(mIntent);
                     finish();
                 }
                 break;

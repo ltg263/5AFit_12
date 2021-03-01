@@ -32,7 +32,7 @@
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_toEndOf="@id/iv"
-        android:text="心率区间50~60%"
+        android:text=""
         android:textColor="#282C37"
         android:textSize="14sp" />
 
@@ -55,7 +55,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
-        android:text="16min"
+        android:text=""
         android:textColor="#282C37"
         android:textSize="14sp" />
 
