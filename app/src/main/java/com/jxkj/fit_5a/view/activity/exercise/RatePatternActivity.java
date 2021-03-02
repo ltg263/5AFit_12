@@ -247,7 +247,7 @@ public class RatePatternActivity extends BaseActivity {
                                 }
                             }
                             mBpmDataBeans.get(0).setBpmTopData(
-                                    new BpmDataBean.BpmTopData(String.valueOf(Calories),String.valueOf(Distance),ZTime,pjDuration,String.valueOf(MaxSpeed),"--"));
+                                    new BpmDataBean.BpmTopData(String.valueOf(Calories),String.valueOf(Distance),duration+"",pjDuration,String.valueOf(MaxSpeed),"--"));
                             mIntent.putParcelableArrayListExtra("mBpmDataBeans",mBpmDataBeans);
                             startActivity(mIntent);
                             finish();
@@ -341,14 +341,13 @@ public class RatePatternActivity extends BaseActivity {
     double Distance;
     int duration;
     long startTimestamp;
-    String ZTime;
 
     List<PostUser.SportLogInfo.DetailsBean.LogsBean> logs = new ArrayList<>();
     private void setData1(ArrayList<Integer> dataList) {
         int timeMinute =  dataList.get(0);//时间-分
         int timeSecond =  dataList.get(1);//时间-秒
         duration = timeMinute*60+timeSecond;
-        ZTime = ConstValues_Ly.getTime(timeMinute,timeSecond);
+        String ZTime = ConstValues_Ly.getTime(timeMinute,timeSecond);
 
         int speedHi = dataList.get(2);//速度-百十
         int speedLow = dataList.get(3);//速度-个小数点下一位
@@ -434,7 +433,7 @@ public class RatePatternActivity extends BaseActivity {
         int timeMinute =  dataList.get(0);//时间-分
         int timeSecond =  dataList.get(1);//时间-秒
         duration = timeMinute*60+timeSecond;
-        ZTime = ConstValues_Ly.getTime(timeMinute,timeSecond);
+        String ZTime = ConstValues_Ly.getTime(timeMinute,timeSecond);
 
         int speedHi = dataList.get(2);//速度-百十
         int speedLow = dataList.get(3);//速度-个小数点下一位
@@ -514,7 +513,7 @@ public class RatePatternActivity extends BaseActivity {
         int timeMinute =  dataList.get(0);//时间-分
         int timeSecond =  dataList.get(1);//时间-秒
         duration = timeMinute*60+timeSecond;
-        ZTime = ConstValues_Ly.getTime(timeMinute,timeSecond);
+        String ZTime = ConstValues_Ly.getTime(timeMinute,timeSecond);
 
         int strokeHi = dataList.get(2);
         int strokeLow = dataList.get(3);

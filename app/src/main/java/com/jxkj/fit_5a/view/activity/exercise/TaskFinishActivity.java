@@ -4,6 +4,7 @@ package com.jxkj.fit_5a.view.activity.exercise;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,10 +18,12 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AADataLabels;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAPie;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.view.adapter.TaskFinishListAdapter;
 import com.jxkj.fit_5a.view.adapter.TaskFinishPjAdapter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +55,20 @@ public class TaskFinishActivity extends BaseActivity {
     TextView mTv5;
     @BindView(R.id.tv_6)
     TextView mTv6;
+    @BindView(R.id.tv_ztime)
+    TextView tv_ztime;
+    @BindView(R.id.vertical_progressbar1)
+    ProgressBar mVerticalProgressbar1;
+    @BindView(R.id.vertical_progressbar2)
+    ProgressBar mVerticalProgressbar2;
+    @BindView(R.id.vertical_progressbar3)
+    ProgressBar mVerticalProgressbar3;
+    @BindView(R.id.vertical_progressbar4)
+    ProgressBar mVerticalProgressbar4;
+    @BindView(R.id.vertical_progressbar5)
+    ProgressBar mVerticalProgressbar5;
+    @BindView(R.id.vertical_progressbar6)
+    ProgressBar mVerticalProgressbar6;
     private AAChartModel aaChartModel;
     private ArrayList<BpmDataBean> mBpmDataBeans;
 
@@ -68,15 +85,24 @@ public class TaskFinishActivity extends BaseActivity {
         aaChartModel = configurePieChart();
         mAAChartView.aa_drawChartWithChartModel(aaChartModel);
     }
-
+    int Ztime = 0;
     private void initTopData() {
         BpmDataBean.BpmTopData mBpmTopData = mBpmDataBeans.get(0).getBpmTopData();
-        mTv1.setText(mBpmTopData.getCalories()+"cal");
-        mTv2.setText(mBpmTopData.getDistance()+"km");
-        mTv3.setText(mBpmTopData.getDuration());
-        mTv4.setText(mBpmTopData.getPjDuration()+"km/h");
-        mTv5.setText(mBpmTopData.getMaxSpeed()+"km/h");
-        mTv6.setText(mBpmTopData.getHeartRate()+"次/分钟");
+        Ztime = Integer.valueOf(mBpmTopData.getDuration());
+        mTv1.setText(mBpmTopData.getCalories() + "cal");
+        mTv2.setText(mBpmTopData.getDistance() + "km");
+        mTv3.setText(StringUtil.getTimeGeShi(Ztime));
+        mTv4.setText(mBpmTopData.getPjDuration() + "km/h");
+        mTv5.setText(mBpmTopData.getMaxSpeed() + "km/h");
+        mTv6.setText(mBpmTopData.getHeartRate() + "次/分钟");
+        tv_ztime.setText("总时间："+StringUtil.getTimeGeShi(Ztime));
+        DecimalFormat df = new DecimalFormat("######0.00");
+        mVerticalProgressbar1.setProgress((int)(Double.valueOf(df.format(mBpmDataBeans.get(0).getTime()/Ztime))*100));
+        mVerticalProgressbar1.setProgress((int)(Double.valueOf(df.format(mBpmDataBeans.get(1).getTime()/Ztime))*100));
+        mVerticalProgressbar1.setProgress((int)(Double.valueOf(df.format(mBpmDataBeans.get(2).getTime()/Ztime))*100));
+        mVerticalProgressbar1.setProgress((int)(Double.valueOf(df.format(mBpmDataBeans.get(3).getTime()/Ztime))*100));
+        mVerticalProgressbar1.setProgress((int)(Double.valueOf(df.format(mBpmDataBeans.get(4).getTime()/Ztime))*100));
+        mVerticalProgressbar1.setProgress((int)(Double.valueOf(df.format(mBpmDataBeans.get(5).getTime()/Ztime))*100));
     }
 
     AAChartModel configurePieChart() {
@@ -89,7 +115,7 @@ public class TaskFinishActivity extends BaseActivity {
                 .legendEnabled(false)
                 .series(new AAPie[]{
                                 new AAPie()
-                                        .name("name")
+                                        .name("心率分析")
                                         .innerSize("20%")
                                         .size(150f)
                                         .dataLabels(new AADataLabels()
@@ -98,12 +124,12 @@ public class TaskFinishActivity extends BaseActivity {
                                                 .distance(5f)
                                                 .format("<b>{point.name}</b>: <br> {point.percentage:.1f} %"))
                                         .data(new Object[][]{
-                                        {mBpmDataBeans.get(0).getName(), 67},
-                                        {mBpmDataBeans.get(1).getName(), 999},
-                                        {mBpmDataBeans.get(2).getName(), 83},
-                                        {mBpmDataBeans.get(3).getName(), 11},
-                                        {mBpmDataBeans.get(4).getName(), 30},
-                                        {mBpmDataBeans.get(5).getName(), 30},
+                                        {mBpmDataBeans.get(0).getName(), mBpmDataBeans.get(0).getTime()},
+                                        {mBpmDataBeans.get(1).getName(), mBpmDataBeans.get(1).getTime()},
+                                        {mBpmDataBeans.get(2).getName(), mBpmDataBeans.get(2).getTime()},
+                                        {mBpmDataBeans.get(3).getName(), mBpmDataBeans.get(3).getTime()},
+                                        {mBpmDataBeans.get(4).getName(), mBpmDataBeans.get(4).getTime()},
+                                        {mBpmDataBeans.get(5).getName(), mBpmDataBeans.get(5).getTime()},
                                 })
                                 ,
                         }
@@ -140,7 +166,7 @@ public class TaskFinishActivity extends BaseActivity {
         });
 
 
-        TaskFinishListAdapter mTaskFinishListAdapter = new TaskFinishListAdapter(mBpmDataBeans);
+        TaskFinishListAdapter mTaskFinishListAdapter = new TaskFinishListAdapter(mBpmDataBeans,Ztime);
         mRvListXl.setLayoutManager(new LinearLayoutManager(this));
         mRvListXl.setHasFixedSize(true);
         mRvListXl.setAdapter(mTaskFinishListAdapter);
@@ -179,12 +205,5 @@ public class TaskFinishActivity extends BaseActivity {
                 }
                 break;
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

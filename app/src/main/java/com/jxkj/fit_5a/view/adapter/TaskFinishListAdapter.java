@@ -3,11 +3,14 @@ package com.jxkj.fit_5a.view.adapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.alibaba.security.biometrics.build.Z;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.BpmDataBean;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -15,14 +18,18 @@ import java.util.List;
  * date   : 2020/5/2914:03
  */
 public class TaskFinishListAdapter extends BaseQuickAdapter<BpmDataBean, BaseViewHolder> {
-    public TaskFinishListAdapter(@Nullable List<BpmDataBean> data) {
+    int Ztime;
+    public TaskFinishListAdapter(@Nullable List<BpmDataBean> data,int Ztime) {
         super(R.layout.item_task_finish_list, data);
+        this.Ztime = Ztime;
     }
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, BpmDataBean item) {
-        helper.setText(R.id.tv1,item.getName()).setText(R.id.tv4,item.getTime()+"s")
-                .setText(R.id.tv3,"101%");
+        double xlfx = item.getTime()/Ztime;
+        DecimalFormat df = new DecimalFormat("######0.00");
+        helper.setText(R.id.tv1,item.getName()).setText(R.id.tv4, StringUtil.getTimeGeShi(item.getTime()))
+                .setText(R.id.tv3,((int)(Double.valueOf(df.format(xlfx))*100))+"%");
     }
 
 }

@@ -536,6 +536,21 @@ public class StringUtil {
         }
         return pastDaysList;
     }
+
+    public static String getTimeGeShi(long date){
+        if (date<60) {
+            return date+"秒";
+        }else if (date>60&&date<3600) {
+            long m = date/60;
+            long s = date%60;
+            return m+"分"+s+"秒";
+        }else {
+            long h = date/3600;
+            long m = (date%3600)/60;
+            long s = (date%3600)%60;
+            return h+"小时"+m+"分"+s+"秒";
+        }
+    }
     /**
      * 获取过去第几天的日期
      * @param past
@@ -550,6 +565,8 @@ public class StringUtil {
         String result = format.format(today);
         return result;
     }
+
+
 
     public static ArrayList<String> getDayMonth7(){
         ArrayList<String> lists = new ArrayList<>();
