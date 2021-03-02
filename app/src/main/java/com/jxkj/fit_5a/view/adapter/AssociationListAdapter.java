@@ -132,7 +132,7 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
             }
         }
 
-        if (item.getCommentCount() > 0) {
+        if (item.getCommentCount() > 0 && false) {
             HttpRequestUtils.getCommentMoment1(circleId, item.getMomentId(), item.getPublisherId() + "", 1, 2,
                     new HttpRequestUtils.ResultInterface() {
                         @Override

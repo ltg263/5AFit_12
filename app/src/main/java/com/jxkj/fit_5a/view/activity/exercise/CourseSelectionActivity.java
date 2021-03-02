@@ -1,6 +1,8 @@
 package com.jxkj.fit_5a.view.activity.exercise;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -33,6 +36,8 @@ public class CourseSelectionActivity extends BaseActivity {
 
     @BindView(R.id.magic_indicator)
     MagicIndicator mMagicIndicator;
+    @BindView(R.id.iv_back)
+    ImageView mIvBack;
 
     @Override
     protected int getContentView() {
@@ -42,7 +47,12 @@ public class CourseSelectionActivity extends BaseActivity {
     @Override
     protected void initViews() {
         queryDeviceCourseTypeList();
-
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void queryDeviceCourseTypeList() {
@@ -58,7 +68,7 @@ public class CourseSelectionActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result<DeviceCourseTypeData> result) {
-                        if(isDataInfoSucceed(result)){
+                        if (isDataInfoSucceed(result)) {
                             initTabs(result.getData().getList());
                         }
                     }
@@ -76,20 +86,22 @@ public class CourseSelectionActivity extends BaseActivity {
     }
 
     List<Fragment> fragments = new ArrayList<>();
+
     private List<Fragment> getFragments(List<DeviceCourseTypeData.ListBean> lists) {
         for (int i = 0; i < lists.size(); i++) {
             CourseSelectionFragment fragment = new CourseSelectionFragment();
             Bundle mBundle = new Bundle();
-            mBundle.putString("type",lists.get(i).getId());
-            mBundle.putString("introduct",lists.get(i).getIntroduct());
+            mBundle.putString("type", lists.get(i).getId());
+            mBundle.putString("introduct", lists.get(i).getIntroduct());
             fragment.setArguments(mBundle);
             fragments.add(fragment);
         }
         return fragments;
     }
+
     private void initTabs(List<DeviceCourseTypeData.ListBean> lists) {
         List<String> titles = new ArrayList<>();
-        for(int i=0;i<lists.size();i++){
+        for (int i = 0; i < lists.size(); i++) {
             titles.add(lists.get(i).getName());
         }
         final List<Fragment> mFragments = getFragments(lists);
@@ -133,5 +145,4 @@ public class CourseSelectionActivity extends BaseActivity {
         mViewpager.setCurrentItem(0);
         MagicIndicatorUtils.initMagicIndicator_1(this, titles, mMagicIndicator, mViewpager);
     }
-
 }

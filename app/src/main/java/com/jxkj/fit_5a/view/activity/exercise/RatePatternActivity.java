@@ -102,6 +102,9 @@ public class RatePatternActivity extends BaseActivity {
         }
         movingTye = getIntent().getStringExtra("movingTye");
         mBpmDataBeans = getIntent().getParcelableArrayListExtra("mBpmDataBeans");
+        if(StringUtil.isBlank(movingTye) || mBpmDataBeans==null){
+            return;
+        }
         if(StringUtil.isNotBlank(movingTye)){
             tv_movingTye.setText(movingTye);
         }
