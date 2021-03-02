@@ -76,7 +76,7 @@ public class RateControlActivity extends BaseActivity {
     @BindView(R.id.tv_sj)
     TextView mTvSj;
     private FacilityManageAdapter mFacilityManageAdapter;
-    private List<TemplateBean.ListBean> textList;
+    private List<TemplateBean.ListBean> textList = new ArrayList<>();
     private List<BpmDataBean> mBpmDataBeans = new ArrayList<>();
     String movingTye = "";
     int age = 40;
@@ -111,6 +111,8 @@ public class RateControlActivity extends BaseActivity {
         mBpmDataBeans.add(new BpmDataBean("有氧耐力心率区间(70~80%)",bfb7,bfb8,0));
         mBpmDataBeans.add(new BpmDataBean("无氧耐力心率区间(80~90%)",bfb8,bfb9,0));
         mBpmDataBeans.add(new BpmDataBean("极限心率区间(90~100%)",bfb9,bfb,0));
+
+        setMovingTye(120.0f);
     }
 
     private void initRvUi() {
@@ -139,19 +141,7 @@ public class RateControlActivity extends BaseActivity {
 
         mRulerWeight.setOnValueChangeListener(value -> {
             mTvTz.setText(value + "");
-            if(value>0 && value<bfb5){
-                movingTye = "非运动区间(0~50%)(0bpm~"+(int) Math.ceil(bfb5)+"bpm)";
-            }else if(value>bfb5 && value<bfb6){
-                movingTye = "热身心率区间(50~60%)("+(int) Math.ceil(bfb5)+"bpm~"+(int) Math.ceil(bfb6)+"bpm)";
-            }else if(value>bfb6 && value<bfb7){
-                movingTye = "燃脂心率区间(60~70%)("+(int) Math.ceil(bfb6)+"bpm~"+(int) Math.ceil(bfb7)+"bpm)";
-            }else if(value>bfb7 && value<bfb8){
-                movingTye = "有氧耐力心率区间(70~80%)("+(int) Math.ceil(bfb7)+"bpm~"+(int) Math.ceil(bfb8)+"bpm)";
-            }else if(value>bfb8 && value<bfb9){
-                movingTye = "无氧耐力心率区间(80~90%)("+(int) Math.ceil(bfb8)+"bpm~"+(int) Math.ceil(bfb9)+"bpm)";
-            }else if(value>bfb9){
-                movingTye = "极限心率区间(90~100%)("+(int) Math.ceil(bfb9)+"bpm~"+(int) Math.ceil(bfb)+"bpm)";
-            }
+            setMovingTye(value);
             double ab = value / maxV;
             for (int i = 0; i < textList.size(); i++) {
                 TemplateBean.ListBean data = textList.get(i);
@@ -172,6 +162,22 @@ public class RateControlActivity extends BaseActivity {
          * @param per   最小单位  如 1:表示 每2条刻度差为1.   0.1:表示 每2条刻度差为0.1 在demo中 身高mPerValue为1  体重mPerValue 为0.1
          */
         mRulerWeight.setValue(60, 40, 220, 1);
+    }
+
+    private void setMovingTye(float value) {
+        if(value>0 && value<bfb5){
+            movingTye = "非运动区间(0~50%)(0bpm~"+(int) Math.ceil(bfb5)+"bpm)";
+        }else if(value>bfb5 && value<bfb6){
+            movingTye = "热身心率区间(50~60%)("+(int) Math.ceil(bfb5)+"bpm~"+(int) Math.ceil(bfb6)+"bpm)";
+        }else if(value>bfb6 && value<bfb7){
+            movingTye = "燃脂心率区间(60~70%)("+(int) Math.ceil(bfb6)+"bpm~"+(int) Math.ceil(bfb7)+"bpm)";
+        }else if(value>bfb7 && value<bfb8){
+            movingTye = "有氧耐力心率区间(70~80%)("+(int) Math.ceil(bfb7)+"bpm~"+(int) Math.ceil(bfb8)+"bpm)";
+        }else if(value>bfb8 && value<bfb9){
+            movingTye = "无氧耐力心率区间(80~90%)("+(int) Math.ceil(bfb8)+"bpm~"+(int) Math.ceil(bfb9)+"bpm)";
+        }else if(value>bfb9){
+            movingTye = "极限心率区间(90~100%)("+(int) Math.ceil(bfb9)+"bpm~"+(int) Math.ceil(bfb)+"bpm)";
+        }
     }
 
     List<String> listTime = new ArrayList<>();
@@ -237,8 +243,8 @@ public class RateControlActivity extends BaseActivity {
                     @Override
                     public void onNext(Result<TemplateBean> result) {
                         if (isDataInfoSucceed(result)) {
-                            textList = result.getData().getList();
-                            double ab = 80.0 / maxV;
+                            textList.addAll(result.getData().getList());
+                            double ab = 120.0 / maxV;
                             for (int i = 0; i < textList.size(); i++) {
                                 TemplateBean.ListBean data = textList.get(i);
                                 double start = data.getStartInterval();

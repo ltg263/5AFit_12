@@ -24,6 +24,17 @@ public class RatePatternAdapter extends BaseQuickAdapter<RatePatternBean, BaseVi
     protected void convert(@NonNull BaseViewHolder helper, RatePatternBean item) {
         helper.setText(R.id.tv_name,item.getName());
         helper.setText(R.id.tv_v,item.getV());
+        if(item.getName().equals("卡路里")){
+            helper.setImageResource(R.id.iv_icon,R.drawable.ic_rate_1);
+        }else if(item.getName().equals("当前速度")){
+            helper.setImageResource(R.id.iv_icon,R.drawable.ic_rate_2);
+        }else if(item.getName().equals("当前功率")){
+            helper.setImageResource(R.id.iv_icon,R.drawable.ic_rate_3);
+        }else if(item.getName().equals("当前段位")){
+            helper.setImageResource(R.id.iv_icon,R.drawable.ic_rate_4);
+        }else if(item.getName().equals("RPM/SPM")){
+            helper.setImageResource(R.id.iv_icon,R.drawable.ic_rate_5);
+        }
     }
 
 }

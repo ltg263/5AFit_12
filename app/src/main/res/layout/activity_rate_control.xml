@@ -96,7 +96,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="60.0"
+                        android:text="120.0"
                         android:textColor="@color/color_ffffff"
                         android:textSize="22sp"
                         android:textStyle="bold" />
@@ -135,7 +135,7 @@
                         app:maxValue="300.0"
                         app:minValue="40.0"
                         app:perValue="1"
-                        app:selectorValue="60.0"
+                        app:selectorValue="120.0"
                         app:textColor="@color/color_ffffff"
                         app:textSize="12sp" />
 
