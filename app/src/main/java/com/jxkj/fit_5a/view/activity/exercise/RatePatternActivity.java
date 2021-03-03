@@ -37,7 +37,6 @@ import com.jxkj.fit_5a.entity.RatePatternBean;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.adapter.RatePatternAdapter;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +77,7 @@ public class RatePatternActivity extends BaseActivity {
     int loadCurrent = 1;
     int loadMax = ConstValues_Ly.maxLoad;
     private RatePatternAdapter mRatePatternAdapter;
-
+//130528199003037903
     int currentPos = 1;
     long time = 0;
     private List<Byte> mData1 = new ArrayList<>();
@@ -94,12 +93,12 @@ public class RatePatternActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        initAAChar();
         if(PopupWindowLanYan.ble4Util==null || !PopupWindowLanYan.ble4Util.isConnect()){
             ToastUtils.showShort("请先链接设备");
             finish();
             return;
         }
+        initAAChar();
         movingTye = getIntent().getStringExtra("movingTye");
         mBpmDataBeans = getIntent().getParcelableArrayListExtra("mBpmDataBeans");
         if(StringUtil.isBlank(movingTye) || mBpmDataBeans==null){
@@ -178,7 +177,7 @@ public class RatePatternActivity extends BaseActivity {
                 .markerSymbol(AAChartSymbolType.Circle)
                 .scrollablePlotArea(
                         new AAScrollablePlotArea()
-                                .minWidth(50)
+                                .minWidth(500)
                                 .scrollPositionX(1f)
                 )
                 .series(getDataList(mData1,mData2,mData3));
@@ -385,6 +384,9 @@ public class RatePatternActivity extends BaseActivity {
         String re = "A2--->>>:时间："+ZTime+",速度："+speed+",转数："+rpm+",距离："+Distance+",卡路里："+Calories
                 +",脉跳："+Pulse+",瓦特："+Watt+",阻力："+loadCurrent+",状态："+Unit;
         Log.w("---》》》", re);
+        if(Unit.equals("Stop")){
+            return;
+        }
         tv_v.setText(loadCurrent+"/"+loadMax);
         tv_time.setText(ZTime);
         tv_distance.setText(Distance+"KM");
@@ -557,6 +559,9 @@ public class RatePatternActivity extends BaseActivity {
         String re = "A2--->>>:时间："+ZTime+",行程："+stroke+",spm："+spm+",距离："+Distance+",卡路里："+Calories
                 +",脉跳："+Pulse+",瓦特："+Watt+",阻力："+loadCurrent+",状态："+Unit;
         Log.w("---》》》", re);
+        if(Unit.equals("Stop")){
+            return;
+        }
         tv_v.setText(loadCurrent+"/"+loadMax);
         tv_time.setText(ZTime);
         tv_distance.setText(Distance+"KM");

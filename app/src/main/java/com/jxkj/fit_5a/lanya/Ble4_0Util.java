@@ -26,6 +26,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 
 import java.io.UnsupportedEncodingException;
@@ -160,7 +161,7 @@ public class Ble4_0Util implements BleUtil {
                         mBluetoothGatt.requestMtu(512);
                     }
                 }
-                if (newState == BluetoothGatt.STATE_DISCONNECTED) {
+                if (newState == BluetoothGatt.STATE_DISCONNECTED && StringUtil.isBlank(PopupWindowLanYan.BleName)) {
                     callback.StateChange(status, newStates);
                     disconnect();
                 }

@@ -120,7 +120,7 @@ public class HomeTwoFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        tv_lianjie.setText("运动设备未连接");
+        tv_lianjie.setText("暂未连接设备");
         if (StringUtil.isNotBlank(PopupWindowLanYan.BleName)) {
             tv_lianjie.setText(PopupWindowLanYan.BleName);
         }
