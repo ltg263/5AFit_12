@@ -1,5 +1,7 @@
 package com.jxkj.fit_5a.view.activity.exercise;
 
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,9 +13,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.HistoryEquipmentData;
-import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.jxkj.fit_5a.conpoment.utils.SharedHistoryEquipment;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
-import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
 import com.jxkj.fit_5a.view.adapter.HistoryEquipmentAdapter;
 
 import java.util.ArrayList;
@@ -48,17 +49,9 @@ public class HistoryEquipmentActivity extends BaseActivity {
         mIvRightimg.setImageDrawable(getResources().getDrawable(R.drawable.icon_add_right));
         mTvRighttext.setText("新增");
         
-        List<HistoryEquipmentData> lists = new ArrayList<>();
-        HistoryEquipmentData data = new HistoryEquipmentData();
-        data.setImg("");
-        data.setName("haha");
-        data.setState("1");
-        data.setTime("123456");
-        lists.add(data);
-        SharedUtils.singleton().put("HistoryEquipmentData", lists);
+//        SharedHistoryEquipment.singleton().putSharedHistoryEquipment(lists);
 
-        listss = SharedUtils.singleton().get("HistoryEquipmentData", null);
-
+        listss = SharedHistoryEquipment.singleton().getSharedHistoryEquipment();
         mHistoryEquipmentAdapter = new HistoryEquipmentAdapter(listss);
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
