@@ -23,6 +23,8 @@ import com.jxkj.fit_5a.entity.RankStatsData;
 import com.jxkj.fit_5a.view.activity.exercise.ExerciseRecordActivity;
 import com.jxkj.fit_5a.view.activity.exercise.HistoryEquipmentActivity;
 import com.jxkj.fit_5a.view.activity.exercise.TaskSelectionActivity;
+import com.jxkj.fit_5a.view.activity.exercise.TaskStartActivity;
+import com.jxkj.fit_5a.view.activity.exercise.landscape.MotorPatternActivity;
 import com.jxkj.fit_5a.view.activity.home.RankListActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
 import com.jxkj.fit_5a.view.adapter.HomeTwoBelowAdapter;
@@ -99,8 +101,12 @@ public class HomeTwoFragment extends BaseFragment {
         mHomeTwoTopAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                IntentUtils.getInstence().
-                        intent(getActivity(), TaskSelectionActivity.class, "exercise_type", list.get(position));
+                if(list.get(position).equals("在线运动")){
+                    MotorPatternActivity.startIntentActivity(getActivity());
+                }else {
+                    IntentUtils.getInstence().
+                            intent(getActivity(), TaskSelectionActivity.class, "exercise_type", list.get(position));
+                }
             }
         });
         mHomeTwoBelowAdapter = new HomeTwoBelowAdapter(null);
