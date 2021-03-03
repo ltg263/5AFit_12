@@ -100,11 +100,11 @@ public class AssociationActivity extends BaseActivity {
             }
         });
         refreshLayout.setEnableScrollContentWhenLoaded(false);
-        postBrows();
         type = getIntent().getIntExtra("type",0);
         if(type==2){
             circleId = getIntent().getStringExtra("circleId");
         }
+        postBrows();
         initRv();
     }
 

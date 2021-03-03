@@ -21,6 +21,7 @@ import com.jxkj.fit_5a.entity.RankDetailsData;
 import com.jxkj.fit_5a.entity.RankListData;
 import com.jxkj.fit_5a.entity.RankStatsData;
 import com.jxkj.fit_5a.view.activity.exercise.ExerciseRecordActivity;
+import com.jxkj.fit_5a.view.activity.exercise.HistoryEquipmentActivity;
 import com.jxkj.fit_5a.view.activity.exercise.TaskSelectionActivity;
 import com.jxkj.fit_5a.view.activity.home.RankListActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
@@ -141,7 +142,7 @@ public class HomeTwoFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_sbgl:
-                FacilityManageActivity.intentActivity(getActivity());
+                IntentUtils.getInstence().intent(getActivity(),HistoryEquipmentActivity.class);
                 break;
             case R.id.tv_two_ri:
                 getRankList(3);

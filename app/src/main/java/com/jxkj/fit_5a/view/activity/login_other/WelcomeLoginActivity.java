@@ -8,6 +8,8 @@ import android.view.WindowManager;
 import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.view.activity.exercise.HistoryEquipmentActivity;
 
 import butterknife.OnClick;
 
@@ -35,7 +37,7 @@ public class WelcomeLoginActivity extends BaseActivity {
                 startActivity(new Intent(this, MainActivity.class));
                 break;
             case R.id.tv_go_x:
-                FacilityManageActivity.intentActivity(this);
+                IntentUtils.getInstence().intent(this,HistoryEquipmentActivity.class);
                 break;
         }
     }

@@ -190,7 +190,7 @@ public class RateControlActivity extends BaseActivity {
                 break;
             case R.id.tv_righttext:
             case R.id.iv_rightimg:
-                startActivity(new Intent(this, FacilityAddSbActivity.class));
+                FacilityAddSbActivity.intentActivity(this);
                 break;
             case R.id.tv_ok:
                 if(PopupWindowLanYan.ble4Util!=null && PopupWindowLanYan.ble4Util.isConnect()){

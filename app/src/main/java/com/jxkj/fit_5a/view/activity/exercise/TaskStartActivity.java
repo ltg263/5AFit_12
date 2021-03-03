@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.view.activity.exercise.landscape.MotorPatternActivity;
@@ -45,7 +46,7 @@ public class TaskStartActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.rl_sbgl:
-                FacilityManageActivity.intentActivity(this);
+                IntentUtils.getInstence().intent(this,HistoryEquipmentActivity.class);
                 break;
             case R.id.btn_start:
                 if(tv_lianjie.getText().toString().equals("暂未连接设备")){

@@ -141,6 +141,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".view.activity.exercise.HistoryEquipmentActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activity.login_other.FindPasswordActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
