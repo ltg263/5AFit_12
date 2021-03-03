@@ -5,7 +5,25 @@ public class HistoryEquipmentData {
     String name;
     String time;
     String state;
-    String id;
+    String serviceUUid;
+    String LyAddress;
+    int id;
+
+    public String getLyAddress() {
+        return LyAddress;
+    }
+
+    public void setLyAddress(String lyAddress) {
+        LyAddress = lyAddress;
+    }
+
+    public void setServiceUUid(String serviceUUid) {
+        this.serviceUUid = serviceUUid;
+    }
+
+    public String getServiceUUid() {
+        return serviceUUid;
+    }
 
     public String getImg() {
         return img;
@@ -39,11 +57,24 @@ public class HistoryEquipmentData {
         this.state = state;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "HistoryEquipmentData{" +
+                "img='" + img + '\'' +
+                ", name='" + name + '\'' +
+                ", time='" + time + '\'' +
+                ", state='" + state + '\'' +
+                ", serviceUUid='" + serviceUUid + '\'' +
+                ", LyAddress='" + LyAddress + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

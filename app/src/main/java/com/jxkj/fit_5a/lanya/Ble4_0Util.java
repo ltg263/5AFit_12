@@ -26,10 +26,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.jxkj.fit_5a.base.HistoryEquipmentData;
+import com.jxkj.fit_5a.conpoment.utils.SharedHistoryEquipment;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -281,9 +284,19 @@ public class Ble4_0Util implements BleUtil {
             ConstValues_Ly.CLIENT_ID = 0x00;
             ConstValues_Ly.CURRENT_STATE = 0;
             ConstValues_Ly.maxLoad = 0;
+            initLsData();
         }
         mDevWriteCharacteristic = null;
         return true;
+    }
+    private void initLsData() {
+        List<HistoryEquipmentData> lists = SharedHistoryEquipment.singleton().getSharedHistoryEquipment();
+        if(lists!=null){
+            for(int i=0;i<lists.size();i++){
+                lists.get(i).setState("1");
+            }
+        }
+        SharedHistoryEquipment.singleton().putSharedHistoryEquipment(lists);
     }
 
     @Override

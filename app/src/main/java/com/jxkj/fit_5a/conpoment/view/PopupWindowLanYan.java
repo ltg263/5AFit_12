@@ -21,6 +21,9 @@ import android.widget.PopupWindow;
 
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.app.MainApplication;
+import com.jxkj.fit_5a.base.HistoryEquipmentData;
+import com.jxkj.fit_5a.conpoment.utils.SharedHistoryEquipment;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.lanya.Ble4_0Util;
 import com.jxkj.fit_5a.lanya.BleAdapter;
 import com.jxkj.fit_5a.lanya.BleUtil;
@@ -29,12 +32,14 @@ import com.jxkj.fit_5a.lanya.DataManage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class PopupWindowLanYan extends PopupWindow {
 
     public static Ble4_0Util ble4Util;
     public static String BleName = "";
+    public static String BleAddress = "";
     Context mcontext;
     BleAdapter bleadapter;
     GiveDialogInterface dialogInterface;
@@ -103,6 +108,7 @@ public class PopupWindowLanYan extends PopupWindow {
                         BleName = "";
                         if (newState == BluetoothGatt.STATE_CONNECTED){
                             BleName = bleadapter.getDevice(i).getName();
+                            BleAddress = bleadapter.getDevice(i).getAddress();
                             value = "连接成功";
                         } else if (newState == BluetoothGatt.STATE_DISCONNECTED){
                             BleName = bleadapter.getDevice(i).getName();
@@ -169,7 +175,7 @@ public class PopupWindowLanYan extends PopupWindow {
         void btnConfirm(String str);
     }
 
-    private void setData(byte[] resultData) {
+    public static void setData(byte[] resultData) {
         DataManage data = new DataManage(resultData);
 
         String resultData_0xff = "";
@@ -202,13 +208,52 @@ public class PopupWindowLanYan extends PopupWindow {
                 ConstValues_Ly.CLIENT_ID = resultData[2];//Client ID
                 ConstValues_Ly.METER_ID = resultData[3];//Meter ID
                 PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A0));
+                initLsData();
             }
             startBroadcast("b2",data.getDataPayload());
             return;
         }
     }
 
-    private void startBroadcast(String type ,ArrayList<Integer> data){
+    private static void initLsData() {
+        boolean isHave = false;
+        List<HistoryEquipmentData> lists = SharedHistoryEquipment.singleton().getSharedHistoryEquipment();
+        if(lists!=null){
+            for(int i=0;i<lists.size();i++){
+                if(lists.get(i).getId()==ConstValues_Ly.METER_ID){
+                    isHave = true;
+                    lists.get(i).setState("0");
+                }else{
+                    lists.get(i).setState("1");
+                }
+            }
+            if(!isHave){
+                HistoryEquipmentData mHistoryEquipmentData = new HistoryEquipmentData();
+                mHistoryEquipmentData.setState("0");
+                mHistoryEquipmentData.setName(PopupWindowLanYan.BleName);
+                mHistoryEquipmentData.setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
+                mHistoryEquipmentData.setImg("");
+                mHistoryEquipmentData.setServiceUUid(ble4Util.getServiceUUid());
+                mHistoryEquipmentData.setId(ConstValues_Ly.METER_ID);
+                mHistoryEquipmentData.setLyAddress(BleAddress);
+                lists.add(mHistoryEquipmentData);
+            }
+        }else{
+            lists = new ArrayList<>();
+            HistoryEquipmentData mHistoryEquipmentData = new HistoryEquipmentData();
+            mHistoryEquipmentData.setState("0");
+            mHistoryEquipmentData.setName(PopupWindowLanYan.BleName);
+            mHistoryEquipmentData.setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
+            mHistoryEquipmentData.setImg("");
+            mHistoryEquipmentData.setId(ConstValues_Ly.METER_ID);
+            mHistoryEquipmentData.setServiceUUid(ble4Util.getServiceUUid());
+            mHistoryEquipmentData.setLyAddress(BleAddress);
+            lists.add(mHistoryEquipmentData);
+        }
+        SharedHistoryEquipment.singleton().putSharedHistoryEquipment(lists);
+    }
+
+    private static void startBroadcast(String type ,ArrayList<Integer> data){
         //开启广播
         //创建一个意图对象
         Intent intent = new Intent("com.jxkj.fit_5a.view.activity.exercise.RatePatternActivity");
