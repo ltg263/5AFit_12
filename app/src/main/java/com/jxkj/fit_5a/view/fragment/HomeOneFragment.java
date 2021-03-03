@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
-import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartViewOne;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAOptionsConstructor;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AASeriesElement;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolStyleType;
@@ -39,8 +39,6 @@ import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.association.VideoActivity;
 import com.jxkj.fit_5a.view.activity.exercise.HistoryEquipmentActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
-import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
-import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
@@ -65,7 +63,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class HomeOneFragment extends BaseFragment {
     @BindView(R.id.AAChartView)
-    AAChartView mAAChartView;
+    AAChartViewOne mAAChartView;
     @BindView(R.id.tv_left_text)
     TextView mTvLeftText;
     @BindView(R.id.tv_message_content)
@@ -311,29 +309,48 @@ public class HomeOneFragment extends BaseFragment {
         String[] str;
         if (!isDay7) {
             str = str30;
+            aaChartModel = new AAChartModel()
+                    .chartType(AAChartType.Areaspline)
+                    .title("")
+                    .yAxisTitle("")
+                    .yAxisLabelsEnabled(false)
+                    .categories(str)
+                    .yAxisGridLineWidth(0f)
+                    .xAxisGridLineWidth(0f)
+                    .legendEnabled(false)
+                    .yAxisGridLineWidth(0f)
+                    .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)
+                    .gradientColorEnable(true)
+                    .markerRadius(0f)
+                    .markerSymbol(AAChartSymbolType.Circle)
+                    .scrollablePlotArea(
+                            new AAScrollablePlotArea()
+                                    .minWidth(1000)
+                                    .scrollPositionX(1f)
+                    )
+                    .series(configureTheStyleForDifferentTypeChart(lists));
         } else {
             str = str7;
+            aaChartModel = new AAChartModel()
+                    .chartType(AAChartType.Areaspline)
+                    .title("")
+                    .yAxisTitle("")
+                    .yAxisLabelsEnabled(false)
+                    .categories(str)
+                    .yAxisGridLineWidth(0f)
+                    .xAxisGridLineWidth(0f)
+                    .legendEnabled(false)
+                    .yAxisGridLineWidth(0f)
+                    .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)
+                    .gradientColorEnable(true)
+                    .markerRadius(0f)
+                    .markerSymbol(AAChartSymbolType.Circle)
+                    .scrollablePlotArea(
+                            new AAScrollablePlotArea()
+                                    .scrollPositionX(1f)
+                    )
+                    .series(configureTheStyleForDifferentTypeChart(lists));
         }
-        aaChartModel = new AAChartModel()
-                .chartType(AAChartType.Areaspline)
-                .title("")
-                .yAxisTitle("")
-                .yAxisLabelsEnabled(false)
-                .categories(str)
-                .yAxisGridLineWidth(0f)
-                .xAxisGridLineWidth(0f)
-                .legendEnabled(false)
-                .yAxisGridLineWidth(0f)
-                .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)
-                .gradientColorEnable(true)
-                .markerRadius(0f)
-                .markerSymbol(AAChartSymbolType.Circle)
-                .scrollablePlotArea(
-                        new AAScrollablePlotArea()
-//                                .minWidth(1000)
-                                .scrollPositionX(1f)
-                )
-                .series(configureTheStyleForDifferentTypeChart(lists));
         return aaChartModel;
     }
 
