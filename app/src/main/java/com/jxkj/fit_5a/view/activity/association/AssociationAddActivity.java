@@ -29,12 +29,9 @@ import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
-import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils_Map;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTy;
 import com.jxkj.fit_5a.entity.MediaInfoBean;
-import com.jxkj.fit_5a.entity.TopicAllBean;
 import com.jxkj.fit_5a.entity.VideoInfoBean;
-import com.jxkj.fit_5a.view.activity.exercise.landscape.MapExerciseActivity;
 import com.jxkj.fit_5a.view.adapter.SpPhotoAdapter;
 import com.jxkj.fit_5a.view.map.LocationSelectActivity;
 import com.luck.picture.lib.PictureSelector;
@@ -43,7 +40,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -101,6 +97,7 @@ public class AssociationAddActivity extends BaseActivity {
         mTvTitle.setText("社区动态");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         mTvRighttext.setText("发布");
+        type = getIntent().getIntExtra("type",0);
         mTvRighttext.setTextColor(getResources().getColor(R.color.color_text_theme));
         mIvRightimg.setImageDrawable(getResources().getDrawable(R.drawable.icon_fabu));
         initRvXq();
@@ -120,10 +117,10 @@ public class AssociationAddActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (mSpPhotoAdapter.getData().get(position).getPath().equals("-1")) {
-                    if (mSpPhotoAdapter.getData().size() == 1 || type == -1) {
-                        initPopupWindow();
-                        return;
-                    }
+//                    if (mSpPhotoAdapter.getData().size() == 1 || type == -1) {
+//                        initPopupWindow();
+//                        return;
+//                    }
                     if (type == 2) {
                         MatisseUtils.gotoSelectPhoto(AssociationAddActivity.this, 10 - mSpPhotoAdapter.getData().size(), false);
                     } else {

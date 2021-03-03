@@ -89,7 +89,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.exercise.landscape.MotorPatternActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
 
@@ -117,300 +116,299 @@
             android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".view.activity.exercise.landscape.ClassicExerciseActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
         <activity
             android:name=".view.activity.exercise.landscape.MapExerciseActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
         <activity
             android:name=".view.activity.exercise.landscape.CreateRoomActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
         <activity
             android:name=".view.activity.exercise.landscape.CreateRoomMineActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
         <activity
             android:name=".view.activity.login_other.LoginActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.exercise.HistoryEquipmentActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.login_other.FindPasswordActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.login_other.WelcomeLoginActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.login_other.RegisterActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.mine.ChangePasswordActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.home.RankListActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.login_other.SetUserXbActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".lanya.MainActivity2"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".lanya.LinkActivity2"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.login_other.SetUserSgActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.login_other.FacilityManageActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.login_other.FacilityAddSbActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.login_other.FacilityAddPpActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.login_other.InterestActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.home.TaskSignActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.exercise.ExerciseRecordActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.exercise.TaskSelectionActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.exercise.TaskStartActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.exercise.RateControlActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.exercise.CourseSelectionActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.exercise.RatePatternActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.exercise.TaskFinishActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.exercise.CoursePatternActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.exercise.CourseStartActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.association.TopicAllActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.association.InterestAllActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.association.CreateCircleActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.association.MineCircleActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.association.MineTopicActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.association.TopicAddActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.association.AssociationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".view.activity.association.AssociationAddActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.UserHomeActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.UserScActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.UserGzActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.UserLwActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.UserFsActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.association.VideoActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.order.OrderActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineLwjActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.order.OrderDetailsActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.order.AddressActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.order.AddressEditActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineIssueActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineInfoActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.mine.MineRegardsActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.mine.CommentListActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineMessageHdActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineMessageActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineVipActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.ShoppingActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineGiftActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineIntegralActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineJinDouActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineJinDouCzActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineIssueQcActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineRwzxActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineSetActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineHomeActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineYhqActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineWzqActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.ShoppingDetailsActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.association.CircleAddActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.order.OrderAffirmActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
     </application>

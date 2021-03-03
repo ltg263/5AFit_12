@@ -1,7 +1,9 @@
 package com.jxkj.fit_5a.view.fragment;
 
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,8 +17,10 @@ import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowTy;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.CommunityHomeInfoBean;
 import com.jxkj.fit_5a.entity.HotTopicBean;
@@ -159,9 +163,33 @@ public class HomeThreeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), TopicAllActivity.class));
                 break;
             case R.id.tv_right_text:
-                startActivity(new Intent(getActivity(), AssociationAddActivity.class));
+                initPopupWindow();
                 break;
         }
+    }
+    PopupWindowTy window;
+
+    List<String> list = new ArrayList<>();
+    private void initPopupWindow() {
+        list.clear();
+        list.add("相册");
+        list.add("视频");
+        if (window == null) {
+            window = new PopupWindowTy(getActivity(), list, new PopupWindowTy.GiveDialogInterface() {
+                @Override
+                public void btnConfirm(int position) {
+                    int type = 3;
+                    if (position == 0) {
+                        type = 2;
+                    }
+                    IntentUtils.getInstence().intent(getActivity(), AssociationAddActivity.class,"type",type);
+                }
+            });
+
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        }
+
+        window.showAtLocation(mRvTopList, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置10464.66
     }
 
     private int totalPage;

@@ -2,7 +2,9 @@ package com.jxkj.fit_5a.view.activity.association;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,11 +21,14 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogCommentPackage;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowTy;
 import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean_X;
 import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
+import com.jxkj.fit_5a.view.activity.mine.order.AddressActivity;
 import com.jxkj.fit_5a.view.adapter.AssociationListAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -308,10 +313,36 @@ public class AssociationActivity extends BaseActivity {
                 break;
             case R.id.tv_righttext:
             case R.id.iv_rightimg:
-                startActivity(new Intent(this, AssociationAddActivity.class));
+                initPopupWindow();
                 break;
         }
     }
+
+    PopupWindowTy window;
+
+    List<String> list = new ArrayList<>();
+    private void initPopupWindow() {
+        list.clear();
+        list.add("相册");
+        list.add("视频");
+        if (window == null) {
+            window = new PopupWindowTy(AssociationActivity.this, list, new PopupWindowTy.GiveDialogInterface() {
+                @Override
+                public void btnConfirm(int position) {
+                    int type = 3;
+                    if (position == 0) {
+                        type = 2;
+                    }
+                    IntentUtils.getInstence().intent(AssociationActivity.this, AssociationAddActivity.class,"type",type);
+                }
+            });
+
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        }
+
+        window.showAtLocation(mTvTitle, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置10464.66
+    }
+
     List<MomentDetailsBean> mMomentDetailsBeans = new ArrayList<>();
     private void getMomentDetails(){
         RetrofitUtil.getInstance().apiService()
