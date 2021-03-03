@@ -269,7 +269,7 @@ public class CircleTaskData {
         }
 
         public String getName() {
-            return name;
+            return "今日奖励";
         }
 
         public void setName(String name) {

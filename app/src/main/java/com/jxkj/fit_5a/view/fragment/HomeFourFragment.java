@@ -291,7 +291,9 @@ public class HomeFourFragment extends BaseFragment {
                 });
     }
     private void initUI(UserDetailData data) {
-        GlideImageUtils.setGlideImage(getActivity(),data.getBackImg(),mIvBackImg);
+        if(StringUtil.isNotBlank(data.getBackImg())){
+            GlideImageUtils.setGlideImage(getActivity(),data.getBackImg(),mIvBackImg);
+        }
         GlideImageUtils.setGlideImage(getActivity(),data.getAvatar(),mIvAvatar);
         mTvNickName.setText(data.getNickName());
         mTvExplain.setText(data.getExplain());
