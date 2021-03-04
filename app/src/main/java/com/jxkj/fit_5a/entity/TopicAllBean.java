@@ -118,6 +118,15 @@ public class TopicAllBean {
         private String sortWeights;
         private String imgUrl;
         private List<?> children;
+        private String id;
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getId() {
+            return id;
+        }
 
         public String getName() {
             return name;
