@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 
@@ -67,23 +68,23 @@ public class CircleDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, Bas
                     String imageUrl = jsonArray.getJSONObject(0).getString("imageUrl");
                     helper.setGone(R.id.siv_1,false).setGone(R.id.siv_2,false)
                             .setGone(R.id.siv_3,false).setGone(R.id.siv_4,true);
-                    GlideImageUtils.setGlideImage(mContext,imageUrl,helper.getView(R.id.siv_4));
+                    GlideImgLoader.loadImageViewRadius(mContext,imageUrl,10,helper.getView(R.id.siv_4));
                 }else if(jsonArray.length()==2){
                     String imageUrl1 = jsonArray.getJSONObject(0).getString("imageUrl");
                     String imageUrl2 = jsonArray.getJSONObject(1).getString("imageUrl");
                     helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
                             .setVisible(R.id.siv_3,false).setGone(R.id.siv_4,false);
-                    GlideImageUtils.setGlideImage(mContext,imageUrl1,helper.getView(R.id.siv_1));
-                    GlideImageUtils.setGlideImage(mContext,imageUrl2,helper.getView(R.id.siv_2));
+                    GlideImgLoader.loadImageViewRadius(mContext,imageUrl1,10,helper.getView(R.id.siv_1));
+                    GlideImgLoader.loadImageViewRadius(mContext,imageUrl2,10,helper.getView(R.id.siv_2));
                 }else if(jsonArray.length()>2){
                     String imageUrl1 = jsonArray.getJSONObject(0).getString("imageUrl");
                     String imageUrl2 = jsonArray.getJSONObject(1).getString("imageUrl");
                     String imageUrl3 = jsonArray.getJSONObject(2).getString("imageUrl");
                     helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
                             .setVisible(R.id.siv_3,true).setGone(R.id.siv_4,false);
-                    GlideImageUtils.setGlideImage(mContext,imageUrl1,helper.getView(R.id.siv_1));
-                    GlideImageUtils.setGlideImage(mContext,imageUrl2,helper.getView(R.id.siv_2));
-                    GlideImageUtils.setGlideImage(mContext,imageUrl3,helper.getView(R.id.siv_3));
+                    GlideImgLoader.loadImageViewRadius(mContext,imageUrl1,10,helper.getView(R.id.siv_1));
+                    GlideImgLoader.loadImageViewRadius(mContext,imageUrl2,10,helper.getView(R.id.siv_2));
+                    GlideImgLoader.loadImageViewRadius(mContext,imageUrl3,10,helper.getView(R.id.siv_3));
                 }
 
             } catch (JSONException e) {
