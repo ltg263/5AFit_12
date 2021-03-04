@@ -17,11 +17,19 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/iv_icon_sp"
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_13" />
+
+            <com.jxkj.fit_5a.conpoment.view.SquareImageView
                 android:id="@+id/iv_icon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/ic_13" />
 
             <ImageView
@@ -39,6 +47,7 @@
             android:layout_margin="@dimen/dp_10"
             android:ellipsize="end"
             android:maxLines="2"
+            android:minLines="2"
             android:text="标题标题标题标题标题标题标题标题"
             android:textColor="@color/color_333333"
             android:textSize="13sp" />

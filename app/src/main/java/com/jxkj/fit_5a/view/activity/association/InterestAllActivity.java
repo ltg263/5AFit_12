@@ -149,7 +149,7 @@ public class InterestAllActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_right_text:
-                if(isY){
+                if(true){
                     isY = false;
                     startActivity(new Intent(this,CreateCircleActivity.class));
                     return;

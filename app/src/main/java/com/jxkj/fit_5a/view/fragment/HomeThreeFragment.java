@@ -114,7 +114,6 @@ public class HomeThreeFragment extends BaseFragment {
 
             }
         });
-
         //生命为瀑布流的布局方式，3列，布局方向为垂直
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         //解决item跳动
