@@ -307,8 +307,6 @@ public class HomeOneFragment extends BaseFragment {
                         "    }\n" +
                         "    return m;\n" +
                         "}" +
-                        "" +
-
                         "        var h = Math.floor(this.points[0].y / 3600) < 10 ? '0'+Math.floor(this.points[0].y / 3600) : Math.floor(this.points[0].y / 3600);\n" +
                         "        var m = Math.floor((this.points[0].y / 60 % 60)) < 10 ? '0' + Math.floor((this.points[0].y / 60 % 60)) : Math.floor((this.points[0].y / 60 % 60));\n" +
                         "        var s = Math.floor((this.points[0].y % 60)) < 10 ? '0' + Math.floor((this.points[0].y % 60)) : Math.floor((this.points[0].y % 60));\n" +
@@ -328,7 +326,6 @@ public class HomeOneFragment extends BaseFragment {
                         "        s0 += (s1 + s2+ s3);\n" +
                         "        return s0;\n" +
                         "    }");
-
         aaOptions = AAOptionsConstructor.configureChartOptions(aaChartModel);
         aaOptions.tooltip(aaTooltip);
 //        }
