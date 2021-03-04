@@ -14,11 +14,15 @@ import java.util.Date;
 public class MianJavaDame {
     public static void main(String[] args) {
 //
-        String[] a = new String[1];
-        a[0]="哈哈";
-//        System.out.println("--->>"+ );
+//        String[] a = new String[1];
+//        a[0]="哈哈";
 
-
+        System.out.println("--->>"+ new Date(2021,03,04).getTime());
+        System.out.println("--->>"+ new Date(2021,03,03).getTime());
+        int a = 1;
+        int b = 1;
+        int c = 1;
+        new Date(a+"-"+b+"-"+c);
     }
 
     public static String getBigWeek(int dayofweek) {
