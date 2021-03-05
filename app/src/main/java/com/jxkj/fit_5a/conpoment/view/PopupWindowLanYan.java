@@ -222,6 +222,7 @@ public class PopupWindowLanYan extends PopupWindow {
             for(int i=0;i<lists.size();i++){
                 if(lists.get(i).getId()==ConstValues_Ly.METER_ID){
                     isHave = true;
+                    PopupWindowLanYan.BleName = lists.get(i).getName();
                     lists.get(i).setState("0");
                 }else{
                     lists.get(i).setState("1");
@@ -230,7 +231,22 @@ public class PopupWindowLanYan extends PopupWindow {
             if(!isHave){
                 HistoryEquipmentData mHistoryEquipmentData = new HistoryEquipmentData();
                 mHistoryEquipmentData.setState("0");
-                mHistoryEquipmentData.setName(PopupWindowLanYan.BleName);
+                if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]){
+                    mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[0]);
+                    PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[0];
+                }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
+                    mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[1]);
+                    PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[1];
+                }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2]){
+                    mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[2]);
+                    PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[2];
+                }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]){
+                    mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[3]);
+                    PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[3];
+                }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]){
+                    mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[4]);
+                    PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[4];
+                }
                 mHistoryEquipmentData.setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
                 mHistoryEquipmentData.setImg("");
                 mHistoryEquipmentData.setServiceUUid(ble4Util.getServiceUUid());
@@ -242,7 +258,22 @@ public class PopupWindowLanYan extends PopupWindow {
             lists = new ArrayList<>();
             HistoryEquipmentData mHistoryEquipmentData = new HistoryEquipmentData();
             mHistoryEquipmentData.setState("0");
-            mHistoryEquipmentData.setName(PopupWindowLanYan.BleName);
+            if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]){
+                mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[0]);
+                PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[0];
+            }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
+                mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[1]);
+                PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[1];
+            }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2]){
+                mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[2]);
+                PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[2];
+            }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]){
+                mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[3]);
+                PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[3];
+            }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]){
+                mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[4]);
+                PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[4];
+            }
             mHistoryEquipmentData.setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
             mHistoryEquipmentData.setImg("");
             mHistoryEquipmentData.setId(ConstValues_Ly.METER_ID);
