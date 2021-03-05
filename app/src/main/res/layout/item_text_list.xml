@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/color_f5f5f5"
     android:orientation="vertical">
 
     <TextView
@@ -12,15 +13,8 @@
         android:gravity="center"
         android:paddingVertical="@dimen/dp_10"
         android:text="标题"
-        android:textColor="@color/color_ffffff"
+        android:textColor="@color/color_text_theme"
         android:textSize="14sp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/tv1"
-        android:layout_marginHorizontal="@dimen/dp_10"
-        android:background="@color/line_color" />
 
 
 </RelativeLayout>

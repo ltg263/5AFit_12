@@ -1,6 +1,8 @@
 package com.jxkj.fit_5a.view.activity.exercise;
 
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
-import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartViewOne;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAOptionsConstructor;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AASeriesElement;
@@ -24,9 +25,11 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AATooltip;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.DeviceTypeData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowSb;
 import com.jxkj.fit_5a.entity.SportLogBean;
 import com.jxkj.fit_5a.entity.SportLogStatsBean;
 import com.jxkj.fit_5a.view.adapter.HomeTopAdapter;
@@ -56,6 +59,8 @@ public class ExerciseRecordActivity extends BaseActivity {
     AAChartViewOne mAAChartView;
     @BindView(R.id.tv_top_jyz)
     TextView mTvTopJyz;
+    @BindView(R.id.tv_sb)
+    TextView tv_sb;
     @BindView(R.id.tv_top_jyy)
     TextView mTvTopJyy;
     @BindView(R.id.iv_z)
@@ -69,6 +74,8 @@ public class ExerciseRecordActivity extends BaseActivity {
     private AAChartModel aaChartModel;
     private HomeTopAdapter mHomeTopAdapter;
     String deviceType = null;
+    private PopupWindowSb window;
+    private List<DeviceTypeData.ListBean> dataSbType;
 
     @Override
     protected int getContentView() {
@@ -105,7 +112,7 @@ public class ExerciseRecordActivity extends BaseActivity {
         });
         getSportLogStats(null);
         getTemplateList();
-
+        queryDeviceTypeLists();
 
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -379,6 +386,9 @@ public class ExerciseRecordActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_sb:
+                if(dataSbType!=null &&dataSbType.size()>0){
+                    popupWindw();
+                }
                 break;
             case R.id.tv_top_jyz:
                 mIvY.setVisibility(View.INVISIBLE);
@@ -397,5 +407,55 @@ public class ExerciseRecordActivity extends BaseActivity {
                 getSportLogStats(null);
                 break;
         }
+    }
+
+    private void queryDeviceTypeLists() {
+        RetrofitUtil.getInstance().apiService()
+                .queryDeviceTypeLists()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<DeviceTypeData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<DeviceTypeData> result) {
+                        if (isDataInfoSucceed(result)) {
+                            dataSbType = result.getData().getList();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+    private void popupWindw() {
+        if(window!=null && !window.isShowing()){
+            window.showAsDropDown(tv_sb, Gravity.BOTTOM,  0, 0);
+            return;
+        }
+        if(window != null) {
+            window.dismiss();
+            return;
+        }
+        window = new PopupWindowSb(this, dataSbType,(topicId, str) -> {
+            window.dismiss();
+            deviceType = topicId+"";
+            tv_sb.setText(str);
+            page = 1;
+            getTemplateList();
+        });
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        window.setOutsideTouchable(true);
+        window.showAsDropDown(tv_sb, Gravity.BOTTOM,  0, 0);
     }
 }
