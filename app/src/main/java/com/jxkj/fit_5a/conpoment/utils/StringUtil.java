@@ -551,6 +551,16 @@ public class StringUtil {
             return h+"小时"+m+"分"+s+"秒";
         }
     }
+
+    public static Double getTimeFenMiao(long date){
+        if (date<60) {
+            return Double.valueOf("0."+date);
+        }else{
+            long m = date/60;
+            long s = date%60;
+            return Double.valueOf(m+"."+s);
+        }
+    }
     /**
      * 获取过去第几天的日期
      * @param past

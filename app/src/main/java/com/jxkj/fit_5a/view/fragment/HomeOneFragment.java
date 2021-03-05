@@ -315,11 +315,13 @@ public class HomeOneFragment extends BaseFragment {
                         "            str = m + '分' + s +'秒';\n" +
                         "        }else{" +
                         "            str = h + '时' + m + '分' + s +'秒';\n" +
-                        "        }"+
+                        "        }\n" +
+                        "        str = this.points[0].y+'秒';\n" +
+                        "        str = str.replace('.','分');\n"+
                         "        var s0 = '' + '<b>' +  getDay(this.x) + '</b>' + '<br/>';\n" +
-                        "        var colorDot1 = '<span style=\\\"' + 'color:#FFA1A1; font-size:13px\\\"' + '>◉</span> ';\n" +
-                        "        var colorDot2 = '<span style=\\\"' + 'color:#A1DFFF; font-size:13px\\\"' + '>◉</span> ';\n" +
-                        "        var colorDot3 = '<span style=\\\"' + 'color:#FFB300; font-size:13px\\\"' + '>◉</span> ';\n" +
+                        "        var colorDot1 = '<span style=\\\"' + 'color:#FFB300; font-size:13px\\\"' + '>◉</span> ';\n" +
+                        "        var colorDot2 = '<span style=\\\"' + 'color:#FFA1A1; font-size:13px\\\"' + '>◉</span> ';\n" +
+                        "        var colorDot3 = '<span style=\\\"' + 'color:#A1DFFF; font-size:13px\\\"' + '>◉</span> ';\n" +
                         "        var s1 = colorDot1 + this.points[0].series.name + ': ' + str + '<br/>';\n" +
                         "        var s2 = colorDot2 + this.points[1].series.name + ': ' + this.points[1].y + 'cal' + '<br/>';\n" +
                         "        var s3 = colorDot3 + this.points[2].series.name + ': ' + this.points[2].y + 'km';\n" +
@@ -402,7 +404,7 @@ public class HomeOneFragment extends BaseFragment {
                 kll[i] = 0;
                 zlc[i] = 0;
                 if (a.get(i).equals(lists.get(j).getDatestr())) {
-                    ydsc[i] = lists.get(j).getTotalDuration();
+                    ydsc[i] = StringUtil.getTimeFenMiao(lists.get(j).getTotalDuration());
                     kll[i] = lists.get(j).getTotalCalories();
                     zlc[i] = lists.get(j).getTotalDistance();
                     break;
@@ -413,19 +415,22 @@ public class HomeOneFragment extends BaseFragment {
         AASeriesElement element1 = new AASeriesElement()
                 .name("运动时长")
                 .lineWidth(1f)
-                .color("#FFA1A1")
+                .fillOpacity(0.5f)
+                .color("#FFB300")
                 .data(ydsc);
 
         AASeriesElement element2 = new AASeriesElement()
                 .name("卡路里")
                 .lineWidth(1f)
-                .color("#A1DFFF")
+                .fillOpacity(0.5f)
+                .color("#FFA1A1")
                 .data(kll);
 
         AASeriesElement element3 = new AASeriesElement()
                 .name("总里程")
                 .lineWidth(1f)
-                .color("#FFB300")
+                .fillOpacity(0.5f)
+                .color("#A1DFFF")
                 .data(zlc);
 
         return new AASeriesElement[]{element1, element2, element3};
