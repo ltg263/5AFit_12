@@ -96,7 +96,7 @@ public class PopupWindowLanYan extends PopupWindow {
                 dismiss();
                 ble4Util.setServiceUUid("49535343-fe7d-4ae5-8fa9-9fafd205e455");
                 BluetoothDevice mBluetoothDevice = (BluetoothDevice) bleadapter.getItem(i);
-                if(mBluetoothDevice.getName().equals("i-Console+1357")){
+                if(mBluetoothDevice.getName().equals("i-Console+1357") || mBluetoothDevice.getName().equals("HEAD0233") ){
                     ble4Util.setServiceUUid("0000fff0-0000-1000-8000-00805f9b34fb");
                 }
                 ble4Util.stopScan();
