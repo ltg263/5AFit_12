@@ -634,7 +634,7 @@ public interface ApiService {
      * 运动记录列表
      */
     @GET(ConstValues.PORT_4 + "api/v1/user/sport/log/list")
-    Observable<Result<SportLogBean>> geSportLogList(@Query("page") int page, @Query("pageSize") int pageSize);
+    Observable<Result<SportLogBean>> geSportLogList(@Query("deviceType") String deviceType,@Query("page") int page, @Query("pageSize") int pageSize);
 
 
     /**

@@ -112,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
-            android:text="时长/min"
+            android:text="时长"
             android:textColor="@color/color_999999"
             android:textSize="10sp" />
 

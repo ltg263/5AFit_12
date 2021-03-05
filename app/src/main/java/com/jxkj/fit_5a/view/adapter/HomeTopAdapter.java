@@ -19,16 +19,14 @@ public class HomeTopAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     public HomeTopAdapter(@Nullable List<String> data) {
         super(R.layout.item_home_top, data);
     }
-
-//                            list.add("卡路里");
-//                            list.add("总里程");
-//                            list.add("总计时间");
-//                            list.add("平均时间");
-    @Override
     protected void convert(@NonNull BaseViewHolder helper, String item) {
         helper.setText(R.id.tv_name,item);
-        if(item.equals("卡路里")){
+        if(item.equals("总卡路里")){
             helper.setText(R.id.tv_v,stats.getTotalCalories()+"cal")
+                    .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_1))
+                    .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fde5e5);
+        }else if(item.equals("平均卡路里")){
+            helper.setText(R.id.tv_v,stats.getAvgCalories()+"cal")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_1))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fde5e5);
         }else if(item.equals("总里程")){
@@ -38,14 +36,14 @@ public class HomeTopAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
         }else if(item.equals("总计时间")){
             helper.setText(R.id.tv_v,stats.getTotalDuration()+"s")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_4))
-                    .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fde5e5);
+                    .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("平均时间")){
             helper.setText(R.id.tv_v,stats.getAvgDuration()+"s")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_4))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("BAI")){
             helper.setText(R.id.tv_v,stats.getBai()+"BAI")
-                    .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_1))
+                    .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_4))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fde5e5);
         }
     }

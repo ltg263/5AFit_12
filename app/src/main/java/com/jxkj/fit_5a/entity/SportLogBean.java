@@ -9,14 +9,14 @@ public class SportLogBean {
      * totalCount : 13
      */
 
-    private String totalCount;
+    private int totalCount;
     private List<ListBean> list;
 
-    public String getTotalCount() {
+    public int getTotalCount() {
         return totalCount;
     }
 
-    public void setTotalCount(String totalCount) {
+    public void setTotalCount(int totalCount) {
         this.totalCount = totalCount;
     }
 

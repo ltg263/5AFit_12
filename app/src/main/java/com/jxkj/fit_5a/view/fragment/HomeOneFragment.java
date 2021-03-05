@@ -259,7 +259,7 @@ public class HomeOneFragment extends BaseFragment {
                             List<SportLogStatsBean.ListBean> lists = result.getData().getList();
                             initAAChar(lists);
                             List<String> list = new ArrayList<>();
-                            list.add("卡路里");
+                            list.add("总卡路里");
                             list.add("总里程");
                             list.add("总计时间");
                             list.add("平均时间");

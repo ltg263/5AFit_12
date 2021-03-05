@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ffffff"
@@ -62,133 +63,154 @@
 
     </RelativeLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dimen_75dp">
+        android:layout_marginTop="@dimen/dimen_75dp"
+        app:srlAccentColor="#00000000"
+        app:srlEnablePreviewInEditMode="true"
+        app:srlPrimaryColor="#00000000">
 
-        <LinearLayout
+        <com.jxkj.fit_5a.conpoment.view.ClassicsHeader
+
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="35dp" />
 
-            <RelativeLayout
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="270dp"
-                android:layout_marginHorizontal="@dimen/dimen_15dp"
-                android:layout_marginTop="@dimen/dimen_75dp"
-                android:background="@drawable/ic_shade_img">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView
-                    android:id="@+id/AAChartView"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/ll_top" />
+                    android:layout_height="270dp"
+                    android:layout_marginHorizontal="@dimen/dimen_15dp"
+                    android:layout_marginTop="@dimen/dimen_75dp"
+                    android:background="@drawable/ic_shade_img">
 
-                <ImageView
-                    android:id="@+id/iv_z"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dimen_100dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="-10dp"
-                    android:layout_marginEnd="-10dp"
-                    android:background="@mipmap/ic_bnt_bj" />
+                    <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartViewOne
+                        android:id="@+id/AAChartView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/ll_top" />
 
-                <ImageView
-                    android:id="@+id/iv_y"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dimen_100dp"
-                    android:layout_marginStart="-10dp"
-                    android:layout_marginTop="-10dp"
-                    android:background="@mipmap/ic_bnt_bj_y"
-                    android:visibility="invisible" />
+                    <ImageView
+                        android:id="@+id/iv_z"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_100dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="-10dp"
+                        android:layout_marginEnd="-10dp"
+                        android:background="@mipmap/ic_bnt_bj" />
 
-                <LinearLayout
-                    android:id="@+id/ll_top"
+                    <ImageView
+                        android:id="@+id/iv_y"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_100dp"
+                        android:layout_marginStart="-10dp"
+                        android:layout_marginTop="-10dp"
+                        android:background="@mipmap/ic_bnt_bj_y"
+                        android:visibility="invisible" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_top"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_50dp">
+
+                        <TextView
+                            android:id="@+id/tv_top_jyz"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dimen_50dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="近一周"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_top_jyy"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dimen_50dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="近一月"
+                            android:textColor="@color/color_666666"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_top_list"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_50dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_15dp"
+                    android:overScrollMode="never" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_15dp">
 
                     <TextView
-                        android:id="@+id/tv_top_jyz"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/dimen_50dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="近一周"
+                        android:id="@+id/tv1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="记录详情"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dimen_2dp"
+                        android:layout_below="@id/tv1"
+                        android:layout_marginTop="-5dp"
+                        android:background="@drawable/line_shape_bj_select" />
 
                     <TextView
-                        android:id="@+id/tv_top_jyy"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/dimen_50dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="近一月"
-                        android:textColor="@color/color_666666"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:drawableEnd="@drawable/icon_jiantou_you_99"
+                        android:paddingStart="@dimen/dimen_5dp"
+                        android:text="更多"
+                        android:textColor="@color/color_999999"
+                        android:textSize="14sp"
+                        android:visibility="invisible" />
 
 
-                </LinearLayout>
+                </RelativeLayout>
 
-            </RelativeLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_top_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_15dp">
-
-                <TextView
-                    android:id="@+id/tv1"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_jlxq_list"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="记录详情"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:layout_marginBottom="@dimen/dimen_50dp"
+                    android:overScrollMode="never" />
 
-                <View
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dimen_2dp"
-                    android:layout_below="@id/tv1"
-                    android:layout_marginTop="-5dp"
-                    android:background="@drawable/line_shape_bj_select" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:drawableEnd="@drawable/icon_jiantou_you_99"
-                    android:paddingStart="@dimen/dimen_5dp"
-                    android:text="更多"
-                    android:textColor="@color/color_999999"
-                    android:textSize="14sp"
-                    android:visibility="invisible" />
+            </LinearLayout>
 
 
-            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
 
+        <com.jxkj.fit_5a.conpoment.view.ClassicsFooter
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_jlxq_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_50dp"
-                android:overScrollMode="never" />
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
 
-        </LinearLayout>
-
-
-    </androidx.core.widget.NestedScrollView>
-
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </RelativeLayout>
