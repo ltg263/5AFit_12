@@ -43,7 +43,7 @@ public class MainApplication extends Application {
     }
     private void initUMShare() {
         UMShareAPI.get(this);
-        PlatformConfig.setWeixin(ConstValues.WX_APP_ID,"c706d670856a9afc92ee1805f71bd2c8");
+        PlatformConfig.setWeixin(ConstValues.WX_APP_ID,"3a48f38098cc604274f3e46f3c400242");
     }
 
     /**

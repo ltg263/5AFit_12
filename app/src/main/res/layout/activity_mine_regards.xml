@@ -100,7 +100,7 @@
         android:layout_marginBottom="@dimen/common_margin_20"
         android:gravity="center"
         android:lineSpacingExtra="@dimen/dp_10"
-        android:text="XXXXXX有限公司 版权所有\nCopyright 2020-2026 xxxxxx All Rights Reserved." />
+        android:text="宁波卡路里科技有限公司 版权所有\nCopyright 2020-2026 All Rights Reserved." />
 
 
 </LinearLayout>

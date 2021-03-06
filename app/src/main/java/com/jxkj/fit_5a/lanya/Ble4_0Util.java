@@ -423,16 +423,16 @@ public class Ble4_0Util implements BleUtil {
         BluetoothProfile.ServiceListener bs = new BluetoothProfile.ServiceListener() {
             @Override
             public void onServiceConnected(int profile, BluetoothProfile proxy) {
-                Log.e("Kavenir", "onServiceConnected");
+                Log.w("Kavenir", "onServiceConnected");
                 List<BluetoothDevice> bluetoothDevices = proxy.getConnectedDevices();
                 if (bluetoothDevices.size() > 0) {
-                    Log.e("Kavenir", "onServiceConnected==" + bluetoothDevices.get(0).getName());
+                    Log.w("Kavenir", "onServiceConnected==" + bluetoothDevices.get(0).getName());
                     if (profile == BluetoothProfile.HEADSET) {
                         BluetoothHeadset bh = (BluetoothHeadset) proxy;
                         if (bh.getConnectionState(bluetoothDevices.get(0)) == BluetoothProfile.STATE_CONNECTED) {
                             try {
                                 bh.getClass().getMethod("connect", BluetoothDevice.class).invoke(bh, bluetoothDevices.get(0));
-                                Log.e("Kavenir", "onServiceConnected==" + "headset通道");
+                                Log.w("Kavenir", "onServiceConnected==" + "headset通道");
                             } catch (Exception e) {
                             }
                         }
@@ -441,7 +441,7 @@ public class Ble4_0Util implements BleUtil {
                         if (a2dp.getConnectionState(bluetoothDevices.get(0)) == BluetoothProfile.STATE_CONNECTED) {
                             try {
                                 a2dp.getClass().getMethod("connect", BluetoothDevice.class).invoke(a2dp, bluetoothDevices.get(0));
-                                Log.e("Kavenir", "onServiceConnected==" + "a2dp通道");
+                                Log.w("Kavenir", "onServiceConnected==" + "a2dp通道");
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

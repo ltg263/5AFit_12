@@ -106,6 +106,16 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.NoDisplay" />
+        <activity
             android:name=".view.map.SearchAddressActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
@@ -411,6 +421,16 @@
 
             android:screenOrientation="portrait" />
 
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.jxkj.fit_5a.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
