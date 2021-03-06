@@ -110,7 +110,7 @@ public class ExerciseRecordActivity extends BaseActivity {
 //                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
             }
         });
-        getSportLogStats(null);
+        getSportLogStats();
         getTemplateList();
         queryDeviceTypeLists();
 
@@ -332,7 +332,7 @@ public class ExerciseRecordActivity extends BaseActivity {
 
     private boolean isDay7 = true;
 
-    private void getSportLogStats(String deviceType) {
+    private void getSportLogStats() {
         Date nowDate = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(nowDate);
@@ -396,7 +396,7 @@ public class ExerciseRecordActivity extends BaseActivity {
                 mTvTopJyz.setTextColor(getResources().getColor(R.color.black));
                 mTvTopJyy.setTextColor(getResources().getColor(R.color.color_666666));
                 isDay7 = true;
-                getSportLogStats(null);
+                getSportLogStats();
                 break;
             case R.id.tv_top_jyy:
                 mIvY.setVisibility(View.VISIBLE);
@@ -404,7 +404,7 @@ public class ExerciseRecordActivity extends BaseActivity {
                 mTvTopJyz.setTextColor(getResources().getColor(R.color.color_666666));
                 mTvTopJyy.setTextColor(getResources().getColor(R.color.black));
                 isDay7 = false;
-                getSportLogStats(null);
+                getSportLogStats();
                 break;
         }
     }
@@ -452,6 +452,7 @@ public class ExerciseRecordActivity extends BaseActivity {
             deviceType = topicId+"";
             tv_sb.setText(str);
             page = 1;
+            getSportLogStats();
             getTemplateList();
         });
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);

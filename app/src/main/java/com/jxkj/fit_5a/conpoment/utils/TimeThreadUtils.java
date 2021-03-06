@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.lanya.Ble4_0Util;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
@@ -56,12 +57,17 @@ public class TimeThreadUtils {
     }
 
     static class ThreadShowA2 implements Runnable {
+        int pos = 1;
         // handler类接收数据
         @SuppressLint("HandlerLeak")
         Handler handler = new Handler() {
             public void handleMessage(Message msg) {
                 if (msg.what == 1) {
                     lanyan1.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A2));
+                    if(pos==5 && ConstValues_Ly.CLIENT_ID==0){
+                        ToastUtils.showShort("设备故障已断开");
+                        PopupWindowLanYan.ble4Util.disconnect();
+                    }
                     System.out.println("receive....");
                 }
             }
@@ -74,6 +80,7 @@ public class TimeThreadUtils {
                     Message msg = new Message();
                     msg.what = 1;
                     handler.sendMessage(msg);
+                    pos++;
                     System.out.println("send...");
                 } catch (Exception e) {
                     e.printStackTrace();

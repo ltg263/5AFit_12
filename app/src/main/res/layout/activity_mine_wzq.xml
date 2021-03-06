@@ -17,7 +17,6 @@
             android:layout_alignTop="@id/tv"
             android:layout_alignBottom="@id/tv"
             android:layout_marginStart="@dimen/dimen_25dp"
-            android:background="@drawable/bj_shape_line_f2_5"
             android:paddingHorizontal="@dimen/dimen_5dp"
             android:src="@drawable/icon_jiantou_zuo_ff" />
 
