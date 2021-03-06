@@ -262,7 +262,7 @@ public class RatePatternActivity extends BaseActivity {
                             sportLogInfo.setBai("11");
                             sportLogInfo.setBrandId(ConstValues_Ly.BRAND_ID);
                             sportLogInfo.setCalories(String.valueOf(Calories));
-                            sportLogInfo.setDeviceType(ConstValues_Ly.DEVICE_TYPE_ID);
+                            sportLogInfo.setDeviceType(ConstValues_Ly.DEVICE_TYPE_ID+"");
                             sportLogInfo.setDistance(String.valueOf(Distance));
                             sportLogInfo.setDuration(String.valueOf(duration));
                             sportLogInfo.setEndTimestamp(String.valueOf(System.currentTimeMillis()));

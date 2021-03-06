@@ -29,9 +29,11 @@ import com.jxkj.fit_5a.base.DeviceTypeData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowSb;
 import com.jxkj.fit_5a.entity.SportLogBean;
 import com.jxkj.fit_5a.entity.SportLogStatsBean;
+import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.adapter.HomeTopAdapter;
 import com.jxkj.fit_5a.view.adapter.TwoJlxqAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -85,6 +87,10 @@ public class ExerciseRecordActivity extends BaseActivity {
     @Override
     protected void initViews() {
         str7 = StringUtil.getDays(7, "dd").toArray(new String[7]);
+        if(StringUtil.isNotBlank(PopupWindowLanYan.BleName)){
+            deviceType =ConstValues_Ly.DEVICE_TYPE_ID+"";
+            tv_sb.setText(PopupWindowLanYan.BleName);
+        }
         str30 = StringUtil.getDays(30, "dd").toArray(new String[30]);
 
         mHomeTopAdapter = new HomeTopAdapter(null);

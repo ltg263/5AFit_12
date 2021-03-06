@@ -207,6 +207,11 @@ public class PopupWindowLanYan extends PopupWindow {
             if(ConstValues_Ly.CLIENT_ID ==0){
                 ConstValues_Ly.CLIENT_ID = resultData[2];//Client ID
                 ConstValues_Ly.METER_ID = resultData[3];//Meter ID
+                for(int i=0;i < ConstValues_Ly.METER_ID_S.length;i++){
+                    if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[i]){
+                        ConstValues_Ly.DEVICE_TYPE_ID =ConstValues_Ly.DEVICE_TYPE_IDS[i];
+                    }
+                }
                 PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A0));
                 initLsData();
             }
@@ -232,25 +237,29 @@ public class PopupWindowLanYan extends PopupWindow {
                 HistoryEquipmentData mHistoryEquipmentData = new HistoryEquipmentData();
                 mHistoryEquipmentData.setState("0");
                 if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]){
+                    mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[0]);
                     mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[0]);
                     PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[0];
                 }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
+                    mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[1]);
                     mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[1]);
                     PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[1];
                 }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2]){
+                    mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[2]);
                     mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[2]);
                     PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[2];
                 }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]){
+                    mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[3]);
                     mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[3]);
                     PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[3];
                 }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]){
+                    mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[4]);
                     mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[4]);
                     PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[4];
                 }
                 mHistoryEquipmentData.setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
                 mHistoryEquipmentData.setImg("");
                 mHistoryEquipmentData.setServiceUUid(ble4Util.getServiceUUid());
-                mHistoryEquipmentData.setId(ConstValues_Ly.METER_ID);
                 mHistoryEquipmentData.setLyAddress(BleAddress);
                 lists.add(mHistoryEquipmentData);
             }
@@ -259,24 +268,28 @@ public class PopupWindowLanYan extends PopupWindow {
             HistoryEquipmentData mHistoryEquipmentData = new HistoryEquipmentData();
             mHistoryEquipmentData.setState("0");
             if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]){
+                mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[0]);
                 mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[0]);
                 PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[0];
             }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
+                mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[1]);
                 mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[1]);
                 PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[1];
             }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2]){
+                mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[2]);
                 mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[2]);
                 PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[2];
             }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]){
+                mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[3]);
                 mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[3]);
                 PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[3];
             }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]){
+                mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[4]);
                 mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[4]);
                 PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[4];
             }
             mHistoryEquipmentData.setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
             mHistoryEquipmentData.setImg("");
-            mHistoryEquipmentData.setId(ConstValues_Ly.METER_ID);
             mHistoryEquipmentData.setServiceUUid(ble4Util.getServiceUUid());
             mHistoryEquipmentData.setLyAddress(BleAddress);
             lists.add(mHistoryEquipmentData);

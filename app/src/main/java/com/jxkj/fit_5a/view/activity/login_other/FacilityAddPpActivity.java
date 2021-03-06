@@ -71,7 +71,6 @@ public class FacilityAddPpActivity extends BaseActivity {
     protected void initViews() {
         Bundle bundle = getIntent().getBundleExtra("bundle");
         type = bundle.getString("id");//设备类型id
-        ConstValues_Ly.DEVICE_TYPE_ID = type;
         mTvTitle.setText(bundle.getString("name"));
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         queryDeviceBrandLists();

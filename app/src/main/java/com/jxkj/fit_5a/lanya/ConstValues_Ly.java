@@ -31,7 +31,7 @@ public class ConstValues_Ly {
     public static byte METER_ID = 0x00;//Meter ID
 
     public static String BRAND_ID = null;//	品牌id
-    public static String DEVICE_TYPE_ID = null;//设备类型id
+    public static int DEVICE_TYPE_ID = 0;//设备类型id
     /**
      * 脚踏车/椭圆机(iC+ Protocol V1.3.1)
      * 手动脚踏车/椭圆机(iB+ Protocol(手動車錶) V1.2)
@@ -40,6 +40,7 @@ public class ConstValues_Ly {
      */
     public static byte[] METER_ID_S = new byte[]{1,-56,-76,-25,-46};//0X00+1  0XC8  0XB4  0XE6+1  0XD2
     public static String[] METER_NAME_S = new String[]{"脚踏车/椭圆机","手动脚踏车/椭圆机","腹健轮","滑雪机","跑步机"};//0X00+1  0XC8  0XB4  0XE6+1
+    public static int[] DEVICE_TYPE_IDS = new int[]{0, 200, 180, 230, 210};//0X00+1  0XC8  0XB4  0XE6+1  0XD2
 
 
     /**
