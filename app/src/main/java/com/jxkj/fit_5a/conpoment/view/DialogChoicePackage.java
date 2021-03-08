@@ -37,7 +37,7 @@ public class DialogChoicePackage {
     ShoppingFlowLayout mSflGuigeCm;
     public static int currentNum1 = 0;
     public static int currentNum2 = 0;
-    TextView tv_price,tv_sales,tv_ok;
+    TextView tv_price,tv_sales,tv_ok,tv_ku_cun;
     List<ProductDetailsBean.SpecsLisBean> specsLis;
     List<ProductDetailsBean.SkuListBean> skuList;
     public DialogChoicePackage(Activity mContext, List<ProductDetailsBean.SpecsLisBean> specsLis,
@@ -57,6 +57,7 @@ public class DialogChoicePackage {
         iv = contentView.findViewById(R.id.dialog_choice_package_layout_shopping_img_iv);
         tv_price = contentView.findViewById(R.id.tv_price);
         tv_sales = contentView.findViewById(R.id.tv_sales);
+        tv_ku_cun = contentView.findViewById(R.id.tv_ku_cun);
         tv_ok = contentView.findViewById(R.id.tv_ok);
         GlideImageUtils.setGlideImage(mContext,imgUrl,iv);
         mSflGuigeYs = contentView.findViewById(R.id.sfl_guige_ys);
@@ -102,8 +103,9 @@ public class DialogChoicePackage {
                             onChoicePackageDialogListener.addListener(j,skuList.get(j).getSpecText());
                             linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_fef6de_5));
                             tv_price.setText(skuList.get(j).getDeductIntegral());
+                            tv_ku_cun.setText("库存"+skuList.get(j).getStock()+"件");
                             if(Double.valueOf(skuList.get(j).getDisPrice())!=0){
-                                String str = "+ <font color=\"#FFB300\">¥ </font>"+skuList.get(j).getDisPrice();
+                                String str = "+ <font color=\"#FFB300\">¥ </font>"+skuList.get(j).getPrice();
                                 tv_sales.setText(Html.fromHtml(str));
                             }else{
                                 tv_sales.setText("");
@@ -146,9 +148,10 @@ public class DialogChoicePackage {
                         linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_fef6de_5));
                         GlideImageUtils.setGlideImage(mContext,skuList.get(j).getImgUrl(),iv);
                         onChoicePackageDialogListener.addListener(j,skuList.get(j).getSpecText());
+                        tv_ku_cun.setText("库存"+skuList.get(j).getStock()+"件");
                         tv_price.setText(skuList.get(j).getDeductIntegral());
                         if(Double.valueOf(skuList.get(j).getDisPrice())!=0){
-                            String str = "+ <font color=\"#FFB300\">¥ </font>"+skuList.get(j).getDisPrice();
+                            String str = "+ <font color=\"#FFB300\">¥ </font>"+skuList.get(j).getPrice();
                             tv_sales.setText(Html.fromHtml(str));
                         }else{
                             tv_sales.setText("");
@@ -158,9 +161,10 @@ public class DialogChoicePackage {
                         if(currentNum2==0 && i!=0 && !isY){
                             onChoicePackageDialogListener.addListener(j,skuList.get(j).getSpecText());
                             linearLayout.setBackground(mContext.getResources().getDrawable(R.drawable.shap_fef6de_5));
+                            tv_ku_cun.setText("库存"+skuList.get(j).getStock()+"件");
                             tv_price.setText(skuList.get(j).getDeductIntegral());
                             if(Double.valueOf(skuList.get(j).getDisPrice())!=0){
-                                String str = "+ <font color=\"#FFB300\">¥ </font>"+skuList.get(j).getDisPrice();
+                                String str = "+ <font color=\"#FFB300\">¥ </font>"+skuList.get(j).getPrice();
                                 tv_sales.setText(Html.fromHtml(str));
                             }else{
                                 tv_sales.setText("");

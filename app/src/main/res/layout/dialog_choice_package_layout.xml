@@ -77,14 +77,14 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_marginTop="@dimen/dp_10"
             android:backgroundTint="@color/line_color" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/dp_10"
             android:text="选择颜色"
             android:textColor="#333333"
             android:textSize="14sp" />
@@ -111,6 +111,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"/>
+
+
 
 
         <TextView
