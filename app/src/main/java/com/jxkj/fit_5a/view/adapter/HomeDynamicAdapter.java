@@ -60,7 +60,7 @@ public class HomeDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, BaseV
                 if(jsonArray.length()==1){
                     String imageUrl = jsonArray.getJSONObject(0).getString("imageUrl");
                     helper.setGone(R.id.siv_1,false).setGone(R.id.siv_2,false)
-                            .setGone(R.id.siv_3,false).setGone(R.id.siv_4,true);
+                            .setGone(R.id.siv_3,false).setGone(R.id.siv_4,true).setGone(R.id.rv_img_1,true);
                     GlideImgLoader.loadImageViewRadius(mContext,imageUrl,10,helper.getView(R.id.siv_4));
                     if(item.getContentType().equals("3")){
                         helper.setGone(R.id.iv_baofang,true);
@@ -69,7 +69,7 @@ public class HomeDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, BaseV
                     String imageUrl1 = jsonArray.getJSONObject(0).getString("imageUrl");
                     String imageUrl2 = jsonArray.getJSONObject(1).getString("imageUrl");
                     helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
-                            .setVisible(R.id.siv_3,false).setGone(R.id.siv_4,false);
+                            .setVisible(R.id.siv_3,false).setGone(R.id.siv_4,false).setGone(R.id.rv_img_1,false);
                     GlideImgLoader.loadImageViewRadius(mContext,imageUrl1,10,helper.getView(R.id.siv_1));
                     GlideImgLoader.loadImageViewRadius(mContext,imageUrl2,10,helper.getView(R.id.siv_2));
                 }else if(jsonArray.length()>2){
@@ -77,7 +77,7 @@ public class HomeDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, BaseV
                     String imageUrl2 = jsonArray.getJSONObject(1).getString("imageUrl");
                     String imageUrl3 = jsonArray.getJSONObject(2).getString("imageUrl");
                     helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
-                            .setVisible(R.id.siv_3,true).setGone(R.id.siv_4,false);
+                            .setVisible(R.id.siv_3,true).setGone(R.id.siv_4,false).setGone(R.id.rv_img_1,false);
                     GlideImgLoader.loadImageViewRadius(mContext,imageUrl1,10,helper.getView(R.id.siv_1));
                     GlideImgLoader.loadImageViewRadius(mContext,imageUrl2,10,helper.getView(R.id.siv_2));
                     GlideImgLoader.loadImageViewRadius(mContext,imageUrl3,10,helper.getView(R.id.siv_3));
