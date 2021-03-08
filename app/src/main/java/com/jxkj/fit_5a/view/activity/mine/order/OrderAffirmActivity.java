@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.activity.mine.order;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.alipay.PaymentContract;
 import com.jxkj.fit_5a.alipay.PaymentParameterBean;
@@ -27,10 +29,13 @@ import com.jxkj.fit_5a.entity.CreateOrderBean;
 import com.jxkj.fit_5a.entity.PostOrderInfo;
 import com.jxkj.fit_5a.entity.ShowOrderInfo;
 import com.jxkj.fit_5a.view.adapter.OrderAffirmAdapter;
+import com.jxkj.fit_5a.wxapi.MessageEvent;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -68,6 +73,7 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
     private OrderAffirmAdapter mOrderAffirmAdapter;
     private PostOrderInfo info;
     private PaymentPresenter paymentPresenter;
+    private int payType=1;
 
     @Override
     protected int getContentView() {
@@ -109,10 +115,12 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
                 AddressActivity.startActivity(OrderAffirmActivity.this,2);
                 break;
             case R.id.iv_zfb:
+                payType = 2;
                 iv_wx.setImageDrawable(getResources().getDrawable(R.drawable.wxz_1));
                 iv_zfb.setImageDrawable(getResources().getDrawable(R.drawable.wxz_));
                 break;
             case R.id.iv_wx:
+                payType= 1;
                 iv_wx.setImageDrawable(getResources().getDrawable(R.drawable.wxz_));
                 iv_zfb.setImageDrawable(getResources().getDrawable(R.drawable.wxz_1));
                 break;
@@ -162,7 +170,7 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
                     public void onNext(Result<CreateOrderBean> result) {
                         if(isDataInfoSucceed(result)){
                             ToastUtils.showShort("创建成功");
-
+                            appPay(result.getData().getId(),result.getData().getDeductIntegral());
                         }
                     }
 
@@ -229,11 +237,12 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
      * wxPayType	支付类型：1,小程序;2,公众号;3,app；4，扫码
      * payType	支付方式:1,支付宝支付;2,微信支付;3,银行卡支付;4,余额支付
      * orderType(订单类型:1,普通订单；2，积分订单；)
+     * @param id
      */
-    private void appPay() {
+    private void appPay(String id,String integral) {
         show();
         RetrofitUtil.getInstance().apiService()
-                .getOrderPayInfo(null, null, null, null, null).observeOn(AndroidSchedulers.mainThread())
+                .getOrderPayInfo(integral, id, payType+"", null, "1").observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<ParamData>>() {
                     @Override
@@ -244,7 +253,11 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
                     @Override
                     public void onNext(Result<ParamData> result) {
                         if(isDataInfoSucceed(result)){
-                            appPayWx(result.getData());
+                            if(payType ==2){
+                                appPayZfb("");
+                            }else {
+                                appPayWx(result.getData());
+                            }
                         }else{
                             ToastUtils.showShort(result.getMesg());
                         }
@@ -283,33 +296,110 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
             ToastUtil.showShortToast(this, "您没有安装微信客户端!");
         }
     }
+    private void appPayZfb(String data) {
+        PaymentParameterBean mPaymentParameterBean1 = new PaymentParameterBean();
+        mPaymentParameterBean1.setOrderInfo(data);
+        paymentPresenter.doAliPay(mPaymentParameterBean1);
+    }
+
+
+    private boolean flag = false;
+    private boolean isResumeFlag = false;
+
+    private Handler mHandler = new Handler();
+
+    private Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            paymentResultCallback(flag);
+            isResumeFlag = false;
+            dismissProgress();
+        }
+    };
+
+    /*支付结果的回调*/
+    private void paymentResultCallback(boolean flag) {
+        ToastUtils.showShort("成功");
+//        ActivityCollector.getAppManager().finishotherActivity(MainActivity.activity, ShoppingPaymentActivity.this);
+        if (flag) {
+//            IntentUtils.getInstence().intent(ShoppingPaymentActivity.this, MyOrderActivity.class, "position", 0);
+        } else {
+//            IntentUtils.getInstence().intent(ShoppingPaymentActivity.this, MyOrderActivity.class, "position", 1);
+
+
+        }
+        finish();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+
+        if (paymentPresenter != null) {
+            paymentPresenter.stop();
+            mHandler.removeCallbacks(mRunnable);
+        }
+
+    }
+    /**
+     * 用于处理微信结果的回调,结果来自{@link }
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+
+        String originClass = event.getOriginClass();
+        if (StringUtil.isBlank(originClass)) {
+            return;
+        }
+        switch (originClass) {
+            case "WXPayEntryActivity":
+                //事件延迟显得更顺滑
+                flag = event.isBooleanFlag();
+                isResumeFlag = true;
+                break;
+            default:
+                break;
+        }
+
+
+    }
+    @Override
+    public void showProgress() {
+        show();
+    }
+
+    @Override
+    public void dismissProgress() {
+        dismiss();
+    }
+
     @Override
     public void onWXPaySuccess() {
+//        ActivityCollector.getAppManager().finishotherActivity(MainActivity.activity, ShoppingPaymentActivity.this);
+//        IntentUtils.getInstence().intent(ShoppingPaymentActivity.this, MyOrderActivity.class, "position", 0);
+        finish();
 
     }
 
     @Override
     public void onAliPaySuccess() {
-
+        paymentResultCallback(true);
     }
 
     @Override
     public void onWxPayFailure() {
-
+        ToastUtils.showShort("支付未成功!");
+//        ActivityCollector.getAppManager().finishotherActivity(MainActivity.activity, ShoppingPaymentActivity.this);
+//        IntentUtils.getInstence().intent(ShoppingPaymentActivity.this, MyOrderActivity.class, "position", 1);
+        finish();
     }
 
     @Override
     public void onAliPayFailure() {
-
+        ToastUtils.showShort("支付未成功!");
+        paymentResultCallback(false);
     }
 
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void dismissProgress() {
-
-    }
 }
