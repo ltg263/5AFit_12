@@ -31,8 +31,11 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
+import com.bumptech.glide.Glide;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.entity.MedalListData;
 
 public class DialogUtils {
 
@@ -185,6 +188,40 @@ public class DialogUtils {
             @Override
             public void onClick(View v) {
                 dialogLyInterface.btnConfirm();
+                dialog.dismiss();
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.setContentView(view);
+        if(!dialog.isShowing()){
+            dialog.show();
+        }
+    }
+
+    /**
+     * 违章墙
+     */
+    public static void showDialogWzq(Activity context, MedalListData.MedalsBean bean, final DialogLyInterface dialogLyInterface) {
+
+        final Dialog dialog = new Dialog(context, R.style.selectorDialog);
+//        final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_wzq, null);
+
+        RelativeLayout rl_parent = view.findViewById(R.id.rl_parent);
+        Bitmap bitmap=screenShotWithoutStatusBar(context);
+//        rl_parent.setBackground(new BitmapDrawable(context.getResources(),blurBitmap(context,bitmap,25)));
+
+        ImageView iv = view.findViewById(R.id.iv);
+        TextView tv1 = view.findViewById(R.id.tv1);
+        TextView tv2 =  view.findViewById(R.id.tv2);
+        ImageView iv_close = view.findViewById(R.id.iv_close);
+        Glide.with(context).load(bean.getImgUrl()).into( iv);
+        tv1.setText(bean.getExplain());
+        tv2.setText(bean.getCreateTime()+"获得");
+        iv_close.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
                 dialog.dismiss();
             }
         });

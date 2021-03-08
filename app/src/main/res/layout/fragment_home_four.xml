@@ -544,7 +544,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:padding="@dimen/dimen_15dp"
-                            android:text="勋章墙"
+                            android:text="徽章墙"
                             android:textColor="@color/color_333333"
                             android:textSize="16sp" />
 

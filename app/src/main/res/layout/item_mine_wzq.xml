@@ -72,8 +72,8 @@
             android:id="@+id/ll_11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dimen_30dp"
             android:src="@drawable/icon_jian"
             android:visibility="invisible" />
 
@@ -110,8 +110,8 @@
             android:id="@+id/ll_22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dimen_30dp"
             android:src="@drawable/icon_jian"
             android:visibility="invisible" />
 
