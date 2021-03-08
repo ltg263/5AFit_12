@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.api;
 
 
+import com.alipay.tscenter.biz.rpc.vkeydfp.result.BaseResult;
 import com.jxkj.fit_5a.base.DeviceCourseData;
 import com.jxkj.fit_5a.base.DeviceCourseTypeData;
 import com.jxkj.fit_5a.base.DeviceData;
@@ -11,6 +12,7 @@ import com.jxkj.fit_5a.base.GiftLogListData;
 import com.jxkj.fit_5a.base.HelpListData;
 import com.jxkj.fit_5a.base.InterestLists;
 import com.jxkj.fit_5a.base.OrderInfoData;
+import com.jxkj.fit_5a.base.ParamData;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.PrizeListData;
 import com.jxkj.fit_5a.base.Result;
@@ -532,7 +534,20 @@ public interface ApiService {
      */
     @POST(ConstValues.PORT_3 +"api/v1/user/order/expediting")
     Observable<Result> postExpediting(@Body PostUser.Expediting expediting);
+    /**
+     * 支付
+     * orderId	订单Id
+     * orderType	支付类型：1,小程序;2,公众号;3,app；4，扫码
+     * payType	支付方式:1,支付宝支付;2,微信支付;3,银行卡支付;4,余额支付
+     * subPayType	订单类型
+     */
 
+    @POST(ConstValues.PORT_3 +"api/v1/user/order/payOrder")
+    Observable<Result<ParamData>> getOrderPayInfo(@Query("integral") String integral,
+                                                      @Query("orderId") String orderId,
+                                                      @Query("payType") String payType,
+                                                      @Query("redId") String redId,
+                                                      @Query("wxPayType") String wxPayType);
     /**
      * 取消订单
      * @return

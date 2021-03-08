@@ -12,16 +12,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.alipay.PaymentContract;
+import com.jxkj.fit_5a.alipay.PaymentParameterBean;
+import com.jxkj.fit_5a.alipay.PaymentPresenter;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.ParamData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.utils.ToastUtil;
 import com.jxkj.fit_5a.entity.AddressData;
 import com.jxkj.fit_5a.entity.CreateOrderBean;
 import com.jxkj.fit_5a.entity.PostOrderInfo;
 import com.jxkj.fit_5a.entity.ShowOrderInfo;
 import com.jxkj.fit_5a.view.adapter.OrderAffirmAdapter;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,7 +39,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class OrderAffirmActivity extends BaseActivity {
+public class OrderAffirmActivity extends BaseActivity  implements PaymentContract.View {
 
     @BindView(R.id.iv_back)
     ImageView mIvBack;
@@ -58,6 +67,7 @@ public class OrderAffirmActivity extends BaseActivity {
     EditText tv_levelMessage;
     private OrderAffirmAdapter mOrderAffirmAdapter;
     private PostOrderInfo info;
+    private PaymentPresenter paymentPresenter;
 
     @Override
     protected int getContentView() {
@@ -71,6 +81,7 @@ public class OrderAffirmActivity extends BaseActivity {
         initRv();
 
         info = (PostOrderInfo) getIntent().getSerializableExtra("info");
+        paymentPresenter = new PaymentPresenter(this, this);
         postShowOrderInfo();
     }
 
@@ -86,6 +97,7 @@ public class OrderAffirmActivity extends BaseActivity {
             tv_youhui.setText("有"+couponCount+"张优惠券");
         }
     }
+
 
     @OnClick({R.id.ll_back, R.id.rl_address,R.id.iv_zfb,R.id.iv_wx,R.id.tv_pay})
     public void onViewClicked(View view) {
@@ -132,7 +144,6 @@ public class OrderAffirmActivity extends BaseActivity {
         }
 
     }
-
     private void postcreateOrder() {
         info.setLevelMessage(tv_levelMessage.getText().toString());
         info.setOrderType("2");
@@ -210,5 +221,95 @@ public class OrderAffirmActivity extends BaseActivity {
 
                     }
                 });
+    }
+
+    /**
+     * 支付
+     * orderId	订单Id
+     * wxPayType	支付类型：1,小程序;2,公众号;3,app；4，扫码
+     * payType	支付方式:1,支付宝支付;2,微信支付;3,银行卡支付;4,余额支付
+     * orderType(订单类型:1,普通订单；2，积分订单；)
+     */
+    private void appPay() {
+        show();
+        RetrofitUtil.getInstance().apiService()
+                .getOrderPayInfo(null, null, null, null, null).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<ParamData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<ParamData> result) {
+                        if(isDataInfoSucceed(result)){
+                            appPayWx(result.getData());
+                        }else{
+                            ToastUtils.showShort(result.getMesg());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dismiss();
+                    }
+                });
+
+
+    }
+
+    private void appPayWx(ParamData mPayModel) {
+        boolean flag = UMShareAPI.get(this).isInstall(this, SHARE_MEDIA.WEIXIN);
+        if (flag) {
+
+            PaymentParameterBean mPaymentParameterBean = new PaymentParameterBean();
+            mPaymentParameterBean.setWxAppid(mPayModel.getAppid());
+            mPaymentParameterBean.setPartnerId(mPayModel.getPartnerid());
+            mPaymentParameterBean.setPrepayId(mPayModel.getPrepayid());
+            mPaymentParameterBean.setNonceStr(mPayModel.getNoncestr());
+            mPaymentParameterBean.setTimeStamp(mPayModel.getTimestamp());
+            mPaymentParameterBean.setPackageValue(mPayModel.getPackageX());
+            mPaymentParameterBean.setSign(mPayModel.getSign());
+            paymentPresenter.doWXPay(mPaymentParameterBean);
+
+        } else {
+            ToastUtil.showShortToast(this, "您没有安装微信客户端!");
+        }
+    }
+    @Override
+    public void onWXPaySuccess() {
+
+    }
+
+    @Override
+    public void onAliPaySuccess() {
+
+    }
+
+    @Override
+    public void onWxPayFailure() {
+
+    }
+
+    @Override
+    public void onAliPayFailure() {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void dismissProgress() {
+
     }
 }
