@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ffffff"
@@ -46,159 +47,175 @@
             android:textSize="@dimen/sp_14" />
     </LinearLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:scrollbars="none">
+        android:layout_below="@id/rl_actionbar"
+        app:srlAccentColor="#00000000"
+        app:srlEnablePreviewInEditMode="true"
+        app:srlPrimaryColor="#00000000">
 
-        <LinearLayout
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlClassicsSpinnerStyle="Scale" />
+
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_15dp">
-
-                <TextView
-                    android:id="@+id/tv1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="加入的圈子"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dimen_2dp"
-                    android:layout_below="@id/tv1"
-                    android:layout_marginTop="-5dp"
-                    android:background="@drawable/line_shape_bj_select" />
-
-                <TextView
-                    android:id="@+id/tv_refresh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:drawableEnd="@drawable/ic_refresh"
-                    android:drawablePadding="@dimen/dimen_5dp"
-                    android:gravity="center_vertical"
-                    android:text="换一批"
-                    android:textColor="@color/color_999999"
-                    android:textSize="12sp" />
-
-
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_top_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
-                android:overScrollMode="never" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_15dp">
-
-                <TextView
-                    android:id="@+id/tv2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="热门话题"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dimen_2dp"
-                    android:layout_below="@id/tv2"
-                    android:layout_marginTop="-5dp"
-                    android:background="@drawable/line_shape_bj_select" />
-
-                <TextView
-                    android:id="@+id/tv_topic_all"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:drawableEnd="@drawable/icon_jiantou_you_99"
-                    android:drawablePadding="@dimen/dimen_5dp"
-                    android:gravity="center_vertical"
-                    android:text="所有话题"
-                    android:textColor="@color/color_999999"
-                    android:textSize="12sp" />
-
-
-            </RelativeLayout>
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:background="@drawable/ic_shade_img"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_rmht_list"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_15dp">
+
+                    <TextView
+                        android:id="@+id/tv1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="加入的圈子"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dimen_2dp"
+                        android:layout_below="@id/tv1"
+                        android:layout_marginTop="-5dp"
+                        android:background="@drawable/line_shape_bj_select" />
+
+                    <TextView
+                        android:id="@+id/tv_refresh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:drawableEnd="@drawable/ic_refresh"
+                        android:drawablePadding="@dimen/dimen_5dp"
+                        android:gravity="center_vertical"
+                        android:text="换一批"
+                        android:textColor="@color/color_999999"
+                        android:textSize="12sp" />
+
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_top_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
                     android:overScrollMode="never" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_15dp">
+
+                    <TextView
+                        android:id="@+id/tv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="热门话题"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dimen_2dp"
+                        android:layout_below="@id/tv2"
+                        android:layout_marginTop="-5dp"
+                        android:background="@drawable/line_shape_bj_select" />
+
+                    <TextView
+                        android:id="@+id/tv_topic_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:drawableEnd="@drawable/icon_jiantou_you_99"
+                        android:drawablePadding="@dimen/dimen_5dp"
+                        android:gravity="center_vertical"
+                        android:text="所有话题"
+                        android:textColor="@color/color_999999"
+                        android:textSize="12sp" />
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_10"
+                    android:background="@drawable/ic_shade_img"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_rmht_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_15dp">
+
+                    <TextView
+                        android:id="@+id/tv3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="社区"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dimen_2dp"
+                        android:layout_below="@id/tv3"
+                        android:layout_marginTop="-5dp"
+                        android:background="@drawable/line_shape_bj_select" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:drawableEnd="@drawable/icon_jiantou_you_99"
+                        android:drawablePadding="@dimen/dimen_5dp"
+                        android:gravity="center_vertical"
+                        android:text="所有话题"
+                        android:textColor="@color/color_999999"
+                        android:textSize="12sp"
+                        android:visibility="invisible" />
+
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_sq_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/line_color"
+                    android:overScrollMode="never"
+                    android:paddingHorizontal="@dimen/dimen_5dp" />
+
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_15dp">
 
-                <TextView
-                    android:id="@+id/tv3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="社区"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dimen_2dp"
-                    android:layout_below="@id/tv3"
-                    android:layout_marginTop="-5dp"
-                    android:background="@drawable/line_shape_bj_select" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:drawableEnd="@drawable/icon_jiantou_you_99"
-                    android:drawablePadding="@dimen/dimen_5dp"
-                    android:gravity="center_vertical"
-                    android:text="所有话题"
-                    android:textColor="@color/color_999999"
-                    android:textSize="12sp"
-                    android:visibility="invisible" />
-
-
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_sq_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/line_color"
-                android:overScrollMode="never"
-                android:paddingHorizontal="@dimen/dimen_5dp" />
-
-
-        </LinearLayout>
-
-
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

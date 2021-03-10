@@ -49,248 +49,310 @@
             android:textSize="@dimen/sp_14" />
     </RelativeLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/rl_actionbar"
-        android:overScrollMode="never"
-        android:scrollbars="none">
+        app:srlAccentColor="#00000000"
+        app:srlEnablePreviewInEditMode="true"
+        app:srlPrimaryColor="#00000000">
 
-        <LinearLayout
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            app:srlClassicsSpinnerStyle="Scale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="189dp"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/ic_home_bj_cen" />
-
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/dimen_60dp"
-                    android:layout_marginBottom="@dimen/dp_10"
-                    android:text="行动比决心更重要"
-                    android:textColor="@color/color_333333"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_title_f"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_title"
-                    android:layout_centerHorizontal="true"
-                    android:text="Action is more important than determination"
-                    android:textColor="@color/color_333333"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="270dp"
-                android:layout_marginHorizontal="@dimen/dimen_15dp"
-                android:layout_marginTop="-50dp"
-                android:background="@drawable/ic_shade_img">
-
-                <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartViewOne
-                    android:id="@+id/AAChartView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/ll_top" />
-
-                <ImageView
-                    android:id="@+id/iv_z"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dimen_100dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="-10dp"
-                    android:layout_marginEnd="-10dp"
-                    android:background="@mipmap/ic_bnt_bj" />
-
-                <ImageView
-                    android:id="@+id/iv_y"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dimen_100dp"
-                    android:layout_marginStart="-10dp"
-                    android:layout_marginTop="-10dp"
-                    android:background="@mipmap/ic_bnt_bj_y"
-                    android:visibility="invisible" />
-
-                <LinearLayout
-                    android:id="@+id/ll_top"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_50dp">
-
-                    <TextView
-                        android:id="@+id/tv_top_jyz"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/dimen_50dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="近一周"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_top_jyy"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/dimen_50dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="近一月"
-                        android:textColor="@color/color_666666"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_top_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never" />
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50dp"
-                android:layout_marginHorizontal="@dimen/dimen_15dp"
-                android:layout_marginVertical="@dimen/dp_10"
-                android:background="@drawable/shape_yy_ff_all_6"
-                android:gravity="center_vertical">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <View
-                    android:layout_width="@dimen/dp_10"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/jb_shape_theme_zx" />
-
-                <TextView
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:text="健身"
-                    android:textColor="@color/color_text_theme"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="公告"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="bold" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="189dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/ic_home_bj_cen" />
 
-                <View
-                    android:layout_width="@dimen/common_margin_3"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/dimen_5dp"
-                    android:background="@color/color_eeeeee" />
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dimen_60dp"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:text="行动比决心更重要"
+                        android:textColor="@color/color_333333"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="“"
-                    android:textColor="@color/color_text_theme"
-                    android:textSize="@dimen/dimen_30dp"
-                    android:textStyle="bold"
-                    android:visibility="invisible" />
+                    <TextView
+                        android:id="@+id/tv_title_f"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_title"
+                        android:layout_centerHorizontal="true"
+                        android:text="Action is more important than determination"
+                        android:textColor="@color/color_333333"
+                        android:textStyle="bold" />
 
-                <com.xiaosu.view.text.VerticalRollingTextView
-                    android:id="@+id/tv_message_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/color_333333"
-                    android:textSize="12sp"
-                    app:animInterval="3000"
-                    app:itemCount="1" />
-
-                <TextView
-                    android:layout_width="@dimen/dimen_20dp"
-                    android:layout_height="wrap_content"
-                    android:text="”"
-                    android:textColor="@color/color_text_theme"
-                    android:textSize="@dimen/dimen_30dp"
-                    android:textStyle="bold"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/icon_jiantou_you_99"
-                    android:gravity="end"
-                    android:paddingStart="@dimen/dimen_5dp"
-                    android:text="更多"
-                    android:textColor="@color/color_999999"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_200dp"
-                android:background="@mipmap/ic_home_bj_cen">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/ic_home_bj_cen_zz" />
+                </RelativeLayout>
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_above="@id/tv_zs"
-                    android:layout_marginHorizontal="@dimen/dimen_20dp"
-                    android:layout_marginTop="@dimen/common_margin_20">
+                    android:layout_height="270dp"
+                    android:layout_marginHorizontal="@dimen/dimen_15dp"
+                    android:layout_marginTop="-50dp"
+                    android:background="@drawable/ic_shade_img">
+
+                    <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartViewOne
+                        android:id="@+id/AAChartView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/ll_top" />
+
+                    <ImageView
+                        android:id="@+id/iv_z"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_100dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="-10dp"
+                        android:layout_marginEnd="-10dp"
+                        android:background="@mipmap/ic_bnt_bj" />
+
+                    <ImageView
+                        android:id="@+id/iv_y"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_100dp"
+                        android:layout_marginStart="-10dp"
+                        android:layout_marginTop="-10dp"
+                        android:background="@mipmap/ic_bnt_bj_y"
+                        android:visibility="invisible" />
 
                     <LinearLayout
+                        android:id="@+id/ll_top"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="@dimen/dimen_50dp">
 
-                        <RelativeLayout
+                        <TextView
+                            android:id="@+id/tv_top_jyz"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="@dimen/dimen_25dp"
+                            android:layout_height="@dimen/dimen_50dp"
                             android:layout_weight="1"
-                            android:background="@drawable/bj_circle_fff_10zsx"
-                            android:gravity="center_horizontal"
-                            android:orientation="horizontal">
+                            android:gravity="center"
+                            android:text="近一周"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_top_jyy"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dimen_50dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="近一月"
+                            android:textColor="@color/color_666666"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_top_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_50dp"
+                    android:layout_marginHorizontal="@dimen/dimen_15dp"
+                    android:layout_marginVertical="@dimen/dp_10"
+                    android:background="@drawable/shape_yy_ff_all_6"
+                    android:gravity="center_vertical">
+
+                    <View
+                        android:layout_width="@dimen/dp_10"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/jb_shape_theme_zx" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:text="健身"
+                        android:textColor="@color/color_text_theme"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="公告"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="@dimen/common_margin_3"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/dimen_5dp"
+                        android:background="@color/color_eeeeee" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="“"
+                        android:textColor="@color/color_text_theme"
+                        android:textSize="@dimen/dimen_30dp"
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
+
+                    <com.xiaosu.view.text.VerticalRollingTextView
+                        android:id="@+id/tv_message_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/color_333333"
+                        android:textSize="12sp"
+                        app:animInterval="3000"
+                        app:itemCount="1" />
+
+                    <TextView
+                        android:layout_width="@dimen/dimen_20dp"
+                        android:layout_height="wrap_content"
+                        android:text="”"
+                        android:textColor="@color/color_text_theme"
+                        android:textSize="@dimen/dimen_30dp"
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/icon_jiantou_you_99"
+                        android:gravity="end"
+                        android:paddingStart="@dimen/dimen_5dp"
+                        android:text="更多"
+                        android:textColor="@color/color_999999"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_200dp"
+                    android:background="@mipmap/ic_home_bj_cen">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/ic_home_bj_cen_zz" />
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_above="@id/tv_zs"
+                        android:layout_marginHorizontal="@dimen/dimen_20dp"
+                        android:layout_marginTop="@dimen/common_margin_20">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="@dimen/dimen_25dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bj_circle_fff_10zsx"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_horizontal"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_phb_2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/common_margin_15"
+                                        android:text="第2-3名"
+                                        android:textColor="#884444"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <ImageView
+                                        android:id="@+id/iv_phb_2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="0dp"
+                                        android:layout_margin="@dimen/dp_10"
+                                        android:layout_weight="1"
+                                        android:src="@mipmap/ic_4" />
+
+                                    <TextView
+                                        android:id="@+id/tv_phb_22"
+                                        android:layout_width="@dimen/dimen_80dp"
+                                        android:layout_height="@dimen/dimen_20dp"
+                                        android:layout_marginBottom="@dimen/dimen_15dp"
+                                        android:background="@drawable/bj_circle_ffe29d_25"
+                                        android:gravity="center"
+                                        android:text="奖品名称"
+                                        android:textColor="#884444"
+                                        android:textSize="10sp" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_alignParentEnd="true"
+                                    android:adjustViewBounds="true"
+                                    android:src="@mipmap/ic_sanjian_z" />
+                            </RelativeLayout>
+
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
+                                android:layout_centerHorizontal="true"
+                                android:layout_weight="1.3"
+                                android:background="@drawable/bj_circle_fff_10_ss"
                                 android:gravity="center_horizontal"
                                 android:orientation="vertical">
 
+
                                 <TextView
-                                    android:id="@+id/tv_phb_2"
+                                    android:id="@+id/tv_phb_1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/common_margin_15"
-                                    android:text="第2-3名"
+                                    android:layout_marginTop="@dimen/dimen_15dp"
+                                    android:text="第1名"
                                     android:textColor="#884444"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/dimen_20dp" />
 
                                 <ImageView
-                                    android:id="@+id/iv_phb_2"
+                                    android:id="@+id/iv_phb_1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="0dp"
                                     android:layout_margin="@dimen/dp_10"
@@ -298,7 +360,7 @@
                                     android:src="@mipmap/ic_4" />
 
                                 <TextView
-                                    android:id="@+id/tv_phb_22"
+                                    android:id="@+id/tv_phb_11"
                                     android:layout_width="@dimen/dimen_80dp"
                                     android:layout_height="@dimen/dimen_20dp"
                                     android:layout_marginBottom="@dimen/dimen_15dp"
@@ -307,136 +369,133 @@
                                     android:text="奖品名称"
                                     android:textColor="#884444"
                                     android:textSize="10sp" />
-
                             </LinearLayout>
 
-                            <ImageView
-                                android:layout_width="wrap_content"
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_alignParentEnd="true"
-                                android:adjustViewBounds="true"
-                                android:src="@mipmap/ic_sanjian_z" />
-                        </RelativeLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_centerHorizontal="true"
-                            android:layout_weight="1.3"
-                            android:background="@drawable/bj_circle_fff_10_ss"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical">
-
-
-                            <TextView
-                                android:id="@+id/tv_phb_1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_15dp"
-                                android:text="第1名"
-                                android:textColor="#884444"
-                                android:textSize="@dimen/dimen_20dp" />
-
-                            <ImageView
-                                android:id="@+id/iv_phb_1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_margin="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dimen_25dp"
                                 android:layout_weight="1"
-                                android:src="@mipmap/ic_4" />
+                                android:background="@drawable/bj_circle_fff_10ysx"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/tv_phb_11"
-                                android:layout_width="@dimen/dimen_80dp"
-                                android:layout_height="@dimen/dimen_20dp"
-                                android:layout_marginBottom="@dimen/dimen_15dp"
-                                android:background="@drawable/bj_circle_ffe29d_25"
-                                android:gravity="center"
-                                android:text="奖品名称"
-                                android:textColor="#884444"
-                                android:textSize="10sp" />
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_horizontal"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_phb_3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/common_margin_15"
+                                        android:text="第4-10名"
+                                        android:textColor="#884444"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <ImageView
+                                        android:id="@+id/iv_phb_3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="0dp"
+                                        android:layout_margin="@dimen/dp_10"
+                                        android:layout_weight="1"
+                                        android:src="@mipmap/ic_4" />
+
+                                    <TextView
+                                        android:id="@+id/tv_phb_33"
+                                        android:layout_width="@dimen/dimen_80dp"
+                                        android:layout_height="@dimen/dimen_20dp"
+                                        android:layout_marginBottom="@dimen/dimen_15dp"
+                                        android:background="@drawable/bj_circle_ffe29d_25"
+                                        android:gravity="center"
+                                        android:text="奖品名称"
+                                        android:textColor="#884444"
+                                        android:textSize="10sp" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:adjustViewBounds="true"
+                                    android:src="@mipmap/ic_sanjiao_y" />
+                            </RelativeLayout>
                         </LinearLayout>
 
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="@dimen/dimen_25dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/bj_circle_fff_10ysx"
-                            android:gravity="center_horizontal"
-                            android:orientation="horizontal">
+                    </RelativeLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center_horizontal"
-                                android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_zs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="@dimen/dp_10"
+                        android:text="注：此榜为周榜奖品"
+                        android:textColor="@color/color_ffffff"
+                        android:textSize="12sp" />
 
-                                <TextView
-                                    android:id="@+id/tv_phb_3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/common_margin_15"
-                                    android:text="第4-10名"
-                                    android:textColor="#884444"
-                                    android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
 
-                                <ImageView
-                                    android:id="@+id/iv_phb_3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="0dp"
-                                    android:layout_margin="@dimen/dp_10"
-                                    android:layout_weight="1"
-                                    android:src="@mipmap/ic_4" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_15dp">
 
-                                <TextView
-                                    android:id="@+id/tv_phb_33"
-                                    android:layout_width="@dimen/dimen_80dp"
-                                    android:layout_height="@dimen/dimen_20dp"
-                                    android:layout_marginBottom="@dimen/dimen_15dp"
-                                    android:background="@drawable/bj_circle_ffe29d_25"
-                                    android:gravity="center"
-                                    android:text="奖品名称"
-                                    android:textColor="#884444"
-                                    android:textSize="10sp" />
+                    <TextView
+                        android:id="@+id/tv1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="热门商品兑换"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                            </LinearLayout>
+                    <View
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dimen_2dp"
+                        android:layout_below="@id/tv1"
+                        android:layout_marginTop="-5dp"
+                        android:background="@drawable/line_shape_bj_select" />
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:adjustViewBounds="true"
-                                android:src="@mipmap/ic_sanjiao_y" />
-                        </RelativeLayout>
-                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:drawableEnd="@drawable/icon_jiantou_you_99"
+                        android:paddingStart="@dimen/dimen_5dp"
+                        android:text="更多"
+                        android:textColor="@color/color_999999"
+                        android:textSize="14sp"
+                        android:visibility="invisible" />
 
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_zs"
-                    android:layout_width="wrap_content"
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_rmsp_list"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="@dimen/dp_10"
-                    android:text="注：此榜为周榜奖品"
-                    android:textColor="@color/color_ffffff"
-                    android:textSize="12sp" />
+                    android:overScrollMode="never" />
 
-            </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="@dimen/dimen_15dp"
+                    android:background="@color/line_color" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_15dp">
 
                 <TextView
-                    android:id="@+id/tv1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="热门商品兑换"
+                    android:layout_marginStart="@dimen/dimen_15dp"
+                    android:layout_marginTop="@dimen/dimen_20dp"
+                    android:text="热门动态"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -444,67 +503,22 @@
                 <View
                     android:layout_width="@dimen/dp_40"
                     android:layout_height="@dimen/dimen_2dp"
-                    android:layout_below="@id/tv1"
+                    android:layout_marginStart="@dimen/dimen_15dp"
                     android:layout_marginTop="-5dp"
                     android:background="@drawable/line_shape_bj_select" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_dtrm_list"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:visibility="invisible"
-                    android:drawableEnd="@drawable/icon_jiantou_you_99"
-                    android:paddingStart="@dimen/dimen_5dp"
-                    android:text="更多"
-                    android:textColor="@color/color_999999"
-                    android:textSize="14sp" />
+                    android:layout_marginTop="@dimen/dimen_20dp"
+                    android:overScrollMode="never" />
+            </LinearLayout>
 
 
-            </RelativeLayout>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_rmsp_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="@dimen/dimen_15dp"
-                android:background="@color/line_color" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_15dp"
-                android:layout_marginTop="@dimen/dimen_20dp"
-                android:text="热门动态"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="@dimen/dimen_2dp"
-                android:layout_marginStart="@dimen/dimen_15dp"
-                android:layout_marginTop="-5dp"
-                android:background="@drawable/line_shape_bj_select" />
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_dtrm_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20dp"
-                android:overScrollMode="never" />
-        </LinearLayout>
-
-
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/on_rv_qd"

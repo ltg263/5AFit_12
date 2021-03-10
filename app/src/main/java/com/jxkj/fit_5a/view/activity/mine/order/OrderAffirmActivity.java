@@ -92,7 +92,7 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
     }
 
     private void initRv() {
-        mOrderAffirmAdapter = new OrderAffirmAdapter( null);//item.getProducts()
+        mOrderAffirmAdapter = new OrderAffirmAdapter( null);
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mOrderAffirmAdapter);

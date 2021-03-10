@@ -763,7 +763,7 @@ public interface ApiService {
      * 获取热门(推荐)动态信息
      */
     @GET(ConstValues.PORT_21 + "api/v1/moment/query_popular")
-    Observable<ResultList<QueryPopularBean>> getMomentQueryPopular();//首页1
+    Observable<ResultList<QueryPopularBean>> getMomentQueryPopular(@Query("page")int page,@Query("pageSize")int pageSize);//首页1
 
 
     /**

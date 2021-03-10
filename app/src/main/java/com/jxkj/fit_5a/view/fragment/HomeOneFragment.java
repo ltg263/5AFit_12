@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +27,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
@@ -43,6 +45,11 @@ import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeTopAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xiaosu.view.text.DataSetAdapter;
 import com.xiaosu.view.text.VerticalRollingTextView;
 
@@ -62,6 +69,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class HomeOneFragment extends BaseFragment {
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     @BindView(R.id.AAChartView)
     AAChartViewOne mAAChartView;
     @BindView(R.id.tv_left_text)
@@ -117,6 +126,7 @@ public class HomeOneFragment extends BaseFragment {
     private boolean isDay7 = true;
     String[] str7, str30;
 
+    private int page = 1;
     @Override
     protected int getContentView() {
         return R.layout.fragment_home_one;
@@ -132,6 +142,23 @@ public class HomeOneFragment extends BaseFragment {
         getMomentQueryPopular();
         getSportLogStats(null);
         getRankList();
+
+        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                getMomentQueryPopular();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page = 1;
+                getProductList(1);
+                getAdList();
+                getMomentQueryPopular();
+                getSportLogStats(null);
+            }
+        });
     }
 
     private void initRvUi() {
@@ -604,7 +631,7 @@ public class HomeOneFragment extends BaseFragment {
 
     private void getMomentQueryPopular() {
         RetrofitUtil.getInstance().apiService()
-                .getMomentQueryPopular()
+                .getMomentQueryPopular(page, ConstValues.PAGE_SIZE)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultList<QueryPopularBean>>() {
@@ -617,6 +644,8 @@ public class HomeOneFragment extends BaseFragment {
                     public void onNext(ResultList<QueryPopularBean> result) {
                         if (result.getCode() == 0) {
                             mHomeDynamicAdapter.setNewData(result.getData());
+                            refreshLayout.finishLoadMoreWithNoMoreData();
+//                            totalPage = StringUtil.getTotalPage(result.getData().getTotalCount(), ConstValues.PAGE_SIZE);
                         }
                     }
 
@@ -626,6 +655,8 @@ public class HomeOneFragment extends BaseFragment {
 
                     @Override
                     public void onComplete() {
+                        refreshLayout.finishRefresh();
+                        refreshLayout.finishLoadMore();
                     }
                 });
     }

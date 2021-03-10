@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.FavoriteQueryList;
 
@@ -62,24 +63,39 @@ public class UserScAdapter extends BaseQuickAdapter<FavoriteQueryList, BaseViewH
         GlideImageUtils.setGlideImage(mContext,item.getMoment().getUser().getAvatar(),helper.getView(R.id.iv_head_img));
 
         if(StringUtil.isNotBlank(item.getMoment().getMedia())){
-            String[] strArr = item.getMoment().getMedia().split(",");
             helper.setGone(R.id.rv_img_list,true);
 
-            if(strArr.length==1){
-                helper.setGone(R.id.siv_1,false).setGone(R.id.siv_2,false)
-                        .setGone(R.id.siv_3,false).setGone(R.id.siv_4,true);
-                GlideImageUtils.setGlideImage(mContext,strArr[0],helper.getView(R.id.siv_4));
-            }else if(strArr.length==2){
-                helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
-                        .setVisible(R.id.siv_3,false).setGone(R.id.siv_4,false);
-                GlideImageUtils.setGlideImage(mContext,strArr[0],helper.getView(R.id.siv_1));
-                GlideImageUtils.setGlideImage(mContext,strArr[1],helper.getView(R.id.siv_2));
-            }else if(strArr.length>2){
-                helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
-                        .setVisible(R.id.siv_3,true).setGone(R.id.siv_4,false);
-                GlideImageUtils.setGlideImage(mContext,strArr[0],helper.getView(R.id.siv_1));
-                GlideImageUtils.setGlideImage(mContext,strArr[1],helper.getView(R.id.siv_2));
-                GlideImageUtils.setGlideImage(mContext,strArr[2],helper.getView(R.id.siv_3));
+            try {
+                JSONArray jsonArray = new JSONArray(item.getMoment().getMedia());
+
+                if(jsonArray.length()==1){
+                    String imageUrl = jsonArray.getJSONObject(0).getString("imageUrl");
+                    helper.setGone(R.id.siv_1,false).setGone(R.id.siv_2,false)
+                            .setGone(R.id.siv_3,false).setGone(R.id.siv_4,true).setGone(R.id.rv_img_1,true);
+                    GlideImgLoader.loadImageViewRadius(mContext,imageUrl,10,helper.getView(R.id.siv_4));
+                    if(item.getMoment().getContentType()==3){
+                        helper.setGone(R.id.iv_baofang,true);
+                    }
+                }else if(jsonArray.length()==2){
+                    String imageUrl1 = jsonArray.getJSONObject(0).getString("imageUrl");
+                    String imageUrl2 = jsonArray.getJSONObject(1).getString("imageUrl");
+                    helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
+                            .setVisible(R.id.siv_3,false).setGone(R.id.siv_4,false).setGone(R.id.rv_img_1,false);
+                    GlideImgLoader.loadImageViewRadius(mContext,imageUrl1,10,helper.getView(R.id.siv_1));
+                    GlideImgLoader.loadImageViewRadius(mContext,imageUrl2,10,helper.getView(R.id.siv_2));
+                }else if(jsonArray.length()>2){
+                    String imageUrl1 = jsonArray.getJSONObject(0).getString("imageUrl");
+                    String imageUrl2 = jsonArray.getJSONObject(1).getString("imageUrl");
+                    String imageUrl3 = jsonArray.getJSONObject(2).getString("imageUrl");
+                    helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
+                            .setVisible(R.id.siv_3,true).setGone(R.id.siv_4,false).setGone(R.id.rv_img_1,false);
+                    GlideImgLoader.loadImageViewRadius(mContext,imageUrl1,10,helper.getView(R.id.siv_1));
+                    GlideImgLoader.loadImageViewRadius(mContext,imageUrl2,10,helper.getView(R.id.siv_2));
+                    GlideImgLoader.loadImageViewRadius(mContext,imageUrl3,10,helper.getView(R.id.siv_3));
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
         }

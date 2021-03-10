@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,14 +18,12 @@ import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
-import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTy;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.CommunityHomeInfoBean;
 import com.jxkj.fit_5a.entity.HotTopicBean;
-import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.association.AssociationAddActivity;
 import com.jxkj.fit_5a.view.activity.association.InterestAllActivity;
@@ -32,14 +31,13 @@ import com.jxkj.fit_5a.view.activity.association.MineCircleActivity;
 import com.jxkj.fit_5a.view.activity.association.MineTopicActivity;
 import com.jxkj.fit_5a.view.activity.association.TopicAllActivity;
 import com.jxkj.fit_5a.view.activity.association.VideoActivity;
-import com.jxkj.fit_5a.view.activity.mine.MineHomeActivity;
 import com.jxkj.fit_5a.view.adapter.HomeThreeRmhtAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeTopAdapter;
 import com.jxkj.fit_5a.view.search.SearchGoodsActivity;
-
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +52,8 @@ import io.reactivex.schedulers.Schedulers;
 public class HomeThreeFragment extends BaseFragment {
 
 
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     @BindView(R.id.rv_top_list)
     RecyclerView mRvTopList;
     @BindView(R.id.rv_rmht_list)
@@ -63,7 +63,7 @@ public class HomeThreeFragment extends BaseFragment {
     private HomeThreeTopAdapter mHomeThreeTopAdapter;
     private HomeThreeRmhtAdapter mHomeThreeRmhtAdapter;
     private HomeThreeSqAdapter mHomeThreeSqAdapter;
-    int page,pageSize;
+    int page = 1;
     @Override
     protected int getContentView() {
         return R.layout.fragment_home_three;
@@ -72,11 +72,24 @@ public class HomeThreeFragment extends BaseFragment {
     @Override
     protected void initViews() {
         initRvUi();
-        page = 1;
-        pageSize = 3;
 //        getCircleQueryJoined();
 //        getHotTopicList();
         getMomentQueryPopular();
+
+
+        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                getMomentQueryPopular();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page = 1;
+                getMomentQueryPopular();
+            }
+        });
     }
 
     private void initRvUi() {
@@ -194,7 +207,7 @@ public class HomeThreeFragment extends BaseFragment {
     private int totalPage;
     private void getCircleQueryJoined(){
         RetrofitUtil.getInstance().apiService()
-                .getCircleQueryJoined(SharedUtils.getUserId()+"",page,pageSize)
+                .getCircleQueryJoined(SharedUtils.getUserId()+"",1,3)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<CircleQueryJoinedBean>>() {
@@ -209,7 +222,7 @@ public class HomeThreeFragment extends BaseFragment {
                             List<CircleQueryJoinedBean.ListBean> data = result.getData().getList();
                             data.add(null);
                             mHomeThreeTopAdapter.setNewData(data);
-                            totalPage = StringUtil.getTotalPage(result.getData().getTotal(), pageSize);
+                            totalPage = StringUtil.getTotalPage(result.getData().getTotal(), 3);
                             page++;
                             if(totalPage <= page){
                                 page = 1;
@@ -246,6 +259,7 @@ public class HomeThreeFragment extends BaseFragment {
                             mHomeThreeTopAdapter.setNewData(data);
                             mHomeThreeRmhtAdapter.setNewData(result.getData().getHotTopics());
                             mHomeThreeSqAdapter.setNewData(result.getData().getHotMoments());
+                            refreshLayout.finishLoadMoreWithNoMoreData();
                         }
                     }
 
@@ -255,6 +269,8 @@ public class HomeThreeFragment extends BaseFragment {
 
                     @Override
                     public void onComplete() {
+                        refreshLayout.finishRefresh();
+                        refreshLayout.finishLoadMore();
                     }
                 });
     }
