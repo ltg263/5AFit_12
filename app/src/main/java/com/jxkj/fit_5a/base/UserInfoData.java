@@ -9,40 +9,40 @@ public class UserInfoData {
      * doubleegral : 0
      */
 
-    private double balance;
-    private double couponCount;
-    private double giftCount;
-    private double doubleegral;
+    private String balance;
+    private String couponCount;
+    private String giftCount;
+    private String integral;
 
-    public double getBalance() {
+    public String getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(String balance) {
         this.balance = balance;
     }
 
-    public double getCouponCount() {
+    public String getCouponCount() {
         return couponCount;
     }
 
-    public void setCouponCount(double couponCount) {
+    public void setCouponCount(String couponCount) {
         this.couponCount = couponCount;
     }
 
-    public double getGiftCount() {
+    public String getGiftCount() {
         return giftCount;
     }
 
-    public void setGiftCount(double giftCount) {
+    public void setGiftCount(String giftCount) {
         this.giftCount = giftCount;
     }
 
-    public double getIntegral() {
-        return doubleegral;
+    public String getIntegral() {
+        return integral;
     }
 
-    public void setIntegral(double doubleegral) {
-        this.doubleegral = doubleegral;
+    public void setIntegral(String integral) {
+        this.integral = integral;
     }
 }

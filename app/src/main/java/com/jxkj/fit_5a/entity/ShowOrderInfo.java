@@ -5,51 +5,101 @@ import java.util.List;
 public class ShowOrderInfo {
 
     /**
-     * userId : 80
-     * orderType : 2
-     * totalQuantity : 1
+     * balance : 0
+     * discount : 0
+     * discountAmount : 0
+     * groupId : 0
+     * integralFlag : 0
+     * integralRate : 0
+     * orderFlag : 0
+     * orderProducts : [{"count":0,"createTime":"","deductIntegral":0,"disPrice":0,"hasSku":0,"id":0,"imgUrl":"","name":"","num":0,"orderId":0,"price":0,"productId":0,"realNum":0,"skuId":0,"skuName":"","stock":0,"sumAmount":0,"sumIntegral":0,"type":0}]
+     * orderType : 0
+     * realAmount : 0
+     * redList : [{"couponName":"","createTime":"","details":"","expireDate":"","id":0,"imgUrl":"","limitAmount":0,"productBase":{"deductIntegral":0,"disPrice":0,"id":0,"imgUrl":"","name":"","price":0,"subTitle":""},"productId":0,"reliefAmount":0,"remark":"","source":0,"type":0,"userId":0}]
+     * remark :
      * totalAmount : 0
      * totalDelivery : 0
-     * totalIntegral : 120
+     * totalIntegral : 0
+     * totalQuantity : 0
      * useableIntegral : 0
-     * StringegralFlag : 0
-     * StringegralRate : 0
-     * realAmount : 0
-     * discountAmount : 0
-     * discount : 0
-     * remark :
-     * groupId : 0
-     * orderFlag : 0
-     * balance : 0
-     * userAddress : {"id":7,"userId":80,"provinceId":440000,"cityId":440100,"districtId":440103,"regions":"广东省,广州市,荔湾区","location":"广东省,广州市,荔湾区 -110112113114115","acceptName":"测试","mobile":"13111111111","isDefult":1,"hasDel":0,"createTime":"2020-12-31 16:42:04"}
-     * orderProducts : [{"id":0,"orderId":0,"type":0,"hasSku":0,"productId":3,"skuId":8,"imgUrl":"https://haide.nbqichen.com/haide/upload/887C27F0CA135ADCF20EF8686D1162D4.png","name":"海德肌肉贴KT06","num":1,"price":0,"disPrice":300,"deductIntegral":120,"realNum":0,"createTime":"","skuName":"颜色:黑色;容量:20ml","sumAmount":0,"stock":11,"sumIntegral":120,"count":0}]
+     * userAddress : {"acceptName":"","cityId":0,"createTime":"","districtId":0,"hasDel":0,"id":0,"isDefult":0,"location":"","mobile":"","provinceId":0,"regions":"","userId":0}
+     * userId : 0
      */
 
-    private String userId;
+    private String balance;
+    private String discount;
+    private String discountAmount;
+    private String groupId;
+    private String integralFlag;
+    private String integralRate;
+    private String orderFlag;
     private String orderType;
-    private String totalQuantity;
+    private String realAmount;
+    private String remark;
     private String totalAmount;
     private String totalDelivery;
     private String totalIntegral;
+    private String totalQuantity;
     private String useableIntegral;
-    private String StringegralFlag;
-    private String StringegralRate;
-    private String realAmount;
-    private String discountAmount;
-    private String discount;
-    private String remark;
-    private String groupId;
-    private String orderFlag;
-    private String balance;
     private UserAddressBean userAddress;
+    private String userId;
     private List<OrderProductsBean> orderProducts;
+    private List<RedListBean> redList;
 
-    public String getUserId() {
-        return userId;
+    public String getBalance() {
+        return balance;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public String getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(String discountAmount) {
+        this.discountAmount = discountAmount;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getIntegralFlag() {
+        return integralFlag;
+    }
+
+    public void setIntegralFlag(String integralFlag) {
+        this.integralFlag = integralFlag;
+    }
+
+    public String getIntegralRate() {
+        return integralRate;
+    }
+
+    public void setIntegralRate(String integralRate) {
+        this.integralRate = integralRate;
+    }
+
+    public String getOrderFlag() {
+        return orderFlag;
+    }
+
+    public void setOrderFlag(String orderFlag) {
+        this.orderFlag = orderFlag;
     }
 
     public String getOrderType() {
@@ -60,12 +110,20 @@ public class ShowOrderInfo {
         this.orderType = orderType;
     }
 
-    public String getTotalQuantity() {
-        return totalQuantity;
+    public String getRealAmount() {
+        return realAmount;
     }
 
-    public void setTotalQuantity(String totalQuantity) {
-        this.totalQuantity = totalQuantity;
+    public void setRealAmount(String realAmount) {
+        this.realAmount = realAmount;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getTotalAmount() {
@@ -92,84 +150,20 @@ public class ShowOrderInfo {
         this.totalIntegral = totalIntegral;
     }
 
+    public String getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public void setTotalQuantity(String totalQuantity) {
+        this.totalQuantity = totalQuantity;
+    }
+
     public String getUseableIntegral() {
         return useableIntegral;
     }
 
     public void setUseableIntegral(String useableIntegral) {
         this.useableIntegral = useableIntegral;
-    }
-
-    public String getIntegralFlag() {
-        return StringegralFlag;
-    }
-
-    public void setIntegralFlag(String StringegralFlag) {
-        this.StringegralFlag = StringegralFlag;
-    }
-
-    public String getIntegralRate() {
-        return StringegralRate;
-    }
-
-    public void setIntegralRate(String StringegralRate) {
-        this.StringegralRate = StringegralRate;
-    }
-
-    public String getRealAmount() {
-        return realAmount;
-    }
-
-    public void setRealAmount(String realAmount) {
-        this.realAmount = realAmount;
-    }
-
-    public String getDiscountAmount() {
-        return discountAmount;
-    }
-
-    public void setDiscountAmount(String discountAmount) {
-        this.discountAmount = discountAmount;
-    }
-
-    public String getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(String discount) {
-        this.discount = discount;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
-
-    public String getOrderFlag() {
-        return orderFlag;
-    }
-
-    public void setOrderFlag(String orderFlag) {
-        this.orderFlag = orderFlag;
-    }
-
-    public String getBalance() {
-        return balance;
-    }
-
-    public void setBalance(String balance) {
-        this.balance = balance;
     }
 
     public UserAddressBean getUserAddress() {
@@ -180,6 +174,14 @@ public class ShowOrderInfo {
         this.userAddress = userAddress;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public List<OrderProductsBean> getOrderProducts() {
         return orderProducts;
     }
@@ -188,57 +190,49 @@ public class ShowOrderInfo {
         this.orderProducts = orderProducts;
     }
 
+    public List<RedListBean> getRedList() {
+        return redList;
+    }
+
+    public void setRedList(List<RedListBean> redList) {
+        this.redList = redList;
+    }
+
     public static class UserAddressBean {
         /**
-         * id : 7
-         * userId : 80
-         * provinceId : 440000
-         * cityId : 440100
-         * districtId : 440103
-         * regions : 广东省,广州市,荔湾区
-         * location : 广东省,广州市,荔湾区 -110112113114115
-         * acceptName : 测试
-         * mobile : 13111111111
-         * isDefult : 1
+         * acceptName :
+         * cityId : 0
+         * createTime :
+         * districtId : 0
          * hasDel : 0
-         * createTime : 2020-12-31 16:42:04
+         * id : 0
+         * isDefult : 0
+         * location :
+         * mobile :
+         * provinceId : 0
+         * regions :
+         * userId : 0
          */
 
-        private String id;
-        private String userId;
-        private String provinceId;
-        private String cityId;
-        private String districtId;
-        private String regions;
-        private String location;
         private String acceptName;
-        private String mobile;
-        private String isDefult;
-        private String hasDel;
+        private String cityId;
         private String createTime;
+        private String districtId;
+        private String hasDel;
+        private String id;
+        private String isDefult;
+        private String location;
+        private String mobile;
+        private String provinceId;
+        private String regions;
+        private String userId;
 
-        public String getId() {
-            return id;
+        public String getAcceptName() {
+            return acceptName;
         }
 
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getUserId() {
-            return userId;
-        }
-
-        public void setUserId(String userId) {
-            this.userId = userId;
-        }
-
-        public String getProvinceId() {
-            return provinceId;
-        }
-
-        public void setProvinceId(String provinceId) {
-            this.provinceId = provinceId;
+        public void setAcceptName(String acceptName) {
+            this.acceptName = acceptName;
         }
 
         public String getCityId() {
@@ -249,52 +243,20 @@ public class ShowOrderInfo {
             this.cityId = cityId;
         }
 
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
         public String getDistrictId() {
             return districtId;
         }
 
         public void setDistrictId(String districtId) {
             this.districtId = districtId;
-        }
-
-        public String getRegions() {
-            return regions;
-        }
-
-        public void setRegions(String regions) {
-            this.regions = regions;
-        }
-
-        public String getLocation() {
-            return location;
-        }
-
-        public void setLocation(String location) {
-            this.location = location;
-        }
-
-        public String getAcceptName() {
-            return acceptName;
-        }
-
-        public void setAcceptName(String acceptName) {
-            this.acceptName = acceptName;
-        }
-
-        public String getMobile() {
-            return mobile;
-        }
-
-        public void setMobile(String mobile) {
-            this.mobile = mobile;
-        }
-
-        public String getIsDefult() {
-            return isDefult;
-        }
-
-        public void setIsDefult(String isDefult) {
-            this.isDefult = isDefult;
         }
 
         public String getHasDel() {
@@ -305,58 +267,6 @@ public class ShowOrderInfo {
             this.hasDel = hasDel;
         }
 
-        public String getCreateTime() {
-            return createTime;
-        }
-
-        public void setCreateTime(String createTime) {
-            this.createTime = createTime;
-        }
-    }
-
-    public static class OrderProductsBean {
-        /**
-         * id : 0
-         * orderId : 0
-         * type : 0
-         * hasSku : 0
-         * productId : 3
-         * skuId : 8
-         * imgUrl : https://haide.nbqichen.com/haide/upload/887C27F0CA135ADCF20EF8686D1162D4.png
-         * name : 海德肌肉贴KT06
-         * num : 1
-         * price : 0
-         * disPrice : 300
-         * deductIntegral : 120
-         * realNum : 0
-         * createTime :
-         * skuName : 颜色:黑色;容量:20ml
-         * sumAmount : 0
-         * stock : 11
-         * sumIntegral : 120
-         * count : 0
-         */
-
-        private String id;
-        private String orderId;
-        private String type;
-        private String hasSku;
-        private String productId;
-        private String skuId;
-        private String imgUrl;
-        private String name;
-        private String num;
-        private String price;
-        private String disPrice;
-        private String deductIntegral;
-        private String realNum;
-        private String createTime;
-        private String skuName;
-        private String sumAmount;
-        private String stock;
-        private String sumIntegral;
-        private String count;
-
         public String getId() {
             return id;
         }
@@ -365,20 +275,128 @@ public class ShowOrderInfo {
             this.id = id;
         }
 
-        public String getOrderId() {
-            return orderId;
+        public String getIsDefult() {
+            return isDefult;
         }
 
-        public void setOrderId(String orderId) {
-            this.orderId = orderId;
+        public void setIsDefult(String isDefult) {
+            this.isDefult = isDefult;
         }
 
-        public String getType() {
-            return type;
+        public String getLocation() {
+            return location;
         }
 
-        public void setType(String type) {
-            this.type = type;
+        public void setLocation(String location) {
+            this.location = location;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
+
+        public String getProvinceId() {
+            return provinceId;
+        }
+
+        public void setProvinceId(String provinceId) {
+            this.provinceId = provinceId;
+        }
+
+        public String getRegions() {
+            return regions;
+        }
+
+        public void setRegions(String regions) {
+            this.regions = regions;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
+        }
+    }
+
+    public static class OrderProductsBean {
+        /**
+         * count : 0
+         * createTime :
+         * deductIntegral : 0
+         * disPrice : 0
+         * hasSku : 0
+         * id : 0
+         * imgUrl :
+         * name :
+         * num : 0
+         * orderId : 0
+         * price : 0
+         * productId : 0
+         * realNum : 0
+         * skuId : 0
+         * skuName :
+         * stock : 0
+         * sumAmount : 0
+         * sumIntegral : 0
+         * type : 0
+         */
+
+        private String count;
+        private String createTime;
+        private String deductIntegral;
+        private String disPrice;
+        private String hasSku;
+        private String id;
+        private String imgUrl;
+        private String name;
+        private String num;
+        private String orderId;
+        private String price;
+        private String productId;
+        private String realNum;
+        private String skuId;
+        private String skuName;
+        private String stock;
+        private String sumAmount;
+        private String sumIntegral;
+        private String type;
+
+        public String getCount() {
+            return count;
+        }
+
+        public void setCount(String count) {
+            this.count = count;
+        }
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public String getDeductIntegral() {
+            return deductIntegral;
+        }
+
+        public void setDeductIntegral(String deductIntegral) {
+            this.deductIntegral = deductIntegral;
+        }
+
+        public String getDisPrice() {
+            return disPrice;
+        }
+
+        public void setDisPrice(String disPrice) {
+            this.disPrice = disPrice;
         }
 
         public String getHasSku() {
@@ -389,20 +407,12 @@ public class ShowOrderInfo {
             this.hasSku = hasSku;
         }
 
-        public String getProductId() {
-            return productId;
+        public String getId() {
+            return id;
         }
 
-        public void setProductId(String productId) {
-            this.productId = productId;
-        }
-
-        public String getSkuId() {
-            return skuId;
-        }
-
-        public void setSkuId(String skuId) {
-            this.skuId = skuId;
+        public void setId(String id) {
+            this.id = id;
         }
 
         public String getImgUrl() {
@@ -429,6 +439,14 @@ public class ShowOrderInfo {
             this.num = num;
         }
 
+        public String getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
+        }
+
         public String getPrice() {
             return price;
         }
@@ -437,20 +455,12 @@ public class ShowOrderInfo {
             this.price = price;
         }
 
-        public String getDisPrice() {
-            return disPrice;
+        public String getProductId() {
+            return productId;
         }
 
-        public void setDisPrice(String disPrice) {
-            this.disPrice = disPrice;
-        }
-
-        public String getDeductIntegral() {
-            return deductIntegral;
-        }
-
-        public void setDeductIntegral(String deductIntegral) {
-            this.deductIntegral = deductIntegral;
+        public void setProductId(String productId) {
+            this.productId = productId;
         }
 
         public String getRealNum() {
@@ -461,12 +471,12 @@ public class ShowOrderInfo {
             this.realNum = realNum;
         }
 
-        public String getCreateTime() {
-            return createTime;
+        public String getSkuId() {
+            return skuId;
         }
 
-        public void setCreateTime(String createTime) {
-            this.createTime = createTime;
+        public void setSkuId(String skuId) {
+            this.skuId = skuId;
         }
 
         public String getSkuName() {
@@ -477,20 +487,20 @@ public class ShowOrderInfo {
             this.skuName = skuName;
         }
 
-        public String getSumAmount() {
-            return sumAmount;
-        }
-
-        public void setSumAmount(String sumAmount) {
-            this.sumAmount = sumAmount;
-        }
-
         public String getStock() {
             return stock;
         }
 
         public void setStock(String stock) {
             this.stock = stock;
+        }
+
+        public String getSumAmount() {
+            return sumAmount;
+        }
+
+        public void setSumAmount(String sumAmount) {
+            this.sumAmount = sumAmount;
         }
 
         public String getSumIntegral() {
@@ -501,12 +511,234 @@ public class ShowOrderInfo {
             this.sumIntegral = sumIntegral;
         }
 
-        public String getCount() {
-            return count;
+        public String getType() {
+            return type;
         }
 
-        public void setCount(String count) {
-            this.count = count;
+        public void setType(String type) {
+            this.type = type;
+        }
+    }
+
+    public static class RedListBean {
+        /**
+         * couponName :
+         * createTime :
+         * details :
+         * expireDate :
+         * id : 0
+         * imgUrl :
+         * limitAmount : 0
+         * productBase : {"deductIntegral":0,"disPrice":0,"id":0,"imgUrl":"","name":"","price":0,"subTitle":""}
+         * productId : 0
+         * reliefAmount : 0
+         * remark :
+         * source : 0
+         * type : 0
+         * userId : 0
+         */
+
+        private String couponName;
+        private String createTime;
+        private String details;
+        private String expireDate;
+        private String id;
+        private String imgUrl;
+        private String limitAmount;
+        private ProductBaseBean productBase;
+        private String productId;
+        private String reliefAmount;
+        private String remark;
+        private String source;
+        private String type;
+        private String userId;
+
+        public String getCouponName() {
+            return couponName;
+        }
+
+        public void setCouponName(String couponName) {
+            this.couponName = couponName;
+        }
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public String getDetails() {
+            return details;
+        }
+
+        public void setDetails(String details) {
+            this.details = details;
+        }
+
+        public String getExpireDate() {
+            return expireDate;
+        }
+
+        public void setExpireDate(String expireDate) {
+            this.expireDate = expireDate;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getImgUrl() {
+            return imgUrl;
+        }
+
+        public void setImgUrl(String imgUrl) {
+            this.imgUrl = imgUrl;
+        }
+
+        public String getLimitAmount() {
+            return limitAmount;
+        }
+
+        public void setLimitAmount(String limitAmount) {
+            this.limitAmount = limitAmount;
+        }
+
+        public ProductBaseBean getProductBase() {
+            return productBase;
+        }
+
+        public void setProductBase(ProductBaseBean productBase) {
+            this.productBase = productBase;
+        }
+
+        public String getProductId() {
+            return productId;
+        }
+
+        public void setProductId(String productId) {
+            this.productId = productId;
+        }
+
+        public String getReliefAmount() {
+            return reliefAmount;
+        }
+
+        public void setReliefAmount(String reliefAmount) {
+            this.reliefAmount = reliefAmount;
+        }
+
+        public String getRemark() {
+            return remark;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
+
+        public String getSource() {
+            return source;
+        }
+
+        public void setSource(String source) {
+            this.source = source;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
+        }
+
+        public static class ProductBaseBean {
+            /**
+             * deductIntegral : 0
+             * disPrice : 0
+             * id : 0
+             * imgUrl :
+             * name :
+             * price : 0
+             * subTitle :
+             */
+
+            private String deductIntegral;
+            private String disPrice;
+            private String id;
+            private String imgUrl;
+            private String name;
+            private String price;
+            private String subTitle;
+
+            public String getDeductIntegral() {
+                return deductIntegral;
+            }
+
+            public void setDeductIntegral(String deductIntegral) {
+                this.deductIntegral = deductIntegral;
+            }
+
+            public String getDisPrice() {
+                return disPrice;
+            }
+
+            public void setDisPrice(String disPrice) {
+                this.disPrice = disPrice;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getImgUrl() {
+                return imgUrl;
+            }
+
+            public void setImgUrl(String imgUrl) {
+                this.imgUrl = imgUrl;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
+
+            public String getSubTitle() {
+                return subTitle;
+            }
+
+            public void setSubTitle(String subTitle) {
+                this.subTitle = subTitle;
+            }
         }
     }
 }

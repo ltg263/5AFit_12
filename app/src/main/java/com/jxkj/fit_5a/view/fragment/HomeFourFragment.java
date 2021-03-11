@@ -241,10 +241,10 @@ public class HomeFourFragment extends BaseFragment {
                         if (isDataInfoSucceed(result)) {
                             UserInfoData data = result.getData();
                             if(data!=null){
-                                mTvBalance.setText(data.getBalance()+"");
-                                mTvCouponCount.setText(data.getCouponCount()+"");
-                                mTvGiftCount.setText(data.getGiftCount()+"");
-                                mTvIntegral.setText(data.getIntegral()+"");
+                                mTvBalance.setText(data.getBalance());
+                                mTvCouponCount.setText(data.getCouponCount());
+                                mTvGiftCount.setText(data.getGiftCount());
+                                mTvIntegral.setText(data.getIntegral());
                                 SharedUtils.singleton().put(ConstValues.MY_BALANCE,data.getBalance()+"");
                                 SharedUtils.singleton().put(ConstValues.MY_COUPON_COUNT,data.getCouponCount()+"");
                                 SharedUtils.singleton().put(ConstValues.MY_GIFTCOUNT,data.getGiftCount()+"");

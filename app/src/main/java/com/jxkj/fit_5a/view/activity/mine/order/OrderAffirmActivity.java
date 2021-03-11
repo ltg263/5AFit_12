@@ -3,7 +3,9 @@ package com.jxkj.fit_5a.view.activity.mine.order;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +26,8 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.ToastUtil;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowSy;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowYhq;
 import com.jxkj.fit_5a.entity.AddressData;
 import com.jxkj.fit_5a.entity.CreateOrderBean;
 import com.jxkj.fit_5a.entity.PostOrderInfo;
@@ -36,6 +40,9 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -74,6 +81,7 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
     private PostOrderInfo info;
     private PaymentPresenter paymentPresenter;
     private int payType=1;
+    private String redId = null;
 
     @Override
     protected int getContentView() {
@@ -82,7 +90,7 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
 
     @Override
     protected void initViews() {
-        mTvTitle.setText("我的订单");
+        mTvTitle.setText("确认订单");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         initRv();
 
@@ -96,16 +104,10 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mOrderAffirmAdapter);
-        String couponCount = getIntent().getStringExtra(ConstValues.MY_COUPON_COUNT);
-        if(StringUtil.isBlank(couponCount) || Double.valueOf(couponCount)==0){
-            tv_youhui.setText("暂无优惠券");
-        }else{
-            tv_youhui.setText("有"+couponCount+"张优惠券");
-        }
     }
 
 
-    @OnClick({R.id.ll_back, R.id.rl_address,R.id.iv_zfb,R.id.iv_wx,R.id.tv_pay})
+    @OnClick({R.id.ll_back, R.id.rl_address,R.id.iv_zfb,R.id.iv_wx,R.id.tv_pay,R.id.tv_youhui})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
@@ -113,6 +115,9 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
                 break;
             case R.id.rl_address:
                 AddressActivity.startActivity(OrderAffirmActivity.this,2);
+                break;
+            case R.id.tv_youhui:
+                popupWindw();
                 break;
             case R.id.iv_zfb:
                 payType = 2;
@@ -129,7 +134,19 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
                 break;
         }
     }
-
+    List<ShowOrderInfo.RedListBean> listYhqs ;
+    PopupWindowSy window;
+    private void popupWindw() {
+        window = new PopupWindowSy(this, listYhqs, new PopupWindowSy.GiveDialogInterface() {
+            @Override
+            public void btnConfirm(String id) {
+                redId = id;
+            }
+        });
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        window.setOutsideTouchable(true);
+        window.showAtLocation(mTvName, Gravity.BOTTOM,  0, 0);
+    }
 
 
 
@@ -155,6 +172,7 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
     private void postcreateOrder() {
         info.setLevelMessage(tv_levelMessage.getText().toString());
         info.setOrderType("2");
+        info.setRedId(redId);
         Log.w("info","info"+info.toString());
         RetrofitUtil.getInstance().apiService()
                 .postcreateOrder(info)
@@ -214,6 +232,13 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
                                 tv11.setText(data.getTotalIntegral()+"积分" +"+￥"+data.getRealAmount());
                             }else{
                                 tv11.setText(data.getTotalIntegral()+"积分");
+                            }
+
+                            if(result.getData().getRedList()==null ||result.getData().getRedList().size()==0){
+                                tv_youhui.setText("暂无优惠券");
+                            }else{
+                                listYhqs = result.getData().getRedList();
+                                tv_youhui.setText("有"+result.getData().getRedList().size()+"张优惠券");
                             }
                         }else{
                             OrderAffirmActivity.this.finish();
