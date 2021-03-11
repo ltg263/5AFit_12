@@ -81,7 +81,6 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
     private PostOrderInfo info;
     private PaymentPresenter paymentPresenter;
     private int payType=1;
-    private String redId = null;
 
     @Override
     protected int getContentView() {
@@ -140,7 +139,8 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
         window = new PopupWindowSy(this, listYhqs, new PopupWindowSy.GiveDialogInterface() {
             @Override
             public void btnConfirm(String id) {
-                redId = id;
+                info.setRedId(id);
+                postShowOrderInfo();
             }
         });
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -171,8 +171,6 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
     }
     private void postcreateOrder() {
         info.setLevelMessage(tv_levelMessage.getText().toString());
-        info.setOrderType("2");
-        info.setRedId(redId);
         Log.w("info","info"+info.toString());
         RetrofitUtil.getInstance().apiService()
                 .postcreateOrder(info)

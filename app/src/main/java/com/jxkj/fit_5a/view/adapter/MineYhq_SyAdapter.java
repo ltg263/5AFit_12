@@ -26,7 +26,7 @@ public class MineYhq_SyAdapter extends BaseQuickAdapter<ShowOrderInfo.RedListBea
         GlideImgLoader.loadImageViewRadius(mContext,item.getImgUrl(),10,helper.getView(R.id.tv_icon));
         helper.setText(R.id.tv_1,item.getCouponName()).addOnClickListener(R.id.btn)
                 .setText(R.id.tv_2,item.getCouponName())
-                .setText(R.id.tv_4,"有效期值："+item.getExpireDate()+"天");
+                .setText(R.id.tv_4,"有效期至："+item.getExpireDate());
     }
 
 }
