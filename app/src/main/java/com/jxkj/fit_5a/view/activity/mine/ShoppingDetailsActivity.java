@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -27,9 +29,15 @@ import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.ToastUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogChoicePackage;
+import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.JudgeNestedScrollView;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowSb;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowYhq;
 import com.jxkj.fit_5a.conpoment.view.SquareBannerLayout;
 import com.jxkj.fit_5a.entity.AddressData;
+import com.jxkj.fit_5a.entity.DiscountUsableNotBean;
+import com.jxkj.fit_5a.entity.NotObtainedBean;
 import com.jxkj.fit_5a.entity.PostOrderInfo;
 import com.jxkj.fit_5a.entity.ProductDetailsBean;
 import com.jxkj.fit_5a.entity.ProductListBean;
@@ -81,12 +89,14 @@ public class ShoppingDetailsActivity extends BaseActivity {
     LinearLayout llEvalute;
     @BindView(R.id.ll_gg)
     LinearLayout llGg;
+    @BindView(R.id.ll_lqyou)
+    LinearLayout ll_lqyou;
     @BindView(R.id.web)
     WebView mWebView;
     private String id;
     private ShoppingPingJiaAdapter mShoppingPingJiaAdapter;
     List<ProductDetailsBean.SpecsLisBean> specsLis;//规格
-    String imgUrl="";
+    String imgUrl = "";
     private AddressData addressData;
     private List<ProductDetailsBean.SkuListBean> skuList;//规格
 
@@ -113,6 +123,7 @@ public class ShoppingDetailsActivity extends BaseActivity {
         mIvRightimg.setImageDrawable(getResources().getDrawable(R.drawable.ic_zhuan_fa));
         initRv();
         getProductDetails(id);
+        usable_not_obtained();
     }
 
     private void initRv() {
@@ -130,7 +141,7 @@ public class ShoppingDetailsActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.ll_back,R.id.ll_gg,R.id.tv_gui_ge,R.id.tv_address,R.id.ll_all_evalute,R.id.tv_ok})
+    @OnClick({R.id.ll_back, R.id.ll_gg, R.id.tv_gui_ge, R.id.tv_address, R.id.ll_all_evalute,R.id.ll_lqyou, R.id.tv_ok})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
@@ -138,17 +149,20 @@ public class ShoppingDetailsActivity extends BaseActivity {
                 break;
             case R.id.ll_gg:
             case R.id.tv_gui_ge:
-                if(specsLis!=null &&specsLis.size()>0 &&skuList!=null && skuList.size()>0){
+                if (specsLis != null && specsLis.size() > 0 && skuList != null && skuList.size() > 0) {
                     ShowChoicePackageDialog();
-                }else{
+                } else {
                     ToastUtils.showShort("无规格");
                 }
                 break;
             case R.id.tv_address:
-                AddressActivity.startActivity(ShoppingDetailsActivity.this,2);
+                AddressActivity.startActivity(ShoppingDetailsActivity.this, 2);
                 break;
             case R.id.ll_all_evalute:
-                IntentUtils.getInstence().intent(this, CommentListActivity.class,"id",id);
+                IntentUtils.getInstence().intent(this, CommentListActivity.class, "id", id);
+                break;
+            case R.id.ll_lqyou:
+                popupWindw();
                 break;
             case R.id.tv_ok:
                 postShowOrderInfo();
@@ -156,6 +170,88 @@ public class ShoppingDetailsActivity extends BaseActivity {
         }
     }
 
+    PopupWindowYhq window;
+    private void popupWindw() {
+        window = new PopupWindowYhq(this, listYhqs, new PopupWindowYhq.GiveDialogInterface() {
+            @Override
+            public void btnConfirm(int topicId) {
+                if(topicId==-1){
+                    List<Integer> lists = new ArrayList<>();
+                    for (int i = 0; i < listYhqs.size(); i++) {
+                        lists.add(listYhqs.get(i).getId());
+                    }
+                    getPrizeReceives(lists);
+                }else{
+                    getPrizeReceive(topicId);
+                }
+            }
+        });
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        window.setOutsideTouchable(true);
+        window.showAtLocation(tvName, Gravity.BOTTOM,  0, 0);
+    }
+
+    private void getPrizeReceive(int id) {
+        RetrofitUtil.getInstance().apiService()
+                .getPrizeReceive(id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(isDataInfoSucceed(result)){
+                            ToastUtils.showShort("领取成功");
+                            usable_not_obtained();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void getPrizeReceives(List<Integer> lists) {
+        RetrofitUtil.getInstance().apiService()
+                .getPrizeReceives(lists)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(isDataInfoSucceed(result)){
+                            ToastUtils.showShort("领取成功");
+                            usable_not_obtained();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 
 
     @Override
@@ -178,7 +274,7 @@ public class ShoppingDetailsActivity extends BaseActivity {
 
         PostOrderInfo info = new PostOrderInfo();
         info.setOrderType("2");
-        if(addressData!=null){
+        if (addressData != null) {
             info.setAddressId(addressData.getId());
         }
         List<PostOrderInfo.EntityListBean> entityList = new ArrayList<>();
@@ -188,41 +284,43 @@ public class ShoppingDetailsActivity extends BaseActivity {
         entityListBean.setQuantity("1");
         entityList.add(entityListBean);
         info.setEntityList(entityList);
-        info.setUserId(SharedUtils.getUserId()+"");
-        Log.w("info:","info:"+info.toString());
+        info.setUserId(SharedUtils.getUserId() + "");
+        Log.w("info:", "info:" + info.toString());
 
         Intent intent = new Intent(this, OrderAffirmActivity.class);
-        intent.putExtra("info",info);
+        intent.putExtra("info", info);
         startActivity(intent);
     }
+
     String skuId = null;
     DialogChoicePackage choicePackageDialog;
+
     private void ShowChoicePackageDialog() {
-        if(choicePackageDialog!=null){
+        if (choicePackageDialog != null) {
             choicePackageDialog.showDialog();
             return;
         }
         choicePackageDialog = new DialogChoicePackage(
                 ShoppingDetailsActivity.this, specsLis, skuList, imgUrl,
                 new DialogChoicePackage.OnChoicePackageDialogListener() {
-            @Override
-            public void addListener(int pos, String text) {
-                skuId = skuList.get(pos).getId();
-                tv_gui_ge.setText(skuList.get(pos).getSpecText());
-                tvPrice.setText(skuList.get(pos).getDeductIntegral());
-                if(Double.valueOf(skuList.get(pos).getPrice())!=0){
-                    String str = "+ <font color=\"#FFB300\">¥ </font>"+skuList.get(pos).getPrice();
-                    tvSales.setText(Html.fromHtml(str));
-                }else{
-                    tvSales.setText("");
-                }
-            }
+                    @Override
+                    public void addListener(int pos, String text) {
+                        skuId = skuList.get(pos).getId();
+                        tv_gui_ge.setText(skuList.get(pos).getSpecText());
+                        tvPrice.setText(skuList.get(pos).getDeductIntegral());
+                        if (Double.valueOf(skuList.get(pos).getPrice()) != 0) {
+                            String str = "+ <font color=\"#FFB300\">¥ </font>" + skuList.get(pos).getPrice();
+                            tvSales.setText(Html.fromHtml(str));
+                        } else {
+                            tvSales.setText("");
+                        }
+                    }
 
-            @Override
-            public void btn_Ok() {
-                postShowOrderInfo();
-            }
-        });
+                    @Override
+                    public void btn_Ok() {
+                        postShowOrderInfo();
+                    }
+                });
         choicePackageDialog.showDialog();
     }
 
@@ -240,7 +338,7 @@ public class ShoppingDetailsActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result<ProductDetailsBean> result) {
-                        if(isDataInfoSucceed(result)){
+                        if (isDataInfoSucceed(result)) {
                             initViewUi(result.getData());
                         }
                     }
@@ -263,27 +361,27 @@ public class ShoppingDetailsActivity extends BaseActivity {
         imgUrl = detailsBean.getImgUrl();
         specsLis = detailsBean.getSpecsLis();
         tvPrice.setText(detailsBean.getDeductIntegral());
-        if(Double.valueOf(detailsBean.getPrice())!=0) {
+        if (Double.valueOf(detailsBean.getPrice()) != 0) {
             String str = "+ <font color=\"#FFB300\">¥ </font>" + detailsBean.getPrice();
             tvSales.setText(Html.fromHtml(str));
-        }else{
+        } else {
             tvSales.setText("");
         }
-        if(skuList!=null && skuList.size()>0){
+        if (skuList != null && skuList.size() > 0) {
             skuId = skuList.get(0).getId();
             llGg.setVisibility(View.VISIBLE);
             tv_gui_ge.setText(skuList.get(0).getSpecText());
             tvPrice.setText(skuList.get(0).getDeductIntegral());
-            if(Double.valueOf(skuList.get(0).getPrice())!=0) {
+            if (Double.valueOf(skuList.get(0).getPrice()) != 0) {
                 String str = "+ <font color=\"#FFB300\">¥ </font>" + skuList.get(0).getPrice();
                 tvSales.setText(Html.fromHtml(str));
-            }else{
+            } else {
                 tvSales.setText("");
             }
         }
         tvName.setText(detailsBean.getName());
         tvIntro.setText(detailsBean.getSubTitle());
-        tv_commentTotal.setText("宝贝评价("+detailsBean.getCommentTotal()+"）");
+        tv_commentTotal.setText("宝贝评价(" + detailsBean.getCommentTotal() + "）");
         mShoppingPingJiaAdapter.setNewData(detailsBean.getCommentList());
     }
 
@@ -327,5 +425,49 @@ public class ShoppingDetailsActivity extends BaseActivity {
         //banner设置方法全部调用完毕时最后调用
         mBanner.start();
     }
+
+    List<NotObtainedBean.ListBean> listYhqs = new ArrayList<>();
+    private void usable_not_obtained() {
+        RetrofitUtil.getInstance().apiService()
+                .usable_not_obtained(id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<NotObtainedBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<NotObtainedBean> result) {
+                        if (isDataInfoSucceed(result)) {
+                            if (result.getData() != null && result.getData().getList() != null && result.getData().getList().size() > 0) {
+                                ll_lqyou.setVisibility(View.VISIBLE);
+                                listYhqs.clear();
+                                listYhqs.addAll(result.getData().getList());
+                                if(window!=null && window.isShowing()){
+                                    window.setNotifyDataSetChanged(listYhqs);
+                                }
+                            }else{
+                                ll_lqyou.setVisibility(View.INVISIBLE);
+                                if(window!=null && window.isShowing()){
+                                    window.dismiss();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
 
 }

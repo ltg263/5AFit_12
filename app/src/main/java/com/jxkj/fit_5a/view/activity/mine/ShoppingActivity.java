@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.mine;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -12,10 +13,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.MagicIndicatorUtils;
 import com.jxkj.fit_5a.conpoment.view.AutoHeightViewPager;
+import com.jxkj.fit_5a.conpoment.view.DialogUtils;
+import com.jxkj.fit_5a.entity.DiscountUsableNotBean;
 import com.jxkj.fit_5a.view.fragment.ShoppingFragment;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -26,6 +33,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class ShoppingActivity extends BaseActivity {
     @BindView(R.id.magic_indicator)
@@ -50,9 +61,125 @@ public class ShoppingActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        getusable_not_obtained();
         initVP();
 
     }
+    Dialog dialog;
+
+    private void getusable_not_obtained() {
+        RetrofitUtil.getInstance().apiService()
+                .getusable_not_obtained()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<DiscountUsableNotBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<DiscountUsableNotBean> result) {
+                        if(isDataInfoSucceed(result)){
+                            if(result.getData()==null || result.getData().getList()==null || result.getData().getList().size()==0){
+                                return;
+                            }
+                            if(dialog!=null && dialog.isShowing()){
+                                dialog.dismiss();
+                                dialog = null;
+                            }
+                            dialog = DialogUtils.showDiaYouHuiQuan(ShoppingActivity.this, result.getData().getList(),
+                                    new DialogUtils.DialogInterfaceYhq() {
+                                        @Override
+                                        public void btnConfirm(int id) {
+                                            if (id == -1) {
+                                                List<Integer> lists = new ArrayList<>();
+                                                for (int i = 0; i < result.getData().getList().size(); i++) {
+                                                    lists.add(result.getData().getList().get(i).getId());
+                                                }
+                                                getPrizeReceives(lists);
+                                            } else {
+                                                getPrizeReceive(id);
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void getPrizeReceive(int id) {
+        RetrofitUtil.getInstance().apiService()
+                .getPrizeReceive(id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(isDataInfoSucceed(result)){
+                            getusable_not_obtained();
+                            ToastUtils.showShort("领取成功");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void getPrizeReceives(List<Integer> lists) {
+        RetrofitUtil.getInstance().apiService()
+                .getPrizeReceives(lists)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(isDataInfoSucceed(result)){
+                            getusable_not_obtained();
+                            ToastUtils.showShort("领取成功");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
 
     List<Fragment> fragments = new ArrayList<>();
 

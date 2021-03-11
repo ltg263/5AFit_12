@@ -50,6 +50,7 @@ public class PrizeListData {
         private int couponId;
         private String couponName;
         private String createTime;
+        private String expireDate;
         private String details;
         private String expireTime;
         private int id;
@@ -62,6 +63,14 @@ public class PrizeListData {
         private int type;
         private String usageTime;
         private int userId;
+
+        public void setExpireDate(String expireDate) {
+            this.expireDate = expireDate;
+        }
+
+        public String getExpireDate() {
+            return expireDate;
+        }
 
         public int getCouponId() {
             return couponId;

@@ -95,12 +95,42 @@
 
                         <TextView
                             android:id="@+id/tv_sales"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dp_10"
+                            android:layout_weight="1"
                             android:text=""
                             android:textColor="@color/color_333333"
                             android:textSize="18sp" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_lqyou"
+                            android:layout_width="wrap_content"
+                            android:visibility="invisible"
+                            android:layout_height="wrap_content"
+                            android:gravity="end">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bj_circle_theme_5"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="@dimen/dimen_2dp"
+                                android:text="你有优惠券可领取"
+                                android:textColor="@color/color_ffffff"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableEnd="@drawable/icon_jiantou_you_99"
+                                android:drawablePadding="@dimen/dimen_5dp"
+                                android:paddingStart="@dimen/dp_10"
+                                android:text="领取"
+                                android:textColor="@color/color_text_theme"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
                     </LinearLayout>
 
 

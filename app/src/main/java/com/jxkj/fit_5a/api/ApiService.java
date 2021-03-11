@@ -33,6 +33,7 @@ import com.jxkj.fit_5a.entity.CommentListBean;
 import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.CommunityHomeInfoBean;
 import com.jxkj.fit_5a.entity.CreateOrderBean;
+import com.jxkj.fit_5a.entity.DiscountUsableNotBean;
 import com.jxkj.fit_5a.entity.FavoriteQueryList;
 import com.jxkj.fit_5a.entity.FollowFansList;
 import com.jxkj.fit_5a.entity.HotTopicBean;
@@ -42,6 +43,7 @@ import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean_X;
+import com.jxkj.fit_5a.entity.NotObtainedBean;
 import com.jxkj.fit_5a.entity.OrderDetailsData;
 import com.jxkj.fit_5a.entity.OssInfoBean;
 import com.jxkj.fit_5a.entity.PostOrderInfo;
@@ -68,6 +70,7 @@ import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
 import com.jxkj.fit_5a.entity.WalletDetailsBean;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -199,6 +202,34 @@ public interface ApiService {
 
     @GET(ConstValues.PORT_1 + "api/v1/user/prize/list")
     Observable<Result<PrizeListData>> getUserPrizeList(@Query("status") int status);
+
+    /**
+     * 用户获取可以使用但未获取的商品满减券
+     */
+
+    @GET(ConstValues.PORT_1 + "api/v1/user/prize/discount/usable_not_obtained")
+    Observable<Result<DiscountUsableNotBean>> getusable_not_obtained();
+
+    /**
+     * 用户获取可以使用但未获取的商品抵扣券
+     */
+
+    @GET(ConstValues.PORT_1 + "api/v1/user/prize/credit/usable_not_obtained")
+    Observable<Result<NotObtainedBean>> usable_not_obtained(@Query("productId") String productId);
+
+    /**
+     * 领取礼券
+     */
+
+    @POST(ConstValues.PORT_1 + "api/v1/user/prize/receive")
+    Observable<Result> getPrizeReceive(@Query("couponId") int couponId);
+
+    /**
+     * 领取多个礼券
+     */
+
+    @POST(ConstValues.PORT_1 + "api/v1/user/prize/receives")
+    Observable<Result> getPrizeReceives(@Query("couponIds") List<Integer> couponIds);
 
     /**
      * 礼物金

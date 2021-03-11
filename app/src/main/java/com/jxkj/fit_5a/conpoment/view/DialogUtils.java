@@ -1,7 +1,5 @@
 package com.jxkj.fit_5a.conpoment.view;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -16,7 +14,6 @@ import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,12 +27,18 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.entity.DiscountUsableNotBean;
 import com.jxkj.fit_5a.entity.MedalListData;
+import com.jxkj.fit_5a.view.adapter.MineYhq_DlqAdapter;
+
+import java.util.List;
 
 public class DialogUtils {
 
@@ -510,4 +513,43 @@ public class DialogUtils {
     }
 
 
+    public static Dialog showDiaYouHuiQuan(Context context, List<DiscountUsableNotBean.ListBean> data, final DialogInterfaceYhq dialogInterface) {
+
+        final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_you_hui_quan, null);
+        RecyclerView mRvList = view.findViewById(R.id.rv_list);
+        TextView tv_bnt = view.findViewById(R.id.tv_bnt);
+        view.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog5.dismiss();
+            }
+        });
+        mRvList.setLayoutManager(new LinearLayoutManager(context));
+        MineYhq_DlqAdapter mBaseQuickAdapter = new MineYhq_DlqAdapter(data);
+        mRvList.setAdapter(mBaseQuickAdapter);
+        mBaseQuickAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                dialogInterface.btnConfirm(data.get(position).getId());
+            }
+        });
+        tv_bnt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogInterface.btnConfirm(-1);
+            }
+        });
+        dialog5.setCancelable(false);
+        dialog5.setContentView(view);
+        dialog5.show();
+        return dialog5;
+    }
+
+    public interface DialogInterfaceYhq {
+        /**
+         * 确定
+         */
+        public void btnConfirm(int type);
+    }
 }
