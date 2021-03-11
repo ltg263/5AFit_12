@@ -48,7 +48,7 @@ public class MineYhqFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
-        mRefreshLayout.setEnableRefresh(false);
+        mRefreshLayout.setEnableLoadMore(false);
         mRefreshLayout.setEnableRefresh(false);
         mRefreshLayout.setVisibility(View.VISIBLE);
         mLvNot.setVisibility(View.GONE);

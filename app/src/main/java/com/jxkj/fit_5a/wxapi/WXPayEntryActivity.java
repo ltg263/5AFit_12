@@ -16,6 +16,8 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import org.greenrobot.eventbus.EventBus;
+
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler, RequestWhatI {
 
@@ -70,19 +72,19 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler, 
 //            builder.show();
 //        }
 //        finish();
-//        if (resp.errCode == 0) {//成功回调
-//            MessageEvent messageEvent = new MessageEvent();
-//            messageEvent.setBooleanFlag(true);
-//            messageEvent.setOriginClass("WXPayEntryActivity");
-//            EventBus.getDefault().post(messageEvent);
-//            finish();
-//        } else {
-//            MessageEvent messageEvent = new MessageEvent();
-//            messageEvent.setBooleanFlag(false);
-//            messageEvent.setOriginClass("WXPayEntryActivity");
-//            EventBus.getDefault().post(messageEvent);
-//            finish();
-//        }
+        if (resp.errCode == 0) {//成功回调
+            MessageEvent messageEvent = new MessageEvent();
+            messageEvent.setBooleanFlag(true);
+            messageEvent.setOriginClass("WXPayEntryActivity");
+            EventBus.getDefault().post(messageEvent);
+            finish();
+        } else {
+            MessageEvent messageEvent = new MessageEvent();
+            messageEvent.setBooleanFlag(false);
+            messageEvent.setOriginClass("WXPayEntryActivity");
+            EventBus.getDefault().post(messageEvent);
+            finish();
+        }
     }
 
 

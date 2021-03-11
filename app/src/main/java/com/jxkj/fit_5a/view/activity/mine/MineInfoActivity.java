@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,17 +23,24 @@ import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.UserDetailData;
 import com.jxkj.fit_5a.base.UserInfoData;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
+import com.jxkj.fit_5a.conpoment.utils.PictureUtil;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.AddressPickTask;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.RoundImageView;
+import com.jxkj.fit_5a.entity.MediaInfoBean;
+import com.jxkj.fit_5a.view.activity.association.AssociationAddActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -144,7 +152,7 @@ public class MineInfoActivity extends BaseActivity {
         avatar = data.getAvatar();
         backImg = data.getBackImg();
         GlideImageUtils.setGlideImage(this,backImg,mIvBackImg);
-        GlideImageUtils.setGlideImage(this,avatar,mIvImg);
+        GlideImgLoader.loadImageViewWithCirclr(MineInfoActivity.this,avatar,mIvImg);
         Glide.with(this)
                 .asBitmap()
                 .load(data.getBackImg())
@@ -319,45 +327,72 @@ public class MineInfoActivity extends BaseActivity {
                 case PictureConfig.CHOOSE_REQUEST:
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
                     if (selectList.size() > 0) {
-                        postImg(selectList.get(0).getCompressPath(),0);
+                        HttpRequestUtils.postOSSFile(1, new HttpRequestUtils.OSSClientInterface() {
+                            @Override
+                            public void succeed(double pos) {
+                                if (pos == 0) {
+                                    ToastUtils.showShort("获取oss信息错误");
+                                    return;
+                                }
+                                postImg(selectList.get(0).getCompressPath(),0);
+                            }
+                        });
                     }
                     break;
                 case PictureConfig.REQUEST_CAMERA:
                     List<LocalMedia> selectListbj = PictureSelector.obtainMultipleResult(data);
                     if (selectListbj.size() > 0) {
-                        postImg(selectListbj.get(0).getCompressPath(),1);
+                        HttpRequestUtils.postOSSFile(1, new HttpRequestUtils.OSSClientInterface() {
+                            @Override
+                            public void succeed(double pos) {
+                                if (pos == 0) {
+                                    ToastUtils.showShort("获取oss信息错误");
+                                    return;
+                                }
+                                postImg(selectListbj.get(0).getCompressPath(),1);
+                            }
+                        });
                     }
                     break;
             }
         }
     }
 
-    private void postImg(final String listPath,int type) {
-        show();
-        HttpRequestUtils.uploadFiles(listPath, new HttpRequestUtils.UploadFileInterface() {
-            @Override
-            public void succeed(String path) {
-                dismiss();
-                if(type ==0){
-                    avatar = path;
-                    GlideImageUtils.setGlideImage(MineInfoActivity.this,avatar,mIvImg);
-                }
-                if(type ==1){
-                    backImg = path;
-                    Glide.with(MineInfoActivity.this).asBitmap().load(backImg)
-                            .into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                    Drawable drawable = new BitmapDrawable(resource);
-                                    mRlActionbar.setBackground(drawable);
-                                }
-                            });
-                }
-            }
 
+    private void postImg(final String listPath,int type) {
+        String path = PictureUtil.compressBmpFileToTargetSize( new File(listPath), 1024 * 1024).getPath();
+//        String path = selectList.get(i).getPath();
+        String fileName = StringUtil.stringToMD5(path) + ".jpg";
+        HttpRequestUtils.initOSSClient(this, fileName, path, new HttpRequestUtils.OSSClientInterface() {
             @Override
-            public void failure() {
-                dismiss();
+            public void succeed(double pos) {
+                if (pos == 101) {
+                    String urlpath = SharedUtils.singleton().get(ConstValues.host, "")
+                            + "/" + SharedUtils.singleton().get(ConstValues.dir, "") + "/" + fileName;
+                    Log.w("UploadSuccessnull","UploadSuccessnull:"+urlpath+"type:"+type);
+                    if(type ==0){
+                        avatar = urlpath;
+                        Glide.with(MineInfoActivity.this).asBitmap().load(avatar)
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                        Drawable drawable = new BitmapDrawable(resource);
+                                        mIvImg.setImageDrawable(drawable);
+                                    }
+                                });
+                    }
+                    if(type ==1){
+                        backImg = urlpath;
+                        Glide.with(MineInfoActivity.this).asBitmap().load(backImg)
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                        Drawable drawable = new BitmapDrawable(resource);
+                                        mRlActionbar.setBackground(drawable);
+                                    }
+                                });
+                    }
+                }
             }
         });
     }

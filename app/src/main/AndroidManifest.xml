@@ -115,6 +115,7 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.NoDisplay" />
+
         <activity
             android:name=".view.map.SearchAddressActivity"
             android:screenOrientation="portrait"
@@ -160,6 +161,10 @@
 
         <activity
             android:name=".view.activity.login_other.WelcomeLoginActivity"
+
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.home.WebViewActivity"
 
             android:screenOrientation="portrait" />
 

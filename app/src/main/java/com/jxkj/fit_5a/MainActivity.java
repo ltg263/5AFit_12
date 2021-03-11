@@ -21,8 +21,10 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.GiftListData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.OssService;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 import com.jxkj.fit_5a.entity.StsTokenBean;
+import com.jxkj.fit_5a.lanya.Ble4_0Util;
 import com.jxkj.fit_5a.view.fragment.HomeFourFragment;
 import com.jxkj.fit_5a.view.fragment.HomeOneFragment;
 import com.jxkj.fit_5a.view.fragment.HomeThreeFragment;
@@ -175,6 +177,12 @@ public class MainActivity extends BaseActivity {
 //        getBoxReceive();
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Ble4_0Util.initLsData();
+    }
 
     private void getBoxReceive() {
         RetrofitUtil.getInstance().apiService()

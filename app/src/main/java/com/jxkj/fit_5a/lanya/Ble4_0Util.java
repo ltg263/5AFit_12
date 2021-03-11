@@ -290,7 +290,7 @@ public class Ble4_0Util implements BleUtil {
         mDevWriteCharacteristic = null;
         return true;
     }
-    private void initLsData() {
+    public static void initLsData() {
         List<HistoryEquipmentData> lists = SharedHistoryEquipment.singleton().getSharedHistoryEquipment();
         if(lists!=null){
             for(int i=0;i<lists.size();i++){

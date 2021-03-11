@@ -20,6 +20,7 @@ import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.RoundImageView;
+import com.jxkj.fit_5a.view.activity.home.WebViewActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineGiftActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineHomeActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineInfoActivity;
@@ -211,10 +212,12 @@ public class HomeFourFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), AddressActivity.class));
                 break;
             case R.id.on_ll_mine_qcbz:
-                startActivity(new Intent(getActivity(), MineIssueQcActivity.class));
+//                startActivity(new Intent(getActivity(), MineIssueQcActivity.class));
+                IntentUtils.getInstence().intent(getContext(), WebViewActivity.class,"type","器材帮助");
                 break;
             case R.id.on_ll_mine_cjwt:
-                startActivity(new Intent(getActivity(), MineIssueActivity.class));
+//                startActivity(new Intent(getActivity(), MineIssueActivity.class));
+                IntentUtils.getInstence().intent(getContext(), WebViewActivity.class,"type","常见问题");
                 break;
             case R.id.on_ll_mine_gywm:
                 startActivity(new Intent(getActivity(), MineRegardsActivity.class));

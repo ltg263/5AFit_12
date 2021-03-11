@@ -20,15 +20,15 @@ public class RelativeLayoutSv extends RelativeLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                getParent().requestDisallowInterceptTouchEvent(true);
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                getParent().requestDisallowInterceptTouchEvent(false);
-                break;
-        }
+        getParent().requestDisallowInterceptTouchEvent(false);
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                break;
+//            case MotionEvent.ACTION_UP:
+//            case MotionEvent.ACTION_CANCEL:
+//                getParent().requestDisallowInterceptTouchEvent(false);
+//                break;
+//        }
         return super.dispatchTouchEvent(ev);
     }
 
