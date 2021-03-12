@@ -56,7 +56,7 @@ public class ConstValues {
     public static final String BASE_URL = "https://5afit.nbqichen.com";
     public static final String BASE_URL_DETAIL = "http://admin.zjduon.com/";
 
-    public static final String WX_APP_ID = "wxdc42a7cf4a99be0";
+    public static final String WX_APP_ID = "wxdc42a7cf4a99be02";
 
 
     public static final String PORT_9 = "http://192.168.2.175:9505/";//积分商城

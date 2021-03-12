@@ -214,19 +214,22 @@ public class LoginActivity extends BaseActivity {
                     registrationId = tm.getDeviceId();
                 }
 //                TextUtil.logOut("--:"+registrationId);
-                Log.w("--:","-->>:"+registrationId);
-                HttpRequestUtils.getVerifyAppEmpower(LoginActivity.this,
-                        map.get("accessToken"), map.get("openid"), registrationId, null,
-                        new HttpRequestUtils.LoginInterface() {
-                            @Override
-                            public void succeed(String path) {
-//                                if(StringUtil.isBlank(path.getHashMap().getUserNo())){
-//                                    IntentUtils.getInstence().intent(getActivity(), BindingPhoneNumberActivity.class);
-//                                    return;
-//                                }
-//                                getData();
-                            }
-                        });
+                Log.w("微信登录1：","-->>:"+registrationId);
+                Log.w("微信登录2：","-->>:"+map.get("accessToken"));
+                Log.w("微信登录3：","-->>:"+map.get("openid"));
+
+//                HttpRequestUtils.getVerifyAppEmpower(LoginActivity.this,
+//                        map.get("accessToken"), map.get("openid"), registrationId, null,
+//                        new HttpRequestUtils.LoginInterface() {
+//                            @Override
+//                            public void succeed(String path) {
+////                                if(StringUtil.isBlank(path.getHashMap().getUserNo())){
+////                                    IntentUtils.getInstence().intent(getActivity(), BindingPhoneNumberActivity.class);
+////                                    return;
+////                                }
+////                                getData();
+//                            }
+//                        });
             }
 
             @Override

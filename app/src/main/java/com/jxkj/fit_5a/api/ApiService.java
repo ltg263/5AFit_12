@@ -121,6 +121,13 @@ public interface ApiService {
     Observable<Result<UserInfoData>> getUserStatistic();
 
     /**
+     * 测试登录
+     * @return
+     */
+    @GET("api/v1/user/verify/weixin/{name}/oauth")
+    @FormUrlEncoded
+    Observable<Result> register(@Field("code") String code,@Field("openId") String openId);
+    /**
      * 用户更新
      *
      * @return
