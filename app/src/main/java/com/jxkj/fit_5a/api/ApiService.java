@@ -587,7 +587,7 @@ public interface ApiService {
     Observable<Result> postCancelOrder(@Body PostUser.Expediting expediting);
 
     /**
-     * 发货提醒
+     * 删除订单
      * @return
      */
     @POST(ConstValues.PORT_3 +"api/v1/user/order/delete")

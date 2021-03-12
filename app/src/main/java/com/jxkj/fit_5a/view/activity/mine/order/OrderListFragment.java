@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.view.activity.mine.order;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -20,6 +19,7 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.view.adapter.OrderListAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -127,7 +127,12 @@ public class OrderListFragment extends BaseFragment {
 
             @Override
             public void setSc(int position) {
-                postDelete(orderDataList.get(position).getId()+"");
+                DialogUtils.showDialogHint(getActivity(), "您确定要取消此订单吗？", false, new DialogUtils.ErrorDialogInterface() {
+                    @Override
+                    public void btnConfirm() {
+                        postDelete(orderDataList.get(position).getId()+"");
+                    }
+                });
             }
 
             @Override
@@ -257,7 +262,7 @@ public class OrderListFragment extends BaseFragment {
                     @Override
                     public void onNext(Result result) {
                         if (isDataInfoSucceed(result)) {
-                            ToastUtils.showShort("已通知卖家");
+
                         }
 
                     }

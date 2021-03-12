@@ -7,12 +7,16 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.OrderInfoData;
+import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.entity.OrderDetailsData;
 import com.jxkj.fit_5a.view.adapter.OrderShoppingDetailsAdapter;
 
@@ -65,6 +69,7 @@ public class OrderDetailsActivity extends BaseActivity {
     TextView btn1;
     @BindView(R.id.bnt2)
     TextView btn2;
+    String id = "";
     private OrderShoppingDetailsAdapter mOrderShoppingDetailsAdapter;
 
     @Override
@@ -78,11 +83,12 @@ public class OrderDetailsActivity extends BaseActivity {
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mOrderShoppingDetailsAdapter = new OrderShoppingDetailsAdapter(this, null);//item.getProducts()
         mRvList.setAdapter(mOrderShoppingDetailsAdapter);
-        getOrderDetails(getIntent().getStringExtra("id"));
+        id = getIntent().getStringExtra("id");
+        getOrderDetails();
     }
 
 
-    private void getOrderDetails(String id) {
+    private void getOrderDetails() {
         RetrofitUtil.getInstance().apiService()
                 .getOrderDetails(id)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -203,9 +209,180 @@ public class OrderDetailsActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.bnt1:
+                setOnclick(btn1.getText().toString());
                 break;
             case R.id.bnt2:
+                setOnclick(btn2.getText().toString());
                 break;
         }
+    }
+
+    private void setOnclick(String strType) {
+        switch (strType){
+            case "联系商家":
+                break;
+            case "取消订单":
+                DialogUtils.showDialogHint(OrderDetailsActivity.this, "您确定要取消此订单吗？", false, new DialogUtils.ErrorDialogInterface() {
+                    @Override
+                    public void btnConfirm() {
+                        getCancelOrder();
+                    }
+                });
+                break;
+            case "去支付":
+
+                break;
+            case "确认收货":
+                DialogUtils.showDialogHint(OrderDetailsActivity.this, "您确定完成此订单吗？", false, new DialogUtils.ErrorDialogInterface() {
+                    @Override
+                    public void btnConfirm() {
+                        postFinishOrder();
+                    }
+                });
+                break;
+            case "去评价":
+                IntentUtils.getInstence().intent(OrderDetailsActivity.this, MineOrderEvaluateGoodsActivity.class, "orderId", id);
+                break;
+            case "提醒发货":
+                getAgainOrder();
+                break;
+            case "删除订单":
+                DialogUtils.showDialogHint(OrderDetailsActivity.this, "您确定要删除此订单吗？", false, new DialogUtils.ErrorDialogInterface() {
+                    @Override
+                    public void btnConfirm() {
+                        postDelete();
+                    }
+                });
+                break;
+            case "申请退款":
+
+                break;
+        }
+    }
+
+    private void postFinishOrder() {
+        PostUser.Expediting expediting = new PostUser.Expediting();
+        expediting.setOrderId(id);
+        RetrofitUtil.getInstance().apiService()
+                .postFinishOrder(expediting)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result result) {
+                        if (isDataInfoSucceed(result)) {
+                            getOrderDetails();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dismiss();
+                    }
+                });
+    }
+    private void getAgainOrder() {
+        PostUser.Expediting expediting = new PostUser.Expediting();
+        expediting.setOrderId(id);
+        RetrofitUtil.getInstance().apiService()
+                .postExpediting(expediting)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result result) {
+                        if (isDataInfoSucceed(result)) {
+                            ToastUtils.showShort("已通知卖家");
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dismiss();
+                    }
+                });
+    }
+    private void postDelete() {
+        PostUser.Expediting expediting = new PostUser.Expediting();
+        expediting.setOrderId(id);
+        RetrofitUtil.getInstance().apiService()
+                .postDelete(expediting)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result result) {
+                        if (isDataInfoSucceed(result)) {
+                            OrderDetailsActivity.this.finish();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dismiss();
+                    }
+                });
+    }
+
+    private void getCancelOrder() {
+        PostUser.Expediting expediting = new PostUser.Expediting();
+        expediting.setOrderId(id);
+        RetrofitUtil.getInstance().apiService()
+                .postCancelOrder(expediting)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Result result) {
+                        if (isDataInfoSucceed(result)) {
+                            getOrderDetails();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dismiss();
+                    }
+                });
     }
 }
