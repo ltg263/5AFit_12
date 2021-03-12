@@ -42,7 +42,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
         helper.setText(R.id.tv_order_shop_name, item.getOrderNo());
         helper.setText(R.id.tv_status, item.getStatusStr());
 //        helper.setText(R.id.tv_time,item.getCreateTime());
-        String str = "共计<font color=\"#FF6666\">1</font>件：4890积分 + ￥24 （含￥0运费）";
+        String str = "共计<font color=\"#FF6666\">1</font>件："+item.getDeductIntegral()+"积分 + ￥"+item.getRealAmount();//+" （含￥0运费）";
         helper.setText(R.id.tv_jg_num, Html.fromHtml(str));
         RecyclerView recyclerView = helper.getView(R.id.rv_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));

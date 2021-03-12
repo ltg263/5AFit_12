@@ -1,5 +1,7 @@
 package com.jxkj.fit_5a.base;
 
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -169,7 +171,7 @@ public class OrderInfoData implements Serializable {
         }
 
         public String getDeductIntegral() {
-            return deductIntegral;
+            return StringUtil.getValue(deductIntegral);
         }
 
         public void setDeductIntegral(String deductIntegral) {
@@ -177,7 +179,7 @@ public class OrderInfoData implements Serializable {
         }
 
         public String getRealAmount() {
-            return realAmount;
+            return StringUtil.getValue(realAmount);
         }
 
         public void setRealAmount(String realAmount) {
@@ -500,7 +502,7 @@ public class OrderInfoData implements Serializable {
             }
 
             public String getPrice() {
-                return price;
+                return StringUtil.getValue(price);
             }
 
             public void setPrice(String price) {
@@ -516,7 +518,7 @@ public class OrderInfoData implements Serializable {
             }
 
             public String getDeductIntegral() {
-                return deductIntegral;
+                return StringUtil.getValue(deductIntegral);
             }
 
             public void setDeductIntegral(String deductIntegral) {

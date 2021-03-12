@@ -32,11 +32,13 @@ public class OrderShoppingAdapter extends BaseQuickAdapter<OrderInfoData.ListBea
         ImageView iv_img = helper.getView(R.id.iv_img);
         TextView tv_name = helper.getView(R.id.tv_name);
         TextView tv_shop_name = helper.getView(R.id.tv_shop_name);
+        TextView tv_spec = helper.getView(R.id.tv_spec);
         TextView tv_price = helper.getView(R.id.tv_price);
         tv_name.setText(item.getName());
-        String str = "单价：<font color=\"#FF6666\">"+item.getDeductIntegral()+"积分 + "+item.getPrice()+"元</font>";
+        String str = "单价：<font color=\"#FF6666\">"+item.getDeductIntegral()+"积分 + ￥"+item.getPrice()+"</font>";
         tv_shop_name.setText(Html.fromHtml(str));
-        tv_price.setText("￥"+item.getRealNum());
+        tv_price.setText("×"+item.getNum());
+        tv_spec.setText(item.getSkuName());
         GlideImgLoader.loadImageViewRadius(activity, item.getImgUrl(),10, iv_img);
 
 

@@ -76,5 +76,5 @@ public class ConstValues {
 
     //默认连接超时时间
     public static final int DEFAULT_TIMEOUT = 30;
-    public static final int PAGE_SIZE =10;
+    public static final int PAGE_SIZE =2;
 }
