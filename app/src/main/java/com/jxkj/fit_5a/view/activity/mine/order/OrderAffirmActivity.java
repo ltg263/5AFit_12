@@ -23,6 +23,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.ParamData;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.ToastUtil;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowSy;
@@ -133,6 +134,9 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
                 AddressActivity.startActivity(OrderAffirmActivity.this, 2);
                 break;
             case R.id.tv_youhui:
+                if(tv_youhui.getText().toString().equals("暂无可用优惠券")){
+                    return;
+                }
                 popupWindw();
                 break;
             case R.id.iv_zfb:
@@ -168,6 +172,7 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
                 isYouHuiQuan = true;
                 youHuiQuanNum = Double.valueOf(bean.getReliefAmount());
                 tv_youhui.setText(bean.getCouponName());
+                info.setRedId(bean.getId());
                 setValueYhq();
             }
         });
@@ -257,6 +262,12 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
 
     private void postcreateOrder() {
         info.setLevelMessage(tv_levelMessage.getText().toString());
+        info.setIntegralFlag("1");
+        if(isJinDou){
+            info.setBalanceFlag("1");
+        }else{
+            info.setBalanceFlag("0");
+        }
         Log.w("info", "info" + info.toString());
         RetrofitUtil.getInstance().apiService()
                 .postcreateOrder(info)
@@ -271,8 +282,15 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
                     @Override
                     public void onNext(Result<CreateOrderBean> result) {
                         if (isDataInfoSucceed(result)) {
-                            ToastUtils.showShort("创建成功");
-                            appPay(result.getData().getId(), result.getData().getDeductIntegral());
+                            if(result.getData().getStatus().equals("1")){
+                                ToastUtils.showShort("创建成功");
+                                appPay(result.getData().getId());
+                            }else{
+                                ToastUtils.showShort("支付成功");
+                                IntentUtils.getInstence().intent(OrderAffirmActivity.this, OrderActivity.class, "type", 0);
+                                dismiss();
+
+                            }
                         }
                     }
 
@@ -361,10 +379,10 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
      *
      * @param id
      */
-    private void appPay(String id, String integral) {
+    private void appPay(String id) {
         show();
         RetrofitUtil.getInstance().apiService()
-                .getOrderPayInfo(integral, id, payType + "", null, "1").observeOn(AndroidSchedulers.mainThread())
+                .getOrderPayInfo("1", id, payType + "", info.getRedId(), "1").observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<ParamData>>() {
                     @Override
@@ -388,7 +406,7 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
 
                     @Override
                     public void onError(Throwable e) {
-
+                        dismiss();
                     }
 
                     @Override

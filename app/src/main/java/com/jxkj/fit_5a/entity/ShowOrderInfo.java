@@ -49,7 +49,7 @@ public class ShowOrderInfo {
     private List<RedListBean> redList;
 
     public String getBalance() {
-        return "199";
+        return balance;
     }
 
     public void setBalance(String balance) {

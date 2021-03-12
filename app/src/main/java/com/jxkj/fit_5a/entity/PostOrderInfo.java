@@ -20,12 +20,21 @@ public class PostOrderInfo implements Serializable {
     private String addressId;
     private String agentId;
     private String groupId;
-    private String StringegralFlag;
+    private String integralFlag;
     private String levelMessage;
+    private String balanceFlag;
     private String orderType;
     private String redId;
     private String userId;
     private List<EntityListBean> entityList;
+
+    public String getBalanceFlag() {
+        return balanceFlag;
+    }
+
+    public void setBalanceFlag(String balanceFlag) {
+        this.balanceFlag = balanceFlag;
+    }
 
     public String getAddressId() {
         return addressId;
@@ -52,11 +61,11 @@ public class PostOrderInfo implements Serializable {
     }
 
     public String getIntegralFlag() {
-        return StringegralFlag;
+        return integralFlag;
     }
 
-    public void setIntegralFlag(String StringegralFlag) {
-        this.StringegralFlag = StringegralFlag;
+    public void setIntegralFlag(String integralFlag) {
+        this.integralFlag = integralFlag;
     }
 
     public String getLevelMessage() {
@@ -205,7 +214,7 @@ public class PostOrderInfo implements Serializable {
                 "addressId='" + addressId + '\'' +
                 ", agentId='" + agentId + '\'' +
                 ", groupId='" + groupId + '\'' +
-                ", StringegralFlag='" + StringegralFlag + '\'' +
+                ", StringegralFlag='" + integralFlag + '\'' +
                 ", levelMessage='" + levelMessage + '\'' +
                 ", orderType='" + orderType + '\'' +
                 ", redId='" + redId + '\'' +
