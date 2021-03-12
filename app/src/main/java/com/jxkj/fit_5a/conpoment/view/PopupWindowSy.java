@@ -58,7 +58,7 @@ public class PopupWindowSy extends PopupWindow {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 dismiss();
-                dialogInterface.btnConfirm(dataSbType.get(position).getId());
+                dialogInterface.btnConfirm(dataSbType.get(position));
             }
         });
 
@@ -76,7 +76,7 @@ public class PopupWindowSy extends PopupWindow {
         /**
          * 确定
          */
-        void btnConfirm(String id);
+        void btnConfirm(ShowOrderInfo.RedListBean bean);
     }
 
 

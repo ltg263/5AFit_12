@@ -1,5 +1,7 @@
 package com.jxkj.fit_5a.base;
 
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+
 public class UserInfoData {
 
     /**
@@ -15,7 +17,7 @@ public class UserInfoData {
     private String integral;
 
     public String getBalance() {
-        return balance;
+        return StringUtil.getValue(balance);
     }
 
     public void setBalance(String balance) {
@@ -23,7 +25,7 @@ public class UserInfoData {
     }
 
     public String getCouponCount() {
-        return couponCount;
+        return StringUtil.getValue(couponCount);
     }
 
     public void setCouponCount(String couponCount) {
@@ -31,7 +33,7 @@ public class UserInfoData {
     }
 
     public String getGiftCount() {
-        return giftCount;
+        return StringUtil.getValue(giftCount);
     }
 
     public void setGiftCount(String giftCount) {
@@ -39,7 +41,7 @@ public class UserInfoData {
     }
 
     public String getIntegral() {
-        return integral;
+        return StringUtil.getValue(integral);
     }
 
     public void setIntegral(String integral) {

@@ -95,6 +95,9 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
     private PaymentPresenter paymentPresenter;
     private int payType = 1;
     private String payJd = "0";
+    private boolean isJinDou = false;
+    private boolean isYouHuiQuan = false;
+    private double youHuiQuanNum = 0.0;
 
     @Override
     protected int getContentView() {
@@ -120,7 +123,7 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
     }
 
 
-    @OnClick({R.id.ll_back, R.id.rl_address, R.id.iv_zfb, R.id.iv_wx, R.id.tv_pay, R.id.tv_youhui,R.id.iv_jd})
+    @OnClick({R.id.ll_back, R.id.rl_address, R.id.iv_zfb, R.id.iv_wx, R.id.tv_pay, R.id.tv_youhui, R.id.iv_jd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
@@ -143,35 +146,14 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
                 iv_zfb.setImageDrawable(getResources().getDrawable(R.drawable.wxz_1));
                 break;
             case R.id.tv_pay:
-                if(Double.valueOf(data.getUseableIntegral())>=Double.valueOf(data.getTotalIntegral())){
+                if (Double.valueOf(data.getUseableIntegral()) >= Double.valueOf(data.getTotalIntegral())) {
                     postcreateOrder();
                     return;
                 }
                 ToastUtils.showShort("暂无可抵扣积分");
                 break;
             case R.id.iv_jd:
-                if(Double.valueOf(payJd)==0){
-                    //100  300  -200
-                    mIvJd.setImageDrawable(getResources().getDrawable(R.drawable.wxz_));
-                    double yzf = Double.valueOf(data.getRealAmount())-Double.valueOf(data.getBalance());
-                    if(yzf>0){
-                        tv_syjf.setText( StringUtil.getValue(data.getTotalIntegral()) + "+￥" +  StringUtil.getValue(yzf));
-                        payJd = data.getBalance();
-                    }else if(yzf<0){
-                        tv_syjf.setText(data.getTotalIntegral());
-                        payJd = data.getRealAmount();
-                    }else{
-                        payJd = data.getBalance();
-                        tv_syjf.setText(data.getTotalIntegral());
-                    }
-                    payJd = StringUtil.getValue(payJd);
-                    tv_jd_y.setText("使用"+payJd+"个金豆抵扣￥"+payJd);
-                }else{
-                    payJd = "0";
-                    tv_jd_y.setText("");
-                    mIvJd.setImageDrawable(getResources().getDrawable(R.drawable.wxz_1));
-                    tv_syjf.setText(StringUtil.getValue(data.getTotalIntegral()) + "+￥" +  StringUtil.getValue(data.getRealAmount()));
-                }
+                setValueJb();
                 break;
         }
     }
@@ -182,9 +164,11 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
     private void popupWindw() {
         window = new PopupWindowSy(this, listYhqs, new PopupWindowSy.GiveDialogInterface() {
             @Override
-            public void btnConfirm(String id) {
-                info.setRedId(id);
-                postShowOrderInfo();
+            public void btnConfirm(ShowOrderInfo.RedListBean bean) {
+                isYouHuiQuan = true;
+                youHuiQuanNum = Double.valueOf(bean.getReliefAmount());
+                tv_youhui.setText(bean.getCouponName());
+                setValueYhq();
             }
         });
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -192,6 +176,64 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
         window.showAtLocation(mTvName, Gravity.BOTTOM, 0, 0);
     }
 
+    private void setValueYhq(){
+        if (isJinDou) {
+            mIvJd.setImageDrawable(getResources().getDrawable(R.drawable.wxz_));
+            double yzf = Double.valueOf(data.getRealAmount())-youHuiQuanNum - Double.valueOf(data.getBalance());
+            if (yzf > 0) {
+                tv_syjf.setText(StringUtil.getValue(data.getTotalIntegral()) + "+￥" + StringUtil.getValue(yzf));
+                payJd = data.getBalance();
+            } else if (yzf < 0) {
+                payJd = StringUtil.getValue(Double.valueOf(data.getRealAmount())-Double.valueOf(youHuiQuanNum));
+                tv_syjf.setText(data.getTotalIntegral());
+            } else {
+                payJd = data.getBalance();
+                tv_syjf.setText(data.getTotalIntegral());
+            }
+            payJd = StringUtil.getValue(payJd);
+            tv_jd_y.setText("");
+            if(Double.valueOf(payJd)>0){
+                tv_jd_y.setText("使用" + payJd + "个金豆抵扣￥" + payJd);
+            }
+        } else {
+            payJd = "";
+            tv_jd_y.setText("");
+            mIvJd.setImageDrawable(getResources().getDrawable(R.drawable.wxz_1));
+            tv_syjf.setText(data.getTotalIntegral() + "+￥" + StringUtil.getValue(Double.valueOf(data.getRealAmount())-youHuiQuanNum));
+        }
+    }
+
+    private void setValueJb(){
+        if (!isJinDou) {
+            isJinDou = true;
+            mIvJd.setImageDrawable(getResources().getDrawable(R.drawable.wxz_));
+            double yzf = Double.valueOf(data.getRealAmount()) - Double.valueOf(data.getBalance());
+            if(isYouHuiQuan){
+                yzf = Double.valueOf(data.getRealAmount())-youHuiQuanNum - Double.valueOf(data.getBalance());
+            }
+            if (yzf > 0) {
+                tv_syjf.setText(StringUtil.getValue(data.getTotalIntegral()) + "+￥" + StringUtil.getValue(yzf));
+                payJd = data.getBalance();
+            } else if (yzf < 0) {
+                payJd = StringUtil.getValue(Double.valueOf(data.getRealAmount())-Double.valueOf(youHuiQuanNum));
+                tv_syjf.setText(data.getTotalIntegral());
+            } else {
+                payJd = data.getBalance();
+                tv_syjf.setText(data.getTotalIntegral());
+            }
+            payJd = StringUtil.getValue(payJd);
+            tv_jd_y.setText("使用" + payJd + "个金豆抵扣￥" + payJd);
+        } else {
+            isJinDou = false;
+            payJd = data.getRealAmount();
+            tv_jd_y.setText("");
+            mIvJd.setImageDrawable(getResources().getDrawable(R.drawable.wxz_1));
+            tv_syjf.setText(data.getTotalIntegral() + "+￥" + data.getRealAmount());
+            if(isYouHuiQuan){ //100-10-200
+                tv_syjf.setText(data.getTotalIntegral() + "+￥" + StringUtil.getValue(Double.valueOf(data.getRealAmount())-youHuiQuanNum));
+            }
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -244,7 +286,9 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
                     }
                 });
     }
+
     ShowOrderInfo data;
+
     private void postShowOrderInfo() {
         RetrofitUtil.getInstance().apiService()
                 .postShowOrderInfo(info)
@@ -284,12 +328,12 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
                                 listYhqs = data.getRedList();
                                 tv_youhui.setText("有" + data.getRedList().size() + "张优惠券");
                             }
-                            if(Double.valueOf(data.getBalance())!=0){
-                                mTvJd.setText("使用金豆(剩余"+data.getBalance()+"个)");
+                            if (Double.valueOf(data.getBalance()) != 0) {
+                                mTvJd.setText("使用金豆(剩余" + data.getBalance() + "个)");
                                 mIvJd.setVisibility(View.VISIBLE);
                             }
-                            if(Double.valueOf(data.getUseableIntegral())!=0){
-                                mTvJf.setText("最多可抵扣"+data.getUseableIntegral()+"积分");
+                            if (Double.valueOf(data.getUseableIntegral()) != 0) {
+                                mTvJf.setText("最多可抵扣" + data.getUseableIntegral() + "积分");
                             }
 
                         } else {

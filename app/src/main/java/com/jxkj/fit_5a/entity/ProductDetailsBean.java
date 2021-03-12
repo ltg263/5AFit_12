@@ -121,7 +121,7 @@ public class ProductDetailsBean {
     }
 
     public String getPrice() {
-        return price;
+        return StringUtil.getValue(price);
     }
 
     public void setPrice(String price) {
