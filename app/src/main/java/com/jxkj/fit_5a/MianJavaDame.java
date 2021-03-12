@@ -17,13 +17,32 @@ public class MianJavaDame {
 //        String[] a = new String[1];
 //        a[0]="哈哈";
 
-        System.out.println("--->>"+ new Date(2021,03,04).getTime());
-        System.out.println("--->>"+ new Date(2021,03,03).getTime());
-        int a = 1;
-        int b = 1;
-        int c = 1;
-        new Date(a+"-"+b+"-"+c);
+        System.out.println("--->>"+getValue(1.55622));
+        System.out.println("--->>"+getValue(1.0));
+        System.out.println("--->>"+getValue(1.00));
+        System.out.println("--->>"+getValue(1.01));
+        System.out.println("--->>"+getValue(1));
+        System.out.println("--->>"+getValue(0.1));
     }
+
+    public static String getValue(double obj) {
+        if(isIntegerForDouble(obj)){
+            return String.valueOf((int) obj);
+        }
+        return String.format("%.2f", obj);
+    }
+
+
+    /**
+     * 判断double是否是整数
+     * @param obj
+     * @return
+     */
+    public static boolean isIntegerForDouble(double obj) {
+        double eps = 1e-10;  // 精度范围
+        return obj-Math.floor(obj) < eps;
+    }
+
 
     public static String getBigWeek(int dayofweek) {
 //Calendar中1-星期天，2-星期一，3-星期二，4-星期三，5-星期四，6-星期五，7-星期六

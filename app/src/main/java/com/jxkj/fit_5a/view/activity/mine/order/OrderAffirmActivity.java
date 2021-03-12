@@ -8,13 +8,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.alipay.PaymentContract;
 import com.jxkj.fit_5a.alipay.PaymentParameterBean;
@@ -23,11 +23,9 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.ParamData;
 import com.jxkj.fit_5a.base.Result;
-import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.ToastUtil;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowSy;
-import com.jxkj.fit_5a.conpoment.view.PopupWindowYhq;
 import com.jxkj.fit_5a.entity.AddressData;
 import com.jxkj.fit_5a.entity.CreateOrderBean;
 import com.jxkj.fit_5a.entity.PostOrderInfo;
@@ -41,7 +39,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,7 +48,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class OrderAffirmActivity extends BaseActivity  implements PaymentContract.View {
+public class OrderAffirmActivity extends BaseActivity implements PaymentContract.View {
 
     @BindView(R.id.iv_back)
     ImageView mIvBack;
@@ -71,16 +68,33 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
     TextView tv11;
     @BindView(R.id.tv_youhui)
     TextView tv_youhui;
+    @BindView(R.id.tv_totalDelivery)
+    TextView tv_totalDelivery;
     @BindView(R.id.iv_wx)
     ImageView iv_wx;
     @BindView(R.id.iv_zfb)
     ImageView iv_zfb;
     @BindView(R.id.tv_levelMessage)
     EditText tv_levelMessage;
+    @BindView(R.id.ll_youhui)
+    LinearLayout mLlYouhui;
+    @BindView(R.id.tv_jd)
+    TextView mTvJd;
+    @BindView(R.id.tv_jd_y)
+    TextView tv_jd_y;
+    @BindView(R.id.iv_jd)
+    ImageView mIvJd;
+    @BindView(R.id.ll_jd)
+    LinearLayout mLlJd;
+    @BindView(R.id.tv_jf)
+    TextView mTvJf;
+    @BindView(R.id.ll_jf)
+    LinearLayout mLlJf;
     private OrderAffirmAdapter mOrderAffirmAdapter;
     private PostOrderInfo info;
     private PaymentPresenter paymentPresenter;
-    private int payType=1;
+    private int payType = 1;
+    private String payJd = "0";
 
     @Override
     protected int getContentView() {
@@ -99,21 +113,21 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
     }
 
     private void initRv() {
-        mOrderAffirmAdapter = new OrderAffirmAdapter( null);
+        mOrderAffirmAdapter = new OrderAffirmAdapter(null);
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mOrderAffirmAdapter);
     }
 
 
-    @OnClick({R.id.ll_back, R.id.rl_address,R.id.iv_zfb,R.id.iv_wx,R.id.tv_pay,R.id.tv_youhui})
+    @OnClick({R.id.ll_back, R.id.rl_address, R.id.iv_zfb, R.id.iv_wx, R.id.tv_pay, R.id.tv_youhui,R.id.iv_jd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
                 finish();
                 break;
             case R.id.rl_address:
-                AddressActivity.startActivity(OrderAffirmActivity.this,2);
+                AddressActivity.startActivity(OrderAffirmActivity.this, 2);
                 break;
             case R.id.tv_youhui:
                 popupWindw();
@@ -124,17 +138,47 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
                 iv_zfb.setImageDrawable(getResources().getDrawable(R.drawable.wxz_));
                 break;
             case R.id.iv_wx:
-                payType= 1;
+                payType = 1;
                 iv_wx.setImageDrawable(getResources().getDrawable(R.drawable.wxz_));
                 iv_zfb.setImageDrawable(getResources().getDrawable(R.drawable.wxz_1));
                 break;
             case R.id.tv_pay:
-                postcreateOrder();
+                if(Double.valueOf(data.getUseableIntegral())>=Double.valueOf(data.getTotalIntegral())){
+                    postcreateOrder();
+                    return;
+                }
+                ToastUtils.showShort("暂无可抵扣积分");
+                break;
+            case R.id.iv_jd:
+                if(Double.valueOf(payJd)==0){
+                    //100  300  -200
+                    mIvJd.setImageDrawable(getResources().getDrawable(R.drawable.wxz_));
+                    double yzf = Double.valueOf(data.getRealAmount())-Double.valueOf(data.getBalance());
+                    if(yzf>0){
+                        tv_syjf.setText( StringUtil.getValue(data.getTotalIntegral()) + "+￥" +  StringUtil.getValue(yzf));
+                        payJd = data.getBalance();
+                    }else if(yzf<0){
+                        tv_syjf.setText(data.getTotalIntegral());
+                        payJd = data.getRealAmount();
+                    }else{
+                        payJd = data.getBalance();
+                        tv_syjf.setText(data.getTotalIntegral());
+                    }
+                    payJd = StringUtil.getValue(payJd);
+                    tv_jd_y.setText("使用"+payJd+"个金豆抵扣￥"+payJd);
+                }else{
+                    payJd = "0";
+                    tv_jd_y.setText("");
+                    mIvJd.setImageDrawable(getResources().getDrawable(R.drawable.wxz_1));
+                    tv_syjf.setText(StringUtil.getValue(data.getTotalIntegral()) + "+￥" +  StringUtil.getValue(data.getRealAmount()));
+                }
                 break;
         }
     }
-    List<ShowOrderInfo.RedListBean> listYhqs ;
+
+    List<ShowOrderInfo.RedListBean> listYhqs;
     PopupWindowSy window;
+
     private void popupWindw() {
         window = new PopupWindowSy(this, listYhqs, new PopupWindowSy.GiveDialogInterface() {
             @Override
@@ -145,9 +189,8 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
         });
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         window.setOutsideTouchable(true);
-        window.showAtLocation(mTvName, Gravity.BOTTOM,  0, 0);
+        window.showAtLocation(mTvName, Gravity.BOTTOM, 0, 0);
     }
-
 
 
     @Override
@@ -162,16 +205,17 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
                     mTvAddress.setText("请选择收货地址");
                 } else {
                     info.setAddressId(addressData.getId());
-                    mTvName.setText("收件人："+addressData.getAcceptName()+"  电话："+addressData.getMobile());
+                    mTvName.setText("收件人：" + addressData.getAcceptName() + "  电话：" + addressData.getMobile());
                     mTvAddress.setText(addressData.getLocation());
                 }
             }
         }
 
     }
+
     private void postcreateOrder() {
         info.setLevelMessage(tv_levelMessage.getText().toString());
-        Log.w("info","info"+info.toString());
+        Log.w("info", "info" + info.toString());
         RetrofitUtil.getInstance().apiService()
                 .postcreateOrder(info)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -184,9 +228,9 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
 
                     @Override
                     public void onNext(Result<CreateOrderBean> result) {
-                        if(isDataInfoSucceed(result)){
+                        if (isDataInfoSucceed(result)) {
                             ToastUtils.showShort("创建成功");
-                            appPay(result.getData().getId(),result.getData().getDeductIntegral());
+                            appPay(result.getData().getId(), result.getData().getDeductIntegral());
                         }
                     }
 
@@ -200,7 +244,7 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
                     }
                 });
     }
-
+    ShowOrderInfo data;
     private void postShowOrderInfo() {
         RetrofitUtil.getInstance().apiService()
                 .postShowOrderInfo(info)
@@ -214,31 +258,41 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
 
                     @Override
                     public void onNext(Result<ShowOrderInfo> result) {
-                        if(isDataInfoSucceed(result)){
-                            ShowOrderInfo data = result.getData();
+                        if (isDataInfoSucceed(result)) {
+                            data = result.getData();
                             if (data.getUserAddress() != null) {
-                                mTvName.setText("收件人："+data.getUserAddress().getAcceptName()+"  电话："+data.getUserAddress().getMobile());
+                                mTvName.setText("收件人：" + data.getUserAddress().getAcceptName() + "  电话：" + data.getUserAddress().getMobile());
                                 mTvAddress.setText(data.getUserAddress().getLocation());
                                 info.setAddressId(data.getUserAddress().getId());
                             }
-                            if(data.getOrderProducts()!=null){
+                            if (data.getOrderProducts() != null) {
                                 mOrderAffirmAdapter.setNewData(data.getOrderProducts());
                             }
-                            tv_syjf.setText(data.getUseableIntegral());
-                            tv1.setText(data.getTotalQuantity()+"件商品");
-                            if(Double.valueOf(data.getRealAmount())!=0){
-                                tv11.setText(data.getTotalIntegral()+"积分" +"+￥"+data.getRealAmount());
-                            }else{
-                                tv11.setText(data.getTotalIntegral()+"积分");
+//                            tv_totalDelivery.setText(StringUtil.getValue());
+                            tv1.setText(data.getTotalQuantity() + "件商品");
+                            if (Double.valueOf(data.getRealAmount()) != 0) {
+                                tv11.setText(data.getTotalIntegral() + "积分" + "+￥" + data.getRealAmount());
+                                tv_syjf.setText(data.getTotalIntegral() + "+￥" + data.getRealAmount());
+                            } else {
+                                tv11.setText(data.getTotalIntegral() + "积分");
+                                tv_syjf.setText(data.getTotalIntegral());
                             }
 
-                            if(result.getData().getRedList()==null ||result.getData().getRedList().size()==0){
-                                tv_youhui.setText("暂无优惠券");
-                            }else{
-                                listYhqs = result.getData().getRedList();
-                                tv_youhui.setText("有"+result.getData().getRedList().size()+"张优惠券");
+                            if (data.getRedList() == null || data.getRedList().size() == 0) {
+                                tv_youhui.setText("暂无可用优惠券");
+                            } else {
+                                listYhqs = data.getRedList();
+                                tv_youhui.setText("有" + data.getRedList().size() + "张优惠券");
                             }
-                        }else{
+                            if(Double.valueOf(data.getBalance())!=0){
+                                mTvJd.setText("使用金豆(剩余"+data.getBalance()+"个)");
+                                mIvJd.setVisibility(View.VISIBLE);
+                            }
+                            if(Double.valueOf(data.getUseableIntegral())!=0){
+                                mTvJf.setText("最多可抵扣"+data.getUseableIntegral()+"积分");
+                            }
+
+                        } else {
                             OrderAffirmActivity.this.finish();
                         }
                     }
@@ -260,12 +314,13 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
      * wxPayType	支付类型：1,小程序;2,公众号;3,app；4，扫码
      * payType	支付方式:1,支付宝支付;2,微信支付;3,银行卡支付;4,余额支付
      * orderType(订单类型:1,普通订单；2，积分订单；)
+     *
      * @param id
      */
-    private void appPay(String id,String integral) {
+    private void appPay(String id, String integral) {
         show();
         RetrofitUtil.getInstance().apiService()
-                .getOrderPayInfo(integral, id, payType+"", null, "1").observeOn(AndroidSchedulers.mainThread())
+                .getOrderPayInfo(integral, id, payType + "", null, "1").observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<ParamData>>() {
                     @Override
@@ -275,13 +330,13 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
 
                     @Override
                     public void onNext(Result<ParamData> result) {
-                        if(isDataInfoSucceed(result)){
-                            if(payType ==2){
+                        if (isDataInfoSucceed(result)) {
+                            if (payType == 2) {
                                 appPayZfb("");
-                            }else {
+                            } else {
                                 appPayWx(result.getData());
                             }
-                        }else{
+                        } else {
                             ToastUtils.showShort(result.getMesg());
                         }
 
@@ -319,6 +374,7 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
             ToastUtil.showShortToast(this, "您没有安装微信客户端!");
         }
     }
+
     private void appPayZfb(String data) {
         PaymentParameterBean mPaymentParameterBean1 = new PaymentParameterBean();
         mPaymentParameterBean1.setOrderInfo(data);
@@ -366,6 +422,7 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
         }
 
     }
+
     /**
      * 用于处理微信结果的回调,结果来自{@link }
      */
@@ -388,6 +445,7 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
 
 
     }
+
     @Override
     public void showProgress() {
         show();
@@ -424,5 +482,4 @@ public class OrderAffirmActivity extends BaseActivity  implements PaymentContrac
         ToastUtils.showShort("支付未成功!");
         paymentResultCallback(false);
     }
-
 }

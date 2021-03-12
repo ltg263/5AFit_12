@@ -144,6 +144,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_youhui"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -163,10 +164,67 @@
                             android:drawableEnd="@drawable/icon_jiantou_you_99_x"
                             android:drawablePadding="@dimen/dimen_5dp"
                             android:padding="@dimen/dp_10"
-                            android:text="有3张优惠券"
+                            android:text="暂无可用优惠券"
                             android:textColor="@color/color_999999"
                             android:textSize="@dimen/sp_14" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_jd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_jd"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/dp_10"
+                            android:text="使用金豆(无可用金豆)"
+                            android:textColor="@color/color_999999"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_jd_y"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@color/color_text_theme"
+                            android:text=""/>
+                        <ImageView
+                            android:id="@+id/iv_jd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="invisible"
+                            android:padding="@dimen/dp_10"
+                            android:src="@drawable/wxz_1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_jf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_jf"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/dp_10"
+                            android:text="暂无可抵扣积分"
+                            android:textColor="@color/color_999999"
+                            android:textSize="@dimen/sp_14" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="@dimen/dp_10"
+                            android:src="@drawable/wxz_1"
+                            android:visibility="invisible" />
+                    </LinearLayout>
+
 
                     <View
                         android:layout_width="match_parent"
@@ -180,11 +238,11 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:gravity="top"
+                        android:hint="填写备注：选填"
                         android:minLines="3"
                         android:padding="@dimen/dp_10"
-                        android:hint="填写备注：选填"
-                        android:textColorHint="#A8A8A8"
                         android:textColor="@color/color_333333"
+                        android:textColorHint="#A8A8A8"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -294,7 +352,7 @@
                         android:layout_below="@id/tv1"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="@dimen/dimen_7dp"
-                        android:text="1600积分+￥160"
+                        android:text="0"
                         android:textColor="@color/color_000000"
                         android:textSize="@dimen/sp_14" />
 
@@ -312,23 +370,33 @@
         android:paddingHorizontal="@dimen/dimen_20dp"
         android:paddingVertical="@dimen/dp_10">
 
+        <ImageView
+            android:id="@+id/iv_jf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_alignTop="@id/tv_syjf"
+            android:layout_marginEnd="@dimen/dimen_5dp"
+            android:layout_alignBottom="@id/tv_syjf"
+            android:src="@drawable/icon_rwzx"/>
+
         <TextView
             android:id="@+id/tv_syjf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/iv_jf"
             android:text="0"
             android:textColor="@color/color_ffffff"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_syjf"
-            android:drawableStart="@drawable/icon_rwzx"
             android:drawablePadding="@dimen/dimen_5dp"
             android:gravity="center_vertical"
             android:padding="@dimen/dimen_5dp"
-            android:text="剩余积分"
+            android:text="应支付"
             android:textColor="@color/color_ffffff"
             android:textSize="14sp" />
 

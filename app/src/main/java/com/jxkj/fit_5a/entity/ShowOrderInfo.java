@@ -1,5 +1,7 @@
 package com.jxkj.fit_5a.entity;
 
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+
 import java.util.List;
 
 public class ShowOrderInfo {
@@ -47,7 +49,7 @@ public class ShowOrderInfo {
     private List<RedListBean> redList;
 
     public String getBalance() {
-        return balance;
+        return "199";
     }
 
     public void setBalance(String balance) {
@@ -111,7 +113,7 @@ public class ShowOrderInfo {
     }
 
     public String getRealAmount() {
-        return realAmount;
+        return StringUtil.getValue(realAmount);
     }
 
     public void setRealAmount(String realAmount) {
@@ -143,7 +145,7 @@ public class ShowOrderInfo {
     }
 
     public String getTotalIntegral() {
-        return totalIntegral;
+        return StringUtil.getValue(totalIntegral);
     }
 
     public void setTotalIntegral(String totalIntegral) {
@@ -384,7 +386,7 @@ public class ShowOrderInfo {
         }
 
         public String getDeductIntegral() {
-            return deductIntegral;
+            return StringUtil.getValue(deductIntegral);
         }
 
         public void setDeductIntegral(String deductIntegral) {
@@ -448,7 +450,7 @@ public class ShowOrderInfo {
         }
 
         public String getPrice() {
-            return price;
+            return StringUtil.getValue(price);
         }
 
         public void setPrice(String price) {

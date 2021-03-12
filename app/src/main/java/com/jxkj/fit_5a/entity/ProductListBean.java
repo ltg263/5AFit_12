@@ -1,5 +1,7 @@
 package com.jxkj.fit_5a.entity;
 
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+
 import java.util.List;
 
 public class ProductListBean {
@@ -144,7 +146,7 @@ public class ProductListBean {
         }
 
         public String getPrice() {
-            return price;
+            return StringUtil.getValue(price);
         }
 
         public void setPrice(String price) {
@@ -160,7 +162,7 @@ public class ProductListBean {
         }
 
         public String getDeductIntegral() {
-            return deductIntegral;
+            return StringUtil.getValue(deductIntegral);
         }
 
         public void setDeductIntegral(String deductIntegral) {

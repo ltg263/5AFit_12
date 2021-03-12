@@ -605,4 +605,41 @@ public class StringUtil {
         }
         return str;
     }
+
+    /**
+     * int double 两位小时
+     * @param obj
+     * @return
+     */
+    public static String getValue(String obj) {
+        Log.w("getValue","obj:"+obj);
+        if(isIntegerForDouble(Double.valueOf(obj))){
+            return getValue(Double.valueOf(obj));
+        }
+        return String.format("%.2f", Double.valueOf(obj));
+    }
+
+    /**
+     * int double 两位小时
+     * @param obj
+     * @return
+     */
+    public static String getValue(double obj) {
+        Log.w("getValue","obj:"+obj);
+        if(isIntegerForDouble(obj)){
+            return String.valueOf((int) obj);
+        }
+        return String.format("%.2f", obj);
+    }
+
+    /**
+     * 判断double是否是整数
+     * @param obj
+     * @return
+     */
+    public static boolean isIntegerForDouble(double obj) {
+        double eps = 1e-10;  // 精度范围
+        return obj-Math.floor(obj) < eps;
+    }
+
 }
