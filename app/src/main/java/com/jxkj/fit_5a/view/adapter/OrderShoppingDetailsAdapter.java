@@ -34,7 +34,7 @@ public class OrderShoppingDetailsAdapter extends BaseQuickAdapter<OrderInfoData.
             str = "单价：<font color=\"#FF6666\">"+item.getDeductIntegral()+"积分";
         }
         helper.setText(R.id.tv_name,item.getName()).setText(R.id.tv_spec,"规格："+item.getSkuName())
-                .setText(R.id.tv_shop_name,Html.fromHtml(str)).setText(R.id.tv_price,"x "+item.getRealNum());
+                .setText(R.id.tv_shop_name,Html.fromHtml(str)).setText(R.id.tv_price,"x "+item.getNum());
     }
 
 

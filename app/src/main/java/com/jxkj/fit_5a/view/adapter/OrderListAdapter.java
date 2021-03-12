@@ -24,11 +24,7 @@ import java.util.List;
 /**
  * author : LiuJie
  * date   : 2020/5/2712:25
- * order.status.data = [{ "label": "待支付", "value": 1 },
- * { "label": "待接单", "value": 2 }, { "label": "待配送", "value": 3 },
- * { "label": "配送中", "value": 4 }, { "label": "待评价", "value": 5 },
- * { "label": "已完成", "value": 6 }, { "label": "已取消", "value": 7 },
- * { "label": "已超时", "value": 8 }, { "label": "已结束", "value": 9 }];
+ * 订单状态1,待支付;2,待发货;3,待收货;4,待评价;5,已完成;6,已取消;7,已过期;8,已结束
  */
 public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, BaseViewHolder> {
     public OrderListAdapter(@Nullable List<OrderInfoData.ListBean> data) {
@@ -42,7 +38,11 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
         helper.setText(R.id.tv_order_shop_name, item.getOrderNo());
         helper.setText(R.id.tv_status, item.getStatusStr());
 //        helper.setText(R.id.tv_time,item.getCreateTime());
-        String str = "共计<font color=\"#FF6666\">1</font>件："+item.getDeductIntegral()+"积分 + ￥"+item.getRealAmount();//+" （含￥0运费）";
+        String deliveryAmount = "";
+        if(Double.valueOf(item.getDeliveryAmount())!=0){
+            deliveryAmount = " （含￥"+item.getDeliveryAmount()+"运费）";
+        }
+        String str = "共计<font color=\"#FF6666\">1</font>件："+item.getDeductIntegral()+"积分 + ￥"+item.getRealAmount()+deliveryAmount;
         helper.setText(R.id.tv_jg_num, Html.fromHtml(str));
         RecyclerView recyclerView = helper.getView(R.id.rv_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));

@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.entity;
 
 import com.jxkj.fit_5a.base.OrderInfoData;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 
 import java.util.List;
 
@@ -137,7 +138,7 @@ public class OrderDetailsData {
     }
 
     public String getDeliveryAmount() {
-        return deliveryAmount;
+        return StringUtil.getValue(deliveryAmount);
     }
 
     public void setDeliveryAmount(String deliveryAmount) {
@@ -145,7 +146,7 @@ public class OrderDetailsData {
     }
 
     public String getDeductIntegral() {
-        return deductIntegral;
+        return StringUtil.getValue(deductIntegral);
     }
 
     public void setDeductIntegral(String deductIntegral) {
@@ -153,7 +154,7 @@ public class OrderDetailsData {
     }
 
     public String getRealAmount() {
-        return realAmount;
+        return StringUtil.getValue(realAmount);
     }
 
     public void setRealAmount(String realAmount) {

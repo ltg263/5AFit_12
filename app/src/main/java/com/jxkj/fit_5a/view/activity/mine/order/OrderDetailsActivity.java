@@ -12,6 +12,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.OrderInfoData;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.OrderDetailsData;
 import com.jxkj.fit_5a.view.adapter.OrderShoppingDetailsAdapter;
 
@@ -47,9 +48,17 @@ public class OrderDetailsActivity extends BaseActivity {
     @BindView(R.id.tv_order_3)
     TextView mTvOrder3;
     @BindView(R.id.tv_order_4)
-    TextView mTvOrder4;
+    TextView mTvOrder4;//下单时间
     @BindView(R.id.tv_order_5)
-    TextView mTvOrder5;
+    TextView mTvOrder5;//支付时间
+    @BindView(R.id.tv_order_6)
+    TextView mTvOrder6;//发货时间
+    @BindView(R.id.tv_order_7)
+    TextView mTvOrder7;//关闭时间
+    @BindView(R.id.tv_order_8)
+    TextView mTvOrder8;//完成时间
+    @BindView(R.id.tv_order_9)
+    TextView mTvOrder9;//完成时间
     @BindView(R.id.bnt0)
     TextView btn0;
     @BindView(R.id.bnt1)
@@ -109,9 +118,29 @@ public class OrderDetailsActivity extends BaseActivity {
         mTvName.setText("收件人："+data.getDetail().getAcceptName()+"  "+data.getDetail().getMobile());
         mTvAddress.setText(data.getDetail().getLocation());
         mTvOrder1.setText("订单编号："+data.getOrderNo());
-        mTvOrder2.setText("支付方式："+(data.getOrderNo().equals("1")?"微信":"支付宝"));
-        mTvOrder3.setText("交易编号："+"---");
+        mTvOrder2.setText("支付方式："+data.getPayTypeStr());
+        mTvOrder3.setText("商品信息：共"+data.getTotalNum()+"件商品"+data.getDeductIntegral()+"积分+ ￥"+data.getRealAmount()+" 运费￥"+data.getDeliveryAmount());
         mTvOrder4.setText("下单时间："+data.getCreateTime());
+        if(StringUtil.isNotBlank(data.getPayTime())){
+            mTvOrder5.setVisibility(View.VISIBLE);
+            mTvOrder5.setText("支付时间："+data.getPayTime());
+        }
+        if(StringUtil.isNotBlank(data.getDeliveryTime())){
+            mTvOrder6.setVisibility(View.VISIBLE);
+            mTvOrder6.setText("发货时间："+data.getDeliveryTime());
+        }
+        if(StringUtil.isNotBlank(data.getCloseTime())){
+            mTvOrder7.setVisibility(View.VISIBLE);
+            mTvOrder7.setText("关闭时间："+data.getCloseTime());
+        }
+        if(StringUtil.isNotBlank(data.getFinishTime())){
+            mTvOrder8.setVisibility(View.VISIBLE);
+            mTvOrder8.setText("完成时间："+data.getFinishTime());
+        }
+        if(StringUtil.isNotBlank(data.getExpireTime())){
+            mTvOrder9.setVisibility(View.VISIBLE);
+            mTvOrder9.setText("过期时间："+data.getExpireTime());
+        }
         btn0.setVisibility(View.GONE);
         btn1.setVisibility(View.GONE);
         btn2.setVisibility(View.GONE);
@@ -164,7 +193,6 @@ public class OrderDetailsActivity extends BaseActivity {
             default:
                 btn0.setVisibility(View.GONE);
         }
-        mTvOrder5.setText("发货时间："+data.getExpireTime());
     }
 
 
