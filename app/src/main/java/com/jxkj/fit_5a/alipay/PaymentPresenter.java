@@ -6,14 +6,13 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alipay.sdk.app.PayTask;
-import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.alipay.pay.PayResult;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
-
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -21,6 +20,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+
 
 /**
  * Function:PaymentPresenter
@@ -65,7 +65,7 @@ public class PaymentPresenter implements PaymentContract.Presenter {
         final String packageValue = paymentParameterBean.getPackageValue();
         final String sign = paymentParameterBean.getSign();
 //        final String extData = paymentParameterBean.getExtData();
-        final IWXAPI api = WXAPIFactory.createWXAPI(mWeakActivity.get(), ConstValues.WX_APP_ID);
+        final IWXAPI api = WXAPIFactory.createWXAPI(mWeakActivity.get(),"wx08a41293a322c4a0");
 
         new Thread(new Runnable() {
             @Override

@@ -1,4 +1,4 @@
-package com.jxkj.fit_5a.alipay;
+package com.jxkj.fit_5a.alipay.pay;
 
 public final class Base64 {
 

@@ -13,16 +13,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.alipay.PaymentContract;
+import com.jxkj.fit_5a.alipay.PaymentParameterBean;
+import com.jxkj.fit_5a.alipay.PaymentPresenter;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.MagicIndicatorUtils;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 import com.jxkj.fit_5a.view.adapter.VipUpSelectAdapter;
 import com.jxkj.fit_5a.view.adapter.VipZxtqAdapter;
 import com.jxkj.fit_5a.view.fragment.VipItemFragment;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 
@@ -36,7 +44,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MineVipActivity extends BaseActivity {
+public class MineVipActivity extends BaseActivity   implements PaymentContract.View {
     @BindView(R.id.magic_indicator)
     MagicIndicator mMagicIndicator;
     @BindView(R.id.view_pager)
@@ -59,6 +67,9 @@ public class MineVipActivity extends BaseActivity {
     TextView mTvPay;
 
     int payType = 1;
+    private PaymentPresenter paymentPresenter;
+    private IWXAPI api;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_mine_vip;
@@ -68,6 +79,8 @@ public class MineVipActivity extends BaseActivity {
     protected void initViews() {
         mTvTitle.setText("会员中心");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
+        api = WXAPIFactory.createWXAPI(this, ConstValues.WX_APP_ID);
+        paymentPresenter = new PaymentPresenter(this, MineVipActivity.this);
         getSpecList();
         initRv();
     }
@@ -226,7 +239,13 @@ public class MineVipActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_pay:
-                postCreateLevel();
+
+                if(payType==1){
+                    weCahtPay(null);
+                }else{
+                    appPayZfb("12");
+                }
+//                postCreateLevel();
                 break;
         }
     }
@@ -261,4 +280,75 @@ public class MineVipActivity extends BaseActivity {
                     }
                 });
     }
+
+
+
+    private void weCahtPay(String payStr){
+        PayReq req = new PayReq();
+//        req.appId = payStr.getAppid();
+//        req.partnerId = payStr.getPartnerid();
+//        req.prepayId = payStr.getPrepayid();
+//        req.nonceStr = payStr.getNoncestr();
+//        req.timeStamp = payStr.getTimestamp();
+//        req.packageValue = payStr.getPackageValue();
+//        req.sign = payStr.getSign();
+//        req.extData = "app data";
+        req.appId = "wx08a41293a322c4a0";
+        req.partnerId = "";
+        req.prepayId = "";
+        req.nonceStr = "";
+        req.timeStamp = "";
+        req.packageValue = "";
+        req.sign = "";
+        req.extData = "app data";
+        api.sendReq(req);
+    }
+    private void appPayZfb(String data) {
+        PaymentParameterBean mPaymentParameterBean1 = new PaymentParameterBean();
+        mPaymentParameterBean1.setOrderInfo(data);
+        paymentPresenter.doAliPay(mPaymentParameterBean1);
+    }
+
+
+    @Override
+    public void onWXPaySuccess() {
+
+    }
+
+    @Override
+    public void onAliPaySuccess() {
+        ToastUtils.showShort( "支付成功!");
+    }
+
+    @Override
+    public void onWxPayFailure() {
+
+    }
+
+    @Override
+    public void onAliPayFailure() {
+        ToastUtils.showShort( "支付未成功!");
+        paymentResultCallback(false);
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void dismissProgress() {
+
+    }
+    /*支付结果的回调*/
+    private void paymentResultCallback(boolean flag) {
+//        ActivityCollector.getAppManager().finishotherActivity(MainActivity.activity, ShoppingPaymentActivity.this);
+//        if (flag) {
+//            IntentUtils.getInstence().intent(ShoppingPaymentActivity.this, MyOrderActivity.class, "position", 0);
+//        } else {
+//            IntentUtils.getInstence().intent(ShoppingPaymentActivity.this, MyOrderActivity.class, "position", 1);
+//        }
+        finish();
+    }
+
 }

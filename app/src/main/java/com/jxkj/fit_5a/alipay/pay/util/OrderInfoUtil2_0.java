@@ -1,17 +1,18 @@
-package com.jxkj.fit_5a.alipay;
+package com.jxkj.fit_5a.alipay.pay.util;
+
+
+
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-
 
 /**
  * 2.0 订单串本地签名逻辑
@@ -147,33 +148,33 @@ public class OrderInfoUtil2_0 {
 	 *
 	 * @return
 	 */
-	public static String getSign(Map<String, String> map, String rsaKey, boolean rsa2) {
-		List<String> keys = new ArrayList<String>(map.keySet());
-		// key排序
-		Collections.sort(keys);
-
-		StringBuilder authInfo = new StringBuilder();
-		for (int i = 0; i < keys.size() - 1; i++) {
-			String key = keys.get(i);
-			String value = map.get(key);
-			authInfo.append(buildKeyValue(key, value, false));
-			authInfo.append("&");
-		}
-
-		String tailKey = keys.get(keys.size() - 1);
-		String tailValue = map.get(tailKey);
-		authInfo.append(buildKeyValue(tailKey, tailValue, false));
-
-		String oriSign = SignUtils.sign(authInfo.toString(), rsaKey, rsa2);
-		String encodedSign = "";
-
-		try {
-			encodedSign = URLEncoder.encode(oriSign, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return "sign=" + encodedSign;
-	}
+//	public static String getSign(Map<String, String> map, String rsaKey, boolean rsa2) {
+//		List<String> keys = new ArrayList<String>(map.keySet());
+//		// key排序
+//		Collections.sort(keys);
+//
+//		StringBuilder authInfo = new StringBuilder();
+//		for (int i = 0; i < keys.size() - 1; i++) {
+//			String key = keys.get(i);
+//			String value = map.get(key);
+//			authInfo.append(buildKeyValue(key, value, false));
+//			authInfo.append("&");
+//		}
+//
+//		String tailKey = keys.get(keys.size() - 1);
+//		String tailValue = map.get(tailKey);
+//		authInfo.append(buildKeyValue(tailKey, tailValue, false));
+//
+//		String oriSign = SignUtils.sign(authInfo.toString(), rsaKey, rsa2);
+//		String encodedSign = "";
+//
+//		try {
+//			encodedSign = URLEncoder.encode(oriSign, "UTF-8");
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
+//		return "sign=" + encodedSign;
+//	}
 
 	/**
 	 * 要求外部订单号必须唯一。
