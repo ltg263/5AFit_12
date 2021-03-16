@@ -536,7 +536,20 @@ public class StringUtil {
         }
         return pastDaysList;
     }
-
+    public static String getTimeGeShiYw(long date){
+        if (date<60) {
+            return date+"s";
+        }else if (date>60&&date<3600) {
+            long m = date/60;
+            long s = date%60;
+            return m+"m"+s+"s";
+        }else {
+            long h = date/3600;
+            long m = (date%3600)/60;
+            long s = (date%3600)%60;
+            return h+"h"+m+"m"+s+"s";
+        }
+    }
     public static String getTimeGeShi(long date){
         if (date<60) {
             return date+"秒";

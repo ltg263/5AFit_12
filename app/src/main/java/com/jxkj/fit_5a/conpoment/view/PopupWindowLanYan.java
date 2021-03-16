@@ -151,6 +151,7 @@ public class PopupWindowLanYan extends PopupWindow {
                 case 99:
                     //连接
                     Ble4_0Util.OpenA2dp();
+                    Log.w("---》》》","错误："+ ble4Util.isConnect());
                     dialogInterface.btnConfirm(message.obj.toString());
                     break;
                 case 101:
@@ -224,10 +225,15 @@ public class PopupWindowLanYan extends PopupWindow {
         boolean isHave = false;
         List<HistoryEquipmentData> lists = SharedHistoryEquipment.singleton().getSharedHistoryEquipment();
         if(lists!=null){
+            int[] a = ConstValues_Ly.DEVICE_TYPE_IDS;
+            Arrays.sort(a); //首先对数组排序
             for(int i=0;i<lists.size();i++){
-                if(lists.get(i).getId()==ConstValues_Ly.METER_ID){
+                int result = Arrays.binarySearch(a, lists.get(i).getId());
+                Log.w("-->","result:"+result);
+                if(result>=0){
                     isHave = true;
                     PopupWindowLanYan.BleName = lists.get(i).getName();
+                    lists.get(i).setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
                     lists.get(i).setState("0");
                 }else{
                     lists.get(i).setState("1");

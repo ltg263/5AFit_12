@@ -3,6 +3,7 @@ package com.jxkj.fit_5a.conpoment.utils;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
@@ -11,8 +12,6 @@ import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 
 
 public class TimeThreadUtils {
-
-    private static Ble4_0Util lanyan1 = PopupWindowLanYan.ble4Util;
 
     public static void sendDataA0() {
         new Thread(new ThreadShowA0()).start();
@@ -34,14 +33,14 @@ public class TimeThreadUtils {
         Handler handler = new Handler() {
             public void handleMessage(Message msg) {
                 if (msg.what == 1) {
-                    lanyan1.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A0));
+                    PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A0));
                     System.out.println("receive....");
                 }
             }
         };
         @Override
         public void run() {
-            while (lanyan1.isConnect()) {
+            while (PopupWindowLanYan.ble4Util.isConnect()) {
                 try {
                     Thread.sleep(5000);
                     Message msg = new Message();
@@ -63,7 +62,7 @@ public class TimeThreadUtils {
         Handler handler = new Handler() {
             public void handleMessage(Message msg) {
                 if (msg.what == 1) {
-                    lanyan1.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A2));
+                    PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A2));
                     if(pos==5 && ConstValues_Ly.CLIENT_ID==0){
                         ToastUtils.showShort("设备故障已断开");
                         PopupWindowLanYan.ble4Util.disconnect();
@@ -74,7 +73,8 @@ public class TimeThreadUtils {
         };
         @Override
         public void run() {
-            while (lanyan1.isConnect()) {
+            Log.w("---》》》","---》》》"+PopupWindowLanYan.ble4Util.isConnect());
+            while (PopupWindowLanYan.ble4Util.isConnect()) {
                 try {
                     Thread.sleep(1000);
                     Message msg = new Message();
@@ -105,7 +105,7 @@ public class TimeThreadUtils {
             public void handleMessage(Message msg) {
                 if (msg.what == 1 && load.length>pos) {
                     System.out.println("receive....");
-                    lanyan1.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A6,load[pos]));
+                    PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A6,load[pos]));
                     pos++;
                 }
             }
@@ -113,7 +113,7 @@ public class TimeThreadUtils {
 
         @Override
         public void run() {
-            while (lanyan1.isConnect() && load.length>pos && ConstValues_Ly.CURRENT_STATE==1) {
+            while (PopupWindowLanYan.ble4Util.isConnect() && load.length>pos && ConstValues_Ly.CURRENT_STATE==1) {
                 try {
                     Message msg = new Message();
                     msg.what = 1;

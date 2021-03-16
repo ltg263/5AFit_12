@@ -1,6 +1,10 @@
 package com.jxkj.fit_5a;
 
 
+import android.util.ArraySet;
+
+import androidx.core.content.res.TypedArrayUtils;
+
 import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 
@@ -10,19 +14,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 public class MianJavaDame {
     public static void main(String[] args) {
-//
-//        String[] a = new String[1];
-//        a[0]="哈哈";
-
-        System.out.println("--->>"+getValue(1.55622));
-        System.out.println("--->>"+getValue(1.0));
-        System.out.println("--->>"+getValue(1.00));
-        System.out.println("--->>"+getValue(1.01));
-        System.out.println("--->>"+getValue(1));
-        System.out.println("--->>"+getValue(0.1));
+        int[] test = {10,200,3,8,9,2,5};
+        Arrays.sort(test); //首先对数组排序
+        int result = Arrays.binarySearch(test, 2); //在数组中搜索是否含有5
+        System.out.println("-->>>:"+result); //这里的结果是 3
     }
 
     public static String getValue(double obj) {

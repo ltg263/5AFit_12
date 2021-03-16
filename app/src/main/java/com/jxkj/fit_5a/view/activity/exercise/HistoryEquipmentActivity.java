@@ -1,6 +1,5 @@
 package com.jxkj.fit_5a.view.activity.exercise;
 
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.os.Handler;
 import android.os.Message;

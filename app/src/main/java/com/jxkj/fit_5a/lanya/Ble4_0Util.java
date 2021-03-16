@@ -135,6 +135,7 @@ public class Ble4_0Util implements BleUtil {
         if (null == curConnectDev.getName() && null == curConnectDev.getAddress()) {
             return false;
         }
+        Log.w("---》》》:","----------");
         //连接蓝牙
         mBluetoothGatt = curConnectDev.connectGatt(context, false, new BluetoothGattCallback() {
             @Override
@@ -213,7 +214,7 @@ public class Ble4_0Util implements BleUtil {
                                 || gattCharacteristic.getProperties() == 12)
                                 && gattCharacteristic.getUuid().toString().indexOf(readUUID) >= 0) {
                             mDevWriteCharacteristic = gattCharacteristic;
-                            Log.e("---》》》", "连接成功");
+                            Log.e("---》》》", "连接成功"+isConnect());
                             callback.StateChange(status, newStates);
                         }
                     }
@@ -275,6 +276,7 @@ public class Ble4_0Util implements BleUtil {
 
     @Override
     public boolean disconnect() {
+        Log.w("---》》》","---》》》");
         if (null != mBluetoothGatt) {
             mBluetoothGatt.disconnect();
             mBluetoothGatt.close();

@@ -43,7 +43,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RatePatternActivity extends BaseActivity {
+public class RatePatternActivity_1 extends BaseActivity {
 
 
     @BindView(R.id.AAChartView)
@@ -174,28 +174,20 @@ public class RatePatternActivity extends BaseActivity {
                 .yAxisLabelsEnabled(false)
                 .xAxisLabelsEnabled(true)
                 .yAxisGridLineWidth(0f)
-                .xAxisVisible(true)
+                .xAxisVisible(false)
                 .legendEnabled(false)
                 .markerRadius(0f)
                 .markerSymbol(AAChartSymbolType.Circle)
                 .scrollablePlotArea(
                         new AAScrollablePlotArea()
-                                .minWidth(300)
+                                .minWidth(500)
                                 .scrollPositionX(1f)
                 )
                 .series(getDataList(mData1,mData2,mData3));
         return aaChartModel;
     }
-    String[] str = null;
+
     private AASeriesElement[] getDataList(List<Byte> data1,List<Byte> data2,List<Byte> data3){
-        if(aaChartModel!=null){
-            str = new String[data1.size()];
-            for(int i=0;i<data1.size();i++){
-                str[i]= StringUtil.getTimeGeShiYw(data1.get(i));
-            }
-//            aaChartModel.categories(str).animationDuration(1);
-//            mAAChartView.aa_refreshChartWithChartModel(aaChartModel);
-        }
         AASeriesElement element = null;
         if(currentPos==1){
             element = new AASeriesElement()
@@ -216,7 +208,6 @@ public class RatePatternActivity extends BaseActivity {
                     .color("#FFB300")
                     .data(data3.toArray());
         }
-
 
         return new AASeriesElement[]{element};
     }
@@ -250,7 +241,7 @@ public class RatePatternActivity extends BaseActivity {
                     public void btnType(int pos) {
                         if (pos == 2) {
                             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x03));
-                            Intent mIntent = new Intent(RatePatternActivity.this, TaskFinishActivity.class);
+                            Intent mIntent = new Intent(RatePatternActivity_1.this, TaskFinishActivity.class);
                             String str = String.valueOf(Distance/duration*60*60);
                             String pjDuration = "0";
                             if(str.equals(".")){
@@ -420,16 +411,15 @@ public class RatePatternActivity extends BaseActivity {
         mRatePatternAdapter.notifyDataSetChanged();
 
         setBpmDataBeanTime(Pulse);
-//        mData1.add((byte) Pulse);
-        mData1.add((byte) timeSecond);
+        mData1.add((byte) Pulse);
         mData2.add((byte) rpm);
         mData3.add((byte) Watt);
         List<Byte> mData11= new ArrayList<>();
-        if(mData1.size()>60){
-            mData11.addAll(mData1.subList(Math.max(mData1.size() - 60, 0), mData1.size()));
-        }else{
-            mData11.addAll(mData1);
-        }
+        mData11.addAll(mData1.subList(Math.max(mData1.size() - 10, 0), mData1.size()));
+//        if(mData1.size()>10){
+//        }else{
+//            mData11.addAll(mData1);
+//        }
 
         List<Byte> mData22= new ArrayList<>();
         if(mData2.size()>10){
