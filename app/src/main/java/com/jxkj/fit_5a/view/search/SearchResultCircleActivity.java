@@ -12,10 +12,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
-import com.jxkj.fit_5a.base.ResultList;
-import com.jxkj.fit_5a.entity.HotTopicBean;
-import com.jxkj.fit_5a.view.activity.association.MineTopicActivity;
-import com.jxkj.fit_5a.view.adapter.TopicListAdapter;
+import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.entity.CircleQueryBean;
+import com.jxkj.fit_5a.view.activity.association.MineCircleActivity;
+import com.jxkj.fit_5a.view.adapter.InterestListAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import butterknife.BindView;
@@ -25,7 +25,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class SearchResultTopicActivity extends BaseActivity {
+public class SearchResultCircleActivity extends BaseActivity {
 
 
     @BindView(R.id.tv_top_title)
@@ -37,7 +37,7 @@ public class SearchResultTopicActivity extends BaseActivity {
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
     private String search;
-    private TopicListAdapter mTopicListAdapter;
+    private InterestListAdapter mInterestListAdapter;
 
     @Override
     protected int getContentView() {
@@ -51,18 +51,21 @@ public class SearchResultTopicActivity extends BaseActivity {
         mRefreshLayout.setEnableLoadMore(false);
         mRefreshLayout.setEnableRefresh(false);
 
-        mTopicListAdapter = new TopicListAdapter(null);
+
+        mInterestListAdapter = new InterestListAdapter(null);
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
-        mRvList.setAdapter(mTopicListAdapter);
+        mRvList.setAdapter(mInterestListAdapter);
 
-        mTopicListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mInterestListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                MineTopicActivity.startActivity(SearchResultTopicActivity.this,null);
+                Intent mIntent = new Intent(SearchResultCircleActivity.this, MineCircleActivity.class);
+                mIntent.putExtra("id",mInterestListAdapter.getData().get(position).getId());
+                startActivity(mIntent);
             }
         });
-        getAllTopic();
+        getCircleQuery();
     }
 
     @OnClick({R.id.ll_back, R.id.tv_top_title})
@@ -75,24 +78,24 @@ public class SearchResultTopicActivity extends BaseActivity {
         }
     }
 
-    private void getAllTopic(){
+    private void getCircleQuery(){
         RetrofitUtil.getInstance().apiService()
-                .getAllTopic(search,1,100)
+                .getCircleQuery(0)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<ResultList<HotTopicBean>>() {
+                .subscribe(new Observer<Result<CircleQueryBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(ResultList<HotTopicBean> result) {
+                    public void onNext(Result<CircleQueryBean> result) {
                         if (isDataInfoSucceed(result)) {
-                            if(result.getData()!=null && result.getData().size()>0){
-                                llNoData.setVisibility(View.GONE);
+                            if(result.getData().getList()!=null && result.getData().getList().size()>0){
                                 mRefreshLayout.setVisibility(View.VISIBLE);
-//                                mTopicListAdapter.setNewData(result.getData());
+                                llNoData.setVisibility(View.GONE);
+                                mInterestListAdapter.setNewData(result.getData().getList());
                             }
                         }
                     }
@@ -105,6 +108,7 @@ public class SearchResultTopicActivity extends BaseActivity {
                     public void onComplete() {
                     }
                 });
+
     }
 
 

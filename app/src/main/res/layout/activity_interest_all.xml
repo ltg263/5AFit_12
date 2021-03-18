@@ -24,7 +24,7 @@
             android:src="@drawable/icon_back_h" />
 
         <TextView
-            android:id="@+id/tv_search_topic"
+            android:id="@+id/tv_search_circle"
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_50dp"
             android:layout_marginEnd="@dimen/dp_10"
@@ -34,7 +34,7 @@
             android:drawablePadding="@dimen/dp_10"
             android:gravity="center_vertical"
             android:padding="@dimen/dimen_15dp"
-            android:text="圈子广场"
+            android:text="搜索圈子"
             android:textColor="@color/color_999999"
             android:textFontWeight="1"
             android:textSize="12sp"

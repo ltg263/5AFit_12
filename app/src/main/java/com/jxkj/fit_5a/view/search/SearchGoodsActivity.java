@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -64,9 +63,9 @@ public class SearchGoodsActivity extends BaseActivity {
     protected void initViews() {
         searchType = getIntent().getIntExtra("searchType",0);
         if(searchType==1){
-            searchEt.setHint("搜索内容或圈子");
+            searchEt.setHint("搜索动态");
         }else if(searchType == 2){
-            searchEt.setHint("搜索话题");
+            searchEt.setHint("搜索圈子");
         }
         activity = this;
         ImmersionBar.with(this).statusBarDarkFont(true).titleBar(R.id.rl_actionbar).fitsSystemWindows(true).init();
@@ -175,7 +174,7 @@ public class SearchGoodsActivity extends BaseActivity {
             IntentUtils.getInstence().intent(SearchGoodsActivity.this, SearchResultGoodsActivity.class,"search",inputText);
         }
         if(searchType==2){
-            IntentUtils.getInstence().intent(SearchGoodsActivity.this, SearchResultTopicActivity.class,"search",inputText);
+            IntentUtils.getInstence().intent(SearchGoodsActivity.this, SearchResultCircleActivity.class,"search",inputText);
         }
     }
 

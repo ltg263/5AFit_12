@@ -102,7 +102,7 @@
             android:name=".view.search.SearchResultGoodsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.search.SearchResultTopicActivity"
+            android:name=".view.search.SearchResultCircleActivity"
             android:screenOrientation="portrait" />
 
         <activity

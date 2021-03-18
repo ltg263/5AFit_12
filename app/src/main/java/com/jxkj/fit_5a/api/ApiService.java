@@ -1014,6 +1014,13 @@ public interface ApiService {
     @GET(ConstValues.PORT_21+"api/v1/moment/query_by_keyword")
     Observable<ResultList<QueryPopularBean>> getQuery_by_keyword(@Query("keyword") String keyword,@Query("contentType") String contentType,@Query("page") int page,@Query("pageSize")int pageSize);
 
+
+    /**
+     * 根据内容搜索发布的动态信息
+     */
+    @GET(ConstValues.PORT_21+"api/v1/circle/moment/query_by_keyword")
+    Observable<ResultList<QueryPopularBean>> getCircleQuery_by_keyword(@Query("keyword") String keyword,@Query("circleId") String circleId,@Query("page") int page,@Query("pageSize")int pageSize);
+
     /**
      *获取动态信息--社群
      * @param momentId

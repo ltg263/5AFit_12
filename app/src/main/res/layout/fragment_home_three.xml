@@ -24,7 +24,7 @@
             android:drawablePadding="@dimen/dp_10"
             android:gravity="center_vertical"
             android:padding="@dimen/dp_10"
-            android:text="搜索内容或圈子"
+            android:text="搜索动态"
             android:textColor="@color/color_999999"
             android:textFontWeight="1"
             android:textSize="12sp"

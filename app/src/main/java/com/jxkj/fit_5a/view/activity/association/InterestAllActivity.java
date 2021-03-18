@@ -16,9 +16,11 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.DeviceTypeData;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.view.AutoHeightViewPager;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.view.fragment.InterestAllFragment;
+import com.jxkj.fit_5a.view.search.SearchGoodsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,7 +144,7 @@ public class InterestAllActivity extends BaseActivity {
         mViewpager.setCurrentItem(0);
     }
     boolean isY = false;
-    @OnClick({R.id.iv_back, R.id.tv_search_topic,R.id.tv_right_text})
+    @OnClick({R.id.iv_back, R.id.tv_search_circle,R.id.tv_right_text})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -161,7 +163,8 @@ public class InterestAllActivity extends BaseActivity {
                     }
                 });
                 break;
-            case R.id.tv_search_topic:
+            case R.id.tv_search_circle:
+                IntentUtils.getInstence().intent(this, SearchGoodsActivity.class,"searchType",2);
                 break;
         }
     }
