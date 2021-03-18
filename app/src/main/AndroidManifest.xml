@@ -104,6 +104,9 @@
         <activity
             android:name=".view.search.SearchResultCircleActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.exercise.ExerciseRecordDetailsActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".wxapi.WXPayEntryActivity"

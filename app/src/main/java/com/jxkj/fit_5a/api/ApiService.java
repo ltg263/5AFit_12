@@ -57,6 +57,7 @@ import com.jxkj.fit_5a.entity.ShowOrderInfo;
 import com.jxkj.fit_5a.entity.SignatureBean;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 import com.jxkj.fit_5a.entity.SportLogBean;
+import com.jxkj.fit_5a.entity.SportLogDetailBean;
 import com.jxkj.fit_5a.entity.SportLogStatsBean;
 import com.jxkj.fit_5a.entity.StsTokenBean;
 import com.jxkj.fit_5a.entity.SubmitFilesBean;
@@ -688,6 +689,12 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_4 + "api/v1/user/sport/log/list")
     Observable<Result<SportLogBean>> geSportLogList(@Query("deviceType") String deviceType,@Query("page") int page, @Query("pageSize") int pageSize);
+
+    /**
+     * 运动记录详情
+     */
+    @GET(ConstValues.PORT_4 + "api/v1/user/sport/log/details")
+    Observable<Result<SportLogDetailBean>> geSportLogDetails(@Query("id") String logid);
 
 
     /**

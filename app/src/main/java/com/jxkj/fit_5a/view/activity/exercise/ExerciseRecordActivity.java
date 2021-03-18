@@ -28,6 +28,7 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.DeviceTypeData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowSb;
@@ -110,10 +111,12 @@ public class ExerciseRecordActivity extends BaseActivity {
         mRvJlxqList.setHasFixedSize(true);
         mRvJlxqList.setAdapter(mTwoJlxqAdapter);
 
-        mTwoJlxqAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mTwoJlxqAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                IntentUtils.getInstence().intent(
+                        ExerciseRecordActivity.this, ExerciseRecordDetailsActivity.class,
+                        "id",mTwoJlxqAdapter.getData().get(position).getId());
             }
         });
         getSportLogStats();
