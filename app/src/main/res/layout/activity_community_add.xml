@@ -61,6 +61,7 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_topic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -89,8 +90,8 @@
 
     </LinearLayout>
 
-
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_margin="@dimen/dimen_15dp"
@@ -142,6 +143,6 @@
         android:paddingHorizontal="@dimen/dp_10"
         android:paddingVertical="@dimen/dimen_5dp"
         android:text="公开"
-        android:textColor="@color/color_333333"
+        android:textColor="@color/color_text_theme"
         android:textSize="12sp" />
 </LinearLayout>

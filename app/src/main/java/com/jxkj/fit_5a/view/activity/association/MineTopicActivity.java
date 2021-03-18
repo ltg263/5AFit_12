@@ -8,7 +8,9 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +30,8 @@ import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowTy;
 import com.jxkj.fit_5a.entity.HotTopicBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.TopicAllBean;
@@ -35,6 +39,9 @@ import com.jxkj.fit_5a.view.activity.mine.MineHomeActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineInfoActivity;
 import com.jxkj.fit_5a.view.adapter.CircleDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -150,7 +157,7 @@ public class MineTopicActivity extends BaseActivity {
             case R.id.tv_share:
                 break;
             case R.id.tv_add_dt:
-                TopicAddActivity.startActivity(this, 0);
+                initPopupWindow();
                 break;
             case R.id.rl1:
                 initView(mTv1, mView1);
@@ -165,6 +172,29 @@ public class MineTopicActivity extends BaseActivity {
         }
     }
 
+    PopupWindowTy window;
+    List<String> list = new ArrayList<>();
+    private void initPopupWindow() {
+        list.clear();
+        list.add("相册");
+        list.add("视频");
+        if (window == null) {
+            window = new PopupWindowTy(MineTopicActivity.this, list, new PopupWindowTy.GiveDialogInterface() {
+                @Override
+                public void btnConfirm(int position) {
+                    int type = 3;
+                    if (position == 0) {
+                        type = 2;
+                    }
+                    IntentUtils.getInstence().intent(MineTopicActivity.this, AssociationAddActivity.class,"type",type,"topic",mHotTopicBean.getName());
+                }
+            });
+
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        }
+
+        window.showAtLocation(mTv, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置10464.66
+    }
     private void initView(TextView tv, View v) {
         mTv1.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         mTv2.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));

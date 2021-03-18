@@ -54,6 +54,8 @@ public class AssociationAddActivity extends BaseActivity {
     ImageView mIvBack;
     @BindView(R.id.ll_back)
     LinearLayout mLlBack;
+    @BindView(R.id.ll_topic)
+    LinearLayout ll_topic;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
     @BindView(R.id.tv_righttext)
@@ -82,10 +84,13 @@ public class AssociationAddActivity extends BaseActivity {
     ImageView iv_close;
     @BindView(R.id.iv_v)
     ImageView iv_v;
+    @BindView(R.id.view)
+    View view;
     List<String> list = new ArrayList<>();
     private SpPhotoAdapter mSpPhotoAdapter;
     int shareType = 1;
     int type = 2;//2:图片;3:视频)
+    String topic = "";
 
     @Override
     protected int getContentView() {
@@ -94,7 +99,14 @@ public class AssociationAddActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        topic = getIntent().getStringExtra("topic");
         mTvTitle.setText("社区动态");
+        if(StringUtil.isNotBlank(topic)){
+            topics = topic;
+            mTvTitle.setText("话题动态");
+            ll_topic.setVisibility(View.GONE);
+            view.setVisibility(View.GONE);
+        }
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         mTvRighttext.setText("发布");
         type = getIntent().getIntExtra("type",0);

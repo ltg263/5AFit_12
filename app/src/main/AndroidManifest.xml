@@ -283,10 +283,6 @@
 
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.association.TopicAddActivity"
-
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.activity.association.AssociationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
 
