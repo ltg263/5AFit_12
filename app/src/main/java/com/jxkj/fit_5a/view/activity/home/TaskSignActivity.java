@@ -277,7 +277,7 @@ public class TaskSignActivity extends BaseActivity {
                     @Override
                     public void onNext(Result result) {
                         if(isDataInfoSucceed(result)){
-                            ToastUtils.showShort("签到成功");
+                            mTvGoSign.setText("已签到");
                         }
                     }
 
