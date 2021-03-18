@@ -98,4 +98,13 @@ public abstract class BaseFragment extends SimpleImmersionFragment {
         return false;
     }
 
+
+    public boolean isDataInfoSucceed(ResultList result){
+        if(result.getCode()==0){
+            return true;
+        }
+        ToastUtils.showShort(result.getMesg());
+        return false;
+    }
+
 }

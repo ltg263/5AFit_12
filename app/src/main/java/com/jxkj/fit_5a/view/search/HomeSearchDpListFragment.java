@@ -11,10 +11,19 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
+import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.entity.HotTopicBean;
+import com.jxkj.fit_5a.entity.QueryPopularBean;
+import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
+import com.jxkj.fit_5a.view.activity.mine.MineHomeActivity;
+import com.jxkj.fit_5a.view.adapter.CircleDynamicAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 
+import java.util.List;
+
 import butterknife.BindView;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -25,20 +34,21 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class HomeSearchDpListFragment extends BaseFragment {
     @BindView(R.id.rv_shopping_cart)
-    RecyclerView mRecyclerView;
+    RecyclerView mRvDtList;
     @BindView(R.id.lv_not)
     LinearLayout lv_not;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
 
     private Bundle bundle;
+    private String search = "";
+    private CircleDynamicAdapter mCircleDynamicAdapter;
+
 
     @Override
     protected int getContentView() {
         return R.layout.fragment_order;
     }
-    private String search="";
-//    HomeShopJiaListAdapter mHomeShopJiaListAdapter;
 
     @Override
     protected void initViews() {
@@ -46,7 +56,7 @@ public class HomeSearchDpListFragment extends BaseFragment {
         if (bundle != null) {
             search = bundle.getString("search");
         }
-//        getData();
+        getData();
         mRefreshLayout.setEnableLoadMore(false);
         mRefreshLayout.setEnableRefresh(false);
     }
@@ -55,59 +65,53 @@ public class HomeSearchDpListFragment extends BaseFragment {
     public void initImmersionBar() {
 
     }
+//内容类型(1:文本;2:图文;3:视频
+    private void getData() {
+        RetrofitUtil.getInstance().apiService()
+                .getQuery_by_keyword(search, "2",1, 100)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<QueryPopularBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-//    private void getData() {
-//        show(getActivity(), "获取中...");
-//        RetrofitUtil.getInstance().apiService()
-//                .homeBusinessList(null,search,
-//                        SharedUtils.singleton().get(ConstValues.LAT, ""),
-//                        SharedUtils.singleton().get(ConstValues.LON, ""),
-//                        null)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(new Observer<BaseResult<BusinessFjShopBean>>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(BaseResult<BusinessFjShopBean> result) {
-//                        dismiss();
-//                        if (result.getCode().equals("000000")) {
-//                            if(result.getData().getList().size()>0){
-//                                lv_not.setVisibility(View.GONE);
-//                                mRefreshLayout.setVisibility(View.VISIBLE);
-//
-//                                initList(result.getData().getList());
-//                            }
-//                            mRefreshLayout.finishRefresh();
-//                            mRefreshLayout.finishLoadMore();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        dismiss();
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        dismiss();
-//                    }
-//                });
-//
-//    }
-//    private void initList(List<BusinessFjShopBean.ListBean> list) {
-//        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        mHomeShopJiaListAdapter = new HomeShopJiaListAdapter(list);
-//        mRecyclerView.setAdapter(mHomeShopJiaListAdapter);
-//        mHomeShopJiaListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                IntentUtils.getInstence().intent(getActivity(),
-//                        HomeShopDetailsActivity.class, "id", list.get(position).getId()+"");
-//            }
-//        });
-//    }
+                    }
+
+                    @Override
+                    public void onNext(ResultList<QueryPopularBean> result) {
+                        if (isDataInfoSucceed(result)) {
+                            if (result.getData() != null && result.getData().size() > 0) {
+                                lv_not.setVisibility(View.GONE);
+                                mRefreshLayout.setVisibility(View.VISIBLE);
+                                initList(result.getData());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    private void initList(List<QueryPopularBean> list) {
+        mCircleDynamicAdapter = new CircleDynamicAdapter(list);
+        mRvDtList.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRvDtList.setHasFixedSize(true);
+        mRvDtList.setAdapter(mCircleDynamicAdapter);
+
+        mCircleDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                AssociationActivity.startActivity(getActivity(),
+                        mCircleDynamicAdapter.getData().get(position).getPublisherId(),
+                        mCircleDynamicAdapter.getData().get(position).getMomentId());
+            }
+        });;
+    }
 }

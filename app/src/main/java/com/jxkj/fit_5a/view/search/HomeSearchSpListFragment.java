@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
@@ -13,9 +13,11 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
-import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
-import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
+import com.jxkj.fit_5a.view.activity.association.VideoActivity;
+import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import java.util.List;
 
 import butterknife.BindView;
 import io.reactivex.Observer;
@@ -29,20 +31,19 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class HomeSearchSpListFragment extends BaseFragment {
     @BindView(R.id.rv_shopping_cart)
-    RecyclerView mRecyclerView;
+    RecyclerView mRvSqList;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.lv_not)
     LinearLayout lv_not;
 
     private Bundle bundle;
-    private HomeDynamicAdapter mHomeDynamicAdapter;
-
+    private String search = "";
+    private HomeThreeSqAdapter mHomeThreeSqAdapter;
     @Override
     protected int getContentView() {
-        return R.layout.fragment_order;
+        return R.layout.fragment_search;
     }
-    private String search = "";
 
     @Override
     protected void initViews() {
@@ -50,32 +51,19 @@ public class HomeSearchSpListFragment extends BaseFragment {
         if (bundle != null) {
             search = bundle.getString("search");
         }
+        getData();
         mRefreshLayout.setEnableLoadMore(false);
         mRefreshLayout.setEnableRefresh(false);
-        mHomeDynamicAdapter = new HomeDynamicAdapter(null);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(mHomeDynamicAdapter);
-
-        mHomeDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                AssociationActivity.startActivity(getActivity(),
-                        mHomeDynamicAdapter.getData().get(position).getPublisherId(),
-                        mHomeDynamicAdapter.getData().get(position).getMomentId());
-            }
-        });
-        getData(search);
     }
 
     @Override
     public void initImmersionBar() {
 
     }
-
-    private void getData(String search) {
+    //内容类型(1:文本;2:图文;3:视频
+    private void getData() {
         RetrofitUtil.getInstance().apiService()
-                .getQueryByKeyword(search,"0")
+                .getQuery_by_keyword(search, "3",1, 100)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultList<QueryPopularBean>>() {
@@ -86,26 +74,41 @@ public class HomeSearchSpListFragment extends BaseFragment {
 
                     @Override
                     public void onNext(ResultList<QueryPopularBean> result) {
-
-                        if(result.getCode()==0 &&result.getData().size()>0){
-                            lv_not.setVisibility(View.GONE);
-                            mRefreshLayout.setVisibility(View.VISIBLE);
-                            mHomeDynamicAdapter.setNewData(result.getData());
+                        if (isDataInfoSucceed(result)) {
+                            if (result.getData() != null && result.getData().size() > 0) {
+                                lv_not.setVisibility(View.GONE);
+                                mRefreshLayout.setVisibility(View.VISIBLE);
+                                initList(result.getData());
+                            }
                         }
-                        mRefreshLayout.finishRefresh();
-                        mRefreshLayout.finishLoadMore();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        dismiss();
                     }
 
                     @Override
                     public void onComplete() {
-                        dismiss();
                     }
                 });
+    }
 
+    private void initList(List<QueryPopularBean> list) {
+
+        //生命为瀑布流的布局方式，3列，布局方向为垂直
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mHomeThreeSqAdapter = new HomeThreeSqAdapter(list);
+        mRvSqList.setLayoutManager(manager);
+        mRvSqList.setHasFixedSize(true);
+        mRvSqList.setAdapter(mHomeThreeSqAdapter);
+
+        mHomeThreeSqAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                VideoActivity.startActivity(getActivity(),
+                        mHomeThreeSqAdapter.getData().get(position).getPublisherId(),
+                        mHomeThreeSqAdapter.getData().get(position).getMomentId());
+            }
+        });;
     }
 }
