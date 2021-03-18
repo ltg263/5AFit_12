@@ -121,12 +121,12 @@ public interface ApiService {
     Observable<Result<UserInfoData>> getUserStatistic();
 
     /**
-     * 测试登录
+     * 微信登录
      * @return
      */
-    @GET("api/v1/user/verify/weixin/{name}/oauth")
+    @POST("api/v1/user/verify/weixin/app/oauth")
     @FormUrlEncoded
-    Observable<Result> register(@Field("code") String code,@Field("openId") String openId);
+    Observable<Result> register(@Field("code") String code);
     /**
      * 用户更新
      *
@@ -802,6 +802,12 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_21 + "api/v1/moment/query_popular")
     Observable<ResultList<QueryPopularBean>> getMomentQueryPopular(@Query("page")int page,@Query("pageSize")int pageSize);//首页1
+
+    /**
+     * 获取热门(推荐)动态信息---话题
+     */
+    @GET(ConstValues.PORT_21 + "api/v1/moment/query_popular")
+    Observable<ResultList<QueryPopularBean>> getMomentQueryPopularTopic(@Query("contentType")String contentType,@Query("topic")String topic,@Query("page")int page,@Query("pageSize")int pageSize);
 
 
     /**

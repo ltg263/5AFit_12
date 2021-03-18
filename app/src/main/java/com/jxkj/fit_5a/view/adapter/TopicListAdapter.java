@@ -18,13 +18,13 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/5/2914:03
  */
-public class TopicListAdapter extends BaseQuickAdapter<TopicAllBean.ChildrenBean, BaseViewHolder> {
-    public TopicListAdapter(@Nullable List<TopicAllBean.ChildrenBean> data) {
+public class TopicListAdapter extends BaseQuickAdapter<HotTopicBean, BaseViewHolder> {
+    public TopicListAdapter(@Nullable List<HotTopicBean> data) {
         super(R.layout.item_topic_all, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, TopicAllBean.ChildrenBean item) {
+    protected void convert(@NonNull BaseViewHolder helper, HotTopicBean item) {
         helper.setText(R.id.tv_1,item.getName()).setText(R.id.tv_2,item.getIntroduction());
         GlideImgLoader.loadImageViewRadius(mContext,item.getImgUrl(),10,helper.getView(R.id.iv));
     }

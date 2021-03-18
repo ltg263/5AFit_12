@@ -88,7 +88,7 @@ public class TopicAllActivity extends BaseActivity {
                     setResult(RESULT_OK, intent);
                     finish();
                 }else{
-                    MineTopicActivity.startActivity(TopicAllActivity.this,mTopicListAdapter.getData().get(position).getId()+"");
+                    MineTopicActivity.startActivity(TopicAllActivity.this,mTopicListAdapter.getData().get(position));
                 }
             }
         });

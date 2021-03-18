@@ -20,6 +20,13 @@
             android:visibility="invisible" />
 
         <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_home_bj_cen_zz"
+            android:visibility="invisible" />
+
+        <ImageView
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,6 +95,7 @@
                     android:layout_height="@dimen/dimen_60dp"
                     android:layout_marginStart="@dimen/dimen_20dp"
                     android:src="@mipmap/icon_app_logo" />
+
 
                 <TextView
                     android:id="@+id/tv"
@@ -178,7 +186,8 @@
                         android:padding="@dimen/dp_10"
                         android:text="全部"
                         android:textColor="@color/color_text_theme"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:visibility="invisible" />
 
                 </RelativeLayout>
 
@@ -277,9 +286,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/dimen_20dp"
-        android:layout_marginBottom="@dimen/dimen_150dp"
+        android:layout_marginBottom="@dimen/dimen_80dp"
         android:src="@drawable/ic_add_dt" />
 
 
 </RelativeLayout>
-

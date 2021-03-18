@@ -24,7 +24,7 @@ public class HomeShoppingAdapter extends BaseQuickAdapter<ProductListBean.ListBe
     protected void convert(@NonNull BaseViewHolder helper, ProductListBean.ListBean item) {
         GlideImageUtils.setGlideImage(mContext, item.getImgUrl(), helper.getView(R.id.iv_shop_pic));
         helper.setText(R.id.tv_shop_title, item.getName()).setText(R.id.tv_jf, item.getDeductIntegral()+"")
-                .setText(R.id.tv_je, "￥ " + item.getPrice());
+                .setText(R.id.tv_je, "+ ￥" + item.getPrice()).setText(R.id.tv_shop_titlef,item.getSubTitle());
     }
 
 }

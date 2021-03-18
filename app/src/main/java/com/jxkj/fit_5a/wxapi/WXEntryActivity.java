@@ -20,10 +20,11 @@ public class WXEntryActivity extends WXCallbackActivity {
         super.onResp(resp);
         String code = ((SendAuth.Resp) resp).code;
         Log.w("-->>>","code:"+code);
-//        login(code);
+        login(code);
 
     }
-//    public static void login(String code) {
+    public static void login(String code) {
+
 //        RetrofitUtil.getInstance().apiService()
 //                .register(code)
 //                .observeOn(AndroidSchedulers.mainThread())
@@ -37,7 +38,11 @@ public class WXEntryActivity extends WXCallbackActivity {
 //                    @Override
 //                    public void onNext(Result result) {
 ////                        if (result.getStatus() == 0) {
+////                            SharedUtils.singleton().put(ConstValues.TOKEN,result.getData().getToken());
+////                            SharedUtils.singleton().put(ConstValues.USERID,result.getData().getId());
+////                            loginInterface.succeed(result.getData());
 ////                        }else{
+//////                            Toast.makeText(mContext,result.get(),Toast.LENGTH_LONG).show();
 ////                        }
 //                    }
 //
@@ -50,6 +55,6 @@ public class WXEntryActivity extends WXCallbackActivity {
 //                    public void onComplete() {
 //                    }
 //                });
-//    }
+    }
 
 }

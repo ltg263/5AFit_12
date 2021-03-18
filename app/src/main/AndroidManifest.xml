@@ -427,15 +427,41 @@
             android:screenOrientation="portrait" />
 
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.jxkj.fit_5a.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+<!--        <provider-->
+<!--            android:name="androidx.core.content.FileProvider"-->
+<!--            android:authorities="com.jxkj.fit_5a.fileprovider"-->
+<!--            android:exported="false"-->
+<!--            android:grantUriPermissions="true">-->
+<!--            <meta-data-->
+<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
+<!--                android:resource="@xml/file_paths" />-->
+<!--        </provider>-->
+
+<!--        <intent-filter>-->
+<!--            &lt;!&ndash; action 和category 必须这样写！！！ &ndash;&gt;-->
+<!--            <action android:name="android.intent.action.VIEW" />-->
+<!--            <category android:name="android.intent.category.DEFAULT" />-->
+<!--            <category android:name="android.intent.category.BROWSABLE" />-->
+<!--            &lt;!&ndash; 接受以 "http://yaoyi.ypzdw.com/article" 或 "https://yaoyi.ypzdw.com/article"开头的URIs &ndash;&gt;-->
+<!--            <data android:scheme="https://api.iconsole.plus" />-->
+<!--&lt;!&ndash;            <data android:scheme="https" />&ndash;&gt;-->
+<!--            <data android:host="api.iconsole.plus" />-->
+<!--            &lt;!&ndash; android:pathPrefix="/article" 这里表示匹配Path以“/article”开头的uri，可以不写&ndash;&gt;-->
+<!--            <data android:pathPrefix="/v2/token" />-->
+<!--            &lt;!&ndash; 注意 "/" 在pathPrefix中是必须的&ndash;&gt;-->
+<!--        </intent-filter>-->
+
+<!--        <intent-filter>-->
+<!--            &lt;!&ndash; action 和category 必须这样写！！！ &ndash;&gt;-->
+<!--            <action android:name="android.intent.action.VIEW" />-->
+<!--            <category android:name="android.intent.category.DEFAULT" />-->
+<!--            <category android:name="android.intent.category.BROWSABLE" />-->
+<!--            &lt;!&ndash; 这里采用的是自定义Scheme &ndash;&gt;-->
+<!--            &lt;!&ndash; 接受以 "com.ypzdw.zdb://article"开头的URIs  &ndash;&gt;-->
+<!--            <data-->
+<!--                android:host="article"-->
+<!--                android:scheme="com.ypzdw.zdb" />-->
+<!--        </intent-filter>-->
     </application>
 
 </manifest>

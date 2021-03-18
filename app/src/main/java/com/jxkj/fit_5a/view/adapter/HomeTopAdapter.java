@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.SportLogStatsBean;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class HomeTopAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_2))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_1091e7);
         }else if(item.equals("总计时间")){
-            helper.setText(R.id.tv_v,stats.getTotalDuration()+"s")
+            helper.setText(R.id.tv_v, StringUtil.getTimeGeShiYw(stats.getTotalDuration()))
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_4))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("平均时间")){

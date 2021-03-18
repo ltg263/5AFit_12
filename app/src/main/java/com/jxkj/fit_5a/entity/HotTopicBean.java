@@ -1,8 +1,9 @@
 package com.jxkj.fit_5a.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class HotTopicBean {
+public class HotTopicBean implements Serializable {
 
     /**
      * name : 如何减肥
@@ -87,7 +88,7 @@ public class HotTopicBean {
         this.user = user;
     }
 
-    public static class UserBean {
+    public static class UserBean implements Serializable{
         /**
          * userId : 95
          * relation : 0

@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class TopicAllBean {
@@ -24,7 +25,7 @@ public class TopicAllBean {
 
     private String sortWeights;
     private String imgUrl;
-    private List<ChildrenBean> children;
+    private List<HotTopicBean> children;
 
     public String getName() {
         return name;
@@ -90,106 +91,12 @@ public class TopicAllBean {
         this.imgUrl = imgUrl;
     }
 
-    public List<ChildrenBean> getChildren() {
+    public List<HotTopicBean> getChildren() {
         return children;
     }
 
-    public void setChildren(List<ChildrenBean> children) {
+    public void setChildren(List<HotTopicBean> children) {
         this.children = children;
     }
 
-    public static class ChildrenBean {
-        /**
-         * name : 如何减肥
-         * articlesCount : 17
-         * pageviews : 641
-         * introduction : 简单介绍
-         * hot : true
-         * sortWeights : 811
-         * imgUrl : https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201604%2F02%2F20160402173031_JYyrn.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1611215862&t=17cb6319866f942f465a4eaab2995496
-         * children : []
-         */
-
-        private String name;
-        private String articlesCount;
-        private String pageviews;
-        private String introduction;
-        private boolean hot;
-        private String sortWeights;
-        private String imgUrl;
-        private List<?> children;
-        private String id;
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getArticlesCount() {
-            return articlesCount;
-        }
-
-        public void setArticlesCount(String articlesCount) {
-            this.articlesCount = articlesCount;
-        }
-
-        public String getPageviews() {
-            return pageviews;
-        }
-
-        public void setPageviews(String pageviews) {
-            this.pageviews = pageviews;
-        }
-
-        public String getIntroduction() {
-            return introduction;
-        }
-
-        public void setIntroduction(String introduction) {
-            this.introduction = introduction;
-        }
-
-        public boolean isHot() {
-            return hot;
-        }
-
-        public void setHot(boolean hot) {
-            this.hot = hot;
-        }
-
-        public String getSortWeights() {
-            return sortWeights;
-        }
-
-        public void setSortWeights(String sortWeights) {
-            this.sortWeights = sortWeights;
-        }
-
-        public String getImgUrl() {
-            return imgUrl;
-        }
-
-        public void setImgUrl(String imgUrl) {
-            this.imgUrl = imgUrl;
-        }
-
-        public List<?> getChildren() {
-            return children;
-        }
-
-        public void setChildren(List<?> children) {
-            this.children = children;
-        }
-    }
 }

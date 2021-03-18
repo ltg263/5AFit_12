@@ -186,7 +186,7 @@
                     android:gravity="center_vertical">
 
                     <View
-                        android:layout_width="@dimen/dp_10"
+                        android:layout_width="@dimen/dimen_5dp"
                         android:layout_height="match_parent"
                         android:background="@drawable/jb_shape_theme_zx" />
 
@@ -208,7 +208,7 @@
                         android:textStyle="bold" />
 
                     <View
-                        android:layout_width="@dimen/common_margin_3"
+                        android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/dimen_5dp"
                         android:background="@color/color_eeeeee" />

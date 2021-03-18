@@ -81,7 +81,7 @@ public class LoginActivity extends BaseActivity {
         mTvLoginWjmm.setVisibility(View.INVISIBLE);
     }
 
-    @OnClick({R.id.tv_login_yzm, R.id.tv_login_wjmm, R.id.iv_login_wx,R.id.tv_go_login, R.id.ll_go_zc,R.id.tv_go_yzm})
+    @OnClick({R.id.tv_login_yzm, R.id.tv_login_wjmm, R.id.iv_login_wx,R.id.iv_iconsole,R.id.tv_go_login, R.id.ll_go_zc,R.id.tv_go_yzm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_login_yzm:
@@ -101,6 +101,10 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.iv_login_wx:
                 getPlatformInfo();
+                break;
+            case R.id.iv_iconsole:
+                Intent intent = getPackageManager().getLaunchIntentForPackage("https://developer.android.com/training/app-links/deep-linking");
+                startActivity(intent);
                 break;
             case R.id.tv_go_yzm:
                 String sjh = mEtInputSjh.getText().toString();
@@ -230,6 +234,7 @@ public class LoginActivity extends BaseActivity {
 ////                                getData();
 //                            }
 //                        });
+
             }
 
             @Override
