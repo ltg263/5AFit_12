@@ -12,8 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 
@@ -39,6 +42,7 @@ public class SetUserXbActivity extends BaseActivity {
     RelativeLayout mRlNan;
     @BindView(R.id.rl_nv)
     RelativeLayout mRlNv;
+    public static int type =0;
 
     @Override
     protected int getContentView() {
@@ -48,7 +52,9 @@ public class SetUserXbActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        MainApplication.getContext().addActivity(this);
         setDatePickerDividerColor(mDatePicker);
+        type = getIntent().getIntExtra("type",0);
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int monthOfYear = calendar.get(Calendar.MONTH);
@@ -101,7 +107,9 @@ public class SetUserXbActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
+        if(type!=0){
+            super.onBackPressed();
+        }
     }
 
     /**
@@ -134,12 +142,5 @@ public class SetUserXbActivity extends BaseActivity {
                 }
             }
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

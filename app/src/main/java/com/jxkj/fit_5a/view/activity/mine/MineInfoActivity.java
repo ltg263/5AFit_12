@@ -27,6 +27,7 @@ import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.utils.PictureUtil;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
@@ -36,6 +37,8 @@ import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.RoundImageView;
 import com.jxkj.fit_5a.entity.MediaInfoBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationAddActivity;
+import com.jxkj.fit_5a.view.activity.login_other.RegisterActivity;
+import com.jxkj.fit_5a.view.activity.login_other.SetUserXbActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -170,11 +173,14 @@ public class MineInfoActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_back, R.id.ll_info_1, R.id.ll_info_2, R.id.ll_info_3, R.id.ll_info_4, R.id.rl, R.id.ll_info_5, R.id.ll_info_6, R.id.ll_info_7, R.id.ll_info_8, R.id.ll_info_9, R.id.tv_go_find})
+    @OnClick({R.id.iv_back,R.id.ll_info_jbxx, R.id.ll_info_1, R.id.ll_info_2, R.id.ll_info_3, R.id.ll_info_4, R.id.rl, R.id.ll_info_5, R.id.ll_info_6, R.id.ll_info_7, R.id.ll_info_8, R.id.ll_info_9, R.id.tv_go_find})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.ll_info_jbxx:
+                IntentUtils.getInstence().intent(this, SetUserXbActivity.class,"type",1);
                 break;
             case R.id.rl:
                 MatisseUtils.gotoSelectPhoto(this, 1, true);

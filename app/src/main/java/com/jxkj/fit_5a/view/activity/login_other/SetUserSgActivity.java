@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
+import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
@@ -45,6 +46,7 @@ public class SetUserSgActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        MainApplication.getContext().addActivity(this);
         sbType = getIntent().getIntExtra("sbType",0);
         csrq = getIntent().getStringExtra("csrq");
         if(sbType==1){

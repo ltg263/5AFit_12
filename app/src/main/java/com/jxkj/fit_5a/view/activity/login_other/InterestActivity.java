@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
+import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.InterestLists;
 import com.jxkj.fit_5a.base.PostUser;
@@ -47,6 +48,7 @@ public class InterestActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        MainApplication.getContext().addActivity(this);
         sbType = getIntent().getStringExtra("sbType");
         csrq = getIntent().getStringExtra("csrq");
         sg = getIntent().getStringExtra("sg");
@@ -159,7 +161,10 @@ public class InterestActivity extends BaseActivity {
                     @Override
                     public void onNext(Result result) {
                         if (isDataInfoSucceed(result)) {
-                            startActivity(new Intent(InterestActivity.this, MainActivity.class));
+                            if(SetUserXbActivity.type==0){
+                                startActivity(new Intent(InterestActivity.this, MainActivity.class));
+                            }
+                            MainApplication.getContext().finishAllActivity();
                         }
                     }
 

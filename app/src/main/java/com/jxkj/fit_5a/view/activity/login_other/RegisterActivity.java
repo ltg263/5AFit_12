@@ -13,6 +13,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeCounter;
@@ -104,7 +105,7 @@ public class RegisterActivity extends BaseActivity {
                             SharedUtils.singleton().put(ConstValues.TOKEN,"Bearer "+result.getData().getTokenId());
                             SharedUtils.singleton().put(ConstValues.USER_PASSWORD, mm);
                             LoginActivity.saveUserInfo(result.getData());
-                            startActivity(new Intent(RegisterActivity.this, SetUserXbActivity.class));
+                            IntentUtils.getInstence().intent(RegisterActivity.this, SetUserXbActivity.class,"type",0);
                             finish();
                         }
                     }
