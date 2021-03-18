@@ -12,7 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAOptionsConstructor;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AASeriesElement;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolStyleType;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolType;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartType;
+import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAOptions;
+import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAScrollablePlotArea;
+import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AATooltip;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
@@ -20,6 +29,7 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.entity.SportLogDetailBean;
+import com.jxkj.fit_5a.entity.SportLogStatsBean;
 import com.jxkj.fit_5a.view.adapter.ExerciseRecordAdapter;
 import com.jxkj.fit_5a.view.adapter.TaskFinishListAdapter;
 
@@ -128,6 +138,7 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
     int maxV = 220;
     int age = 40;
     private List<BpmDataBean> mBpmDataBeans = new ArrayList<>();
+    private AAChartModel aaChartModel;
 
     @Override
     protected int getContentView() {
@@ -234,8 +245,93 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
         mExerciseRecordAdapter.setNewData(list,data);
         mTaskFinishListAdapter.setZtime(Integer.valueOf(data.getDuration()));
         mTaskFinishListAdapter.setNewData(mBpmDataBeans);
+
+        initAAChar(data.getDetails().getLogs());
         
     }
+
+    private void initAAChar(List<SportLogDetailBean.DetailsBean.LogsBean> logs) {
+        AAChartModel aaChartModel = configureChartModel(logs);
+        AATooltip aaTooltip = new AATooltip()
+                .useHTML(true)
+                .formatter("function () {\n" +
+                        "function getDay(day){\n" +
+                        "    var today = new Date();\n" +
+                        "    var targetday_milliseconds=today.getTime() + 1000*60*60*24;\n" +
+                        "    today.setTime(targetday_milliseconds);\n" +
+                        "    var tYear = today.getFullYear();\n" +
+                        "    var tMonth = today.getMonth();\n" +
+                        "    tMonth = doHandleMonth(tMonth + 1);\n" +
+                        "     if(new Date().getTime() < new Date(tYear+\"-\"+tMonth+\"-\"+day).getTime()){\n" +
+                        "        tMonth = doHandleMonth(today.getMonth());\n" +
+                        "     }\n" +
+                        "    day = doHandleMonth(day);\n" +
+                        "    return tYear+\"-\"+tMonth+\"-\"+day;\n" +
+                        "}\n" +
+                        "function doHandleMonth(month){\n" +
+                        "    var m = month;\n" +
+                        "    if(month.toString().length == 1){\n" +
+                        "     m = \"0\" + month;\n" +
+                        "    }\n" +
+                        "    return m;\n" +
+                        "}" +
+                        "        var h = Math.floor(this.points[0].y / 3600) < 10 ? '0'+Math.floor(this.points[0].y / 3600) : Math.floor(this.points[0].y / 3600);\n" +
+                        "        var m = Math.floor((this.points[0].y / 60 % 60)) < 10 ? '0' + Math.floor((this.points[0].y / 60 % 60)) : Math.floor((this.points[0].y / 60 % 60));\n" +
+                        "        var s = Math.floor((this.points[0].y % 60)) < 10 ? '0' + Math.floor((this.points[0].y % 60)) : Math.floor((this.points[0].y % 60));\n" +
+                        "        var str =  '';\n" +
+                        "        if(h == \"00\"){\n" +
+                        "            str = m + '分' + s +'秒';\n" +
+                        "        }else{" +
+                        "            str = h + '时' + m + '分' + s +'秒';\n" +
+                        "        }\n" +
+                        "        str = this.points[0].y+'秒';\n" +
+                        "        str = str.replace('.','分');\n"+
+                        "        var s0 = '' + '<b>' +  getDay(this.x) + '</b>' + '<br/>';\n" +
+                        "        var colorDot1 = '<span style=\\\"' + 'color:#FFB300; font-size:13px\\\"' + '>◉</span> ';\n" +
+                        "        var s1 = colorDot1 + this.points[0].series.name + ': ' + str + '<br/>';\n" +
+                        "        s0 += s1;\n" +
+                        "        return s0;\n" +
+                        "    }");
+        aaOptions = AAOptionsConstructor.configureChartOptions(aaChartModel);
+        aaOptions.tooltip(aaTooltip);
+        mAAChartViewB.aa_drawChartWithChartOptions(aaOptions);
+    }
+    AAOptions aaOptions;
+    private AAChartModel configureChartModel(List<SportLogDetailBean.DetailsBean.LogsBean> lists) {
+        String[] str = new String[lists.size()];
+        Double[] strV = new Double[lists.size()];
+        for(int i=0;i<lists.size();i++){
+            str[i] = i+"";
+            strV[i] = Double.valueOf(lists.get(i).getSpeed());
+        }
+        aaChartModel = new AAChartModel()
+                .chartType(AAChartType.Areaspline)
+                .title("")
+                .yAxisTitle("")
+                .yAxisLabelsEnabled(false)
+                .categories(str)
+                .yAxisGridLineWidth(0f)
+                .xAxisGridLineWidth(0f)
+                .legendEnabled(false)
+                .yAxisGridLineWidth(0f)
+                .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)
+                .gradientColorEnable(true)
+                .markerRadius(0f)
+                .markerSymbol(AAChartSymbolType.Circle)
+                .scrollablePlotArea(
+                        new AAScrollablePlotArea()
+                                .minWidth(2000)
+                                .scrollPositionX(1f)
+                )
+                .series(new AASeriesElement[]{new AASeriesElement()
+                        .name("速度：")
+                        .lineWidth(1f)
+                        .fillOpacity(0.5f)
+                        .color("#FFB300")
+                        .data(strV)});
+        return aaChartModel;
+    }
+
 
     @OnClick({R.id.iv_back, R.id.rl})
     public void onViewClicked(View view) {

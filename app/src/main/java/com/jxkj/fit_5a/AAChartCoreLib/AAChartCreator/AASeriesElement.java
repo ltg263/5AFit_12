@@ -89,13 +89,13 @@ public class AASeriesElement {
         return this;
     }
 
-    public AASeriesElement data(Object[] prop) {
-        data = prop;
+    public AASeriesElement lineWidth(Float prop) {
+        lineWidth = prop;
         return this;
     }
 
-    public AASeriesElement lineWidth(Float prop) {
-        lineWidth = prop;
+    public AASeriesElement data(Object[] prop) {
+        data = prop;
         return this;
     }
 
