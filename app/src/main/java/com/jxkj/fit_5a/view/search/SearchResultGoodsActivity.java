@@ -27,8 +27,6 @@ import butterknife.OnClick;
 public class SearchResultGoodsActivity extends BaseActivity {
 
 
-    @BindView(R.id.img_top_back)
-    ImageView imgTopBack;
     @BindView(R.id.tv_top_title)
     TextView tvTopTitle;
     @BindView(R.id.rl_actionbar)
@@ -59,10 +57,10 @@ public class SearchResultGoodsActivity extends BaseActivity {
         initVP();
     }
 
-    @OnClick({R.id.img_top_back, R.id.tv_top_title})
+    @OnClick({R.id.ll_back, R.id.tv_top_title})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.img_top_back:
+            case R.id.ll_back:
             case R.id.tv_top_title:
                 finish();
                 break;

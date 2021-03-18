@@ -30,8 +30,6 @@ import butterknife.OnClick;
 public class SearchGoodsActivity extends BaseActivity {
 
 
-    @BindView(R.id.img_top_back)
-    ImageView imgTopBack;
     @BindView(R.id.tv_top_title)
     EditText searchEt;
     @BindView(R.id.activity_search_goods_search_tv)
@@ -153,10 +151,10 @@ public class SearchGoodsActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.img_top_back, R.id.activity_search_goods_search_tv})
+    @OnClick({R.id.ll_back, R.id.activity_search_goods_search_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.img_top_back:
+            case R.id.ll_back:
                 finish();
                 break;
             case R.id.activity_search_goods_search_tv:
