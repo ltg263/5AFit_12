@@ -24,6 +24,14 @@ public class TaskFinishListAdapter extends BaseQuickAdapter<BpmDataBean, BaseVie
         this.Ztime = Ztime;
     }
 
+    public TaskFinishListAdapter(@Nullable List<BpmDataBean> data) {
+        super(R.layout.item_task_finish_list, data);
+    }
+
+    public void setZtime(int ztime) {
+        Ztime = ztime;
+    }
+
     @Override
     protected void convert(@NonNull BaseViewHolder helper, BpmDataBean item) {
         double xlfx = item.getTime()/Ztime;
