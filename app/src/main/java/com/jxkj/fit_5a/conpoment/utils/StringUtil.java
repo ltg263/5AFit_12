@@ -564,6 +564,20 @@ public class StringUtil {
             return h+"小时"+m+"分"+s+"秒";
         }
     }
+    public static String getTimeGeShiH(long date){
+        if (date<60) {
+            return date+"'";
+        }else if (date>60&&date<3600) {
+            long m = date/60;
+            long s = date%60;
+            return m+"'"+s+"'";
+        }else {
+            long h = date/3600;
+            long m = (date%3600)/60;
+            long s = (date%3600)%60;
+            return h+"'"+m+"'"+s+"'";
+        }
+    }
 
     public static Double getTimeFenMiao(long date){
         if (date<60) {

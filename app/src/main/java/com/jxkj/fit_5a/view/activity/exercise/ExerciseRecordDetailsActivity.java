@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.activity.exercise;
 
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,17 +20,20 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AASeriesElement;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolStyleType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartType;
+import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AADataLabels;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAOptions;
+import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAPie;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAScrollablePlotArea;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AATooltip;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.entity.SportLogDetailBean;
-import com.jxkj.fit_5a.entity.SportLogStatsBean;
 import com.jxkj.fit_5a.view.adapter.ExerciseRecordAdapter;
 import com.jxkj.fit_5a.view.adapter.TaskFinishListAdapter;
 
@@ -136,7 +140,7 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
 
     double bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
     int maxV = 220;
-    int age = 40;
+    int age = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_AGE,""));
     private List<BpmDataBean> mBpmDataBeans = new ArrayList<>();
     private AAChartModel aaChartModel;
 
@@ -149,12 +153,12 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
     protected void initViews() {
 
 
-        bfb5 = (maxV-age)*0.5+40;
-        bfb6 = (maxV-age)*0.6+40;
-        bfb7 = (maxV-age)*0.7+40;
-        bfb8 = (maxV-age)*0.8+40;
-        bfb9 = (maxV-age)*0.9+40;
-        bfb  = (maxV-age)*1+40;
+        bfb5 = (maxV-age)*0.5;
+        bfb6 = (maxV-age)*0.6;
+        bfb7 = (maxV-age)*0.7;
+        bfb8 = (maxV-age)*0.8;
+        bfb9 = (maxV-age)*0.9;
+        bfb  = (maxV-age)*1;
         initBpmData();
 
         mExerciseRecordAdapter = new ExerciseRecordAdapter(null);
@@ -181,8 +185,71 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
             }
         });
         geSportLogDetails();
+
     }
 
+    AAChartModel configurePieChart() {
+        return new AAChartModel()
+                .chartType(AAChartType.Pie)
+                .title("")
+                .yAxisTitle("")
+                .backgroundColor("#ffffff")
+                .dataLabelsEnabled(true)//是否直接显示扇形图数据
+                .legendEnabled(false)
+                .series(new AAPie[]{
+                                new AAPie()
+                                        .name("心率分析")
+                                        .innerSize("20%")
+                                        .size(150f)
+                                        .dataLabels(new AADataLabels()
+                                                .enabled(true)
+                                                .useHTML(true)
+                                                .distance(5f)
+                                                .format("<b>{point.name}</b>: <br> {point.percentage:.1f} %"))
+                                        .data(new Object[][]{
+                                        {mBpmDataBeans.get(0).getName(), mBpmDataBeans.get(0).getTime()},
+                                        {mBpmDataBeans.get(1).getName(), mBpmDataBeans.get(1).getTime()},
+                                        {mBpmDataBeans.get(2).getName(), mBpmDataBeans.get(2).getTime()},
+                                        {mBpmDataBeans.get(3).getName(), mBpmDataBeans.get(3).getTime()},
+                                        {mBpmDataBeans.get(4).getName(), mBpmDataBeans.get(4).getTime()},
+                                        {mBpmDataBeans.get(5).getName(), mBpmDataBeans.get(5).getTime()},
+                                })
+                                ,
+                        }
+                );
+    }
+    AAChartModel configurePieChartS() {
+        return new AAChartModel()
+                .chartType(AAChartType.Column)
+                .title("")
+                .yAxisTitle("")
+                .backgroundColor("#ffffff")
+                .legendEnabled(false)
+                .xAxisVisible(true)
+                .legendEnabled(false)
+                .categories(new String[]{"非运动区间","","","有氧耐力心率区间","", ""})
+                .dataLabelsEnabled(true)
+                .series(new AAPie[]{
+                                new AAPie()
+                                        .name("心率分析")
+                                        .innerSize("20%")
+                                        .dataLabels(new AADataLabels()
+                                                .enabled(true)
+                                                .useHTML(true)
+                                                .distance(5f)
+                                                .format(""))
+                                        .data(new Object[][]{
+                                        {"非运动区间", mBpmDataBeans.get(0).getTime()},
+                                        {"热身心率区间", mBpmDataBeans.get(1).getTime()},
+                                        {"燃脂心率区间", mBpmDataBeans.get(2).getTime()},
+                                        {"有氧耐力心率区间", mBpmDataBeans.get(3).getTime()},
+                                        {"无氧耐力心率区间", mBpmDataBeans.get(4).getTime()},
+                                        {"极限心率区间", mBpmDataBeans.get(5).getTime()},
+                                })
+                                ,
+                        }
+                );
+    }
     private void initBpmData() {
         mBpmDataBeans.add(new BpmDataBean("非运动区间(0~50%)",0,bfb5,0));
         mBpmDataBeans.add(new BpmDataBean("热身心率区间(50~60%)",bfb5,bfb6,0));
@@ -223,10 +290,10 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
     }
 
     private void initData(SportLogDetailBean data) {
-        mTvDistance.setText(data.getDistance());
+        mTvDistance.setText(StringUtil.getValue(data.getDistance()));
         mTvTrainingMode.setText(data.getTrainingMode());
         mTvTime.setText(StringUtil.getTimeToYMD(Long.valueOf(data.getCreateTimestamp()),"yyyy-MM-dd"));
-        tv_duration.setText(StringUtil.getTimeGeShi(Long.valueOf(data.getDuration())));
+        tv_duration.setText(StringUtil.getTimeGeShiH(Long.valueOf(data.getDuration())));
         mTvMansu.setText("最慢"+StringUtil.getValue(data.getMinSpeed()));
         mTvKuaisu.setText("最快"+StringUtil.getValue(data.getMaxSpeed()));
         mTvZtime.setText("总时间："+StringUtil.getTimeGeShi(Long.valueOf(data.getDuration())));
@@ -248,6 +315,35 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
 
         initAAChar(data.getDetails().getLogs());
         
+    }
+
+
+    private void setBpmDataBeanTime(int pulse){
+        Log.w("-->>","mBpmDataBeans"+mBpmDataBeans.toString());
+        if(pulse>=mBpmDataBeans.get(0).getStartV() && pulse<mBpmDataBeans.get(0).getEndV()){
+            mBpmDataBeans.get(0).setTime(mBpmDataBeans.get(0).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(1).getStartV() && pulse<mBpmDataBeans.get(1).getEndV()){
+            mBpmDataBeans.get(1).setTime(mBpmDataBeans.get(1).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(2).getStartV() && pulse<mBpmDataBeans.get(2).getEndV()){
+            mBpmDataBeans.get(2).setTime(mBpmDataBeans.get(2).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(3).getStartV() && pulse<mBpmDataBeans.get(3).getEndV()){
+            mBpmDataBeans.get(3).setTime(mBpmDataBeans.get(3).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(4).getStartV() && pulse<mBpmDataBeans.get(4).getEndV()){
+            mBpmDataBeans.get(4).setTime(mBpmDataBeans.get(4).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(5).getStartV() && pulse<mBpmDataBeans.get(5).getEndV()){
+            mBpmDataBeans.get(5).setTime(mBpmDataBeans.get(5).getTime()+1);
+            return;
+        }
     }
 
     private void initAAChar(List<SportLogDetailBean.DetailsBean.LogsBean> logs) {
@@ -276,6 +372,12 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
         aaOptions = AAOptionsConstructor.configureChartOptions(aaChartModel);
         aaOptions.tooltip(aaTooltip);
         mAAChartViewB.aa_drawChartWithChartOptions(aaOptions);
+
+
+        aaChartModel = configurePieChart();
+        mAAChartView.aa_drawChartWithChartModel(aaChartModel);
+
+
     }
     AAOptions aaOptions;
     private AAChartModel configureChartModel(List<SportLogDetailBean.DetailsBean.LogsBean> lists) {
@@ -284,6 +386,7 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
         for(int i=0;i<lists.size();i++){
             str[i] = i+"";
             strV[i] = Double.valueOf(lists.get(i).getSpeed());
+            setBpmDataBeanTime(Integer.valueOf(lists.get(i).getHeartRate()));
         }
         aaChartModel = new AAChartModel()
                 .chartType(AAChartType.Areaspline)
@@ -318,18 +421,23 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+                finish();
                 break;
             case R.id.rl:
             case R.id.tv_xz:
                 String strXz = mTvXz.getText().toString();
                 if (strXz.equals("条形图")) {
                     mTvXz.setText("饼状图");
-                    mAAChartView.setVisibility(View.VISIBLE);
-                    mLlTxt.setVisibility(View.GONE);
+//                    mAAChartView.setVisibility(View.VISIBLE);
+//                    mLlTxt.setVisibility(View.GONE);
+                    aaChartModel = configurePieChart();
+                    mAAChartView.aa_drawChartWithChartModel(aaChartModel);
                 } else {
                     mTvXz.setText("条形图");
-                    mAAChartView.setVisibility(View.GONE);
-                    mLlTxt.setVisibility(View.VISIBLE);
+//                    mAAChartView.setVisibility(View.GONE);
+//                    mLlTxt.setVisibility(View.VISIBLE);
+                    aaChartModel = configurePieChartS();
+                    mAAChartView.aa_drawChartWithChartModel(aaChartModel);
                 }
                 break;
         }
