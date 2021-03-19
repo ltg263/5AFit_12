@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class HomeShoppingAdapter extends BaseQuickAdapter<ProductListBean.ListBean, BaseViewHolder> {
     public HomeShoppingAdapter(@Nullable List<ProductListBean.ListBean> data) {
-        super(R.layout.item_home_commodity, data);
+        super(R.layout.item_home_commodity_z, data);
     }
 
     @Override
