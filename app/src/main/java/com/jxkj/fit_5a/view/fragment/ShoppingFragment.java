@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.fragment;
 
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,7 +12,9 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
@@ -36,6 +39,8 @@ public class ShoppingFragment extends BaseFragment {
     RecyclerView mRvListAll;
     @BindView(R.id.banner)
     Banner mBanner;
+    @BindView(R.id.tv_integral)
+    TextView tv_integral;
     private ShoppingRmAdapter mShoppingRmAdapter;
     private HomeShoppingAdapter mHomeShoppingAdapter;
 
@@ -50,10 +55,10 @@ public class ShoppingFragment extends BaseFragment {
         initRv();
         getProductList(1);
         getProductList(null);
+        tv_integral.setText(SharedUtils.singleton().get(ConstValues.MY_INTEGRAL,""));
     }
 
     private void initBannerOne() {
-        ArrayList<String> list_title = new ArrayList<>();
         ArrayList<String> list_path = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             list_path.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1096319023,1267316854&fm=26&gp=0.jpg");

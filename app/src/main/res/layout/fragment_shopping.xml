@@ -158,6 +158,7 @@
                 android:src="@drawable/icon_home_jq_d" />
 
             <TextView
+                android:id="@+id/tv_integral"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"

@@ -18,7 +18,6 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
-import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.MagicIndicatorUtils;
 import com.jxkj.fit_5a.conpoment.view.AutoHeightViewPager;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
@@ -63,6 +62,7 @@ public class ShoppingActivity extends BaseActivity {
     protected void initViews() {
         getusable_not_obtained();
         initVP();
+
 
     }
     Dialog dialog;
