@@ -256,39 +256,20 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
                 .useHTML(true)
                 .formatter("function () {\n" +
                         "function getDay(day){\n" +
-                        "    var today = new Date();\n" +
-                        "    var targetday_milliseconds=today.getTime() + 1000*60*60*24;\n" +
-                        "    today.setTime(targetday_milliseconds);\n" +
-                        "    var tYear = today.getFullYear();\n" +
-                        "    var tMonth = today.getMonth();\n" +
-                        "    tMonth = doHandleMonth(tMonth + 1);\n" +
-                        "     if(new Date().getTime() < new Date(tYear+\"-\"+tMonth+\"-\"+day).getTime()){\n" +
-                        "        tMonth = doHandleMonth(today.getMonth());\n" +
-                        "     }\n" +
-                        "    day = doHandleMonth(day);\n" +
-                        "    return tYear+\"-\"+tMonth+\"-\"+day;\n" +
-                        "}\n" +
-                        "function doHandleMonth(month){\n" +
-                        "    var m = month;\n" +
-                        "    if(month.toString().length == 1){\n" +
-                        "     m = \"0\" + month;\n" +
-                        "    }\n" +
-                        "    return m;\n" +
-                        "}" +
-                        "        var h = Math.floor(this.points[0].y / 3600) < 10 ? '0'+Math.floor(this.points[0].y / 3600) : Math.floor(this.points[0].y / 3600);\n" +
-                        "        var m = Math.floor((this.points[0].y / 60 % 60)) < 10 ? '0' + Math.floor((this.points[0].y / 60 % 60)) : Math.floor((this.points[0].y / 60 % 60));\n" +
-                        "        var s = Math.floor((this.points[0].y % 60)) < 10 ? '0' + Math.floor((this.points[0].y % 60)) : Math.floor((this.points[0].y % 60));\n" +
-                        "        var str =  '';\n" +
+                        "        var h = Math.floor(day / 3600) < 10 ? '0'+Math.floor(day / 3600) : Math.floor(day / 3600);\n" +
+                        "        var m = Math.floor((day / 60 % 60)) < 10 ? Math.floor((day / 60 % 60)) : Math.floor((day / 60 % 60));\n" +
+                        "        var s = Math.floor((day % 60)) < 10 ? '0' + Math.floor((day % 60)) : Math.floor((day % 60));\n" +
+                        "        var str = day+'秒';\n" +
                         "        if(h == \"00\"){\n" +
                         "            str = m + '分' + s +'秒';\n" +
                         "        }else{" +
                         "            str = h + '时' + m + '分' + s +'秒';\n" +
                         "        }\n" +
-                        "        str = this.points[0].y+'秒';\n" +
-                        "        str = str.replace('.','分');\n"+
+                        "    return str;" +
+                        "       }\n" +
                         "        var s0 = '' + '<b>' +  getDay(this.x) + '</b>' + '<br/>';\n" +
                         "        var colorDot1 = '<span style=\\\"' + 'color:#FFB300; font-size:13px\\\"' + '>◉</span> ';\n" +
-                        "        var s1 = colorDot1 + this.points[0].series.name + ': ' + str + '<br/>';\n" +
+                        "        var s1 = colorDot1 + this.points[0].series.name + ': ' + this.points[0].y+'km/h' + '<br/>';\n" +
                         "        s0 += s1;\n" +
                         "        return s0;\n" +
                         "    }");
