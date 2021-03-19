@@ -23,6 +23,7 @@ import com.jxkj.fit_5a.conpoment.view.AutoHeightViewPager;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.entity.DiscountUsableNotBean;
 import com.jxkj.fit_5a.view.fragment.ShoppingFragment;
+import com.jxkj.fit_5a.view.fragment.ShoppingLhqFragment;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 
@@ -184,13 +185,17 @@ public class ShoppingActivity extends BaseActivity {
     List<Fragment> fragments = new ArrayList<>();
 
     private List<Fragment> getFragments() {
-        for (int i = 0; i < mDataList.size(); i++) {
-            ShoppingFragment fragment = new ShoppingFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("search", "");
-            fragment.setArguments(bundle);
-            fragments.add(fragment);
-        }
+        ShoppingFragment fragment = new ShoppingFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("type", "1");
+        fragment.setArguments(bundle);
+        fragments.add(fragment);
+
+        ShoppingLhqFragment fragmentQ = new ShoppingLhqFragment();
+        Bundle bundleQ = new Bundle();
+        bundleQ.putString("type", "1");
+        fragment.setArguments(bundleQ);
+        fragments.add(fragmentQ);
         return fragments;
     }
 
