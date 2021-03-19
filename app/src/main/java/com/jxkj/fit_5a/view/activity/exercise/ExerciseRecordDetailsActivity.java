@@ -227,7 +227,7 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
                 .legendEnabled(false)
                 .xAxisVisible(true)
                 .legendEnabled(false)
-                .categories(new String[]{"非运动区间","","","有氧耐力心率区间","", ""})
+                .categories(new String[]{"非运动","热身","燃脂","有氧","无氧","极限"})
                 .dataLabelsEnabled(true)
                 .series(new AAPie[]{
                                 new AAPie()
