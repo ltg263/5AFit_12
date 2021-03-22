@@ -91,7 +91,6 @@ public class HistoryEquipmentActivity extends BaseActivity {
 
     private void goLianJie(HistoryEquipmentData historyEquipmentData) {
         Log.w("historyEquipmentData","historyEquipmentData:"+historyEquipmentData.toString());
-        show();
         PopupWindowLanYan.ble4Util = new Ble4_0Util(this);
         PopupWindowLanYan.ble4Util.init();
         PopupWindowLanYan.ble4Util.setServiceUUid(historyEquipmentData.getServiceUUid());
@@ -99,15 +98,17 @@ public class HistoryEquipmentActivity extends BaseActivity {
         PopupWindowLanYan.ble4Util.connect(historyEquipmentData.getLyAddress(), new BleUtil.CallBack() {
             @Override
             public void StateChange(int state, int newState) {
-                dismiss();
                 String value = null;
                 PopupWindowLanYan.BleName = "";
                 if (newState == BluetoothGatt.STATE_CONNECTED){
+                    dismiss();
                     PopupWindowLanYan.BleName = historyEquipmentData.getName();
                     value = "连接成功";
                 } else if (newState == BluetoothGatt.STATE_DISCONNECTED){
+                    dismiss();
                     value = "连接失败";
                 } else if(newState == BluetoothGatt.STATE_CONNECTING){
+                    show();
                     value = "连接设备中";
                 } else if(newState == BluetoothGatt.STATE_DISCONNECTING){
                     value = "断开连接中";

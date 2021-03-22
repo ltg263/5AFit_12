@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,10 +14,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.Glide;
 import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
@@ -32,6 +36,7 @@ import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -103,8 +108,7 @@ public class LoginActivity extends BaseActivity {
                 getPlatformInfo();
                 break;
             case R.id.iv_iconsole:
-                Intent intent = getPackageManager().getLaunchIntentForPackage("https://developer.android.com/training/app-links/deep-linking");
-                startActivity(intent);
+                startIconsoleApp();
                 break;
             case R.id.tv_go_yzm:
                 String sjh = mEtInputSjh.getText().toString();
@@ -128,6 +132,31 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+    private void startIconsoleApp() {
+        Uri uri = Uri.parse("iconsoleplus://3ptoken?rights=read_profile,read_workouts&linkback=FiveAFitness://3ptoken.result&appname=5AFit");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
+        //Verify if app XYZ has this screen path
+        PackageManager packageManager = getPackageManager();
+        List<ResolveInfo> activities =
+                packageManager.queryIntentActivities(mapIntent, 0);
+        boolean isIntentSafe = activities.size() > 0;
+
+        if (isIntentSafe) {
+            startActivity(mapIntent);
+        }else{
+           ToastUtils.showShort("请先安装iConsole");
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.w("requestCode:","requestCode:"+resultCode);
+        Log.w("resultCode:","resultCode:"+resultCode);
+        if(data!=null){
+            Log.w("data:","data:"+data.toString());
+        }
+    }
 
     private void userVerifyLogin() {
         String sjh = mEtInputSjh.getText().toString();
