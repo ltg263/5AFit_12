@@ -421,7 +421,6 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
     private void appPayWx(ParamData mPayModel) {
         boolean flag = UMShareAPI.get(this).isInstall(this, SHARE_MEDIA.WEIXIN);
         if (flag) {
-
             PaymentParameterBean mPaymentParameterBean = new PaymentParameterBean();
             mPaymentParameterBean.setWxAppid(mPayModel.getAppid());
             mPaymentParameterBean.setPartnerId(mPayModel.getPartnerid());
