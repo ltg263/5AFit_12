@@ -172,9 +172,10 @@ public class RatePatternActivity extends BaseActivity {
                 .title("")
                 .yAxisTitle("")
                 .yAxisLabelsEnabled(false)
-                .xAxisLabelsEnabled(true)
+                .xAxisLabelsEnabled(false)
                 .yAxisGridLineWidth(0f)
-                .xAxisVisible(true)
+                .xAxisGridLineWidth(0f)
+                .xAxisVisible(false)
                 .legendEnabled(false)
                 .markerRadius(0f)
                 .markerSymbol(AAChartSymbolType.Circle)
@@ -188,14 +189,6 @@ public class RatePatternActivity extends BaseActivity {
     }
     String[] str = null;
     private AASeriesElement[] getDataList(List<Byte> data1,List<Byte> data2,List<Byte> data3){
-        if(aaChartModel!=null){
-            str = new String[data1.size()];
-            for(int i=0;i<data1.size();i++){
-                str[i]= StringUtil.getTimeGeShiYw(data1.get(i));
-            }
-//            aaChartModel.categories(str).animationDuration(1);
-//            mAAChartView.aa_refreshChartWithChartModel(aaChartModel);
-        }
         AASeriesElement element = null;
         if(currentPos==1){
             element = new AASeriesElement()
@@ -420,13 +413,12 @@ public class RatePatternActivity extends BaseActivity {
         mRatePatternAdapter.notifyDataSetChanged();
 
         setBpmDataBeanTime(Pulse);
-//        mData1.add((byte) Pulse);
-        mData1.add((byte) timeSecond);
+        mData1.add((byte) Pulse);
         mData2.add((byte) rpm);
         mData3.add((byte) Watt);
         List<Byte> mData11= new ArrayList<>();
         if(mData1.size()>10){
-            mData11.addAll(mData1.subList(Math.max(mData1.size() - 60, 0), mData1.size()));
+            mData11.addAll(mData1.subList(Math.max(mData1.size() - 10, 0), mData1.size()));
         }else{
             mData11.addAll(mData1);
         }
@@ -444,8 +436,8 @@ public class RatePatternActivity extends BaseActivity {
         }else{
             mData33.addAll(mData3);
         }
-        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(getDataList(mData11,mData22,mData33));
 
+        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(getDataList(mData11,mData22,mData33));
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
                 String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
                 null,String.valueOf(loadCurrent),String.valueOf(loadCurrent),
