@@ -102,6 +102,9 @@
             android:name=".view.search.SearchResultGoodsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activity.mine.RZA"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.search.SearchResultCircleActivity"
             android:screenOrientation="portrait" />
         <activity

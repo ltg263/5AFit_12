@@ -13,9 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
-import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartViewOne;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAOptionsConstructor;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AASeriesElement;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartAnimationType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolStyleType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartType;
@@ -47,8 +48,6 @@ import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeTopAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xiaosu.view.text.DataSetAdapter;
 import com.xiaosu.view.text.VerticalRollingTextView;
@@ -72,7 +71,7 @@ public class HomeOneFragment extends BaseFragment {
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.AAChartView)
-    AAChartViewOne mAAChartView;
+    AAChartView mAAChartView;
     @BindView(R.id.tv_left_text)
     TextView mTvLeftText;
     @BindView(R.id.tv_message_content)
@@ -381,7 +380,7 @@ public class HomeOneFragment extends BaseFragment {
                     .markerSymbol(AAChartSymbolType.Circle)
                     .scrollablePlotArea(
                             new AAScrollablePlotArea()
-                                    .minWidth(1000)
+                                    .minWidth(str.length*50)
                                     .scrollPositionX(1f)
                     )
                     .series(configureTheStyleForDifferentTypeChart(lists));

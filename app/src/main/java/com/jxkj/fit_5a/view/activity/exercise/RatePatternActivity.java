@@ -425,7 +425,7 @@ public class RatePatternActivity extends BaseActivity {
         mData2.add((byte) rpm);
         mData3.add((byte) Watt);
         List<Byte> mData11= new ArrayList<>();
-        if(mData1.size()>60){
+        if(mData1.size()>10){
             mData11.addAll(mData1.subList(Math.max(mData1.size() - 60, 0), mData1.size()));
         }else{
             mData11.addAll(mData1);

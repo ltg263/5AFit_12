@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
-import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartViewOne;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAOptionsConstructor;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AASeriesElement;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolStyleType;
@@ -59,7 +59,7 @@ public class ExerciseRecordActivity extends BaseActivity {
     @BindView(R.id.rv_jlxq_list)
     RecyclerView mRvJlxqList;
     @BindView(R.id.AAChartView)
-    AAChartViewOne mAAChartView;
+    AAChartView mAAChartView;
     @BindView(R.id.tv_top_jyz)
     TextView mTvTopJyz;
     @BindView(R.id.tv_sb)

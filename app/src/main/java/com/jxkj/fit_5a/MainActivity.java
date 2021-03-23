@@ -91,7 +91,7 @@ public class MainActivity extends BaseActivity {
 
         mFragments = mHomeOneFragment;
         fragmentManager.beginTransaction().replace(R.id.fl_content, mHomeOneFragment, "A").commitAllowingStateLoss();
-
+        Ble4_0Util.initLsData();
         openLocation();
     }
 

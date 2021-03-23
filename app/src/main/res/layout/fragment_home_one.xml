@@ -115,7 +115,7 @@
                     android:layout_marginTop="-50dp"
                     android:background="@drawable/ic_shade_img">
 
-                    <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartViewOne
+                    <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView
                         android:id="@+id/AAChartView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

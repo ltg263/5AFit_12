@@ -75,6 +75,6 @@ public class ConstValues {
     public static final String POPT_LS = "";//没有
 
     //默认连接超时时间
-    public static final int DEFAULT_TIMEOUT = 30;
+    public static final int DEFAULT_TIMEOUT =60;
     public static final int PAGE_SIZE =10;
 }

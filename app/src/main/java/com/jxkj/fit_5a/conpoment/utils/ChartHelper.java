@@ -2,6 +2,7 @@ package com.jxkj.fit_5a.conpoment.utils;
 
 import android.graphics.Color;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -11,6 +12,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -26,9 +28,11 @@ public class ChartHelper {
         return Float.valueOf(mDecimalFormat.format(mRandom.nextFloat() * seed));
     }
 
-    private static int maxCount = 10; //集合最大存储数量
+    private static int maxCount = 20; //集合最大存储数量
 
-    public static void addEntry(List<Entry> mData, LineChart lineChart, float yValues) {
+    public static int mAxisMaximum = 0;
+
+    public static void addEntry(List<Entry> mData, LineChart lineChart, float yValues,String color) {
         if (lineChart != null
                 && lineChart.getData() != null &&
                 lineChart.getData().getDataSetCount() > 0) {
@@ -36,6 +40,7 @@ public class ChartHelper {
             if (size == 0) {
                 Entry entry = new Entry(maxCount, yValues);
                 mData.add(entry);
+                mAxisMaximum = (int)yValues+10;
             } else {
                 boolean needRemove = false;
                 for (Entry e : mData) {
@@ -44,6 +49,9 @@ public class ChartHelper {
                         needRemove = true;
                     }
                     e.setX(x);
+                    if(mAxisMaximum<e.getY()){
+                        mAxisMaximum = (int)e.getY()+10;
+                    }
                 }
                 if (needRemove) {
                     mData.remove(0);
@@ -51,78 +59,54 @@ public class ChartHelper {
                 Entry entry = new Entry(maxCount, yValues);
                 mData.add(entry);
             }
-            LineData lineData = new LineData(getSet(mData));
+
+
+            YAxis axisLeft = lineChart.getAxisLeft();
+            axisLeft.setAxisMinimum(0);
+            axisLeft.setLabelCount(5);
+            axisLeft.setAxisMaximum(mAxisMaximum);
+            axisLeft.setGridColor(Color.parseColor("#00000000"));
+            axisLeft.setTextColor(Color.parseColor("#666666"));
+            axisLeft.setAxisLineColor(Color.parseColor("#00000000"));
+            axisLeft.setDrawLabels(true);//不显示数值
+            // X轴可以缩放，Y轴不能缩放
+            lineChart.setScaleXEnabled(false);
+            lineChart.setScaleYEnabled(false);
+            // 可以拖动，而不影响缩放比例
+            lineChart.setDragEnabled(false);
+
+            XAxis xAxis = lineChart.getXAxis();
+            xAxis.setDrawGridLines(false);
+            xAxis.setTextColor(Color.parseColor("#666666"));
+            xAxis.setDrawLabels(true);//不显示数值
+            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xAxis.setAxisMinimum(0f);
+            xAxis.setAxisMaximum(maxCount);
+            xAxis.setLabelCount(maxCount);
+            Collections.sort(mData, new EntryXComparator());
+
+            LineData lineData = new LineData(getSet(mData,color));
             lineData.setDrawValues(false);
             lineChart.setData(lineData);
             lineChart.invalidate();
         }
     }
 
-    public static void initChart(List<Entry> mData, LineChart lineChart, long maxYValue) {
-        initChart(mData,lineChart,maxYValue,null,null);
-    }
+    public static void initChart(LineChart lineChart) {
 
-    public static void initChart(List<Entry> mData, LineChart lineChart, long maxYValue, String color1, String color2) {
-        int lineColor = Color.parseColor("#00ffffff");
-        int textColor = Color.parseColor("#00ffffff");
-        if(StringUtil.isNotBlank(color1)){
-            lineColor = Color.parseColor(color1);
-            textColor = Color.parseColor(color2);
-        }
-
-        lineChart.setDragEnabled(false);
+        lineChart.setDragEnabled(true);
         lineChart.setScaleEnabled(false);
         lineChart.getDescription().setEnabled(false);
         lineChart.getLegend().setEnabled(false);
         lineChart.getAxisRight().setEnabled(false);
-        lineChart.getXAxis().setEnabled(false);
-
-        YAxis axisLeft = lineChart.getAxisLeft();
-        axisLeft.setAxisMinimum(0);
-        axisLeft.setLabelCount(5);
-        if(maxYValue>0){
-            axisLeft.setAxisMaximum(maxYValue);
-        }
-//        axisLeft.setGridColor(lineColor);
-//        axisLeft.setTextColor(textColor);
-//        axisLeft.setAxisLineColor(lineColor);
-
-        axisLeft.setDrawLabels(false);//不显示数值
-        if(StringUtil.isNotBlank(color1)){
-            axisLeft.setDrawLabels(true);//不显示数值
-            // X轴可以缩放，Y轴不能缩放
-            lineChart.setScaleXEnabled(true);
-            lineChart.setScaleYEnabled(false);
-            // 可以拖动，而不影响缩放比例
-            lineChart.setDragEnabled(true);
-        }
-
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setDrawGridLines(false);
-        xAxis.setDrawLabels(false);//不显示数值
-        if(StringUtil.isNotBlank(color1)){
-            xAxis.setDrawLabels(true);//不显示数值
-        }
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setAxisMinimum(0f);
-        xAxis.setAxisMaximum(maxCount);
-        xAxis.setLabelCount(maxCount);
-        xAxis.setTextColor(textColor);
-        Collections.sort(mData, new EntryXComparator());
-        LineData lineData = new LineData(getSet(mData));
-
-
-        lineData.setDrawValues(false);//不显示数值
-        if(StringUtil.isNotBlank(color1)){
-            lineData.setDrawValues(true);//不显示数值
-        }
-
+//        lineChart.getXAxis().setEnabled(false);
+        LineData lineData = new LineData(new LineDataSet(new ArrayList<>(), ""));
         lineChart.setData(lineData);
         lineChart.invalidate();
     }
 
-    private static LineDataSet getSet(List<Entry> mData) {
-        int valueColor = Color.parseColor("#999999");
+    private static LineDataSet getSet(List<Entry> mData,String color) {
+        int valueColor = Color.parseColor(color);
         LineDataSet set = new LineDataSet(mData, "");
         set.setDrawFilled(true);
         set.setFillColor(valueColor);

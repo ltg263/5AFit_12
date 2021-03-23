@@ -404,7 +404,7 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
                 .markerSymbol(AAChartSymbolType.Circle)
                 .scrollablePlotArea(
                         new AAScrollablePlotArea()
-                                .minWidth(2000)
+                                .minWidth(lists.size()*50)
                                 .scrollPositionX(1f)
                 )
                 .series(new AASeriesElement[]{new AASeriesElement()
