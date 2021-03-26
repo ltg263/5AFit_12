@@ -70,6 +70,10 @@ public class GlideImgLoader extends ImageLoader {
     public static void loadImage(Context mContext, int path, ImageView mImageView) {
         Glide.with(mContext).load(path).into(mImageView);
     }
+    //默认加载
+    public static void loadImage(Context mContext, String path, ImageView mImageView) {
+        Glide.with(mContext).load(path).into(mImageView);
+    }
 
     //加载圆角
     public static void loadImageViewRadiusNoCenter(Context mContext, String path, ImageView mImageView) {

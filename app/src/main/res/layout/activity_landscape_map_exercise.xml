@@ -4,10 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.amap.api.maps.MapView
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
+    <com.jxkj.fit_5a.conpoment.view.RobotView
+        android:id="@+id/iv_img"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_mpg_image" />
 
     <TextView
         android:id="@+id/tv_time"
@@ -83,7 +86,6 @@
         android:layout_below="@id/rl"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/dimen_15dp"
-        android:layout_marginBottom="130dp"
         android:background="@drawable/bj_circle_fff_6_zx">
 
         <ImageView

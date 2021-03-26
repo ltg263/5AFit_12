@@ -1,5 +1,8 @@
 package com.jxkj.fit_5a.view.activity.mine;
 
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.jxkj.fit_5a.R;
@@ -14,6 +17,8 @@ import butterknife.BindView;
 public class RZA extends BaseActivity {
     @BindView(R.id.line_chart_1)
     LineChart mLineChart1;
+    @BindView(R.id.iv_img)
+    ImageView mImg;
 
     private List<Entry> mData1 = new ArrayList<>();
 
@@ -24,6 +29,7 @@ public class RZA extends BaseActivity {
 
     @Override
     protected void initViews() {
+//        Glide.with(this).load("file:///drawable/ic_path_img.svg").into(mImg);
         ChartHelper.initChart(mLineChart1);
 
         new Thread(new Runnable() {

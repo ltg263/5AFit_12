@@ -212,4 +212,8 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textColorHint">#b5b5b5</item>
     </style>
+    <declare-styleable name="RobotView">
+        <attr name="angle" format="float" />
+        <attr name="red" format="integer" />
+    </declare-styleable>
 </resources>

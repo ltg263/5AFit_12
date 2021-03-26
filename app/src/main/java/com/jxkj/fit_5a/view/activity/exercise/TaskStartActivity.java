@@ -49,10 +49,10 @@ public class TaskStartActivity extends BaseActivity {
                 IntentUtils.getInstence().intent(this,HistoryEquipmentActivity.class);
                 break;
             case R.id.btn_start:
-                if(tv_lianjie.getText().toString().equals("暂未连接设备")){
-                    ToastUtils.showShort("请先链接运动设备");
-                    return;
-                }
+//                if(tv_lianjie.getText().toString().equals("暂未连接设备")){
+//                    ToastUtils.showShort("请先链接运动设备");
+//                    return;
+//                }
                 startActivity(new Intent(this, CourseStartActivity.class));
                 break;
             case R.id.ll_kcxz:
