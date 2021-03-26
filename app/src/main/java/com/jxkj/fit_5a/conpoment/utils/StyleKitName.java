@@ -1,22 +1,21 @@
 package com.jxkj.fit_5a.conpoment.utils;
 
-import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.animation.DecelerateInterpolator;
-
-import androidx.appcompat.app.AppCompatActivity;
+import android.view.WindowManager;
 
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.app.MainApplication;
+import com.jxkj.fit_5a.base.BaseActivity;
 
 import java.util.List;
 
@@ -72,24 +71,26 @@ public class StyleKitName {
 
         //屏幕宽:(1920-1620)/2
         //矩形范围宽:1620
+        //
         RectF resizedFrame = new RectF((canvas.getWidth()-canvas.getHeight()*3/2)/2, 0f, (canvas.getWidth()-canvas.getHeight()*3/2)/2+canvas.getHeight()*3/2,  canvas.getHeight());
 //        RectF mRectF = new RectF(0, 0f, canvas.getHeight()*3/2,  canvas.getHeight());
 //        RectF resizedFrame = CacheFor_1100900Canvas.originalFrame;
 
 //        StyleKitName.resizingBehaviorApply(resizing, CacheFor_1100900Canvas.originalFrame, targetFrame, resizedFrame);
 //        RectF resizedFrame = resizingBehaviorApply(resizing, mRectF, new RectF(0f, 0f, 1200f, 900f));
+
         canvas.translate(resizedFrame.left, resizedFrame.top);
 //        canvas.scale(0, 0);
 
-        // 路径3:2  canvas.getHeight()
-        //30:20
-        //15:10
-        //75:50  10*3/2
+
         Path _2Path = CacheFor_1100900Canvas._2Path;
         _2Path.reset();
-        _2Path.moveTo((float) ((double) info.get(0).get(0)), (float) ((double) info.get(0).get(1)));
+//        double hieghtBl = 1000/(canvas.getWidth()/2);
+        double hieghtBl = 1;
+
+        _2Path.moveTo((float) (info.get(0).get(0)/hieghtBl), (float) (info.get(0).get(1)/hieghtBl));
         for (int i = 0; i < info.size(); i++) {
-            _2Path.lineTo((float) ((double) info.get(i).get(0) ), (float) ((double) info.get(i).get(1) ));
+            _2Path.lineTo((float) (info.get(i).get(0)/hieghtBl), (float) (info.get(i).get(1)/hieghtBl));
         }
         _2Path.close();
         paint.reset();
@@ -101,8 +102,8 @@ public class StyleKitName {
         canvas.drawPath(_2Path, paint);
         if (mCurrentPosition == null) {
             mCurrentPosition = new float[2];
-            mCurrentPosition[0] = (float) ((double) info.get(0).get(0));
-            mCurrentPosition[1] = (float) ((double) info.get(0).get(1) );
+            mCurrentPosition[0] = (float) (info.get(0).get(0)/hieghtBl);
+            mCurrentPosition[1] = (float) (info.get(0).get(1)/hieghtBl);
         }
 
         Bitmap bitmap = ((BitmapDrawable) MainApplication.getContext().getResources().getDrawable(R.drawable.ic_d_red)).getBitmap();
