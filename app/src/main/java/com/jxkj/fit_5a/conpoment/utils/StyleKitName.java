@@ -1,21 +1,16 @@
 package com.jxkj.fit_5a.conpoment.utils;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
-import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.WindowManager;
 
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.app.MainApplication;
-import com.jxkj.fit_5a.base.BaseActivity;
 
 import java.util.List;
 
@@ -35,30 +30,12 @@ public class StyleKitName {
     public static PathMeasure mPathMeasure;
     public static float[] mCurrentPosition;
 
-    // Resizing Behavior
-    public enum ResizingBehavior {
-        AspectFit, //!< The content is proportionally resized to fit into the target rectangle.
-        AspectFill, //!< The content is proportionally resized to completely fill the target rectangle.
-        Stretch, //!< The content is stretched to match the entire target rectangle.
-        Center, //!< The content is centered in the target rectangle, but it is NOT resized.
-    }
-
-    // Canvas Drawings
-    // Tab
-
-
-    //900*600
-
     private static class CacheFor_1100900Canvas {
         private static Paint paint = new Paint();
         private static Path _2Path = new Path();
     }
 
     public static void draw_1100900Canvas(Canvas canvas, List<List<Double>> info) {
-        StyleKitName.draw_1100900Canvas(canvas, info, new RectF(150f, 120f, 2500f, 1800f), ResizingBehavior.AspectFill);
-    }
-
-    public static void draw_1100900Canvas(Canvas canvas, List<List<Double>> info, RectF targetFrame, ResizingBehavior resizing) {
         Log.w("--->>>>>", "屏幕宽:" + canvas.getWidth());//1920
         Log.w("--->>>>>", "屏幕高:" + canvas.getHeight());//1080
 
@@ -78,10 +55,8 @@ public class StyleKitName {
 
 //        StyleKitName.resizingBehaviorApply(resizing, CacheFor_1100900Canvas.originalFrame, targetFrame, resizedFrame);
 //        RectF resizedFrame = resizingBehaviorApply(resizing, mRectF, new RectF(0f, 0f, 1200f, 900f));
-
-        canvas.translate(resizedFrame.left, resizedFrame.top);
+        canvas.translate(resizedFrame.left+50, resizedFrame.top+50);
 //        canvas.scale(0, 0);
-
 
         Path _2Path = CacheFor_1100900Canvas._2Path;
         _2Path.reset();
@@ -117,40 +92,4 @@ public class StyleKitName {
         canvas.restore();
     }
 
-
-    public static RectF resizingBehaviorApply(ResizingBehavior behavior, RectF rect, RectF target) {
-        if (rect.equals(target) || target == null) {
-            return rect;
-        }
-
-        if (behavior == ResizingBehavior.Stretch) {
-            return target;
-        }
-
-        PointF ratio = new PointF();
-        ratio.x = Math.abs(target.width() / rect.width());
-        ratio.y = Math.abs(target.height() / rect.height());
-
-        float scale = 0f;
-
-        switch (behavior) {
-            case AspectFit: {
-                scale = Math.min(ratio.x, ratio.y);
-                break;
-            }
-            case AspectFill: {
-                scale = Math.max(ratio.x, ratio.y);
-                break;
-            }
-            case Center: {
-                scale = 1f;
-                break;
-            }
-        }
-
-        PointF newSize = new PointF(Math.abs(rect.width() * scale), Math.abs(rect.height() * scale));
-        RectF result = new RectF(target.centerX(), target.centerY(), target.centerX(), target.centerY());
-        result.inset(-newSize.x / 2f, -newSize.y / 2f);
-        return result;
-    }
 }

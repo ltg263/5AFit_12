@@ -1,6 +1,5 @@
 package com.jxkj.fit_5a.conpoment.view;
 
-import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.StyleKitName;
 
@@ -70,11 +68,8 @@ public class RobotView extends ImageView {
 
     }
 
-    public void setAngle(float angle) {
-//        mAngle = angle;
-//        invalidate();
-        LogUtils.w("setAngle:" + angle);
-        startPathAnim(60000);
+    public void start(long time) {
+        startPathAnim(time);
     }
 
     ValueAnimator valueAnimator;
@@ -82,9 +77,11 @@ public class RobotView extends ImageView {
     public void setRed(int red) {
 //
         if(red==0){
-            valueAnimator.resume();//继续
+            valueAnimator.end();//继续
+//            valueAnimator.setDuration(5000);
         }else{
-            valueAnimator.resume();
+//            valueAnimator.resume();
+            startPathAnim(1000);
         }
 //        valueAnimator.setDuration(1000);
 //        valueAnimator.resume();//继续
@@ -99,7 +96,6 @@ public class RobotView extends ImageView {
         valueAnimator = ValueAnimator.ofFloat(0, StyleKitName.mPathMeasure.getLength());
         Log.w("startPathAnim", "measure length = " + StyleKitName.mPathMeasure.getLength());
         valueAnimator.setDuration(duration);
-
         // 减速插值器
         valueAnimator.setInterpolator(new LinearInterpolator());
 //        valueAnimator.setInterpolator(new AnticipateOvershootInterpolator(5f));
@@ -120,19 +116,11 @@ public class RobotView extends ImageView {
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (Float) animation.getAnimatedValue();
                 StyleKitName.mPathMeasure.getPosTan(value, StyleKitName.mCurrentPosition, null);
+
                 postInvalidate();
             }
         });
         valueAnimator.start();
 
-    }
-
-    public class MyInterpolator implements TimeInterpolator {
-        @Override
-        public float getInterpolation(float input) {
-            Log.w("MyInterpolator", "MyInterpolator" + input);
-            Log.w("MyInterpolator", "Math.sin(input):" + Math.sin(input));
-            return (float) Math.sin(input);
-        }
     }
 }
