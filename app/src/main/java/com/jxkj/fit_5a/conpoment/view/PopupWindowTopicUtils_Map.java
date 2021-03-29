@@ -17,20 +17,21 @@ import android.widget.TextView;
 
 import com.jxkj.fit_5a.R;
 
+import java.util.function.BinaryOperator;
+
 
 public class PopupWindowTopicUtils_Map extends PopupWindow {
 
     Context mContext;
     TextView tv_Distance, tv_speed, tv_time, tv_Calories, tv_Watt, tv_Pulse;
-
+    ImageView mIv;
     @SuppressLint("ClickableViewAccessibility")
     public PopupWindowTopicUtils_Map(Activity context, GiveDialogInterface dialogInterface) {
         super(context);
         this.mContext = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.dialog_exercise_layout_map, null);
-        ImageView mIv = view.findViewById(R.id.iv);
-        mIv.setSelected(true);
+        mIv = view.findViewById(R.id.iv);
         // 设置SelectPicPopupWindow的View
         this.setContentView(view);
         // 设置SelectPicPopupWindow弹出窗体的宽
@@ -119,6 +120,9 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
                 return true;
             }
         });
+    }
+    public void setIvSelect(boolean isSelect){
+        mIv.setSelected(isSelect);
     }
 
     boolean isSuo = false;

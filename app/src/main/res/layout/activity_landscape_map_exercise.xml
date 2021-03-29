@@ -28,12 +28,11 @@
         android:layout_marginBottom="@dimen/dimen_24dp"
         android:background="@drawable/bj_circle_fff_50"
         android:paddingHorizontal="@dimen/dimen_24dp"
-        android:paddingVertical="@dimen/dimen_14dp"
-        android:text="00:30:00"
+        android:paddingVertical="@dimen/dp_10"
+        android:text="00:00:00"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
-        android:textStyle="bold"
-        android:visibility="gone" />
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:id="@+id/rl"
@@ -76,6 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/dimen_30dp"
         android:background="@drawable/bj_circle_ccc_6"
         android:drawableStart="@mipmap/ic_hp_yd_14"

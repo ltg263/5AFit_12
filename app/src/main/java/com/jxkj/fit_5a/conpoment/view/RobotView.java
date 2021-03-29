@@ -88,6 +88,9 @@ public class RobotView extends ImageView {
         valueAnimator.start();
     }
     public void setState(int state){
+        if(valueAnimator==null){
+            return;
+        }
         if(state==1){
             if(valueAnimator!=null && valueAnimator.isRunning()){
                 valueAnimator.pause();

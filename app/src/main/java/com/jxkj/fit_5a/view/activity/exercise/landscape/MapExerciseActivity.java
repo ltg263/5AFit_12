@@ -121,8 +121,18 @@ public class MapExerciseActivity extends Activity {
             window = new PopupWindowTopicUtils_Map(MapExerciseActivity.this, type -> {
                 if(type ==0){
                     iv_img.setState(type);
+                    if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]
+                            || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]
+                            || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]) ){
+                        PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x02));
+                    }
                 }else if(type==1){
                     iv_img.setState(type);
+                    if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]
+                            || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]
+                            || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]) ){
+                        PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+                    }
                 }else if(type==2){
 
                 }
@@ -214,7 +224,7 @@ public class MapExerciseActivity extends Activity {
 
     private void getMapDetails() {
         RetrofitUtil.getInstance().apiService()
-                .getMapDetails("17")
+                .getMapDetails(mapId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<MapDetailsBean>>() {
@@ -340,15 +350,17 @@ public class MapExerciseActivity extends Activity {
                 +",脉跳："+Pulse+",瓦特："+Watt+",阻力："+loadCurrent+",状态："+Unit;
         Log.w("---》》》", re);
         if(Unit.equals("Stop")){
+            window.setIvSelect(false);
             return;
         }
-
+        window.setIvSelect(true);
         if(currentSpeed!=speed && speed!=0){
             iv_img.setRed(Math.round((distance-Distance)/(speed*1000)*60*60*1000));
         }else if(speed==0){
             iv_img.setState(1);
         }
         currentSpeed = speed;
+        mTvTime.setText(ZTime);
         window.setTextViewStr(Distance+"km",speed+"km/h",ZTime,Calories+"cal",Watt+"w",Pulse+"bpm");
 
     }
