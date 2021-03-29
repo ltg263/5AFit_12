@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.exercise.landscape;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,8 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +27,7 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils_Map;
 import com.jxkj.fit_5a.conpoment.view.RobotView;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
@@ -45,14 +49,16 @@ import io.reactivex.schedulers.Schedulers;
 public class MapExerciseActivity extends Activity {
     @BindView(R.id.iv_1)
     ImageView mIv1;
-    @BindView(R.id.iv_2)
-    ImageView mIv2;
+//    @BindView(R.id.iv_2)
+//    ImageView mIv2;
     @BindView(R.id.iv_3)
     ImageView mIv3;
     @BindView(R.id.iv_4)
     ImageView mIv4;
     @BindView(R.id.iv)
     ImageView mIv;
+    @BindView(R.id.iv_dian)
+    ImageView iv_dian;
     @BindView(R.id.iv_img)
     RobotView iv_img;
     @BindView(R.id.ll)
@@ -78,7 +84,16 @@ public class MapExerciseActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landscape_map_exercise);
         ButterKnife.bind(this);
-        initViews();
+
+        if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]) ){
+            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+        }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
+            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5));
+        }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2]){
+            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+        }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]){
+            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+        }
 
         /**
          * 广播动态注册
@@ -86,11 +101,18 @@ public class MapExerciseActivity extends Activity {
         mMyReceiver = new MyReceiver();//集成广播的类
         IntentFilter filter = new IntentFilter("com.jxkj.fit_5a.view.activity.exercise.RatePatternActivity");// 创建IntentFilter对象
         registerReceiver(mMyReceiver, filter);// 注册Broadcast Receive
+
+        initViews();
     }
 
 
     PopupWindowTopicUtils_Map window;
 
+    private float mPosX;
+    private float mPosY;
+    private float mCurrentPosX;
+    private float mCurrentPosY;
+    @SuppressLint("ClickableViewAccessibility")
     private void initViews() {
         mapId = getIntent().getStringExtra("mapId");
         getMapDetails();
@@ -98,9 +120,9 @@ public class MapExerciseActivity extends Activity {
         if(window==null){
             window = new PopupWindowTopicUtils_Map(MapExerciseActivity.this, type -> {
                 if(type ==0){
-                    iv_img.setRed(0);
+                    iv_img.setState(type);
                 }else if(type==1){
-                    iv_img.setRed(1);
+                    iv_img.setState(type);
                 }else if(type==2){
 
                 }
@@ -108,37 +130,75 @@ public class MapExerciseActivity extends Activity {
             });
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         }
+        iv_img.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()) {
+                    // 按下
+                    case MotionEvent.ACTION_DOWN:
+                        mPosX = event.getX();
+                        mPosY = event.getY();
+                        break;
+                    // 移动
+                    case MotionEvent.ACTION_MOVE:
+                        mCurrentPosX = event.getX();
+                        mCurrentPosY = event.getY();
+                        if (mCurrentPosX - mPosX > 0 && Math.abs(mCurrentPosY - mPosY) < 10)
+                            Log.e("", "向右");
+                        else if (mCurrentPosX - mPosX < 0 && Math.abs(mCurrentPosY - mPosY) < 10)
+                            Log.e("", "向左");
+                        else if (mCurrentPosY - mPosY > 0 && Math.abs(mCurrentPosX - mPosX) < 10){
+                            Log.e("", "向下");
+                            if(!isSuo){
+                                isSuo = true;
+                                mTvTime.setVisibility(View.VISIBLE);
+//                                mIv2.setImageDrawable(MapExerciseActivity.this.getResources().getDrawable(R.mipmap.ic_hp_yd_99));
+                                if (window != null && window.isShowing()) {
+                                    window.dismiss();
+                                }
+                            }
+                        }else if (mCurrentPosY - mPosY < 0 && Math.abs(mCurrentPosX - mPosX) < 10){
+                            Log.e("", "向上");
+                            if(isSuo){
+                                isSuo = false;
+//                                mIv2.setImageDrawable(MapExerciseActivity.this.getResources().getDrawable(R.mipmap.ic_hp_yd_9));
+                                window.showAtLocation(mLl, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置
+                                mTvTime.setVisibility(View.GONE);
+                            }
+                        }
+                        break;
+                    // 拿起
+                    case MotionEvent.ACTION_UP:
+
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
-    @OnClick({R.id.iv_1, R.id.iv_2, R.id.iv_3, R.id.iv_4, R.id.iv})
+    @OnClick({R.id.iv_1, R.id.iv_3, R.id.iv_4, R.id.iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_1:
                 if (mIv3.getVisibility() == View.VISIBLE) {
                     mIv3.setVisibility(View.GONE);
+                    mIv3.setAnimation(AnimationUtils.makeOutAnimation(this, true));
                     mIv4.setVisibility(View.GONE);
+                    mIv4.setAnimation(AnimationUtils.makeOutAnimation(this, true));
                 } else {
                     mIv3.setVisibility(View.VISIBLE);
+                    mIv3.setAnimation(AnimationUtils.makeInAnimation(this, true));
                     mIv4.setVisibility(View.VISIBLE);
-                }
-                break;
-            case R.id.iv_2:
-                if (isSuo) {
-                    isSuo = false;
-                    mIv2.setImageDrawable(MapExerciseActivity.this.getResources().getDrawable(R.mipmap.ic_hp_yd_9));
-                    window.showAtLocation(mLl, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置
-                    mTvTime.setVisibility(View.GONE);
-                } else {
-                    isSuo = true;
-                    mTvTime.setVisibility(View.VISIBLE);
-                    mIv2.setImageDrawable(MapExerciseActivity.this.getResources().getDrawable(R.mipmap.ic_hp_yd_99));
-                    if (window != null && window.isShowing()) {
-                        window.dismiss();
-                    }
+                    mIv4.setAnimation(AnimationUtils.makeInAnimation(this, true));
                 }
                 break;
             case R.id.iv_3:
-                iv_img.start(60000);
+//                iv_img.startPathAnim(60000);
                 break;
             case R.id.iv_4:
                 outRoom();
@@ -166,7 +226,7 @@ public class MapExerciseActivity extends Activity {
                     @Override
                     public void onNext(Result<MapDetailsBean> result) {
                         if (result.getCode() == 0 && result.getData() != null) {
-                            String distance = result.getData().getDistance();
+                            distance = Double.valueOf(result.getData().getDistance());
                             mTvDistance.setText(distance + "m");
                             if (Double.valueOf(result.getData().getDistance()) > 1000) {
                                 mTvDistance.setText(StringUtil.getValue(Double.valueOf(distance) / 1000d) + "km");
@@ -238,7 +298,8 @@ public class MapExerciseActivity extends Activity {
             }
         }
     }
-
+    Double distance = 0.0;//总距离
+    double currentSpeed = 0.0;
     private void setData1(ArrayList<Integer> dataList) {
         int timeMinute =  dataList.get(0);//时间-分
         int timeSecond =  dataList.get(1);//时间-秒
@@ -281,6 +342,14 @@ public class MapExerciseActivity extends Activity {
         if(Unit.equals("Stop")){
             return;
         }
+
+        if(currentSpeed!=speed && speed!=0){
+            iv_img.setRed(Math.round((distance-Distance)/(speed*1000)*60*60*1000));
+        }else if(speed==0){
+            iv_img.setState(1);
+        }
+        currentSpeed = speed;
+        window.setTextViewStr(Distance+"km",speed+"km/h",ZTime,Calories+"cal",Watt+"w",Pulse+"bpm");
 
     }
 

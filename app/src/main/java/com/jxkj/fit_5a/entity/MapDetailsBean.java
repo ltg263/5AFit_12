@@ -20,7 +20,7 @@ public class MapDetailsBean {
     private String imgUrl;
     private String minLevel;
     private String distance;
-    private List<List<Double>> info;
+    private List<List<Float>> info;
     private List<?> boxs;
 
     public String getId() {
@@ -63,11 +63,11 @@ public class MapDetailsBean {
         this.distance = distance;
     }
 
-    public List<List<Double>> getInfo() {
+    public List<List<Float>> getInfo() {
         return info;
     }
 
-    public void setInfo(List<List<Double>> info) {
+    public void setInfo(List<List<Float>> info) {
         this.info = info;
     }
 

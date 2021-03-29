@@ -33,63 +33,72 @@ public class StyleKitName {
     private static class CacheFor_1100900Canvas {
         private static Paint paint = new Paint();
         private static Path _2Path = new Path();
+        private static Path _3Path = new Path();
     }
 
-    public static void draw_1100900Canvas(Canvas canvas, List<List<Double>> info) {
-        Log.w("--->>>>>", "屏幕宽:" + canvas.getWidth());//1920
-        Log.w("--->>>>>", "屏幕高:" + canvas.getHeight());//1080
-
-        Log.w("--->>>>>", "矩形范围宽:" + canvas.getHeight()*3/2);//1920
-        Log.w("--->>>>>", "矩形范围高:" + canvas.getHeight());//1080
-
-        Log.w("--->>>>>", "矩形居中X起止:" + (canvas.getWidth()-canvas.getHeight()*3/2)/2);//1080
-        Log.w("--->>>>>", "矩形居中X终止:" + ((canvas.getWidth()-canvas.getHeight()*3/2)/2+canvas.getHeight()*3/2));//1080
-        Paint paint = CacheFor_1100900Canvas.paint;
+    public static void draw_1100900Canvas(Canvas canvas, List<List<Float>> info, List<List<Float>> infoJg) {
+//        Log.w("--->>>>>", "屏幕宽:" + canvas.getWidth());//1920
+//        Log.w("--->>>>>", "屏幕高:" + canvas.getHeight());//1080
+//
+//        Log.w("--->>>>>", "矩形范围宽:" + canvas.getHeight() * 3 / 2);//1920
+//        Log.w("--->>>>>", "矩形范围高:" + canvas.getHeight());//1080
+//
+//        Log.w("--->>>>>", "矩形居中X起止:" + (canvas.getWidth() - canvas.getHeight() * 3 / 2) / 2);//1080
+//        Log.w("--->>>>>", "矩形居中X终止:" + ((canvas.getWidth() - canvas.getHeight() * 3 / 2) / 2 + canvas.getHeight() * 3 / 2));//1080
 
         //屏幕宽:(1920-1620)/2
         //矩形范围宽:1620
-        //
-        RectF resizedFrame = new RectF((canvas.getWidth()-canvas.getHeight()*3/2)/2, 0f, (canvas.getWidth()-canvas.getHeight()*3/2)/2+canvas.getHeight()*3/2,  canvas.getHeight());
-//        RectF mRectF = new RectF(0, 0f, canvas.getHeight()*3/2,  canvas.getHeight());
-//        RectF resizedFrame = CacheFor_1100900Canvas.originalFrame;
-
-//        StyleKitName.resizingBehaviorApply(resizing, CacheFor_1100900Canvas.originalFrame, targetFrame, resizedFrame);
-//        RectF resizedFrame = resizingBehaviorApply(resizing, mRectF, new RectF(0f, 0f, 1200f, 900f));
-        canvas.translate(resizedFrame.left+50, resizedFrame.top+50);
-//        canvas.scale(0, 0);
-
-        Path _2Path = CacheFor_1100900Canvas._2Path;
-        _2Path.reset();
-//        double hieghtBl = 1000/(canvas.getWidth()/2);
+        RectF resizedFrame = new RectF((canvas.getWidth() - canvas.getHeight() * 3 / 2) / 2, 0f, (canvas.getWidth() - canvas.getHeight() * 3 / 2) / 2 + canvas.getHeight() * 3 / 2, canvas.getHeight());
+        canvas.translate(resizedFrame.left + 50, resizedFrame.top + 50);
+//       canvas.scale(0, 0);
+//       double hieghtBl = 1000/(canvas.getWidth()/2);
         double hieghtBl = 1;
+        CacheFor_1100900Canvas._2Path.reset();
 
-        _2Path.moveTo((float) (info.get(0).get(0)/hieghtBl), (float) (info.get(0).get(1)/hieghtBl));
+        CacheFor_1100900Canvas._2Path.moveTo((float) (info.get(0).get(0) / hieghtBl), (float) (info.get(0).get(1) / hieghtBl));
         for (int i = 0; i < info.size(); i++) {
-            _2Path.lineTo((float) (info.get(i).get(0)/hieghtBl), (float) (info.get(i).get(1)/hieghtBl));
+            CacheFor_1100900Canvas._2Path.lineTo((float) (info.get(i).get(0) / hieghtBl), (float) (info.get(i).get(1) / hieghtBl));
         }
-        _2Path.close();
-        paint.reset();
-        paint.setFlags(Paint.ANTI_ALIAS_FLAG);
-        paint.setStrokeWidth(5f);
+        CacheFor_1100900Canvas._2Path.lineTo((float) (info.get(0).get(0) / hieghtBl), (float) (info.get(0).get(1) / hieghtBl));
+//        CacheFor_1100900Canvas._2Path.close();
+        CacheFor_1100900Canvas.paint.reset();
+        CacheFor_1100900Canvas.paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        CacheFor_1100900Canvas.paint.setStrokeWidth(5f);
         canvas.save();
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(MainApplication.getContext().getResources().getColor(R.color.color_text_theme));
-        canvas.drawPath(_2Path, paint);
+        CacheFor_1100900Canvas.paint.setStyle(Paint.Style.STROKE);
+        CacheFor_1100900Canvas.paint.setColor(MainApplication.getContext().getResources().getColor(R.color.color_text_theme));
+        canvas.drawPath(CacheFor_1100900Canvas._2Path, CacheFor_1100900Canvas.paint);
+
+        if (infoJg != null && infoJg.size() > 0) {
+            CacheFor_1100900Canvas._3Path.reset();
+            CacheFor_1100900Canvas._3Path.moveTo((float) (infoJg.get(infoJg.size() - 1).get(0) / hieghtBl), (float) (infoJg.get(infoJg.size() - 1).get(1) / hieghtBl));
+            for (int i = 0; i < infoJg.size(); i++) {
+                CacheFor_1100900Canvas._3Path.lineTo((float) (infoJg.get(i).get(0) / hieghtBl), (float) (infoJg.get(i).get(1) / hieghtBl));
+            }
+
+            CacheFor_1100900Canvas.paint.reset();
+            CacheFor_1100900Canvas.paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            CacheFor_1100900Canvas.paint.setStrokeWidth(5f);
+            canvas.save();
+            CacheFor_1100900Canvas.paint.setStyle(Paint.Style.STROKE);
+            CacheFor_1100900Canvas.paint.setColor(MainApplication.getContext().getResources().getColor(R.color.red40));
+//            canvas.drawPath(CacheFor_1100900Canvas._3Path, CacheFor_1100900Canvas.paint);
+        }
+
         if (mCurrentPosition == null) {
             mCurrentPosition = new float[2];
-            mCurrentPosition[0] = (float) (info.get(0).get(0)/hieghtBl);
-            mCurrentPosition[1] = (float) (info.get(0).get(1)/hieghtBl);
+            mCurrentPosition[0] = (float) (info.get(0).get(0) / hieghtBl);
+            mCurrentPosition[1] = (float) (info.get(0).get(1) / hieghtBl);
         }
 
         Bitmap bitmap = ((BitmapDrawable) MainApplication.getContext().getResources().getDrawable(R.drawable.ic_d_red)).getBitmap();
         bitmap = StringUtil.zoomImage(bitmap, 30, 50);
-        canvas.drawBitmap(bitmap, mCurrentPosition[0] - 15, mCurrentPosition[1] - 50, paint);
+        canvas.drawBitmap(bitmap, mCurrentPosition[0] - 15, mCurrentPosition[1] - 50, CacheFor_1100900Canvas.paint);
 
         if (mPathMeasure == null) {
-            mPathMeasure = new PathMeasure(_2Path, true);
+            mPathMeasure = new PathMeasure(CacheFor_1100900Canvas._2Path, true);
         }
 
         canvas.restore();
     }
-
 }

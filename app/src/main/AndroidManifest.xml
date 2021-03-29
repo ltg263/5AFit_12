@@ -138,7 +138,6 @@
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
         <activity
             android:name=".view.activity.exercise.landscape.MapExerciseActivity"
-
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
         <activity
