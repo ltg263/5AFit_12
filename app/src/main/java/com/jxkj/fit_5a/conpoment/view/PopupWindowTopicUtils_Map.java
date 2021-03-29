@@ -17,8 +17,6 @@ import android.widget.TextView;
 
 import com.jxkj.fit_5a.R;
 
-import java.util.function.BinaryOperator;
-
 
 public class PopupWindowTopicUtils_Map extends PopupWindow {
 

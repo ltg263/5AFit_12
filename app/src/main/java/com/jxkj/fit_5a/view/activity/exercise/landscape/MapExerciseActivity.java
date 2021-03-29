@@ -22,7 +22,6 @@ import androidx.annotation.Nullable;
 
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
-import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
@@ -31,12 +30,9 @@ import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils_Map;
 import com.jxkj.fit_5a.conpoment.view.RobotView;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
-import com.jxkj.fit_5a.entity.RatePatternBean;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
-import com.jxkj.fit_5a.view.activity.exercise.RatePatternActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
