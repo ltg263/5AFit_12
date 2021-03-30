@@ -340,12 +340,13 @@ public interface ApiService {
 
 
     /**
-     * 设备列表
-     *
+     * 设备型号列表
      * @return
      */
-    @GET(ConstValues.PORT_2 + "api/v1/device/query")
-    Observable<Result<DeviceData>> queryDeviceLists(@Query("brand") String brand, @Query("type") String type);
+    @GET(ConstValues.PORT_2 + "api/v1/device/model/query")
+    Observable<Result<DeviceData>> queryDeviceModelLists(
+            @Query("deviceBrandId") String deviceBrandId, @Query("deviceTypeId") String deviceTypeId);
+
 
     /**
      *  检查协议参数是否符合

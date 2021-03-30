@@ -23,9 +23,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.DeviceData;
 import com.jxkj.fit_5a.base.DeviceDrandData;
-import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
-import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
@@ -43,6 +41,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
+
 public class FacilityAddPpActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView mIvBack;
@@ -58,7 +57,6 @@ public class FacilityAddPpActivity extends BaseActivity {
     TextView mTv;
     @BindView(R.id.iv_d)
     ImageView mIvD;
-    String type;
     private FacilityAddAdapter mFacilityAddAdapter;
 
     @Override
@@ -69,7 +67,7 @@ public class FacilityAddPpActivity extends BaseActivity {
     @Override
     protected void initViews() {
         Bundle bundle = getIntent().getBundleExtra("bundle");
-        type = bundle.getString("id");//设备类型id
+        ConstValues_Ly.DEVICE_TYPE_ID_URL =  bundle.getString("id");//设备类型id
         mTvTitle.setText(bundle.getString("name"));
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         queryDeviceBrandLists();
@@ -111,6 +109,35 @@ public class FacilityAddPpActivity extends BaseActivity {
                     public void onNext(Result<DeviceDrandData> result) {
                         if(isDataInfoSucceed(result)){
                             initRvUi(result.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+    private void queryDeviceModelLists(int id) {
+        RetrofitUtil.getInstance().apiService()
+                .queryDeviceModelLists(String.valueOf(id),ConstValues_Ly.DEVICE_TYPE_ID_URL)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<DeviceData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<DeviceData> result) {
+                        if(isDataInfoSucceed(result)){
+
                         }
                     }
 
@@ -180,7 +207,7 @@ public class FacilityAddPpActivity extends BaseActivity {
                 list.get(position).setSelect(true);
                 mFacilityAddAdapter.notifyDataSetChanged();
                 ConstValues_Ly.BRAND_ID = list.get(position).getId()+"";
-//                queryDeviceLists(list.get(position).getId());
+                queryDeviceModelLists(list.get(position).getId());
             }
         });
     }

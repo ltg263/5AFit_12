@@ -215,6 +215,7 @@ public class PopupWindowLanYan extends PopupWindow {
             if(ConstValues_Ly.CLIENT_ID ==0){
                 ConstValues_Ly.CLIENT_ID = resultData[2];//Client ID
                 ConstValues_Ly.METER_ID = resultData[3];//Meter ID
+                postDeviceProtocolCheck();
                 for(int i=0;i < ConstValues_Ly.METER_ID_S.length;i++){
                     if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[i]){
                         ConstValues_Ly.DEVICE_TYPE_ID =ConstValues_Ly.DEVICE_TYPE_IDS[i];
@@ -232,7 +233,7 @@ public class PopupWindowLanYan extends PopupWindow {
     public static void postDeviceProtocolCheck() {
         RetrofitUtil.getInstance().apiService()
                 .postDeviceProtocolCheck(ConstValues_Ly.BRAND_ID, ConstValues_Ly.CLIENT_ID+"",
-                        "","","","","")
+                        ConstValues_Ly.DEVICE_Model_ID_URL,ConstValues_Ly.DEVICE_TYPE_ID_URL,ConstValues_Ly.METER_ID+"","iconsole",null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {
@@ -243,6 +244,15 @@ public class PopupWindowLanYan extends PopupWindow {
 
                     @Override
                     public void onNext(Result result) {
+//                        https://5afit.nbqichen.com/sysconfig/api/v1/device/protocol/check?
+//                        deviceBrandId=4&deviceBrandParamId=56&deviceModelId=0&deviceTypeId=2&
+//                        deviceTypeParamId=1&protocolName=iconsole http response =
+//                        {"code":"000000","mesg":"处理成功","sub_code":"000000","sub_mesg":
+//                        "处理成功","time":"2021-03-30T07:08:10.036Z","data":{"result":false,
+//                        "deviceBrandTypeModel":{"deviceBrand":{"id":57,"name":"PARKBOX",
+//                        "protocolName":"iconsole","paramId":"56",
+//                        "img":"http://5a-fit.oss-cn-hangzhou.aliyuncs.com/device/Skeg225ghT3tP3wilyiSQ.png"},
+//                        "deviceType":null,"deviceModel":null}}}
                     }
 
                     @Override

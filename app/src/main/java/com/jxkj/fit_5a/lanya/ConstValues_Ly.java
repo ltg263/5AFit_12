@@ -32,6 +32,8 @@ public class ConstValues_Ly {
 
     public static String BRAND_ID = null;//	品牌id
     public static int DEVICE_TYPE_ID = 0;//设备类型id
+    public static String DEVICE_TYPE_ID_URL = "0";//设备类型id
+    public static String DEVICE_Model_ID_URL = "0";//设备型号id
     /**
      * 脚踏车/椭圆机(iC+ Protocol V1.3.1)
      * 手动脚踏车/椭圆机(iB+ Protocol(手動車錶) V1.2)

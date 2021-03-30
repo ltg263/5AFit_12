@@ -5,12 +5,42 @@ import java.util.List;
 public class DeviceData {
 
     /**
-     * list : [{"brand":0,"detail":"","id":0,"imgUrl":"","matchstr":"","model":"","name":"","status":0,"subTitle":"","type":0}]
+     * list : [{"detail":"","deviceBrandId":0,"deviceTypeId":0,"id":0,"img":"","name":"","param":{"adjustIncline":true,"adjustLevel":true,"adjustSpeed":true,"attachParam":"","id":0,"inclineMax":0,"inclineMin":0,"levelMax":0,"levelMin":0,"pauseAble":true,"readHeartRateAble":true,"speedMax":0,"speedMin":0,"supportProgram":true},"subTitle":""}]
+     * page : 0
+     * pageSize : 0
+     * total : 0
      * totalCount : 0
      */
 
+    private int page;
+    private int pageSize;
+    private int total;
     private int totalCount;
     private List<ListBean> list;
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
     public int getTotalCount() {
         return totalCount;
@@ -30,36 +60,24 @@ public class DeviceData {
 
     public static class ListBean {
         /**
-         * brand : 0
          * detail :
+         * deviceBrandId : 0
+         * deviceTypeId : 0
          * id : 0
-         * imgUrl :
-         * matchstr :
-         * model :
+         * img :
          * name :
-         * status : 0
+         * param : {"adjustIncline":true,"adjustLevel":true,"adjustSpeed":true,"attachParam":"","id":0,"inclineMax":0,"inclineMin":0,"levelMax":0,"levelMin":0,"pauseAble":true,"readHeartRateAble":true,"speedMax":0,"speedMin":0,"supportProgram":true}
          * subTitle :
-         * type : 0
          */
 
-        private int brand;
         private String detail;
+        private int deviceBrandId;
+        private int deviceTypeId;
         private int id;
-        private String imgUrl;
-        private String matchstr;
-        private String model;
+        private String img;
         private String name;
-        private int status;
+        private ParamBean param;
         private String subTitle;
-        private int type;
-
-        public int getBrand() {
-            return brand;
-        }
-
-        public void setBrand(int brand) {
-            this.brand = brand;
-        }
 
         public String getDetail() {
             return detail;
@@ -67,6 +85,22 @@ public class DeviceData {
 
         public void setDetail(String detail) {
             this.detail = detail;
+        }
+
+        public int getDeviceBrandId() {
+            return deviceBrandId;
+        }
+
+        public void setDeviceBrandId(int deviceBrandId) {
+            this.deviceBrandId = deviceBrandId;
+        }
+
+        public int getDeviceTypeId() {
+            return deviceTypeId;
+        }
+
+        public void setDeviceTypeId(int deviceTypeId) {
+            this.deviceTypeId = deviceTypeId;
         }
 
         public int getId() {
@@ -77,28 +111,12 @@ public class DeviceData {
             this.id = id;
         }
 
-        public String getImgUrl() {
-            return imgUrl;
+        public String getImg() {
+            return img;
         }
 
-        public void setImgUrl(String imgUrl) {
-            this.imgUrl = imgUrl;
-        }
-
-        public String getMatchstr() {
-            return matchstr;
-        }
-
-        public void setMatchstr(String matchstr) {
-            this.matchstr = matchstr;
-        }
-
-        public String getModel() {
-            return model;
-        }
-
-        public void setModel(String model) {
-            this.model = model;
+        public void setImg(String img) {
+            this.img = img;
         }
 
         public String getName() {
@@ -109,12 +127,12 @@ public class DeviceData {
             this.name = name;
         }
 
-        public int getStatus() {
-            return status;
+        public ParamBean getParam() {
+            return param;
         }
 
-        public void setStatus(int status) {
-            this.status = status;
+        public void setParam(ParamBean param) {
+            this.param = param;
         }
 
         public String getSubTitle() {
@@ -125,12 +143,150 @@ public class DeviceData {
             this.subTitle = subTitle;
         }
 
-        public int getType() {
-            return type;
-        }
+        public static class ParamBean {
+            /**
+             * adjustIncline : true
+             * adjustLevel : true
+             * adjustSpeed : true
+             * attachParam :
+             * id : 0
+             * inclineMax : 0
+             * inclineMin : 0
+             * levelMax : 0
+             * levelMin : 0
+             * pauseAble : true
+             * readHeartRateAble : true
+             * speedMax : 0
+             * speedMin : 0
+             * supportProgram : true
+             */
 
-        public void setType(int type) {
-            this.type = type;
+            private boolean adjustIncline;
+            private boolean adjustLevel;
+            private boolean adjustSpeed;
+            private String attachParam;
+            private int id;
+            private int inclineMax;
+            private int inclineMin;
+            private int levelMax;
+            private int levelMin;
+            private boolean pauseAble;
+            private boolean readHeartRateAble;
+            private int speedMax;
+            private int speedMin;
+            private boolean supportProgram;
+
+            public boolean isAdjustIncline() {
+                return adjustIncline;
+            }
+
+            public void setAdjustIncline(boolean adjustIncline) {
+                this.adjustIncline = adjustIncline;
+            }
+
+            public boolean isAdjustLevel() {
+                return adjustLevel;
+            }
+
+            public void setAdjustLevel(boolean adjustLevel) {
+                this.adjustLevel = adjustLevel;
+            }
+
+            public boolean isAdjustSpeed() {
+                return adjustSpeed;
+            }
+
+            public void setAdjustSpeed(boolean adjustSpeed) {
+                this.adjustSpeed = adjustSpeed;
+            }
+
+            public String getAttachParam() {
+                return attachParam;
+            }
+
+            public void setAttachParam(String attachParam) {
+                this.attachParam = attachParam;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public int getInclineMax() {
+                return inclineMax;
+            }
+
+            public void setInclineMax(int inclineMax) {
+                this.inclineMax = inclineMax;
+            }
+
+            public int getInclineMin() {
+                return inclineMin;
+            }
+
+            public void setInclineMin(int inclineMin) {
+                this.inclineMin = inclineMin;
+            }
+
+            public int getLevelMax() {
+                return levelMax;
+            }
+
+            public void setLevelMax(int levelMax) {
+                this.levelMax = levelMax;
+            }
+
+            public int getLevelMin() {
+                return levelMin;
+            }
+
+            public void setLevelMin(int levelMin) {
+                this.levelMin = levelMin;
+            }
+
+            public boolean isPauseAble() {
+                return pauseAble;
+            }
+
+            public void setPauseAble(boolean pauseAble) {
+                this.pauseAble = pauseAble;
+            }
+
+            public boolean isReadHeartRateAble() {
+                return readHeartRateAble;
+            }
+
+            public void setReadHeartRateAble(boolean readHeartRateAble) {
+                this.readHeartRateAble = readHeartRateAble;
+            }
+
+            public int getSpeedMax() {
+                return speedMax;
+            }
+
+            public void setSpeedMax(int speedMax) {
+                this.speedMax = speedMax;
+            }
+
+            public int getSpeedMin() {
+                return speedMin;
+            }
+
+            public void setSpeedMin(int speedMin) {
+                this.speedMin = speedMin;
+            }
+
+            public boolean isSupportProgram() {
+                return supportProgram;
+            }
+
+            public void setSupportProgram(boolean supportProgram) {
+                this.supportProgram = supportProgram;
+            }
         }
     }
 }
