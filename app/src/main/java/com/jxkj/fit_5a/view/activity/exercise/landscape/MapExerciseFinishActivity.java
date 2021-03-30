@@ -45,11 +45,35 @@ public class MapExerciseFinishActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        mIvZuo.setVisibility(View.INVISIBLE);
         initVP();
     }
     private void initVP() {
         getFragments();
         mViewPager.setOffscreenPageLimit(3);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mIvZuo.setVisibility(View.VISIBLE);
+                mIvYou.setVisibility(View.VISIBLE);
+                if(position==0){
+                    mIvZuo.setVisibility(View.INVISIBLE);
+                }
+                if(position==2){
+                    mIvYou.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {

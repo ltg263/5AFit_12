@@ -69,8 +69,10 @@
         tools:replace="android:icon,allowBackup">
         <!--        SplashScreenActivity-->
         <activity
-            android:name=".view.activity.SplashScreenActivity"
-            android:launchMode="singleTask">
+            android:name=".view.activity.exercise.landscape.MapExerciseFinishActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -138,13 +140,13 @@
 
         <activity
             android:name=".view.activity.exercise.landscape.MapExerciseActivity"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
 
-        <activity
-            android:name=".view.activity.exercise.landscape.MapExerciseFinishActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="landscape" />
+        <!--        <activity-->
+        <!--            android:name=".view.activity.exercise.landscape.MapExerciseFinishActivity"-->
+        <!--            android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
+        <!--            android:screenOrientation="landscape" />-->
 
         <activity
             android:name=".view.activity.exercise.landscape.CreateRoomActivity"
@@ -159,7 +161,7 @@
         <activity
             android:name=".view.activity.login_other.LoginActivity"
 
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.exercise.HistoryEquipmentActivity"
@@ -445,17 +447,17 @@
         </provider>
 
 
-<!--        <intent-filter>-->
-<!--            &lt;!&ndash; action 和category 必须这样写！！！ &ndash;&gt;-->
-<!--            <action android:name="android.intent.action.VIEW"/>-->
-<!--            <category android:name="android.intent.category.DEFAULT"/>-->
-<!--            <category android:name="android.intent.category.BROWSABLE"/>-->
-<!--            &lt;!&ndash; 这里采用的是自定义Scheme &ndash;&gt;-->
-<!--            &lt;!&ndash; 接受以 "com.ypzdw.zdb://article"开头的URIs  &ndash;&gt;-->
-<!--            <data-->
-<!--                android:host="article"-->
-<!--                android:scheme="com.ypzdw.zdb"/>-->
-<!--        </intent-filter>-->
+        <!--        <intent-filter>-->
+        <!--            &lt;!&ndash; action 和category 必须这样写！！！ &ndash;&gt;-->
+        <!--            <action android:name="android.intent.action.VIEW"/>-->
+        <!--            <category android:name="android.intent.category.DEFAULT"/>-->
+        <!--            <category android:name="android.intent.category.BROWSABLE"/>-->
+        <!--            &lt;!&ndash; 这里采用的是自定义Scheme &ndash;&gt;-->
+        <!--            &lt;!&ndash; 接受以 "com.ypzdw.zdb://article"开头的URIs  &ndash;&gt;-->
+        <!--            <data-->
+        <!--                android:host="article"-->
+        <!--                android:scheme="com.ypzdw.zdb"/>-->
+        <!--        </intent-filter>-->
 
     </application>
 
