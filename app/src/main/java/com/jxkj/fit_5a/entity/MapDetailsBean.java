@@ -20,8 +20,17 @@ public class MapDetailsBean {
     private String imgUrl;
     private String minLevel;
     private String distance;
+    private ParamBean param;
     private List<List<Float>> info;
     private List<?> boxs;
+
+    public void setParam(ParamBean param) {
+        this.param = param;
+    }
+
+    public ParamBean getParam() {
+        return param;
+    }
 
     public String getId() {
         return id;
@@ -77,5 +86,44 @@ public class MapDetailsBean {
 
     public void setBoxs(List<?> boxs) {
         this.boxs = boxs;
+    }
+
+    public class ParamBean{
+        double width;
+        double height;
+        double referenceWidth;
+        double referenceHeight;
+
+        public double getWidth() {
+            return width;
+        }
+
+        public void setWidth(double width) {
+            this.width = width;
+        }
+
+        public double getHeight() {
+            return height;
+        }
+
+        public void setHeight(double height) {
+            this.height = height;
+        }
+
+        public double getReferenceWidth() {
+            return referenceWidth;
+        }
+
+        public void setReferenceWidth(double referenceWidth) {
+            this.referenceWidth = referenceWidth;
+        }
+
+        public double getReferenceHeight() {
+            return referenceHeight;
+        }
+
+        public void setReferenceHeight(double referenceHeight) {
+            this.referenceHeight = referenceHeight;
+        }
     }
 }

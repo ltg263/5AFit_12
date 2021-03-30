@@ -133,13 +133,19 @@
             android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".view.activity.exercise.landscape.ClassicExerciseActivity"
-
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+
         <activity
             android:name=".view.activity.exercise.landscape.MapExerciseActivity"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+            android:screenOrientation="landscape"/>
+
+        <activity
+            android:name=".view.activity.exercise.landscape.MapExerciseFinishActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="landscape" />
+
         <activity
             android:name=".view.activity.exercise.landscape.CreateRoomActivity"
 

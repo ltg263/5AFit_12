@@ -25,6 +25,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.utils.StyleKitName;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils_Map;
@@ -91,6 +92,8 @@ public class MapExerciseActivity extends Activity {
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
         }
 
+        StyleKitName.mPathMeasure = null;
+        StyleKitName.mCurrentPosition = null;
         /**
          * 广播动态注册
          */
@@ -239,7 +242,7 @@ public class MapExerciseActivity extends Activity {
                             }
                             GlideImgLoader.loadImage(MapExerciseActivity.this,result.getData().getImgUrl(),iv_img);
                             if(result.getData().getInfo()!=null && result.getData().getInfo().size()>0){
-                                iv_img.setData(result.getData().getInfo());
+                                iv_img.setData(result.getData().getInfo(),result.getData().getParam());
                             }
                         }
                     }
@@ -266,6 +269,8 @@ public class MapExerciseActivity extends Activity {
         DialogUtils.showDialogOutRoom(MapExerciseActivity.this, new DialogUtils.DialogLyInterface() {
             @Override
             public void btnConfirm() {
+                Intent mIntent = new Intent(MapExerciseActivity.this,MapExerciseFinishActivity.class);
+                startActivity(mIntent);
                 finish();
             }
         });

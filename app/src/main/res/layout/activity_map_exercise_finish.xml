@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_actionbar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_hp_cjfj_2">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:visibility="invisible"
+        android:src="@mipmap/ic_hp_cjfj_1" />
+
+    <ImageView
+        android:id="@+id/iv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_15dp"
+        android:layout_marginTop="13dp"
+        android:src="@mipmap/ic_hp_cjfj_3" />
+
+    <Button
+        android:layout_width="63dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dimen_20dp"
+        android:layout_toStartOf="@id/tv_ok"
+        android:background="@mipmap/ic_hp_bnt"
+        android:gravity="center"
+        android:text="分享"
+        android:textColor="@color/color_ffffff"
+        android:textSize="14sp"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/tv_ok"
+        android:layout_width="63dp"
+        android:layout_height="31dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dimen_20dp"
+        android:background="@mipmap/ic_hp_bnt"
+        android:gravity="center"
+        android:text="分享"
+        android:textColor="@color/color_ffffff"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/iv_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_ok"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:src="@mipmap/ic_map_finish" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/iv_top"
+        android:layout_marginBottom="@dimen/dimen_50dp">
+
+        <ImageView
+            android:id="@+id/iv_zuo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dimen_30dp"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/ic_zuo_jiantou" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_toStartOf="@id/iv_you"
+            android:layout_toEndOf="@id/iv_zuo" />
+
+        <ImageView
+            android:id="@+id/iv_you"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dimen_30dp"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/ic_you_jiantou" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

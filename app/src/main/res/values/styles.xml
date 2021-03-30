@@ -15,7 +15,10 @@
         <item name="vertical_Space">20dp</item>
         <item name="isFull">false</item>
     </style>
-
+    <style name="Theme.AppCompat.Light.NoActionBar1">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">false</item>
+    </style>
     <declare-styleable name="searchmlist">
         <attr name="search_hint" format="string|reference" /><!--EditText hint-->
         <attr name="search_baground" format="reference" /><!--EditText  background-->

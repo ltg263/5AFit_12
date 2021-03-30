@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.StyleKitName;
+import com.jxkj.fit_5a.entity.MapDetailsBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class RobotView extends ImageView {
     private Canvas mCanvas;
     List<List<Float>> info;
     List<List<Float>> infoJg;
+    MapDetailsBean.ParamBean param;
 
     public RobotView(Context context) {
         super(context);
@@ -47,8 +49,9 @@ public class RobotView extends ImageView {
         a.recycle();
     }
 
-    public void setData(List<List<Float>> info) {
+    public void setData(List<List<Float>> info, MapDetailsBean.ParamBean param) {
         this.info = info;
+        this.param = param;
         invalidate();
     }
 
@@ -57,7 +60,7 @@ public class RobotView extends ImageView {
         super.onDraw(canvas);
         this.mCanvas = canvas;
         if (info != null) {
-            StyleKitName.draw_1100900Canvas(mCanvas, info, infoJg);
+            StyleKitName.draw_1100900Canvas(mCanvas, info, param,infoJg);
         }
     }
 
