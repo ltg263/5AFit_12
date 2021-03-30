@@ -59,7 +59,6 @@ public class FacilityAddPpActivity extends BaseActivity {
     @BindView(R.id.iv_d)
     ImageView mIvD;
     String type;
-    String id = "";
     private FacilityAddAdapter mFacilityAddAdapter;
 
     @Override
@@ -126,36 +125,6 @@ public class FacilityAddPpActivity extends BaseActivity {
                     }
                 });
     }
-    private void queryDeviceLists(int id) {
-        RetrofitUtil.getInstance().apiService()
-                .queryDeviceLists(String.valueOf(id),type)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result<DeviceData>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Result<DeviceData> result) {
-                        if(isDataInfoSucceed(result)){
-
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
 
     private void initVvUi() {
 
@@ -197,7 +166,6 @@ public class FacilityAddPpActivity extends BaseActivity {
         if(list.size()==0){
             return;
         }
-        id = list.get(0).getId()+"";
         mFacilityAddAdapter = new FacilityAddAdapter(list);
         mRvAllList.setLayoutManager(new GridLayoutManager(this, 3));
         mRvAllList.setHasFixedSize(true);
@@ -211,8 +179,7 @@ public class FacilityAddPpActivity extends BaseActivity {
                 }
                 list.get(position).setSelect(true);
                 mFacilityAddAdapter.notifyDataSetChanged();
-                id = list.get(position).getId()+"";
-                ConstValues_Ly.BRAND_ID = id;
+                ConstValues_Ly.BRAND_ID = list.get(position).getId()+"";
 //                queryDeviceLists(list.get(position).getId());
             }
         });
@@ -234,48 +201,6 @@ public class FacilityAddPpActivity extends BaseActivity {
                 initPopupWindw();
                 break;
         }
-    }
-
-    private void goConnect() {
-        mIv.setVisibility(View.GONE);
-        mTv.setVisibility(View.GONE);
-        mIvD.setVisibility(View.VISIBLE);
-
-        PostUser.DeviceFormDTO deviceFormDTO= new PostUser.DeviceFormDTO();
-        deviceFormDTO.setDeviceId("0");
-        deviceFormDTO.setDeviceNo("");
-        deviceFormDTO.setId(id);
-        deviceFormDTO.setUserId(SharedUtils.getUserId()+"");
-        show();
-        RetrofitUtil.getInstance().apiService()
-                .userDeviceAdd(deviceFormDTO)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Result result) {
-                        if(isDataInfoSucceed(result)){
-//                            showDialogUi();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        dismiss();
-                    }
-                });
-
-
     }
 
     private void showDialogUi(String str) {

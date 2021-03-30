@@ -20,8 +20,10 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.HistoryEquipmentData;
+import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.SharedHistoryEquipment;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.lanya.Ble4_0Util;
@@ -33,6 +35,11 @@ import com.jxkj.fit_5a.lanya.DataManage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class PopupWindowLanYan extends PopupWindow {
@@ -214,11 +221,41 @@ public class PopupWindowLanYan extends PopupWindow {
                     }
                 }
                 PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A0));
+//                postDeviceProtocolCheck();
                 initLsData();
             }
             startBroadcast("b2",data.getDataPayload());
             return;
         }
+    }
+
+    public static void postDeviceProtocolCheck() {
+        RetrofitUtil.getInstance().apiService()
+                .postDeviceProtocolCheck(ConstValues_Ly.BRAND_ID, ConstValues_Ly.CLIENT_ID+"",
+                        "","","","","")
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
+
     }
 
     private static void initLsData() {

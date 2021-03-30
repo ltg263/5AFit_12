@@ -69,10 +69,8 @@
         tools:replace="android:icon,allowBackup">
         <!--        SplashScreenActivity-->
         <activity
-            android:name=".view.activity.exercise.landscape.MapExerciseFinishActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:name=".view.activity.SplashScreenActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -143,10 +141,10 @@
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
 
-        <!--        <activity-->
-        <!--            android:name=".view.activity.exercise.landscape.MapExerciseFinishActivity"-->
-        <!--            android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
-        <!--            android:screenOrientation="landscape" />-->
+        <activity
+            android:name=".view.activity.exercise.landscape.MapExerciseFinishActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
             android:name=".view.activity.exercise.landscape.CreateRoomActivity"

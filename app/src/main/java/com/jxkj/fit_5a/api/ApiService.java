@@ -1,6 +1,8 @@
 package com.jxkj.fit_5a.api;
 
 
+import android.content.Intent;
+
 import com.alipay.tscenter.biz.rpc.vkeydfp.result.BaseResult;
 import com.jxkj.fit_5a.base.DeviceCourseData;
 import com.jxkj.fit_5a.base.DeviceCourseTypeData;
@@ -33,6 +35,7 @@ import com.jxkj.fit_5a.entity.CommentListBean;
 import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.CommunityHomeInfoBean;
 import com.jxkj.fit_5a.entity.CreateOrderBean;
+import com.jxkj.fit_5a.entity.DeviceProtocolCheckData;
 import com.jxkj.fit_5a.entity.DiscountUsableNotBean;
 import com.jxkj.fit_5a.entity.FavoriteQueryList;
 import com.jxkj.fit_5a.entity.FollowFansList;
@@ -345,11 +348,24 @@ public interface ApiService {
     Observable<Result<DeviceData>> queryDeviceLists(@Query("brand") String brand, @Query("type") String type);
 
     /**
-     * 添加用户设备
-     * 未完善
+     *  检查协议参数是否符合
+     * @param deviceBrandId 设备品牌id
+     * @param deviceBrandParamId 设备品牌参数id(iconsole协议下为client id)
+     * @param deviceModelId 设备型号id
+     * @param deviceTypeId 设备类型id
+     * @param deviceTypeParamId 设备类型参数id(iconsole协议下为meter id)
+     * @param protocolName 	协议名称(仪器厂商, 目前只有iconsole)
+     * @param deviceModelParamId 协议对应的型号参数id(iconsole协议下没有该字段)
+     * @return
      */
-    @POST(ConstValues.PORT_2 + "api/v1/user/device/add")
-    Observable<Result> userDeviceAdd(@Body PostUser.DeviceFormDTO postUser);
+    @POST(ConstValues.PORT_2 + "api/v1/device/protocol/check")
+    Observable<Result<DeviceProtocolCheckData>> postDeviceProtocolCheck(@Query("deviceBrandId")String deviceBrandId,//
+                                                                        @Query("deviceBrandParamId")String deviceBrandParamId,
+                                                                        @Query("deviceModelId")String deviceModelId,
+                                                                        @Query("deviceTypeId")String deviceTypeId,
+                                                                        @Query("deviceTypeParamId")String deviceTypeParamId,
+                                                                        @Query("protocolName")String protocolName,
+                                                                        @Query("deviceModelParamId")String deviceModelParamId);
 
 
     /**
