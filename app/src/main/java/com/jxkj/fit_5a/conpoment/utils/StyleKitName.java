@@ -53,11 +53,11 @@ public class StyleKitName {
         canvas.translate(resizedFrame.left, resizedFrame.top);
         CacheFor_1100900Canvas._2Path.reset();
 
-        CacheFor_1100900Canvas._2Path.moveTo((float) (info.get(0).get(0) * bl), (float) (info.get(0).get(1)  * bl));
+        CacheFor_1100900Canvas._2Path.moveTo(info.get(0).get(0) * bl, info.get(0).get(1)  * bl);
         for (int i = 0; i < info.size(); i++) {
-            CacheFor_1100900Canvas._2Path.lineTo((float) (info.get(i).get(0)  * bl), (float) (info.get(i).get(1) * bl));
+            CacheFor_1100900Canvas._2Path.lineTo(info.get(i).get(0)  * bl, info.get(i).get(1) * bl);
         }
-        CacheFor_1100900Canvas._2Path.lineTo((float) (info.get(0).get(0)  * bl), (float) (info.get(0).get(1)  * bl));
+        CacheFor_1100900Canvas._2Path.lineTo(info.get(0).get(0)  * bl, info.get(0).get(1)  * bl);
 //        CacheFor_1100900Canvas._2Path.close();
         CacheFor_1100900Canvas.paint.reset();
         CacheFor_1100900Canvas.paint.setFlags(Paint.ANTI_ALIAS_FLAG);
@@ -69,9 +69,9 @@ public class StyleKitName {
 //        infoJg = info;
         if (infoJg != null && infoJg.size() > 0) {
             CacheFor_1100900Canvas._3Path.reset();
-            CacheFor_1100900Canvas._3Path.moveTo((float) (infoJg.get(infoJg.size() - 1).get(0) ), (float) (infoJg.get(infoJg.size() - 1).get(1) ));
+            CacheFor_1100900Canvas._3Path.moveTo(infoJg.get(infoJg.size() - 1).get(0), infoJg.get(infoJg.size() - 1).get(1));
             for (int i = 0; i < infoJg.size(); i++) {
-                CacheFor_1100900Canvas._3Path.lineTo((float) (infoJg.get(i).get(0) ), (float) (infoJg.get(i).get(1) ));
+                CacheFor_1100900Canvas._3Path.lineTo(infoJg.get(i).get(0), infoJg.get(i).get(1));
             }
 
             CacheFor_1100900Canvas.paint.reset();
