@@ -341,5 +341,5 @@
         android:background="@drawable/bnt_circle_start"
         android:gravity="center"
         android:scaleType="center"
-        android:src="@drawable/ic_yundong_kaishi" />
+        android:src="@drawable/bnt_yun_dong_type_bf" />
 </RelativeLayout>

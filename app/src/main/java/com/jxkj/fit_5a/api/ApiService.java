@@ -336,7 +336,7 @@ public interface ApiService {
      * @return
      */
     @GET(ConstValues.PORT_2 + "api/v1/device/brand/query")
-    Observable<Result<DeviceDrandData>> queryDeviceBrandLists();
+    Observable<Result<DeviceDrandData>> queryDeviceBrandLists(@Query("page") String page, @Query("pageSize") String pageSize);
 
 
     /**
@@ -367,6 +367,14 @@ public interface ApiService {
                                                                         @Query("deviceTypeParamId")String deviceTypeParamId,
                                                                         @Query("protocolName")String protocolName,
                                                                         @Query("deviceModelParamId")String deviceModelParamId);
+    //https://5afit.nbqichen.com/sysconfig/api/v1/device/protocol/
+    // check?
+    // deviceBrandId=2&
+    // deviceBrandParamId=55&
+    // deviceModelId=0&
+    // deviceTypeId=3&
+    // deviceTypeParamId=0&
+    // protocolName=iconsole http response = {"code":"000000","mesg":"处理成功","sub_code":"000000","sub_mesg":"处理成功","time":"2021-03-31T07:39:34.586Z","data":{"result":false,"deviceBrandTypeModel":{"deviceBrand":{"id":56,"name":"HEAD FITNESS","protocolName":"iconsole","paramId":"55","img":"http://5a-fit.oss-cn-hangzhou.aliyuncs.com/device/1kL4w9LWwasXTRcNLcjteA.png"},"deviceType":{"id":9,"name":"室内单车/椭圆机","protocolName":"iconsole","paramId":"0","img":"https://haide.nbqichen.com/haide/upload/CEC73BA7C3B06E9A55B7982189236DD7.png"},"deviceModel":null}}}
 
 
     /**

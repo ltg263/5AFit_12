@@ -27,6 +27,7 @@ public class FacilityAddAdapter extends BaseQuickAdapter<DeviceDrandData.ListBea
     @Override
     protected void convert(@NonNull BaseViewHolder helper, DeviceDrandData.ListBean item) {
         GlideImgLoader.loadImage(mContext,item.getImg(), helper.getView(R.id.iv));
+        helper.setText(R.id.tv,item.getName());
         if(item.isSelect()){
             helper.setBackgroundRes(R.id.rl,R.drawable.bj_shape_line_theme_6);
         }else{

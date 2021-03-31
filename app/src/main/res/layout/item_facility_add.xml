@@ -14,9 +14,19 @@
             android:id="@+id/iv"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_centerInParent="true"
-            android:layout_margin="@dimen/dimen_5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dimen_5dp"
             android:src="@mipmap/ic_123456" />
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dimen_5dp"
+            android:text="iConsole+"
+            android:textColor="@color/color_333333" />
 
     </RelativeLayout>
 

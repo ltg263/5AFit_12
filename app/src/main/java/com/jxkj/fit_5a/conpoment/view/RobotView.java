@@ -84,7 +84,7 @@ public class RobotView extends ImageView {
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (Float) animation.getAnimatedValue();
                 lastAnimtionValue = value;
-//                Log.e("onAnimationUpdate：", "lastAnimtionValue: " + lastAnimtionValue);
+                Log.e("onAnimationUpdate：", "lastAnimtionValue: " + lastAnimtionValue);
                 invalidateByValue(value);
             }
         });
@@ -99,7 +99,9 @@ public class RobotView extends ImageView {
                 valueAnimator.pause();
             }
         }else{
-            valueAnimator.resume();
+            if(valueAnimator!=null && !valueAnimator.isRunning()){
+                valueAnimator.resume();
+            }
         }
     }
 

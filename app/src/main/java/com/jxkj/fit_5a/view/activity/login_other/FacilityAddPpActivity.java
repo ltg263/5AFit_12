@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -30,6 +31,7 @@ import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.adapter.FacilityAddAdapter;
+import com.jxkj.fit_5a.view.adapter.FacilitySbAddAdapter;
 
 import java.util.List;
 
@@ -49,15 +51,20 @@ public class FacilityAddPpActivity extends BaseActivity {
     TextView mTvTitle;
     @BindView(R.id.rv_all_list)
     RecyclerView mRvAllList;
-    @BindView(R.id.video_view)
-    VideoView mVideoView;
+    @BindView(R.id.rv_sbxh_list)
+    RecyclerView mRvSbxhList;
     @BindView(R.id.iv)
     ImageView mIv;
     @BindView(R.id.tv)
     TextView mTv;
+    @BindView(R.id.tv_show)
+    TextView tv_show;
+    @BindView(R.id.tv_name)
+    TextView tv_name;
     @BindView(R.id.iv_d)
     ImageView mIvD;
     private FacilityAddAdapter mFacilityAddAdapter;
+    private FacilitySbAddAdapter mFacilitySbAddAdapter;
 
     @Override
     protected int getContentView() {
@@ -71,9 +78,7 @@ public class FacilityAddPpActivity extends BaseActivity {
         mTvTitle.setText(bundle.getString("name"));
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         queryDeviceBrandLists();
-        initVvUi();
-
-
+        initRvUiXh();
     }
     PopupWindowLanYan window;
     private void initPopupWindw() {
@@ -93,10 +98,10 @@ public class FacilityAddPpActivity extends BaseActivity {
         }
         window.showAtLocation(mTv, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置
     }
-
+    List<DeviceDrandData.ListBean> list;
     private void queryDeviceBrandLists() {
         RetrofitUtil.getInstance().apiService()
-                .queryDeviceBrandLists()
+                .queryDeviceBrandLists("1","1000")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<DeviceDrandData>>() {
@@ -108,7 +113,8 @@ public class FacilityAddPpActivity extends BaseActivity {
                     @Override
                     public void onNext(Result<DeviceDrandData> result) {
                         if(isDataInfoSucceed(result)){
-                            initRvUi(result.getData().getList());
+                            list = result.getData().getList();
+                            initRvUi();
                         }
                     }
 
@@ -137,7 +143,11 @@ public class FacilityAddPpActivity extends BaseActivity {
                     @Override
                     public void onNext(Result<DeviceData> result) {
                         if(isDataInfoSucceed(result)){
-
+                            if(result.getData()!=null && result.getData().getList()!=null && result.getData().getList().size()>0){
+                                result.getData().getList().get(0).setSelect(true);
+                                ConstValues_Ly.DEVICE_Model_ID_URL = result.getData().getList().get(0).getId()+"";
+                                mFacilitySbAddAdapter.setNewData(result.getData().getList());
+                            }
                         }
                     }
 
@@ -153,47 +163,36 @@ public class FacilityAddPpActivity extends BaseActivity {
                 });
     }
 
-    private void initVvUi() {
+    private void initRvUiXh() {
+        mFacilitySbAddAdapter = new FacilitySbAddAdapter(null);
+        mRvSbxhList.setLayoutManager(new LinearLayoutManager(this));
+        mRvSbxhList.setHasFixedSize(true);
+        mRvSbxhList.setAdapter(mFacilitySbAddAdapter);
 
-        /***
-         * 将播放器关联上一个音频或者视频文件
-         * videoView.setVideoURI(Uri uri)
-         * videoView.setVideoPath(String path)
-         * 以上两个方法都可以。
-         */
-        mVideoView.setVideoPath("http://vfx.mtime.cn/Video/2019/03/19/mp4/190319222227698228.mp4");
-
-        /**
-         * w为其提供一个控制器，控制其暂停、播放……等功能
-         */
-        mVideoView.setMediaController(new MediaController(this));
-
-        /**
-         * 视频或者音频到结尾时触发的方法
-         */
-        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        mFacilitySbAddAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onCompletion(MediaPlayer mp) {
-                Log.i("通知", "完成");
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                List<DeviceData.ListBean> data = mFacilitySbAddAdapter.getData();
+                for(int i = 0; i< data.size(); i++){
+                    data.get(i).setSelect(false);
+                }
+                data.get(position).setSelect(true);
+                ConstValues_Ly.DEVICE_Model_ID_URL = data.get(position).getId()+"";
+                mFacilitySbAddAdapter.notifyDataSetChanged();
             }
         });
-
-        mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-
-            @Override
-            public boolean onError(MediaPlayer mp, int what, int extra) {
-                Log.i("通知", "播放中出现错误");
-                return false;
-            }
-        });
-
     }
 
-    private void initRvUi(List<DeviceDrandData.ListBean> list) {
-        if(list.size()==0){
+
+    private void initRvUi() {
+        if(list==null || list.size()==0){
             return;
         }
-        mFacilityAddAdapter = new FacilityAddAdapter(list);
+
+        queryDeviceModelLists(list.get(0).getId());
+        tv_name.setText("("+list.get(0).getName()+")");
+        int length = list.size()<9?list.size():9;
+        mFacilityAddAdapter = new FacilityAddAdapter(list.subList(0,length));
         mRvAllList.setLayoutManager(new GridLayoutManager(this, 3));
         mRvAllList.setHasFixedSize(true);
         mRvAllList.setAdapter(mFacilityAddAdapter);
@@ -206,21 +205,29 @@ public class FacilityAddPpActivity extends BaseActivity {
                 }
                 list.get(position).setSelect(true);
                 mFacilityAddAdapter.notifyDataSetChanged();
+                tv_name.setText("("+list.get(position).getName()+")");
                 ConstValues_Ly.BRAND_ID = list.get(position).getId()+"";
                 queryDeviceModelLists(list.get(position).getId());
             }
         });
     }
-    @OnClick({R.id.ll_back, R.id.ll_connect})
+    @OnClick({R.id.ll_back, R.id.ll_connect,R.id.tv_show})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_back:
                 finish();
                 break;
+            case R.id.tv_show:
+                int length = list.size()<9?list.size():9;
+                if("收起全部".equals(tv_show.getText().toString())){
+                    tv_show.setText("展示全部");
+                    mFacilityAddAdapter.setNewData(list.subList(0,length));
+                }else{
+                    mFacilityAddAdapter.setNewData(list);
+                    tv_show.setText("收起全部");
+                }
+                break;
             case R.id.ll_connect:
-//                startActivity(new Intent(this,MainActivity2.class));
-//                goConnect();
-
                 if(StringUtil.isBlank(ConstValues_Ly.BRAND_ID)){
                     ToastUtils.showShort("请选择设备品牌");
                     return;

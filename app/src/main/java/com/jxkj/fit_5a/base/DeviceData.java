@@ -78,6 +78,15 @@ public class DeviceData {
         private String name;
         private ParamBean param;
         private String subTitle;
+        private boolean isSelect;
+
+        public boolean isSelect() {
+            return isSelect;
+        }
+
+        public void setSelect(boolean select) {
+            isSelect = select;
+        }
 
         public String getDetail() {
             return detail;

@@ -95,8 +95,8 @@ public class StyleKitName {
 
         if (mCurrentPosition == null) {
             mCurrentPosition = new float[2];
-            mCurrentPosition[0] = info.get(0).get(0) * bl;
-            mCurrentPosition[1] = info.get(0).get(1) * bl;
+            mCurrentPosition[0] = info.get(0).get(0) * (bl+0.05f);
+            mCurrentPosition[1] = info.get(0).get(1) * (bl+0.05f);
         }
 
         Bitmap bitmap = ((BitmapDrawable) MainApplication.getContext().getResources().getDrawable(R.drawable.ic_d_red)).getBitmap();

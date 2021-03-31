@@ -67,7 +67,7 @@ public class MapExerciseActivity extends Activity {
     TextView mTvDistance;
     @BindView(R.id.tv_time)
     TextView mTvTime;
-    boolean isSuo = false;
+    boolean isSuo = true;
     String mapId;
     String boxId;
     private MyReceiver mMyReceiver;
@@ -354,14 +354,19 @@ public class MapExerciseActivity extends Activity {
                 +",脉跳："+Pulse+",瓦特："+Watt+",阻力："+loadCurrent+",状态："+Unit;
         Log.w("---》》》", re);
         if(Unit.equals("Stop")){
-            window.setIvSelect(false);
+            window.setIvSelect(true);
+            iv_img.setState(1);
             return;
         }
-        window.setIvSelect(true);
+        window.setIvSelect(false);
         if(currentSpeed!=speed && speed!=0){
-            iv_img.setRed(Math.round((distance-Distance)/(speed*1000)*60*60*1000));
-        }else if(speed==0){
-            iv_img.setState(1);
+            iv_img.setRed(Math.round((distance-Distance*1000)/(speed*1000)*60*60*1000));
+        }else{
+            if(speed==0){
+                iv_img.setState(1);
+            }else{
+                iv_img.setState(0);
+            }
         }
         currentSpeed = speed;
         mTvTime.setText(ZTime);

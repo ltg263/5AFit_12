@@ -65,11 +65,11 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
             @Override
             public void onClick(View v) {
                 if (mIv.isSelected()) {
-                    dialogInterface.btnConfirm(0);
-                    mIv.setSelected(false);
-                } else {
                     dialogInterface.btnConfirm(1);
-                    mIv.setSelected(true);
+//                    mIv.setSelected(false);
+                } else {
+                    dialogInterface.btnConfirm(0);
+//                    mIv.setSelected(true);
                 }
             }
         });
