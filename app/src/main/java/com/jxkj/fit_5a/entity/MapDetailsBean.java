@@ -89,40 +89,40 @@ public class MapDetailsBean {
     }
 
     public class ParamBean{
-        double width;
-        double height;
-        double referenceWidth;
-        double referenceHeight;
+        float width;
+        float height;
+        float referenceWidth;
+        float referenceHeight;
 
-        public double getWidth() {
+        public float getWidth() {
             return width;
         }
 
-        public void setWidth(double width) {
+        public void setWidth(float width) {
             this.width = width;
         }
 
-        public double getHeight() {
+        public float getHeight() {
             return height;
         }
 
-        public void setHeight(double height) {
+        public void setHeight(float height) {
             this.height = height;
         }
 
-        public double getReferenceWidth() {
+        public float getReferenceWidth() {
             return referenceWidth;
         }
 
-        public void setReferenceWidth(double referenceWidth) {
+        public void setReferenceWidth(float referenceWidth) {
             this.referenceWidth = referenceWidth;
         }
 
-        public double getReferenceHeight() {
+        public float getReferenceHeight() {
             return referenceHeight;
         }
 
-        public void setReferenceHeight(double referenceHeight) {
+        public void setReferenceHeight(float referenceHeight) {
             this.referenceHeight = referenceHeight;
         }
     }

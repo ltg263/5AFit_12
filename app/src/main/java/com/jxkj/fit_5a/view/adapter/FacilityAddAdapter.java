@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.DeviceDrandData;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class FacilityAddAdapter extends BaseQuickAdapter<DeviceDrandData.ListBea
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, DeviceDrandData.ListBean item) {
-        Glide.with(mContext).load(item.getImg()).into((ImageView) helper.getView(R.id.iv));
+        GlideImgLoader.loadImage(mContext,item.getImg(), helper.getView(R.id.iv));
         if(item.isSelect()){
             helper.setBackgroundRes(R.id.rl,R.drawable.bj_shape_line_theme_6);
         }else{

@@ -43,6 +43,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ *
+ */
 public class MapExerciseActivity extends Activity {
     @BindView(R.id.iv_1)
     ImageView mIv1;

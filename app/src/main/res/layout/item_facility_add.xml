@@ -5,19 +5,18 @@
 
     <RelativeLayout
         android:id="@+id/rl"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
+        android:layout_marginVertical="@dimen/dimen_5dp"
         android:background="@drawable/bj_shape_line_theme_6">
 
         <ImageView
             android:id="@+id/iv"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
             android:layout_centerInParent="true"
             android:layout_margin="@dimen/dimen_5dp"
-            android:adjustViewBounds="true"
-            android:src="@mipmap/ic_1" />
+            android:src="@mipmap/ic_123456" />
 
     </RelativeLayout>
 
