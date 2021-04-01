@@ -262,13 +262,14 @@ public class RatePatternActivity extends BaseActivity {
                             finish();
                             PostUser.SportLogInfo sportLogInfo= new PostUser.SportLogInfo();
                             sportLogInfo.setBai("11");
-                            sportLogInfo.setBrandId(ConstValues_Ly.BRAND_ID);
+                            sportLogInfo.setDeviceBrandId(ConstValues_Ly.BRAND_ID);
                             sportLogInfo.setCalories(String.valueOf(Calories));
-                            sportLogInfo.setDeviceType(ConstValues_Ly.DEVICE_TYPE_ID+"");
+                            sportLogInfo.setDeviceTypeId(ConstValues_Ly.DEVICE_TYPE_ID+"");
                             sportLogInfo.setDistance(String.valueOf(Distance));
                             sportLogInfo.setDuration(String.valueOf(duration));
                             sportLogInfo.setEndTimestamp(String.valueOf(System.currentTimeMillis()));
                             sportLogInfo.setStartTimestamp(String.valueOf(startTimestamp));
+                            sportLogInfo.setProtocolDeviceBrandParamId(11+""+'1');
                             sportLogInfo.setHeartRateSource("2");//1=器材;2=藍牙心跳;3=Apple Watch
 
                             if(StringUtil.isNotBlank(movingTye)){
@@ -284,7 +285,7 @@ public class RatePatternActivity extends BaseActivity {
                         }else{
                             if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]
                                     || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]
-                                    || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]) ){
+                                    || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4])){
                                 PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
                             }
                             dismiss();

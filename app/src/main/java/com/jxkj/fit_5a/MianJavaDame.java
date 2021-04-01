@@ -25,7 +25,9 @@ public class MianJavaDame {
 //        System.out.println("-->>>:"+result); //这里的结果是 3
         double a = 313.83333333333337;
         float b = 1.5f;
-        System.out.println("-->>>:"+(float)a*b); //这里的结果是 3
+//        System.out.println("-->>>:"+(float)a*b); //这里的结果是 3
+        int number = 10;
+        System.out.println("-->>>:"+toInt(toBytes(11)));
     }
 
     public static String getValue(double obj) {
@@ -35,6 +37,21 @@ public class MianJavaDame {
         return String.format("%.2f", obj);
     }
 
+    public static int toInt(byte[] bytes) {
+        int number = 0;
+        for (int i = 0; i < 4; i++) {
+            number += bytes[i] << i * 8;
+        }
+        return number;
+    }
+    public static byte[] toBytes(int number){
+        byte[] bytes = new byte[4];
+        bytes[0] = (byte)number;
+        bytes[1] = (byte) (number >> 8);
+        bytes[2] = (byte) (number >> 16);
+        bytes[3] = (byte) (number >> 24);
+        return bytes;
+    }
 
     /**
      * 判断double是否是整数

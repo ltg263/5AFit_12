@@ -53,8 +53,8 @@
             android:textColor="@color/color_ffffff"
             android:textSize="8sp" />
 
-        <com.jxkj.fit_5a.conpoment.view.LinShiView
-            android:id="@+id/lsv"
+        <com.jxkj.fit_5a.conpoment.view.RobotView
+            android:id="@+id/rvLX"
             android:layout_width="@dimen/dimen_50dp"
             android:layout_height="@dimen/dimen_50dp"
             android:layout_margin="@dimen/common_margin_6" />
@@ -63,8 +63,8 @@
             android:id="@+id/tv_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/lsv"
-            android:layout_alignBottom="@id/lsv"
+            android:layout_alignEnd="@id/rvLX"
+            android:layout_alignBottom="@id/rvLX"
             android:drawableStart="@mipmap/ic_hp_yd_13"
             android:text="0km"
             android:textColor="@color/color_000000"
@@ -75,7 +75,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:visibility="gone"
         android:layout_marginTop="@dimen/dimen_30dp"
         android:background="@drawable/bj_circle_ccc_6"
         android:drawableStart="@mipmap/ic_hp_yd_14"
@@ -84,7 +83,8 @@
         android:paddingHorizontal="@dimen/dimen_20dp"
         android:paddingVertical="@dimen/dimen_5dp"
         android:text="返回VGu起哦v哥Wiu曲棍球诶怕高V九曲湾"
-        android:textColor="@color/color_ffffff" />
+        android:textColor="@color/color_ffffff"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll"

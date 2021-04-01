@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.exercise.landscape;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -197,6 +198,7 @@ public class MapExerciseActivity extends Activity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_1:
+
                 if (mIv3.getVisibility() == View.VISIBLE) {
                     mIv3.setVisibility(View.GONE);
                     mIv3.setAnimation(AnimationUtils.makeOutAnimation(this, true));
@@ -221,6 +223,21 @@ public class MapExerciseActivity extends Activity {
                 }
                 break;
         }
+    }
+    ValueAnimator valueAnimator;
+    // 开启路径动画
+    public void startPathAnim(long currentDuration) {
+        // 0 － getLength()
+        valueAnimator = ValueAnimator.ofFloat(0, 500);
+        valueAnimator.setDuration(currentDuration);
+        // 减速插值器
+//        valueAnimator.setInterpolator(new LinearInterpolator());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+            }
+        });
+        valueAnimator.start();
     }
 
 

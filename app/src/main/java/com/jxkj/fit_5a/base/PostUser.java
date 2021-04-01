@@ -324,27 +324,39 @@ public class PostUser {
 
         /**
          * bai : 0
-         * brandId : 0
          * calories : 0
-         * details : {"logs":[{"calories":0,"distance":0,"heartRate":0,"incline":0,"intensity":0,"resistanceLevel":0,"rpm":0,"speed":0,"timeStamp":0,"watt":0}]}
-         * deviceType : 0
+         * details : {"logs":[{"calories":0,"distance":0,"heartRate":0,"incline":0,"intensity":0,"resistanceLevel":0,"rpm":0,"speed":0,"timeStamp":0,"watt":0}],"motionTrajectories":[{"pointX":0,"pointY":0,"timestamp":0}]}
+         * deviceBrandId : 0
+         * deviceModelId : 0
+         * deviceTypeId : 0
          * distance : 0
          * duration : 0
          * endTimestamp : 0
          * heartRateSource : 0
+         * mapId :
+         * protocolDeviceBrandParamId :
+         * protocolDeviceModelParamId :
+         * protocolDeviceTypeParamId :
+         * protocolName :
          * startTimestamp : 0
          * trainingMode :
          */
 
         private String bai;
-        private String brandId;
         private String calories;
         private DetailsBean details;
-        private String deviceType;
+        private String deviceBrandId;
+        private String deviceModelId;
+        private String deviceTypeId;
         private String distance;
         private String duration;
         private String endTimestamp;
         private String heartRateSource;
+        private String mapId;
+        private String protocolDeviceBrandParamId;
+        private String protocolDeviceModelParamId;
+        private String protocolDeviceTypeParamId;
+        private String protocolName;
         private String startTimestamp;
         private String trainingMode;
 
@@ -354,14 +366,6 @@ public class PostUser {
 
         public void setBai(String bai) {
             this.bai = bai;
-        }
-
-        public String getBrandId() {
-            return brandId;
-        }
-
-        public void setBrandId(String brandId) {
-            this.brandId = brandId;
         }
 
         public String getCalories() {
@@ -380,12 +384,28 @@ public class PostUser {
             this.details = details;
         }
 
-        public String getDeviceType() {
-            return deviceType;
+        public String getDeviceBrandId() {
+            return deviceBrandId;
         }
 
-        public void setDeviceType(String deviceType) {
-            this.deviceType = deviceType;
+        public void setDeviceBrandId(String deviceBrandId) {
+            this.deviceBrandId = deviceBrandId;
+        }
+
+        public String getDeviceModelId() {
+            return deviceModelId;
+        }
+
+        public void setDeviceModelId(String deviceModelId) {
+            this.deviceModelId = deviceModelId;
+        }
+
+        public String getDeviceTypeId() {
+            return deviceTypeId;
+        }
+
+        public void setDeviceTypeId(String deviceTypeId) {
+            this.deviceTypeId = deviceTypeId;
         }
 
         public String getDistance() {
@@ -420,6 +440,46 @@ public class PostUser {
             this.heartRateSource = heartRateSource;
         }
 
+        public String getMapId() {
+            return mapId;
+        }
+
+        public void setMapId(String mapId) {
+            this.mapId = mapId;
+        }
+
+        public String getProtocolDeviceBrandParamId() {
+            return protocolDeviceBrandParamId;
+        }
+
+        public void setProtocolDeviceBrandParamId(String protocolDeviceBrandParamId) {
+            this.protocolDeviceBrandParamId = protocolDeviceBrandParamId;
+        }
+
+        public String getProtocolDeviceModelParamId() {
+            return protocolDeviceModelParamId;
+        }
+
+        public void setProtocolDeviceModelParamId(String protocolDeviceModelParamId) {
+            this.protocolDeviceModelParamId = protocolDeviceModelParamId;
+        }
+
+        public String getProtocolDeviceTypeParamId() {
+            return protocolDeviceTypeParamId;
+        }
+
+        public void setProtocolDeviceTypeParamId(String protocolDeviceTypeParamId) {
+            this.protocolDeviceTypeParamId = protocolDeviceTypeParamId;
+        }
+
+        public String getProtocolName() {
+            return protocolName;
+        }
+
+        public void setProtocolName(String protocolName) {
+            this.protocolName = protocolName;
+        }
+
         public String getStartTimestamp() {
             return startTimestamp;
         }
@@ -438,6 +498,7 @@ public class PostUser {
 
         public static class DetailsBean {
             private List<LogsBean> logs;
+            private List<MotionTrajectoriesBean> motionTrajectories;
 
             public List<LogsBean> getLogs() {
                 return logs;
@@ -445,6 +506,14 @@ public class PostUser {
 
             public void setLogs(List<LogsBean> logs) {
                 this.logs = logs;
+            }
+
+            public List<MotionTrajectoriesBean> getMotionTrajectories() {
+                return motionTrajectories;
+            }
+
+            public void setMotionTrajectories(List<MotionTrajectoriesBean> motionTrajectories) {
+                this.motionTrajectories = motionTrajectories;
             }
 
             public static class LogsBean {
@@ -563,6 +632,42 @@ public class PostUser {
 
                 public void setWatt(String watt) {
                     this.watt = watt;
+                }
+            }
+
+            public static class MotionTrajectoriesBean {
+                /**
+                 * pointX : 0
+                 * pointY : 0
+                 * timestamp : 0
+                 */
+
+                private String pointX;
+                private String pointY;
+                private String timestamp;
+
+                public String getPointX() {
+                    return pointX;
+                }
+
+                public void setPointX(String pointX) {
+                    this.pointX = pointX;
+                }
+
+                public String getPointY() {
+                    return pointY;
+                }
+
+                public void setPointY(String pointY) {
+                    this.pointY = pointY;
+                }
+
+                public String getTimestamp() {
+                    return timestamp;
+                }
+
+                public void setTimestamp(String timestamp) {
+                    this.timestamp = timestamp;
                 }
             }
         }
