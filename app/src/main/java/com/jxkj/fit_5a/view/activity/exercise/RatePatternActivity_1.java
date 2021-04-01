@@ -77,7 +77,7 @@ public class RatePatternActivity_1 extends BaseActivity {
     int loadCurrent = 1;
     int loadMax = ConstValues_Ly.maxLoad;
     private RatePatternAdapter mRatePatternAdapter;
-//130528199003037903
+
     int currentPos = 1;
     long time = 0;
     private List<Byte> mData1 = new ArrayList<>();
@@ -260,9 +260,9 @@ public class RatePatternActivity_1 extends BaseActivity {
                             finish();
                             PostUser.SportLogInfo sportLogInfo= new PostUser.SportLogInfo();
                             sportLogInfo.setBai("11");
-                            sportLogInfo.setBrandId(ConstValues_Ly.BRAND_ID);
+                            sportLogInfo.setDeviceBrandId(ConstValues_Ly.BRAND_ID);
                             sportLogInfo.setCalories(String.valueOf(Calories));
-                            sportLogInfo.setDeviceType(ConstValues_Ly.DEVICE_TYPE_ID+"");
+                            sportLogInfo.setDeviceTypeId(ConstValues_Ly.DEVICE_TYPE_ID+"");
                             sportLogInfo.setDistance(String.valueOf(Distance));
                             sportLogInfo.setDuration(String.valueOf(duration));
                             sportLogInfo.setEndTimestamp(String.valueOf(System.currentTimeMillis()));

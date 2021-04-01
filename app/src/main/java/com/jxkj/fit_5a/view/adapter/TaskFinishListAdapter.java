@@ -38,7 +38,7 @@ public class TaskFinishListAdapter extends BaseQuickAdapter<BpmDataBean, BaseVie
         DecimalFormat df = new DecimalFormat("######0.00");
         helper.setText(R.id.tv1,item.getName()).setText(R.id.tv4, StringUtil.getTimeGeShi(item.getTime()))
                 .setText(R.id.tv3,((int)(Double.valueOf(df.format(xlfx))*100))+"%")
-                .setText(R.id.tv2,item.getStartV()+"bpm~"+item.getEndV()+"bpm");
+                .setText(R.id.tv2,StringUtil.getValue(item.getStartV())+"bpm~"+StringUtil.getValue(item.getEndV())+"bpm");
     }
 
 }
