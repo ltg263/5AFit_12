@@ -183,12 +183,10 @@ public class TaskFinishActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+            case R.id.tv_go_xxyx:
                 finish();
                 break;
             case R.id.tv_go_ffhd:
-                break;
-            case R.id.tv_go_xxyx:
-                finish();
                 break;
             case R.id.tv_xz:
                 String strXz = mTvXz.getText().toString();
