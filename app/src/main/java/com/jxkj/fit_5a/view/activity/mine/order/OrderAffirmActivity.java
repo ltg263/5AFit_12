@@ -283,7 +283,7 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
                     public void onNext(Result<CreateOrderBean> result) {
                         if (isDataInfoSucceed(result)) {
                             if(result.getData().getStatus().equals("1")){
-                                ToastUtils.showShort("创建成功");
+//                                ToastUtils.showShort("创建成功");
                                 appPay(result.getData().getId());
                             }else{
                                 ToastUtils.showShort("支付成功");
@@ -394,7 +394,7 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
                     public void onNext(Result<ParamData> result) {
                         if (isDataInfoSucceed(result)) {
                             if (payType == 2) {
-                                appPayZfb("");
+//                                appPayZfb(result.getData().getParam());
                             } else {
                                 appPayWx(result.getData());
                             }
@@ -430,7 +430,6 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
             mPaymentParameterBean.setPackageValue(mPayModel.getPackageX());
             mPaymentParameterBean.setSign(mPayModel.getSign());
             paymentPresenter.doWXPay(mPaymentParameterBean);
-
         } else {
             ToastUtil.showShortToast(this, "您没有安装微信客户端!");
         }
@@ -459,15 +458,13 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
 
     /*支付结果的回调*/
     private void paymentResultCallback(boolean flag) {
-        ToastUtils.showShort("成功");
-//        ActivityCollector.getAppManager().finishotherActivity(MainActivity.activity, ShoppingPaymentActivity.this);
         if (flag) {
-//            IntentUtils.getInstence().intent(ShoppingPaymentActivity.this, MyOrderActivity.class, "position", 0);
+            ToastUtils.showShort("支付成功");
+//            IntentUtils.getInstence().intent(this, OrderActivity.class, "position", 0);
         } else {
-//            IntentUtils.getInstence().intent(ShoppingPaymentActivity.this, MyOrderActivity.class, "position", 1);
-
-
+            ToastUtils.showShort("支付失败");
         }
+        IntentUtils.getInstence().intent(this, OrderActivity.class);
         finish();
     }
 
