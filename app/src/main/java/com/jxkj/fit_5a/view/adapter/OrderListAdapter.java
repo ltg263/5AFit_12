@@ -114,24 +114,24 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderInfoData.ListBean, B
             default:
                 btn0.setVisibility(View.GONE);
         }
-        btn0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setIntentType(btn0.getText().toString(),helper.getLayoutPosition());
-            }
-        });
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setIntentType(btn1.getText().toString(),helper.getLayoutPosition());
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setIntentType(btn2.getText().toString(),helper.getLayoutPosition());
-            }
-        });
+//        btn0.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setIntentType(btn0.getText().toString(),helper.getLayoutPosition());
+//            }
+//        });
+//        btn1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setIntentType(btn1.getText().toString(),helper.getLayoutPosition());
+//            }
+//        });
+//        btn2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setIntentType(btn2.getText().toString(),helper.getLayoutPosition());
+//            }
+//        });
 
     }
 

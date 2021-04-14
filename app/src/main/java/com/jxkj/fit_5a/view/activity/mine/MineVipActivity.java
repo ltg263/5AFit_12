@@ -293,7 +293,7 @@ public class MineVipActivity extends BaseActivity   implements PaymentContract.V
 //        req.packageValue = payStr.getPackageValue();
 //        req.sign = payStr.getSign();
 //        req.extData = "app data";
-        req.appId = "wx08a41293a322c4a0";
+        req.appId = ConstValues.WX_APP_ID;
         req.partnerId = "";
         req.prepayId = "";
         req.nonceStr = "";

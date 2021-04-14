@@ -1,47 +1,48 @@
 package com.jxkj.fit_5a.base;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * author : LiuJie
  * date   : 2020/6/1510:37
  */
 public class ParamData {
 
-    private String param;
     /**
      * package : Sign=WXPay
-     * appid : wx68c7d6a5fd1bd95a
-     * wxorderno : 200623090455001364
-     * sign : DCADD77B32E543C5EA9B8EB6A41C5EEE
-     * partnerid : 1517475341
-     * prepayid : wx23090456478575976768f2071774904900
-     * noncestr : BcuhZ0Hrv9OKwKwmwSMXJg6fLWuCtKpu
-     * timestamp : 1592874296
+     * packageValue : Sign=WXPay
+     * appid : wxdc42a7cf4a99be02
+     * sign : 47212C8605D95C5C384A4796863AF891
+     * partnerid : 1585233261
+     * prepayid : wx14153109142037c00f10d98309dc810000
+     * noncestr : Viquyv4BvdqX5WJi6Ky9oh6DewDfvKgD
+     * timestamp : 1618385469
      */
 
-
-    private String packages = "Sign=WXPay";
+    @SerializedName("package")
+    private String packageX;
+    private String packageValue;
     private String appid;
-    private String wxorderno;
     private String sign;
     private String partnerid;
     private String prepayid;
     private String noncestr;
     private String timestamp;
 
-    public String getParam() {
-        return param;
-    }
-
-    public void setParam(String param) {
-        this.param = param;
-    }
-
     public String getPackageX() {
-        return packages;
+        return packageX;
     }
 
     public void setPackageX(String packageX) {
-        this.packages = packageX;
+        this.packageX = packageX;
+    }
+
+    public String getPackageValue() {
+        return packageValue;
+    }
+
+    public void setPackageValue(String packageValue) {
+        this.packageValue = packageValue;
     }
 
     public String getAppid() {
@@ -50,14 +51,6 @@ public class ParamData {
 
     public void setAppid(String appid) {
         this.appid = appid;
-    }
-
-    public String getWxorderno() {
-        return wxorderno;
-    }
-
-    public void setWxorderno(String wxorderno) {
-        this.wxorderno = wxorderno;
     }
 
     public String getSign() {

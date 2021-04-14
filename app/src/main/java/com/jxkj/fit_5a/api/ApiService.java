@@ -597,7 +597,7 @@ public interface ApiService {
      * @return
      */
     @POST(ConstValues.PORT_3 +"api/v1/user/order/expediting")
-    Observable<Result> postExpediting(@Body PostUser.Expediting expediting);
+    Observable<Result> postExpediting(@Query("orderId") String orderId);
     /**
      * 支付
      * orderId	订单Id
@@ -617,21 +617,22 @@ public interface ApiService {
      * @return
      */
     @POST(ConstValues.PORT_3 +"api/v1/user/order/cancelOrder")
-    Observable<Result> postCancelOrder(@Body PostUser.Expediting expediting);
+    Observable<Result> postCancelOrder(@Query("id") String id);
+
 
     /**
      * 删除订单
      * @return
      */
     @POST(ConstValues.PORT_3 +"api/v1/user/order/delete")
-    Observable<Result> postDelete(@Body PostUser.Expediting expediting);
+    Observable<Result> postDelete(@Query("orderId") String orderId);
 
     /**
      * 完成订单
      * @return
      */
     @POST(ConstValues.PORT_3 +"api/v1/user/order/finishOrder")
-    Observable<Result> postFinishOrder(@Body PostUser.Expediting expediting);
+    Observable<Result> postFinishOrder(@Query("id") String id);
 
     /**
      * 订单评论

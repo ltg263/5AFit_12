@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.alipay.sdk.app.PayTask;
 import com.jxkj.fit_5a.alipay.pay.PayResult;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -64,8 +65,8 @@ public class PaymentPresenter implements PaymentContract.Presenter {
         final String timeStamp = paymentParameterBean.getTimeStamp();
         final String packageValue = paymentParameterBean.getPackageValue();
         final String sign = paymentParameterBean.getSign();
-//        final String extData = paymentParameterBean.getExtData();
-        final IWXAPI api = WXAPIFactory.createWXAPI(mWeakActivity.get(),"wx08a41293a322c4a0");
+        final String extData = paymentParameterBean.getExtData();
+        final IWXAPI api = WXAPIFactory.createWXAPI(mWeakActivity.get(), ConstValues.WX_APP_ID);
 
         new Thread(new Runnable() {
             @Override

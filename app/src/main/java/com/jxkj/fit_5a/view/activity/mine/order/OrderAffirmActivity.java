@@ -112,7 +112,8 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
         initRv();
 
         info = (PostOrderInfo) getIntent().getSerializableExtra("info");
-        paymentPresenter = new PaymentPresenter(this, this);
+        EventBus.getDefault().register(this);
+        paymentPresenter = new PaymentPresenter(this, OrderAffirmActivity.this);
         postShowOrderInfo();
     }
 
@@ -442,19 +443,8 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
     }
 
 
-    private boolean flag = false;
-    private boolean isResumeFlag = false;
+//    private boolean flag = false;
 
-    private Handler mHandler = new Handler();
-
-    private Runnable mRunnable = new Runnable() {
-        @Override
-        public void run() {
-            paymentResultCallback(flag);
-            isResumeFlag = false;
-            dismissProgress();
-        }
-    };
 
     /*支付结果的回调*/
     private void paymentResultCallback(boolean flag) {
@@ -476,7 +466,6 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
 
         if (paymentPresenter != null) {
             paymentPresenter.stop();
-            mHandler.removeCallbacks(mRunnable);
         }
 
     }
@@ -486,7 +475,6 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-
         String originClass = event.getOriginClass();
         if (StringUtil.isBlank(originClass)) {
             return;
@@ -494,8 +482,7 @@ public class OrderAffirmActivity extends BaseActivity implements PaymentContract
         switch (originClass) {
             case "WXPayEntryActivity":
                 //事件延迟显得更顺滑
-                flag = event.isBooleanFlag();
-                isResumeFlag = true;
+                paymentResultCallback(event.isBooleanFlag());
                 break;
             default:
                 break;

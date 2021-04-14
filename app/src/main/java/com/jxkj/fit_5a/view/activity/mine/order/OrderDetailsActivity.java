@@ -261,10 +261,8 @@ public class OrderDetailsActivity extends BaseActivity {
     }
 
     private void postFinishOrder() {
-        PostUser.Expediting expediting = new PostUser.Expediting();
-        expediting.setOrderId(id);
         RetrofitUtil.getInstance().apiService()
-                .postFinishOrder(expediting)
+                .postFinishOrder(id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {
@@ -292,10 +290,8 @@ public class OrderDetailsActivity extends BaseActivity {
                 });
     }
     private void getAgainOrder() {
-        PostUser.Expediting expediting = new PostUser.Expediting();
-        expediting.setOrderId(id);
         RetrofitUtil.getInstance().apiService()
-                .postExpediting(expediting)
+                .postExpediting(id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {
@@ -323,10 +319,8 @@ public class OrderDetailsActivity extends BaseActivity {
                 });
     }
     private void postDelete() {
-        PostUser.Expediting expediting = new PostUser.Expediting();
-        expediting.setOrderId(id);
         RetrofitUtil.getInstance().apiService()
-                .postDelete(expediting)
+                .postDelete(id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {
@@ -355,10 +349,8 @@ public class OrderDetailsActivity extends BaseActivity {
     }
 
     private void getCancelOrder() {
-        PostUser.Expediting expediting = new PostUser.Expediting();
-        expediting.setOrderId(id);
         RetrofitUtil.getInstance().apiService()
-                .postCancelOrder(expediting)
+                .postCancelOrder(id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {
