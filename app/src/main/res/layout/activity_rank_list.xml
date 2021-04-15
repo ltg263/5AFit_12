@@ -13,6 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/dp_10"
         android:padding="@dimen/dimen_15dp">
 
@@ -58,10 +59,10 @@
     </RelativeLayout>
 
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_200dp"
-        android:layout_marginTop="@dimen/dp_10"
         android:background="@mipmap/ic_home_bj_cen">
 
         <ImageView
@@ -69,6 +70,7 @@
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             android:src="@mipmap/ic_home_bj_cen_zz" />
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -97,6 +99,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_phb_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/common_margin_15"
@@ -105,6 +108,7 @@
                             android:textSize="@dimen/sp_14" />
 
                         <ImageView
+                            android:id="@+id/iv_phb_2"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_margin="@dimen/dp_10"
@@ -112,6 +116,7 @@
                             android:src="@mipmap/ic_4" />
 
                         <TextView
+                            android:id="@+id/tv_phb_22"
                             android:layout_width="@dimen/dimen_80dp"
                             android:layout_height="@dimen/dimen_20dp"
                             android:layout_marginBottom="@dimen/dimen_15dp"
@@ -143,6 +148,7 @@
 
 
                     <TextView
+                        android:id="@+id/tv_phb_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_15dp"
@@ -151,6 +157,7 @@
                         android:textSize="@dimen/dimen_20dp" />
 
                     <ImageView
+                        android:id="@+id/iv_phb_1"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_margin="@dimen/dp_10"
@@ -158,6 +165,7 @@
                         android:src="@mipmap/ic_4" />
 
                     <TextView
+                        android:id="@+id/tv_phb_11"
                         android:layout_width="@dimen/dimen_80dp"
                         android:layout_height="@dimen/dimen_20dp"
                         android:layout_marginBottom="@dimen/dimen_15dp"
@@ -185,6 +193,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_phb_3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/common_margin_15"
@@ -193,6 +202,7 @@
                             android:textSize="@dimen/sp_14" />
 
                         <ImageView
+                            android:id="@+id/iv_phb_3"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_margin="@dimen/dp_10"
@@ -200,6 +210,7 @@
                             android:src="@mipmap/ic_4" />
 
                         <TextView
+                            android:id="@+id/tv_phb_33"
                             android:layout_width="@dimen/dimen_80dp"
                             android:layout_height="@dimen/dimen_20dp"
                             android:layout_marginBottom="@dimen/dimen_15dp"
@@ -230,8 +241,7 @@
             android:layout_margin="@dimen/dp_10"
             android:text="注：此榜为周榜奖品"
             android:textColor="@color/color_ffffff"
-            android:textSize="12sp"
-            android:visibility="invisible" />
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

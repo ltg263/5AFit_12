@@ -255,6 +255,43 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_15dp">
+
+                    <TextView
+                        android:id="@+id/tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="卡路里排名"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dimen_2dp"
+                        android:layout_below="@id/tv"
+                        android:layout_marginTop="-5dp"
+                        android:background="@drawable/line_shape_bj_select" />
+
+                    <TextView
+                        android:id="@+id/tv_phb_ck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:drawableEnd="@drawable/icon_jiantou_you_99"
+                        android:paddingStart="@dimen/dimen_5dp"
+                        android:text="查看排行"
+                        android:textColor="@color/color_999999"
+                        android:textSize="14sp" />
+
+
+                </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_200dp"

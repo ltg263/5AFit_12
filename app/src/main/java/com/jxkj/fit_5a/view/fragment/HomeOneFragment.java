@@ -42,6 +42,7 @@ import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.association.VideoActivity;
 import com.jxkj.fit_5a.view.activity.exercise.HistoryEquipmentActivity;
 import com.jxkj.fit_5a.view.activity.exercise.RateControlActivity;
+import com.jxkj.fit_5a.view.activity.home.RankListActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
@@ -229,7 +230,7 @@ public class HomeOneFragment extends BaseFragment {
         return homeFragment;
     }
 
-    @OnClick({R.id.tv_left_text, R.id.tv_right_text, R.id.tv_top_jyz,
+    @OnClick({R.id.tv_left_text, R.id.tv_right_text, R.id.tv_top_jyz,R.id.tv_phb_ck,
             R.id.tv_top_jyy, R.id.on_rv_qd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -257,6 +258,9 @@ public class HomeOneFragment extends BaseFragment {
                 break;
             case R.id.on_rv_qd:
                 startActivity(new Intent(getActivity(), TaskSignActivity.class));
+                break;
+            case R.id.tv_phb_ck:
+                startActivity(new Intent(getActivity(), RankListActivity.class));
                 break;
         }
     }
