@@ -148,7 +148,7 @@ public class OrderListFragment extends BaseFragment {
             }
         });
 
-        getData();
+//        getData();
     }
 
     private void getCancelOrder(String id) {
@@ -297,6 +297,8 @@ public class OrderListFragment extends BaseFragment {
                     @Override
                     public void onNext(Result<OrderInfoData> result) {
                         if (isDataInfoSucceed(result)) {
+//                            lv_not.setVisibility(View.VISIBLE);
+//                            refreshLayout.setVisibility(View.GONE);
                             if(result.getData().getList().size()>0){
                                 lv_not.setVisibility(View.GONE);
                                 refreshLayout.setVisibility(View.VISIBLE);

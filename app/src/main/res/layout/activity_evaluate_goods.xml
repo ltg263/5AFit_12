@@ -27,21 +27,21 @@
 
                 <ImageView
                     android:id="@+id/iv_img"
-                    android:layout_width="@dimen/dimen_80dp"
-                    android:layout_height="@dimen/dimen_80dp"
-                    android:layout_margin="5dp"
+                    android:layout_width="@dimen/dimen_70dp"
+                    android:layout_height="@dimen/dimen_70dp"
                     android:src="@mipmap/ic_5" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dimen_5dp"
+                    android:gravity="center_vertical"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="XXXX运动水杯 "
@@ -52,6 +52,7 @@
                         android:id="@+id/tv_spec1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:text="规格：黑色"
                         android:textColor="@color/color_999999"
                         android:textSize="12sp" />
@@ -63,7 +64,8 @@
                         android:layout_marginTop="5dp"
                         android:text="规格：黑色"
                         android:textColor="@color/color_999999"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone" />
 
 
                 </LinearLayout>
@@ -92,7 +94,7 @@
                     app:starEmpty="@drawable/xing_h"
                     app:starFill="@drawable/xing"
                     app:starHalf="@drawable/xing"
-                    app:starImageSize="25dp"
+                    app:starImageSize="20dp"
                     app:starPadding="10dp"
                     app:starStep="0.0" />
 
@@ -100,7 +102,7 @@
                     android:id="@+id/tv_r"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="好"
+                    android:text="非常满意"
                     android:textColor="@color/color_999999"
                     android:textSize="14sp" />
 
@@ -178,7 +180,7 @@
                     app:starEmpty="@drawable/xing_h"
                     app:starFill="@drawable/xing"
                     app:starHalf="@drawable/xing"
-                    app:starImageSize="25dp"
+                    app:starImageSize="@dimen/dimen_20dp"
                     app:starPadding="10dp"
                     app:starStep="0.0" />
 
@@ -186,7 +188,7 @@
                     android:id="@+id/tv_r1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="好"
+                    android:text="非常满意"
                     android:textColor="@color/color_999999"
                     android:textSize="14sp" />
 
@@ -213,7 +215,7 @@
                     app:starEmpty="@drawable/xing_h"
                     app:starFill="@drawable/xing"
                     app:starHalf="@drawable/xing"
-                    app:starImageSize="25dp"
+                    app:starImageSize="@dimen/dimen_20dp"
                     app:starPadding="10dp"
                     app:starStep="0.0" />
 
@@ -221,7 +223,7 @@
                     android:id="@+id/tv_r2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="好"
+                    android:text="非常满意"
                     android:textColor="@color/color_999999"
                     android:textSize="14sp" />
 

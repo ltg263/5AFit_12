@@ -386,7 +386,7 @@ public class OrderInfoData implements Serializable {
             this.productList = productList;
         }
 
-        public static class ProductListBean {
+        public static class ProductListBean implements Serializable{
             /**
              * id : 46
              * orderId : 50

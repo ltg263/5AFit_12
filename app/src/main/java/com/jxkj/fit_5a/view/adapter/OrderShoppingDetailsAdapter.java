@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.OrderInfoData;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 
 import java.util.List;
 
@@ -33,7 +34,13 @@ public class OrderShoppingDetailsAdapter extends BaseQuickAdapter<OrderInfoData.
         if(Double.valueOf(item.getPrice())==0){
             str = "单价：<font color=\"#FF6666\">"+item.getDeductIntegral()+"积分";
         }
-        helper.setText(R.id.tv_name,item.getName()).setText(R.id.tv_spec,"规格："+item.getSkuName())
+
+        if (StringUtil.isNotBlank(item.getSkuName())) {
+            helper.setText(R.id.tv_spec,"规格："+item.getSkuName());
+        }else{
+            helper.setText(R.id.tv_spec,"");
+        }
+        helper.setText(R.id.tv_name,item.getName())
                 .setText(R.id.tv_shop_name,Html.fromHtml(str)).setText(R.id.tv_price,"x "+item.getNum());
     }
 

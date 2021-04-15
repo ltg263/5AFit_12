@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.OrderInfoData;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
@@ -94,7 +95,7 @@ public class MineOrderEvaluateGoodsActivity extends BaseActivity {
     private int rank2 = 5;
     private int rank3 = 5;
     private SpPhotoAdapter mSpPhotoAdapter;
-    String orderId = "";
+    OrderInfoData.ListBean.ProductListBean mProductListBean;
     @Override
     protected int getContentView() {
         return R.layout.activity_evaluate_goods;
@@ -107,8 +108,10 @@ public class MineOrderEvaluateGoodsActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        orderId = getIntent().getStringExtra("orderId");
+        mProductListBean = (OrderInfoData.ListBean.ProductListBean) getIntent().getSerializableExtra("ProductListBean");
         initTitle();
+        mTvName.setText(mProductListBean.getName());
+        mTvSpec1.setText("规格："+(StringUtil.isNotBlank(mProductListBean.getSkuName())?mProductListBean.getSkuName():"无"));
 
         initRvXq();
 
@@ -144,7 +147,7 @@ public class MineOrderEvaluateGoodsActivity extends BaseActivity {
         mRatingbar1.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
             @Override
             public void onRatingChange(float ratingCount) {
-                rank1 = (int) ratingCount;
+                rank2 = (int) ratingCount;
                 setTvEvaluatel(rank2, mTvR1);
             }
         });
@@ -152,7 +155,7 @@ public class MineOrderEvaluateGoodsActivity extends BaseActivity {
         mRatingbar2.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
             @Override
             public void onRatingChange(float ratingCount) {
-                rank1 = (int) ratingCount;
+                rank3 = (int) ratingCount;
                 setTvEvaluatel(rank3, mTvR2);
             }
         });
@@ -276,18 +279,24 @@ public class MineOrderEvaluateGoodsActivity extends BaseActivity {
     }
 
     private void postCommentOrder() {
-        if(StringUtil.isBlank(orderId) || StringUtil.isBlank(mEtCon.getText().toString())){
+        if(StringUtil.isBlank(mProductListBean.getOrderId()) || StringUtil.isBlank(mEtCon.getText().toString())){
             ToastUtils.showShort("内容不能为空");
             return;
         }
         PostUser.Comment comment = new PostUser.Comment();
-        comment.setOrderId(orderId);
+        comment.setOrderId(mProductListBean.getOrderId());
         comment.setUserId(SharedUtils.getUserId()+"");
+        comment.setServiceScore(rank3+"");
+        comment.setDeliveryScore(rank2+"");
         List<PostUser.Comment.ProductCommentsBean> productComments = new ArrayList<>();
         PostUser.Comment.ProductCommentsBean productCommentsBean = new PostUser.Comment.ProductCommentsBean();
         productCommentsBean.setContent(mEtCon.getText().toString());
-        productCommentsBean.setDeductIntegral(null);
-        productCommentsBean.setImgStr(listUrls.toString());
+        String imgStr = listUrls.toString().replace("[","");
+        imgStr.replace("]","");
+        productCommentsBean.setImgStr(imgStr.trim());
+        productCommentsBean.setProductId(mProductListBean.getProductId());
+        productCommentsBean.setIsShow(isShow+"");
+        productCommentsBean.setProductScore(rank1+"");
         productComments.add(productCommentsBean);
         comment.setProductComments(productComments);
         RetrofitUtil.getInstance().apiService()

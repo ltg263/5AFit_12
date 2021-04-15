@@ -684,7 +684,25 @@ public class PostUser {
 
         private String orderId;
         private String userId;
+        private String deliveryScore;
+        private String serviceScore;
         private List<ProductCommentsBean> productComments;
+
+        public String getDeliveryScore() {
+            return deliveryScore;
+        }
+
+        public void setDeliveryScore(String deliveryScore) {
+            this.deliveryScore = deliveryScore;
+        }
+
+        public String getServiceScore() {
+            return serviceScore;
+        }
+
+        public void setServiceScore(String serviceScore) {
+            this.serviceScore = serviceScore;
+        }
 
         public String getOrderId() {
             return orderId;
@@ -711,33 +729,13 @@ public class PostUser {
         }
 
         public static class ProductCommentsBean {
-            /**
-             * content :
-             * deductIntegral : 0
-             * imgStr :
-             * isShow : 0
-             * productContent :
-             * productId : 0
-             * productImg :
-             * productName :
-             * productPrice : 0
-             * productQuantity : 0
-             * productScore : 0
-             * specText :
-             */
+
 
             private String content;
-            private String deductIntegral;
             private String imgStr;
             private String isShow;
-            private String productContent;
             private String productId;
-            private String productImg;
-            private String productName;
-            private String productPrice;
-            private String productQuantity;
             private String productScore;
-            private String specText;
 
             public String getContent() {
                 return content;
@@ -745,14 +743,6 @@ public class PostUser {
 
             public void setContent(String content) {
                 this.content = content;
-            }
-
-            public String getDeductIntegral() {
-                return deductIntegral;
-            }
-
-            public void setDeductIntegral(String deductIntegral) {
-                this.deductIntegral = deductIntegral;
             }
 
             public String getImgStr() {
@@ -771,14 +761,6 @@ public class PostUser {
                 this.isShow = isShow;
             }
 
-            public String getProductContent() {
-                return productContent;
-            }
-
-            public void setProductContent(String productContent) {
-                this.productContent = productContent;
-            }
-
             public String getProductId() {
                 return productId;
             }
@@ -787,52 +769,12 @@ public class PostUser {
                 this.productId = productId;
             }
 
-            public String getProductImg() {
-                return productImg;
-            }
-
-            public void setProductImg(String productImg) {
-                this.productImg = productImg;
-            }
-
-            public String getProductName() {
-                return productName;
-            }
-
-            public void setProductName(String productName) {
-                this.productName = productName;
-            }
-
-            public String getProductPrice() {
-                return productPrice;
-            }
-
-            public void setProductPrice(String productPrice) {
-                this.productPrice = productPrice;
-            }
-
-            public String getProductQuantity() {
-                return productQuantity;
-            }
-
-            public void setProductQuantity(String productQuantity) {
-                this.productQuantity = productQuantity;
-            }
-
             public String getProductScore() {
                 return productScore;
             }
 
             public void setProductScore(String productScore) {
                 this.productScore = productScore;
-            }
-
-            public String getSpecText() {
-                return specText;
-            }
-
-            public void setSpecText(String specText) {
-                this.specText = specText;
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.activity.mine.order;
 
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,17 +12,11 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
-import com.jxkj.fit_5a.base.OrderInfoData;
-import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
-import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.entity.OrderDetailsData;
 import com.jxkj.fit_5a.view.adapter.OrderShoppingDetailsAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -241,7 +236,9 @@ public class OrderDetailsActivity extends BaseActivity {
                 });
                 break;
             case "去评价":
-                IntentUtils.getInstence().intent(OrderDetailsActivity.this, MineOrderEvaluateGoodsActivity.class, "orderId", id);
+                Intent mIntent = new Intent(OrderDetailsActivity.this, MineOrderEvaluateGoodsActivity.class);
+                mIntent.putExtra("ProductListBean", mOrderShoppingDetailsAdapter.getData().get(0));
+                startActivity(mIntent);
                 break;
             case "提醒发货":
                 getAgainOrder();

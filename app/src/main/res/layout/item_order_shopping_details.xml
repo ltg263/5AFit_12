@@ -52,7 +52,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="规格：黑色"
                         android:textColor="@color/color_999999"
                         android:textSize="12sp" />
 

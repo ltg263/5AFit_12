@@ -79,7 +79,7 @@ public class OrderActivity extends BaseActivity {
     }
     private void initVP() {
         getFragments();
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(CHANNELS.length);
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {

@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.OrderInfoData;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 
 import java.util.List;
 
@@ -38,7 +39,11 @@ public class OrderShoppingAdapter extends BaseQuickAdapter<OrderInfoData.ListBea
         String str = "单价：<font color=\"#FF6666\">"+item.getDeductIntegral()+"积分 + ￥"+item.getPrice()+"</font>";
         tv_shop_name.setText(Html.fromHtml(str));
         tv_price.setText("×"+item.getNum());
-        tv_spec.setText(item.getSkuName());
+        if (StringUtil.isNotBlank(item.getSkuName())) {
+            tv_spec.setText(item.getSkuName());
+        }else{
+            tv_spec.setText("");
+        }
         GlideImgLoader.loadImageViewRadius(activity, item.getImgUrl(),10, iv_img);
 
 

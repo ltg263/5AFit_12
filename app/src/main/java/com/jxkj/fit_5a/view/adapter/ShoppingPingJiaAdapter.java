@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.CommentListBean;
 import com.jxkj.fit_5a.entity.ProductDetailsBean;
 
@@ -28,7 +29,8 @@ public class ShoppingPingJiaAdapter extends BaseQuickAdapter<CommentListBean.Lis
                 .setText(R.id.tv_content,item.getDetail()).setGone(R.id.rv_img_list,false);
 
         String[] strArr = item.getImgs().split(",");
-        if(strArr!=null && strArr.length>0){
+        helper.setGone(R.id.rv_img_list,false);
+        if(StringUtil.isNotBlank(item.getImgs()) && strArr!=null && strArr.length>0){
             helper.setGone(R.id.rv_img_list,true);
             if(strArr.length==1){
 //                helper.setGone(R.id.siv_1,false).setGone(R.id.siv_2,false)
@@ -37,6 +39,7 @@ public class ShoppingPingJiaAdapter extends BaseQuickAdapter<CommentListBean.Lis
 
                 helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,false)
                         .setVisible(R.id.siv_3,false).setGone(R.id.siv_4,false);
+
                 GlideImageUtils.setGlideImage(mContext,strArr[0],helper.getView(R.id.siv_1));
             }else if(strArr.length==2){
                 helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
