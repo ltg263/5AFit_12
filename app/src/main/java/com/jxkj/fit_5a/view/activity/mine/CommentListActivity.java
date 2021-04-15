@@ -45,6 +45,12 @@ public class CommentListActivity extends BaseActivity {
     protected void initViews() {
         mTvTitle.setText("全部评论");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         initRv();
     }
 

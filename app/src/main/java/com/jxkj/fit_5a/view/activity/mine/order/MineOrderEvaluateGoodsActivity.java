@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
@@ -22,6 +23,7 @@ import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.utils.PictureUtil;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
@@ -311,7 +313,9 @@ public class MineOrderEvaluateGoodsActivity extends BaseActivity {
                     @Override
                     public void onNext(Result result) {
                         if (isDataInfoSucceed(result)) {
-                            ToastUtils.showShort("已通知卖家");
+                            ToastUtils.showShort("评论成功");
+                            IntentUtils.getInstence().intent(MineOrderEvaluateGoodsActivity.this, MainActivity.class);
+                            MineOrderEvaluateGoodsActivity.this.finish();
                         }
 
                     }

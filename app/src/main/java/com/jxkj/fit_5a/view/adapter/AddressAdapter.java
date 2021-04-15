@@ -39,7 +39,7 @@ public class AddressAdapter extends BaseQuickAdapter<AddressData, BaseViewHolder
         phoneTv.setText(item.getMobile());
         addressTv.setText(item.getRegions()+item.getLocation());
         defaultIv.setImageResource(R.drawable.wxz);
-        if (item.getIsDefult().equals("1")) {
+        if (item.getIsDefault().equals("1")) {
             defaultIv.setImageResource(R.drawable.wxz_);
         }
         editTv.setOnClickListener(new View.OnClickListener() {

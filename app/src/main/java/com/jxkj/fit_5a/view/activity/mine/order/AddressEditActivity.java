@@ -77,13 +77,13 @@ public class AddressEditActivity extends BaseActivity {
 //            tvAddressKtwz.setText(addressData.getPlace());
             tvAddress.setText("" + addressData.getRegions());
             etDetailaddress.setText(addressData.getLocation());
-            if(addressData.getIsDefult().equals("1")){
+            if(addressData.getIsDefault().equals("1")){
                 iv_szmr.setImageDrawable(getResources().getDrawable(R.drawable.wxz_));
             }
         } else {
             flag = 1;
             addressData = new AddressData();
-            addressData.setIsDefult("0");
+            addressData.setIsDefault("0");
             tvTitle.setText("添加新地址");
         }
     }
@@ -143,11 +143,11 @@ public class AddressEditActivity extends BaseActivity {
 //                IntentUtils.getInstence().intent(this, AddressByMapActivity.class);
                 break;
             case R.id.iv_szmr:
-                if(addressData.getIsDefult().equals("1")){
-                    addressData.setIsDefult("0");
+                if(addressData.getIsDefault().equals("1")){
+                    addressData.setIsDefault("0");
                     iv_szmr.setImageDrawable(getResources().getDrawable(R.drawable.wxz));
                 }else{
-                    addressData.setIsDefult("1");
+                    addressData.setIsDefault("1");
                     iv_szmr.setImageDrawable(getResources().getDrawable(R.drawable.wxz_));
                 }
                 break;
