@@ -33,10 +33,12 @@ public class FacilityAddSbActivity extends BaseActivity {
     ImageView mIvBack;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+    @BindView(R.id.tv)
+    TextView mTv;
     @BindView(R.id.rv_all_list)
     RecyclerView mRvAllList;
     private FacilityAddSbAdapter mFacilityAddSbAdapter;
-
+    String type = "";
     @Override
     protected int getContentView() {
         return R.layout.activity_facility_add_sb;
@@ -45,13 +47,18 @@ public class FacilityAddSbActivity extends BaseActivity {
     @Override
     protected void initViews() {
         mTvTitle.setText("新增设备");
+        type = getIntent().getStringExtra("type");
+        if(type.equals("00")){
+            mTvTitle.setText("心率");
+            mTv.setText("心率设备分类");
+        }
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         queryDeviceTypeLists();
     }
 
     private void queryDeviceTypeLists() {
         RetrofitUtil.getInstance().apiService()
-                .queryDeviceTypeLists()
+                .queryDeviceTypeLists(type.equals("00")?2:1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<DeviceTypeData>>() {
@@ -89,6 +96,9 @@ public class FacilityAddSbActivity extends BaseActivity {
         mFacilityAddSbAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if(type.equals("00")){
+                    return;
+                }
 
                 list.get(position).getName();
                 list.get(position).getId();

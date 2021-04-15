@@ -41,7 +41,9 @@ import com.jxkj.fit_5a.entity.SportLogStatsBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.association.VideoActivity;
 import com.jxkj.fit_5a.view.activity.exercise.HistoryEquipmentActivity;
+import com.jxkj.fit_5a.view.activity.exercise.RateControlActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
+import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
@@ -235,7 +237,7 @@ public class HomeOneFragment extends BaseFragment {
                 IntentUtils.getInstence().intent(getActivity(),HistoryEquipmentActivity.class);
                 break;
             case R.id.tv_right_text:
-//                RateControlActivity.intentActivity(getActivity());
+                IntentUtils.getInstence().intent(getActivity(), FacilityAddSbActivity.class,"type","00");
                 break;
             case R.id.tv_top_jyz:
                 mIvY.setVisibility(View.INVISIBLE);

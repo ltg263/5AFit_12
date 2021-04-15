@@ -136,7 +136,7 @@
                     android:layout_toEndOf="@id/tv_time"
                     android:drawableStart="@drawable/ic_yun_dong"
                     android:drawablePadding="@dimen/dimen_5dp"
-                    android:text="1h36min"
+                    android:text="0分0秒"
                     android:textColor="@color/color_999999"
                     android:textSize="13sp" />
 

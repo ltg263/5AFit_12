@@ -420,7 +420,7 @@ public class ExerciseRecordActivity extends BaseActivity {
 
     private void queryDeviceTypeLists() {
         RetrofitUtil.getInstance().apiService()
-                .queryDeviceTypeLists()
+                .queryDeviceTypeLists(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<DeviceTypeData>>() {

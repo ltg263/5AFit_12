@@ -324,11 +324,11 @@ public interface ApiService {
 
     /**
      * 设备类型列表
-     *
+     * 	设备分类(1,健身器材;2,心率设备)
      * @return
      */
     @GET(ConstValues.PORT_2 + "api/v1/device/type/query")
-    Observable<Result<DeviceTypeData>> queryDeviceTypeLists();
+    Observable<Result<DeviceTypeData>> queryDeviceTypeLists(@Query("type") int type);
 
     /**
      * 设备品牌列表
