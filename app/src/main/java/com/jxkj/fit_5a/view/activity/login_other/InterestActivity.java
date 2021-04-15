@@ -118,11 +118,13 @@ public class InterestActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_go_xyb:
-                List<InterestLists.ListBean> data = mImgAdapter.getData();
-                interest = "";
-                for(int i=0;i<data.size();i++){
-                    if (data.get(i).isSelect()){
-                        interest+=data.get(i).getId()+",";
+                if(mImgAdapter!=null &&mImgAdapter.getData()!=null){
+                    List<InterestLists.ListBean> data = mImgAdapter.getData();
+                    interest = "";
+                    for(int i=0;i<data.size();i++){
+                        if (data.get(i).isSelect()){
+                            interest+=data.get(i).getId()+",";
+                        }
                     }
                 }
                 postUserUpdate();

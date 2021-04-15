@@ -31,9 +31,13 @@ public class ShoppingPingJiaAdapter extends BaseQuickAdapter<CommentListBean.Lis
         if(strArr!=null && strArr.length>0){
             helper.setGone(R.id.rv_img_list,true);
             if(strArr.length==1){
-                helper.setGone(R.id.siv_1,false).setGone(R.id.siv_2,false)
-                        .setGone(R.id.siv_3,false).setGone(R.id.siv_4,true);
-                GlideImageUtils.setGlideImage(mContext,strArr[0],helper.getView(R.id.siv_4));
+//                helper.setGone(R.id.siv_1,false).setGone(R.id.siv_2,false)
+//                        .setGone(R.id.siv_3,false).setGone(R.id.siv_4,true);
+//                GlideImageUtils.setGlideImage(mContext,strArr[0],helper.getView(R.id.siv_4));
+
+                helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,false)
+                        .setVisible(R.id.siv_3,false).setGone(R.id.siv_4,false);
+                GlideImageUtils.setGlideImage(mContext,strArr[0],helper.getView(R.id.siv_1));
             }else if(strArr.length==2){
                 helper.setVisible(R.id.siv_1,true).setVisible(R.id.siv_2,true)
                         .setVisible(R.id.siv_3,false).setGone(R.id.siv_4,false);

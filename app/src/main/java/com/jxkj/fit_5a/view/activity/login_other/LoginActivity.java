@@ -197,7 +197,9 @@ public class LoginActivity extends BaseActivity {
                     public void onNext(Result<LoginInfo> result) {
                         if(isDataInfoSucceed(result)){
                             SharedUtils.singleton().put(ConstValues.TOKEN,"Bearer "+result.getData().getTokenId());
-                            SharedUtils.singleton().put(ConstValues.USER_PASSWORD, finalMm);
+                            if(finalMm!=null){
+                                SharedUtils.singleton().put(ConstValues.USER_PASSWORD, finalMm);
+                            }
                             saveUserInfo(result.getData());
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         }

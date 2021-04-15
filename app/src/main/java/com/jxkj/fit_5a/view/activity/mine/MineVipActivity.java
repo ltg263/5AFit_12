@@ -239,7 +239,6 @@ public class MineVipActivity extends BaseActivity   implements PaymentContract.V
                 }
                 break;
             case R.id.tv_pay:
-
                 if(payType==1){
                     weCahtPay(null);
                 }else{
@@ -280,7 +279,6 @@ public class MineVipActivity extends BaseActivity   implements PaymentContract.V
                     }
                 });
     }
-
 
 
     private void weCahtPay(String payStr){
