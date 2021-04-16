@@ -69,6 +69,7 @@ public class RobotView extends ImageView {
     ValueAnimator valueAnimator;
     private float lastAnimtionValue = 0;
 //
+    long resetDuration = 0;
     public void setRed(long resetDuration) {
         ToastUtils.showShort("resetDuration:"+resetDuration);
         Log.w("--->>>","时间改变了:"+resetDuration);//392111
@@ -79,11 +80,10 @@ public class RobotView extends ImageView {
             infoJg = new ArrayList<>();
         }
         if(valueAnimator!=null){
-            Log.w("--->>>"," !valueAnimator.isPaused():"+ !valueAnimator.isPaused());//392111
-            Log.w("--->>>"," !valueAnimator.isRunning():"+ !valueAnimator.isRunning());//392111
-            if(!valueAnimator.isRunning() && !valueAnimator.isPaused()){
+            if(this.resetDuration < resetDuration){
                 lastAnimtionValue = 0;
             }
+            this.resetDuration = resetDuration;
             valueAnimator.cancel();
             valueAnimator = null;
         }
