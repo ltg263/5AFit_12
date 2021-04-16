@@ -32,6 +32,7 @@ public class ConstValues_Ly {
 
     public static String BRAND_ID = null;//	品牌id
     public static int DEVICE_TYPE_ID = 0;//设备类型id
+    public static String DEVICE_IMG = "";//设备的图片
     public static String DEVICE_TYPE_ID_URL = "0";//设备类型id
     public static String DEVICE_Model_ID_URL = "0";//设备型号id
     /**

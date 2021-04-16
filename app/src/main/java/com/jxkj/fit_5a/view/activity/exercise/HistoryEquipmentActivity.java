@@ -23,6 +23,7 @@ import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.lanya.Ble4_0Util;
 import com.jxkj.fit_5a.lanya.BleUtil;
+import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
 import com.jxkj.fit_5a.view.adapter.HistoryEquipmentAdapter;
 
@@ -91,6 +92,7 @@ public class HistoryEquipmentActivity extends BaseActivity {
 
     private void goLianJie(HistoryEquipmentData historyEquipmentData) {
         Log.w("historyEquipmentData","historyEquipmentData:"+historyEquipmentData.toString());
+        ConstValues_Ly.BRAND_ID = historyEquipmentData.getBrandId();
         PopupWindowLanYan.ble4Util = new Ble4_0Util(this);
         PopupWindowLanYan.ble4Util.init();
         PopupWindowLanYan.ble4Util.setServiceUUid(historyEquipmentData.getServiceUUid());

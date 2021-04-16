@@ -17,6 +17,7 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.DeviceTypeData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.adapter.FacilityAddSbAdapter;
 
 import java.util.List;
@@ -108,6 +109,7 @@ public class FacilityAddSbActivity extends BaseActivity {
                 Bundle mBundle = new Bundle();
                 mBundle.putString("name",list.get(position).getName());
                 mBundle.putString("id",list.get(position).getId()+"");
+                ConstValues_Ly.DEVICE_IMG = list.get(position).getImg();
                 IntentUtils.getInstence().intent(FacilityAddSbActivity.this, FacilityAddPpActivity.class,"bundle",mBundle);
             }
         });

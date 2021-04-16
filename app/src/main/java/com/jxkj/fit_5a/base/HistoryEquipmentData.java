@@ -7,10 +7,19 @@ public class HistoryEquipmentData {
     String state;
     String serviceUUid;
     String LyAddress;
+    String brandId;
     int id;
 
     public String getLyAddress() {
         return LyAddress;
+    }
+
+    public void setBrandId(String brandId) {
+        this.brandId = brandId;
+    }
+
+    public String getBrandId() {
+        return brandId;
     }
 
     public void setLyAddress(String lyAddress) {
