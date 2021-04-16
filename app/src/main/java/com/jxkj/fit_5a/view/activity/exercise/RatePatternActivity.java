@@ -277,6 +277,7 @@ public class RatePatternActivity extends BaseActivity {
                             }else{
                                 sportLogInfo.setTrainingMode("Program");
                             }
+                            sportLogInfo.setProtocolName("iconsole");
                             PostUser.SportLogInfo.DetailsBean deleteDatabase = new PostUser.SportLogInfo.DetailsBean();
                             deleteDatabase.setLogs(logs);
                             sportLogInfo.setDetails(deleteDatabase);
