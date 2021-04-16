@@ -222,7 +222,7 @@ public class PopupWindowLanYan extends PopupWindow {
                     }
                 }
                 PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A0));
-//                postDeviceProtocolCheck();
+//              postDeviceProtocolCheck();
                 initLsData();
             }
             startBroadcast("b2",data.getDataPayload());
