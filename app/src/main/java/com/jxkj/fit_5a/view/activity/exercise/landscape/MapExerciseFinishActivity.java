@@ -102,7 +102,7 @@ public class MapExerciseFinishActivity extends BaseActivity {
     private List<Fragment> getFragments() {
         MapFinish1Fragment fragment = new MapFinish1Fragment();
         Bundle bundle = new Bundle();
-//        bundle.putString("search",search);
+        bundle.putParcelableArrayList("mBpmDataBeans",mBpmDataBeans);
         fragment.setArguments(bundle);
         fragments.add(fragment);
 
