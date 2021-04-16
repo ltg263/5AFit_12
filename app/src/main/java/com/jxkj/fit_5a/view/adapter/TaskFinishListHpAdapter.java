@@ -23,14 +23,6 @@ public class TaskFinishListHpAdapter extends BaseQuickAdapter<BpmDataBean, BaseV
         this.Ztime = Ztime;
     }
 
-    public TaskFinishListHpAdapter(@Nullable List<BpmDataBean> data) {
-        super(R.layout.item_task_finish_list, data);
-    }
-
-    public void setZtime(int ztime) {
-        Ztime = ztime;
-    }
-
     @Override
     protected void convert(@NonNull BaseViewHolder helper, BpmDataBean item) {
         double xlfx = item.getTime()/Ztime;

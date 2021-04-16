@@ -1,5 +1,8 @@
 package com.jxkj.fit_5a.base;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 public class PostUser {
@@ -516,7 +519,7 @@ public class PostUser {
                 this.motionTrajectories = motionTrajectories;
             }
 
-            public static class LogsBean {
+            public static class LogsBean implements Parcelable {
                 /**
                  * calories : 0
                  * distance : 0
@@ -553,6 +556,8 @@ public class PostUser {
                     this.timeStamp = timeStamp;
                     this.watt = watt;
                 }
+
+
 
                 public String getCalories() {
                     return calories;
@@ -633,6 +638,50 @@ public class PostUser {
                 public void setWatt(String watt) {
                     this.watt = watt;
                 }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeString(this.calories);
+                    dest.writeString(this.distance);
+                    dest.writeString(this.heartRate);
+                    dest.writeString(this.incline);
+                    dest.writeString(this.intensity);
+                    dest.writeString(this.resistanceLevel);
+                    dest.writeString(this.rpm);
+                    dest.writeString(this.speed);
+                    dest.writeString(this.timeStamp);
+                    dest.writeString(this.watt);
+                }
+
+                protected LogsBean(Parcel in) {
+                    this.calories = in.readString();
+                    this.distance = in.readString();
+                    this.heartRate = in.readString();
+                    this.incline = in.readString();
+                    this.intensity = in.readString();
+                    this.resistanceLevel = in.readString();
+                    this.rpm = in.readString();
+                    this.speed = in.readString();
+                    this.timeStamp = in.readString();
+                    this.watt = in.readString();
+                }
+
+                public static final Parcelable.Creator<LogsBean> CREATOR = new Parcelable.Creator<LogsBean>() {
+                    @Override
+                    public LogsBean createFromParcel(Parcel source) {
+                        return new LogsBean(source);
+                    }
+
+                    @Override
+                    public LogsBean[] newArray(int size) {
+                        return new LogsBean[size];
+                    }
+                };
             }
 
             public static class MotionTrajectoriesBean {

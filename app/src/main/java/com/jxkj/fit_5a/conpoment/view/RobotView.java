@@ -71,11 +71,11 @@ public class RobotView extends ImageView {
 //
     long resetDuration = 0;
     public void setRed(long resetDuration) {
-        ToastUtils.showShort("resetDuration:"+resetDuration);
-        Log.w("--->>>","时间改变了:"+resetDuration);//392111
-        if(resetDuration<4000){
+        Log.w("--->>>","时间准备改变:"+resetDuration);//392111
+        if(resetDuration<4000 || this.resetDuration == resetDuration){
             return;
         }
+        Log.w("--->>>","时间改变了:"+resetDuration);//392111
         if(infoJg == null){//
             infoJg = new ArrayList<>();
         }
@@ -83,10 +83,10 @@ public class RobotView extends ImageView {
             if(this.resetDuration < resetDuration){
                 lastAnimtionValue = 0;
             }
-            this.resetDuration = resetDuration;
             valueAnimator.cancel();
             valueAnimator = null;
         }
+        this.resetDuration = resetDuration;
         valueAnimator = ValueAnimator.ofFloat(lastAnimtionValue, StyleKitName.mPathMeasure.getLength());
         valueAnimator.setDuration(resetDuration < 1000 ? 1000 : resetDuration);
         valueAnimator.setInterpolator(new LinearInterpolator());
@@ -96,7 +96,7 @@ public class RobotView extends ImageView {
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (Float) animation.getAnimatedValue();
                 lastAnimtionValue = value;
-                Log.e("onAnimationUpdate：", "lastAnimtionValue: " + lastAnimtionValue);
+//                Log.e("onAnimationUpdate：", "lastAnimtionValue: " + lastAnimtionValue);
                 invalidateByValue(value);
             }
         });
@@ -117,6 +117,12 @@ public class RobotView extends ImageView {
         }
     }
 
+    public void setCancel(){
+        if(valueAnimator==null) {
+            valueAnimator.cancel();
+            valueAnimator = null;
+        }
+    }
 
     // 开启路径动画
     public void startPathAnim(long currentDuration) {

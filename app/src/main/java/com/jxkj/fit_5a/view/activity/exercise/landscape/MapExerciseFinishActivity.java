@@ -13,6 +13,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.base.PostUser;
+import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.view.fragment.MapFinish1Fragment;
 import com.jxkj.fit_5a.view.fragment.MapFinish2Fragment;
 import com.jxkj.fit_5a.view.fragment.MapFinish3Fragment;
@@ -30,9 +32,8 @@ public class MapExerciseFinishActivity extends BaseActivity {
     ViewPager mViewPager;
     @BindView(R.id.iv_you)
     ImageView mIvYou;
-
-    int position = 0;
-
+    private ArrayList<BpmDataBean> mBpmDataBeans;
+    private ArrayList<PostUser.SportLogInfo.DetailsBean.LogsBean> logs;
     @Override
     protected int getContentView() {
         //去除title
@@ -46,6 +47,8 @@ public class MapExerciseFinishActivity extends BaseActivity {
     @Override
     protected void initViews() {
         mIvZuo.setVisibility(View.INVISIBLE);
+        mBpmDataBeans = getIntent().getParcelableArrayListExtra("mBpmDataBeans");
+        logs = getIntent().getParcelableArrayListExtra("logs");
         initVP();
     }
     private void initVP() {
@@ -105,7 +108,8 @@ public class MapExerciseFinishActivity extends BaseActivity {
 
         MapFinish2Fragment fragment1 = new MapFinish2Fragment();
         Bundle bundle1 = new Bundle();
-//        bundle1.putString("search",search);
+        bundle1.putParcelableArrayList("mBpmDataBeans",mBpmDataBeans);
+        bundle1.putParcelableArrayList("logs",logs);
         fragment1.setArguments(bundle1);
         fragments.add(fragment1);
 

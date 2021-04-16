@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -23,18 +24,25 @@ import androidx.annotation.Nullable;
 
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
+import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.StyleKitName;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils_Map;
 import com.jxkj.fit_5a.conpoment.view.RobotView;
+import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
+import com.jxkj.fit_5a.view.activity.exercise.TaskFinishActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,6 +83,10 @@ public class MapExerciseActivity extends Activity {
     String boxId;
     private MyReceiver mMyReceiver;
 
+    int maxV = 220;
+    double bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
+    int age = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_AGE,""));
+    private ArrayList<BpmDataBean> mBpmDataBeans = new ArrayList<>();
 
     public static void intentStartActivity(Context mContext, String mapId) {
         Intent intent = new Intent(mContext, MapExerciseActivity.class);
@@ -97,7 +109,7 @@ public class MapExerciseActivity extends Activity {
         } else if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[4]) {
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
         }
-
+        startTimestamp = System.currentTimeMillis();
         StyleKitName.mPathMeasure = null;
         StyleKitName.mCurrentPosition = null;
         /**
@@ -108,8 +120,23 @@ public class MapExerciseActivity extends Activity {
         registerReceiver(mMyReceiver, filter);// 注册Broadcast Receive
 
         initViews();
+        initBpmData();
     }
 
+    private void initBpmData() {
+        bfb5 = (maxV-age)*0.5+40;
+        bfb6 = (maxV-age)*0.6+40;
+        bfb7 = (maxV-age)*0.7+40;
+        bfb8 = (maxV-age)*0.8+40;
+        bfb9 = (maxV-age)*0.9+40;
+        bfb  = (maxV-age)*1+40;
+        mBpmDataBeans.add(new BpmDataBean("非运动区间(0~50%)",0,bfb5,0));
+        mBpmDataBeans.add(new BpmDataBean("热身心率区间(50~60%)",bfb5,bfb6,0));
+        mBpmDataBeans.add(new BpmDataBean("燃脂心率区间(60~70%)",bfb6,bfb7,0));
+        mBpmDataBeans.add(new BpmDataBean("有氧耐力心率区间(70~80%)",bfb7,bfb8,0));
+        mBpmDataBeans.add(new BpmDataBean("无氧耐力心率区间(80~90%)",bfb8,bfb9,0));
+        mBpmDataBeans.add(new BpmDataBean("极限心率区间(90~100%)",bfb9,bfb,0));
+    }
 
     PopupWindowTopicUtils_Map window;
 
@@ -227,22 +254,6 @@ public class MapExerciseActivity extends Activity {
                 break;
         }
     }
-    ValueAnimator valueAnimator;
-
-    // 开启路径动画
-    public void startPathAnim(long currentDuration) {
-        // 0 － getLength()
-        valueAnimator = ValueAnimator.ofFloat(0, 500);
-        valueAnimator.setDuration(currentDuration);
-        // 减速插值器
-//        valueAnimator.setInterpolator(new LinearInterpolator());
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-            }
-        });
-        valueAnimator.start();
-    }
 
     private void getMapDetails() {
         RetrofitUtil.getInstance().apiService()
@@ -293,8 +304,6 @@ public class MapExerciseActivity extends Activity {
         DialogUtils.showDialogOutRoom(MapExerciseActivity.this, new DialogUtils.DialogLyInterface() {
             @Override
             public void btnConfirm() {
-                Intent mIntent = new Intent(MapExerciseActivity.this, MapExerciseFinishActivity.class);
-                startActivity(mIntent);
                 psotUserSportLog();
                 finish();
             }
@@ -310,46 +319,47 @@ public class MapExerciseActivity extends Activity {
     }
 
     private void psotUserSportLog() {
-//        PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x03));
-//        Intent mIntent = new Intent(this, TaskFinishActivity.class);
-//        String str = String.valueOf(Distance / duration * 60 * 60);
-//        String pjDuration = "0";
-//        if (str.equals(".")) {
-//            pjDuration = str.format("%.2f");
-//        }
-//        double MaxSpeed = 0;
-//        for (int i = 0; i < logs.size(); i++) {
-//            if (Double.valueOf(logs.get(i).getSpeed()) > MaxSpeed) {
-//                MaxSpeed = Double.valueOf(logs.get(i).getSpeed());
-//            }
-//        }
-//        mBpmDataBeans.get(0).setBpmTopData(
-//                new BpmDataBean.BpmTopData(String.valueOf(Calories), String.valueOf(Distance), duration + "", pjDuration, String.valueOf(MaxSpeed), "--"));
-//        mIntent.putParcelableArrayListExtra("mBpmDataBeans", mBpmDataBeans);
-//        startActivity(mIntent);
-//        finish();
-//        PostUser.SportLogInfo sportLogInfo = new PostUser.SportLogInfo();
-//        sportLogInfo.setBai("11");
-//        sportLogInfo.setDeviceBrandId(ConstValues_Ly.BRAND_ID);
-//        sportLogInfo.setCalories(String.valueOf(Calories));
-//        sportLogInfo.setDeviceTypeId(ConstValues_Ly.DEVICE_TYPE_ID + "");
-//        sportLogInfo.setDistance(String.valueOf(Distance));
-//        sportLogInfo.setDuration(String.valueOf(duration));
-//        sportLogInfo.setEndTimestamp(String.valueOf(System.currentTimeMillis()));
-//        sportLogInfo.setStartTimestamp(String.valueOf(startTimestamp));
-//        sportLogInfo.setProtocolDeviceBrandParamId(11 + "" + '1');
-//        sportLogInfo.setHeartRateSource("2");//1=器材;2=藍牙心跳;3=Apple Watch
-//
-//        if (StringUtil.isNotBlank(movingTye)) {
-//            sportLogInfo.setTrainingMode("HeartRate");//目前只有HeartRate(心率)、Program(课程)
-//        } else {
-//            sportLogInfo.setTrainingMode("Program");
-//        }
-//        PostUser.SportLogInfo.DetailsBean deleteDatabase = new PostUser.SportLogInfo.DetailsBean();
-//        deleteDatabase.setLogs(logs);
-//        sportLogInfo.setDetails(deleteDatabase);
-//        HttpRequestUtils.psotUserSportLog(sportLogInfo);
-//        PopupWindowLanYan.ble4Util.disconnect();
+        PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x03));
+        Intent mIntent = new Intent(this, MapExerciseFinishActivity.class);
+        String str = String.valueOf(Distance / duration * 60 * 60);
+        String pjDuration = "0";
+        if (str.equals(".")) {
+            pjDuration = str.format("%.2f");
+        }
+        double MaxSpeed = 0;
+        for (int i = 0; i < logs.size(); i++) {
+            if (Double.valueOf(logs.get(i).getSpeed()) > MaxSpeed) {
+                MaxSpeed = Double.valueOf(logs.get(i).getSpeed());
+            }
+        }
+        mBpmDataBeans.get(0).setBpmTopData(
+                new BpmDataBean.BpmTopData(String.valueOf(Calories), String.valueOf(Distance), duration + "", pjDuration, String.valueOf(MaxSpeed), "--"));
+        mIntent.putParcelableArrayListExtra("mBpmDataBeans", mBpmDataBeans);
+        mIntent.putParcelableArrayListExtra("logs",logs);
+        startActivity(mIntent);
+        iv_img.setCancel();
+        iv_img = null;
+        finish();
+
+        PostUser.SportLogInfo sportLogInfo = new PostUser.SportLogInfo();
+        sportLogInfo.setBai("11");
+        sportLogInfo.setMapId(mapId);
+        sportLogInfo.setDeviceBrandId(ConstValues_Ly.BRAND_ID);
+        sportLogInfo.setCalories(String.valueOf(Calories));
+        sportLogInfo.setDeviceTypeId(ConstValues_Ly.DEVICE_TYPE_ID + "");
+        sportLogInfo.setDistance(String.valueOf(Distance));
+        sportLogInfo.setDuration(String.valueOf(duration));
+        sportLogInfo.setEndTimestamp(String.valueOf(System.currentTimeMillis()));
+        sportLogInfo.setStartTimestamp(String.valueOf(startTimestamp));
+        sportLogInfo.setProtocolName("iconsole");
+        sportLogInfo.setProtocolDeviceBrandParamId(11 + "" + '1');
+        sportLogInfo.setHeartRateSource("2");//1=器材;2=藍牙心跳;3=Apple Watch
+        sportLogInfo.setTrainingMode("QuickStart");//目前只有HeartRate(心率)、Program(课程)
+        PostUser.SportLogInfo.DetailsBean deleteDatabase = new PostUser.SportLogInfo.DetailsBean();
+        deleteDatabase.setLogs(logs);
+        sportLogInfo.setDetails(deleteDatabase);
+        HttpRequestUtils.psotUserSportLog(sportLogInfo);
+        PopupWindowLanYan.ble4Util.disconnect();
     }
 
     public class MyReceiver extends BroadcastReceiver {
@@ -378,12 +388,16 @@ public class MapExerciseActivity extends Activity {
     }
 
     Double distance = 0.0;//总距离
-    double currentSpeed = 0.0;
+    double Distance;
+    int duration;
+    int Calories;
+    long startTimestamp;
 
+    ArrayList<PostUser.SportLogInfo.DetailsBean.LogsBean> logs = new ArrayList<>();
     private void setData1(ArrayList<Integer> dataList) {
         int timeMinute = dataList.get(0);//时间-分
         int timeSecond = dataList.get(1);//时间-秒
-        int duration = timeMinute * 60 + timeSecond;
+        duration = timeMinute*60+timeSecond;
         String ZTime = ConstValues_Ly.getTime(timeMinute, timeSecond);
 
         int speedHi = dataList.get(2);//速度-百十
@@ -396,11 +410,11 @@ public class MapExerciseActivity extends Activity {
 
         int DistanceHi = dataList.get(6);//距离-百十
         int DistanceLow = dataList.get(7);//距离-个小数点下一位
-        double Distance = ConstValues_Ly.getBaiShiGeX(DistanceHi, DistanceLow);
+        Distance = ConstValues_Ly.getBaiShiGeX(DistanceHi, DistanceLow);
 
         int CaloriesHi = dataList.get(8);// 卡路里 -千,佰
         int CaloriesLow = dataList.get(9);// 卡路里 -个十
-        int Calories = ConstValues_Ly.getQianBaiShiGe(CaloriesHi, CaloriesLow);
+        Calories = ConstValues_Ly.getQianBaiShiGe(CaloriesHi, CaloriesLow);
 
         int PulseHi = dataList.get(10);//跳动 千,佰
         int PulseLow = dataList.get(11);//跳动 千,佰 -个十
@@ -422,13 +436,12 @@ public class MapExerciseActivity extends Activity {
         if (Unit.equals("Stop")) {
             window.setIvSelect(true);
             iv_img.setState(1);
-            return;//314767
+            return;
         }
         window.setIvSelect(false);
         String str = ""+duration;
-//currentSpeed != speed &&
+
         if (speed != 0 && (str.substring(str.length() - 1).equals("5") || str.substring(str.length() - 1).equals("0"))) {
-//            currentSpeed = speed;//392111  2400/22000*60*60*1000
             int quanNum = (int) Math.ceil(Distance * 1000d/distance);
             if(quanNum==0){
                 quanNum =1;
@@ -441,10 +454,44 @@ public class MapExerciseActivity extends Activity {
             } else {
                 iv_img.setState(0);
             }
-        }//34364//18000//1636
+        }
+
+
+        setBpmDataBeanTime(Pulse);
         mTvTime.setText(ZTime);
         window.setTextViewStr(Distance + "km", speed + "km/h", ZTime, Calories + "cal", Watt + "w", Pulse + "bpm");
 
+        logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
+                String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
+                null,String.valueOf(loadCurrent),String.valueOf(loadCurrent),
+                String.valueOf(rpm),String.valueOf(speed),String.valueOf(System.currentTimeMillis()),String.valueOf(Watt)));
     }
 
+    private void setBpmDataBeanTime(int pulse){
+        Log.w("-->>","mBpmDataBeans"+mBpmDataBeans.toString());
+        if(pulse>=mBpmDataBeans.get(0).getStartV() && pulse<mBpmDataBeans.get(0).getEndV()){
+            mBpmDataBeans.get(0).setTime(mBpmDataBeans.get(0).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(1).getStartV() && pulse<mBpmDataBeans.get(1).getEndV()){
+            mBpmDataBeans.get(1).setTime(mBpmDataBeans.get(1).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(2).getStartV() && pulse<mBpmDataBeans.get(2).getEndV()){
+            mBpmDataBeans.get(2).setTime(mBpmDataBeans.get(2).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(3).getStartV() && pulse<mBpmDataBeans.get(3).getEndV()){
+            mBpmDataBeans.get(3).setTime(mBpmDataBeans.get(3).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(4).getStartV() && pulse<mBpmDataBeans.get(4).getEndV()){
+            mBpmDataBeans.get(4).setTime(mBpmDataBeans.get(4).getTime()+1);
+            return;
+        }
+        if(pulse>mBpmDataBeans.get(5).getStartV() && pulse<mBpmDataBeans.get(5).getEndV()){
+            mBpmDataBeans.get(5).setTime(mBpmDataBeans.get(5).getTime()+1);
+            return;
+        }
+    }
 }
