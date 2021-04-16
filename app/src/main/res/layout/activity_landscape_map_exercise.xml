@@ -44,6 +44,7 @@
         android:background="@drawable/bj_circle_fff_4">
 
         <TextView
+            android:id="@+id/tv_quan"
             android:layout_width="11dp"
             android:layout_height="11dp"
             android:layout_margin="6dp"

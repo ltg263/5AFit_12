@@ -7,8 +7,10 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.StyleKitName;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
@@ -66,18 +68,28 @@ public class RobotView extends ImageView {
 
     ValueAnimator valueAnimator;
     private float lastAnimtionValue = 0;
-//535552
+//
     public void setRed(long resetDuration) {
-        Log.w("--->>>","时间改变了:"+resetDuration);
-        if(infoJg == null){
+        ToastUtils.showShort("resetDuration:"+resetDuration);
+        Log.w("--->>>","时间改变了:"+resetDuration);//392111
+        if(resetDuration<4000){
+            return;
+        }
+        if(infoJg == null){//
             infoJg = new ArrayList<>();
         }
         if(valueAnimator!=null){
+            Log.w("--->>>"," !valueAnimator.isPaused():"+ !valueAnimator.isPaused());//392111
+            Log.w("--->>>"," !valueAnimator.isRunning():"+ !valueAnimator.isRunning());//392111
+            if(!valueAnimator.isRunning() && !valueAnimator.isPaused()){
+                lastAnimtionValue = 0;
+            }
             valueAnimator.cancel();
             valueAnimator = null;
         }
         valueAnimator = ValueAnimator.ofFloat(lastAnimtionValue, StyleKitName.mPathMeasure.getLength());
         valueAnimator.setDuration(resetDuration < 1000 ? 1000 : resetDuration);
+        valueAnimator.setInterpolator(new LinearInterpolator());
         valueAnimator.removeAllUpdateListeners();
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

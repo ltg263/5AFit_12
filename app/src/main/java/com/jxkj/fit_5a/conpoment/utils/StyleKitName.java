@@ -52,16 +52,16 @@ public class StyleKitName {
         //矩形范围宽:1620
         RectF resizedFrame = new RectF((canvas.getWidth() - canvas.getHeight() * bl) / 2, 0f, (canvas.getWidth() - canvas.getHeight() * bl) / 2 + canvas.getHeight() * bl,canvas.getHeight());
         canvas.translate(resizedFrame.left, resizedFrame.top);
-        Log.w("--->>>>>","resizedFrame.left:"+resizedFrame.left);
-        Log.w("--->>>>>","resizedFrame.top:"+resizedFrame.top);
-        Log.w("--->>>>>","resizedFrame.height():"+resizedFrame.height());
-        Log.w("--->>>>>","resizedFrame.width():"+resizedFrame.width());
-        Log.w("--->>>>>","SDUIUtil.px2dp(MainApplication.getContext(),param.getReferenceWidth():"+SDUIUtil.px2dp(MainApplication.getContext(),param.getReferenceWidth()));
+//        Log.w("--->>>>>","resizedFrame.left:"+resizedFrame.left);
+//        Log.w("--->>>>>","resizedFrame.top:"+resizedFrame.top);
+//        Log.w("--->>>>>","resizedFrame.height():"+resizedFrame.height());
+//        Log.w("--->>>>>","resizedFrame.width():"+resizedFrame.width());
+//        Log.w("--->>>>>","SDUIUtil.px2dp(MainApplication.getContext(),param.getReferenceWidth():"+SDUIUtil.px2dp(MainApplication.getContext(),param.getReferenceWidth()));
         CacheFor_1100900Canvas._2Path.reset();
         float blx = resizedFrame.width()/param.getReferenceWidth();
         float bly = resizedFrame.height()/param.getReferenceHeight();
-        Log.w("--->>>>>","blx:"+blx);
-        Log.w("--->>>>>","bly:"+bly);
+//        Log.w("--->>>>>","blx:"+blx);
+//        Log.w("--->>>>>","bly:"+bly);
 
         CacheFor_1100900Canvas._2Path.moveTo(info.get(0).get(0) * (bl+0.05f), info.get(0).get(1)  * (bl+0.05f));
         for (int i = 0; i < info.size(); i++) {

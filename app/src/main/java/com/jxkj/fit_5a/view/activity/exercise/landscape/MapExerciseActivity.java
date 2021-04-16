@@ -68,6 +68,8 @@ public class MapExerciseActivity extends Activity {
     TextView mTvDistance;
     @BindView(R.id.tv_time)
     TextView mTvTime;
+    @BindView(R.id.tv_quan)
+    TextView tv_quan;
     boolean isSuo = true;
     String mapId;
     String boxId;
@@ -213,7 +215,7 @@ public class MapExerciseActivity extends Activity {
                 }
                 break;
             case R.id.iv_3:
-//                iv_img.startPathAnim(60000);
+//                iv_img.setRed(20000);
                 break;
             case R.id.iv_4:
                 outRoom();
@@ -225,7 +227,6 @@ public class MapExerciseActivity extends Activity {
                 break;
         }
     }
-
     ValueAnimator valueAnimator;
 
     // 开启路径动画
@@ -258,6 +259,7 @@ public class MapExerciseActivity extends Activity {
                     public void onNext(Result<MapDetailsBean> result) {
                         if (result.getCode() == 0 && result.getData() != null) {
                             distance = Double.valueOf(result.getData().getDistance());
+//                            distance = 910d;
                             mTvDistance.setText(distance + "m");
                             if (Double.valueOf(result.getData().getDistance()) > 1000) {
                                 mTvDistance.setText(StringUtil.getValue(Double.valueOf(distance) / 1000d) + "km");
@@ -420,19 +422,26 @@ public class MapExerciseActivity extends Activity {
         if (Unit.equals("Stop")) {
             window.setIvSelect(true);
             iv_img.setState(1);
-            return;
+            return;//314767
         }
         window.setIvSelect(false);
-        if (currentSpeed != speed && speed != 0) {
-            iv_img.setRed(Math.round((distance - Distance * 1000) / (speed * 1000) * 60 * 60 * 1000));
+        String str = ""+duration;
+//currentSpeed != speed &&
+        if (speed != 0 && (str.substring(str.length() - 1).equals("5") || str.substring(str.length() - 1).equals("0"))) {
+//            currentSpeed = speed;//392111  2400/22000*60*60*1000
+            int quanNum = (int) Math.ceil(Distance * 1000d/distance);
+            if(quanNum==0){
+                quanNum =1;
+            }
+            tv_quan.setText(String.valueOf(quanNum));
+            iv_img.setRed(Math.round((distance -(Distance * 1000d-distance*(quanNum-1))) / (speed * 1000d) * 60d * 60d * 1000d));
         } else {
             if (speed == 0) {
                 iv_img.setState(1);
             } else {
                 iv_img.setState(0);
             }
-        }
-        currentSpeed = speed;
+        }//34364//18000//1636
         mTvTime.setText(ZTime);
         window.setTextViewStr(Distance + "km", speed + "km/h", ZTime, Calories + "cal", Watt + "w", Pulse + "bpm");
 

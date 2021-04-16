@@ -27,7 +27,8 @@ public class MianJavaDame {
         float b = 1.5f;
 //        System.out.println("-->>>:"+(float)a*b); //这里的结果是 3
         int number = 10;
-        System.out.println("-->>>:"+toInt(toBytes(11)));
+        System.out.println("-->>>:"+ Math.floor(1.4));
+        System.out.println("-->>>:"+ Math.round((132.54*1 - 0 * 1000d)));
     }
 
     public static String getValue(double obj) {

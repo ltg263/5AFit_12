@@ -48,6 +48,9 @@ public class FacilityAddSbActivity extends BaseActivity {
     protected void initViews() {
         mTvTitle.setText("新增设备");
         type = getIntent().getStringExtra("type");
+        if(type==null){
+            type = "";
+        }
         if(type.equals("00")){
             mTvTitle.setText("心率");
             mTv.setText("心率设备分类");
