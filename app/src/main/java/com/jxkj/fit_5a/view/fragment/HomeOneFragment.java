@@ -470,7 +470,7 @@ public class HomeOneFragment extends BaseFragment {
 
     private void getRankList() {
         RetrofitUtil.getInstance().apiService()
-                .getRankList(1)
+                .getRankList(3)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<RankListData>>() {

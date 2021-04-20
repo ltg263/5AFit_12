@@ -275,16 +275,22 @@ public interface ApiService {
     Observable<Result<RankDetailsData>> getRankDetails(@Query("rankId") Integer rankId);
 
     /**
-     * 排行榜排名
+     * 排行榜排名\
+     * 维度(1:天;2:周;3:月)
      */
-    @GET(ConstValues.PORT_1 + "api/v1/rank/stats/rank")
-    Observable<Result<RankStatsData>> getRankStatsList(@Query("type") int type);
+    @GET(ConstValues.PORT_4 + "api/v1/user/sport/ranking/list/stats/calories/current")
+    Observable<Result<RankStatsData>> getRankStatsList(@Query("dimension") int dimension);
 
     /**
      * 排行榜点赞
      */
-    @GET(ConstValues.PORT_1 + "api/v1/user/stats/zan")
-    Observable<Result> getStatsZan(@Query("calStatsId") int calStatsId, @Query("hasZan") boolean hasZan);
+    @GET(ConstValues.PORT_4 + "api/v1/user/cal/rank/zan/day/like")
+    Observable<Result> getStatsZan(@Query("calRankId") String calStatsId, @Query("dimension") int dimension);
+    /**
+     * 排行榜取消点赞
+     */
+    @GET(ConstValues.PORT_4 + "api/v1/user/cal/rank/zan/day/cancel_like")
+    Observable<Result> getCancelStatsZan(@Query("calRankId") String calStatsId, @Query("dimension") int dimension);
 
 
     /**

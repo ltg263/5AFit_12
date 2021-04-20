@@ -18,13 +18,13 @@ import java.util.List;
  * author : LiuJie
  * date   : 2020/5/2914:03
  */
-public class HomeTwoBelowAdapter extends BaseQuickAdapter<RankStatsData.ListBean, BaseViewHolder> {
-    public HomeTwoBelowAdapter(@Nullable List<RankStatsData.ListBean> data) {
+public class HomeTwoBelowAdapter extends BaseQuickAdapter<RankStatsData.CaloriesRankingListBean, BaseViewHolder> {
+    public HomeTwoBelowAdapter(@Nullable List<RankStatsData.CaloriesRankingListBean> data) {
         super(R.layout.item_home_two_below, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, RankStatsData.ListBean item) {
+    protected void convert(@NonNull BaseViewHolder helper, RankStatsData.CaloriesRankingListBean item) {
         if(helper.getLayoutPosition()==0){
             Glide.with(mContext).load(R.drawable.icon_home_two_1).into((ImageView) helper.getView(R.id.iv_1));
             helper.setGone(R.id.tv,false).setGone(R.id.iv_1,true);
@@ -36,12 +36,12 @@ public class HomeTwoBelowAdapter extends BaseQuickAdapter<RankStatsData.ListBean
             helper.setGone(R.id.tv,false).setGone(R.id.iv_1,true);
         }else{
             helper.setGone(R.id.tv,true).setGone(R.id.iv_1,false);
-            helper.setText(R.id.tv,"No."+helper.getLayoutPosition()+1);
+            helper.setText(R.id.tv,"No."+item.getRanking());
         }
-        helper.setText(R.id.tv_1,item.getNickName()).setText(R.id.tv_2,item.getCal()+"cal").setText(R.id.tv_3,item.getZan()+"");
-        GlideImageUtils.setGlideImage(mContext,item.getAvatar(),helper.getView(R.id.iv_2));
+        helper.setText(R.id.tv_1,item.getUser().getNickName()).setText(R.id.tv_2,item.getCalories()+"cal").setText(R.id.tv_3,item.getLikeCount()+"");
+        GlideImageUtils.setGlideImage(mContext,item.getUser().getAvatar(),helper.getView(R.id.iv_2));
         Glide.with(mContext).load(R.drawable.icon_zan_no).into((ImageView) helper.getView(R.id.iv_3));
-        if(item.isHasZan()){
+        if(item.isLike()){
             Glide.with(mContext).load(R.drawable.icon_zan_yes).into((ImageView) helper.getView(R.id.iv_3));
         }
         helper.addOnClickListener(R.id.ll_dianzan);

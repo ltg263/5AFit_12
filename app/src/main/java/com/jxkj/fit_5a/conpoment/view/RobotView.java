@@ -118,7 +118,7 @@ public class RobotView extends ImageView {
     }
 
     public void setCancel(){
-        if(valueAnimator==null) {
+        if(valueAnimator!=null) {
             valueAnimator.cancel();
             valueAnimator = null;
         }

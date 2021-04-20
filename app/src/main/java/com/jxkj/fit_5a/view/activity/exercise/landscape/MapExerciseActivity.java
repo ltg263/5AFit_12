@@ -38,6 +38,7 @@ import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils_Map;
 import com.jxkj.fit_5a.conpoment.view.RobotView;
 import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
+import com.jxkj.fit_5a.entity.RatePatternBean;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.activity.exercise.TaskFinishActivity;
 
@@ -319,6 +320,10 @@ public class MapExerciseActivity extends Activity {
     }
 
     private void psotUserSportLog() {
+        if(duration==0){
+            finish();
+            return;
+        }
         PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x03));
         Intent mIntent = new Intent(this, MapExerciseFinishActivity.class);
         String str = String.valueOf(Distance / duration * 60 * 60);
@@ -372,7 +377,7 @@ public class MapExerciseActivity extends Activity {
                     setData1(dataList);
                 }
                 if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[1] && dataList.size() == 14) {
-//                    setData56(dataList);
+                    setData56(dataList);
                 }
                 if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[2] && dataList.size() == 14) {
                     //健腹轮
@@ -465,6 +470,71 @@ public class MapExerciseActivity extends Activity {
                 String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
                 null,String.valueOf(loadCurrent),String.valueOf(loadCurrent),
                 String.valueOf(rpm),String.valueOf(speed),String.valueOf(System.currentTimeMillis()),String.valueOf(Watt)));
+    }
+
+
+    private void setData56(ArrayList<Integer> dataList) {
+        int timeMinute =  dataList.get(0);//时间-分
+        int timeSecond =  dataList.get(1);//时间-秒
+        duration = timeMinute*60+timeSecond;
+        String ZTime = ConstValues_Ly.getTime(timeMinute,timeSecond);
+
+        int speedHi = dataList.get(2);//速度-百十
+        int speedLow = dataList.get(3);//速度-个小数点下一位
+        double speed = ConstValues_Ly.getBaiShiGeX(speedHi,speedLow);
+
+        int rpm1Hi = dataList.get(4);//每分钟转数 -千百
+        int rpm1Low = dataList.get(5);//每分钟转数 -十个
+        int rpm1 = ConstValues_Ly.getQianBaiShiGe(rpm1Hi,rpm1Low);
+
+        int rpm2Hi = dataList.get(6);//每分钟转数 -千百
+        int rpm2Low = dataList.get(7);//每分钟转数 -十个
+        int rpm2 = ConstValues_Ly.getQianBaiShiGe(rpm2Hi,rpm2Low);
+
+        int DistanceHi = dataList.get(8);//距离-百十
+        int DistanceLow = dataList.get(9);//距离-个小数点下一位
+        Distance = ConstValues_Ly.getBaiShiGeX(DistanceHi,DistanceLow);
+
+        int CaloriesHi = dataList.get(10);// 卡路里 -千,佰
+        int CaloriesLow = dataList.get(11);// 卡路里 -个十
+        Calories = ConstValues_Ly.getQianBaiShiGe(CaloriesHi,CaloriesLow);
+
+        int PulseHi = dataList.get(12);//跳动 千,佰
+        int PulseLow = dataList.get(13);//跳动 千,佰 -个十
+        int Pulse = ConstValues_Ly.getQianBaiShiGe(PulseHi,PulseLow);
+
+        String re = "A2--->>>:时间："+ZTime+",速度："+speed+",转数1："+rpm1+",转数2："+rpm2+",距离："+Distance+",卡路里："+Calories
+                +",脉跳："+Pulse;
+        Log.w("---》》》", re);
+
+        window.setIvSelect(false);
+        String str = ""+duration;
+
+        if (speed != 0 && (str.substring(str.length() - 1).equals("5") || str.substring(str.length() - 1).equals("0"))) {
+            int quanNum = (int) Math.ceil(Distance * 1000d/distance);
+            if(quanNum==0){
+                quanNum =1;
+            }
+            tv_quan.setText(String.valueOf(quanNum));
+            iv_img.setRed(Math.round((distance -(Distance * 1000d-distance*(quanNum-1))) / (speed * 1000d) * 60d * 60d * 1000d));
+        } else {
+            if (speed == 0) {
+                iv_img.setState(1);
+            } else {
+                iv_img.setState(0);
+            }
+        }
+
+
+        setBpmDataBeanTime(Pulse);
+        mTvTime.setText(ZTime);
+        window.setTextViewStr(Distance + "km", speed + "km/h", ZTime, Calories + "cal", 0 + "w", Pulse + "bpm");
+
+        logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
+                String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
+                null,String.valueOf(0),String.valueOf(0),
+                String.valueOf(rpm1),String.valueOf(speed),String.valueOf(System.currentTimeMillis()),String.valueOf(0)));
+        return;
     }
 
     private void setBpmDataBeanTime(int pulse){

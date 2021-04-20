@@ -32,7 +32,6 @@
                 android:background="@drawable/btn_shape_bj_theme_2"
                 android:gravity="center"
                 android:text="日"
-                android:visibility="gone"
                 android:textColor="@color/color_000000"
                 android:textSize="12sp" />
 

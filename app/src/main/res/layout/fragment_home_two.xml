@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ffffff"
@@ -143,8 +144,8 @@
                 <ImageView
                     android:id="@+id/iv_two_img"
                     android:layout_width="35dp"
-                    android:layout_margin="@dimen/dimen_5dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_5dp"
                     android:adjustViewBounds="true"
                     android:src="@mipmap/ic_2" />
 
@@ -208,7 +209,6 @@
                         android:background="@drawable/btn_shape_bj_theme_2"
                         android:gravity="center"
                         android:text="日"
-                        android:visibility="gone"
                         android:textColor="@color/color_000000"
                         android:textSize="12sp" />
 
@@ -430,35 +430,58 @@
                 android:gravity="center_vertical">
 
                 <TextView
+                    android:id="@+id/tv_mingc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
-                    android:text="No.8"
+                    android:text="No.0"
                     android:textColor="@color/color_000000"
                     android:textSize="13sp" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_15dp"
-                    android:drawableStart="@drawable/icon_two"
-                    android:drawablePadding="@dimen/dimen_5dp"
-                    android:gravity="center"
-                    android:text="吴帅帅W"
-                    android:textColor="@color/color_333333"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="1360cal"
+                    android:gravity="center|start">
+
+                    <com.jxkj.fit_5a.conpoment.view.RoundImageView
+                        android:id="@+id/iv_head"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:src="@drawable/icon_two"
+                        app:type="circle" />
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_5dp"
+                        android:drawablePadding="@dimen/dimen_5dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="--"
+                        android:textColor="@color/color_333333"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_dll"
+                    android:layout_width="@dimen/dimen_75dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:drawablePadding="@dimen/dimen_5dp"
+                    android:drawableStart="@drawable/icon_home_huo"
+                    android:gravity="center|start"
+                    android:text="0cal"
                     android:textColor="@color/color_333333"
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/tv_zan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
@@ -466,7 +489,7 @@
                     android:drawableStart="@drawable/icon_zan_yes"
                     android:drawablePadding="@dimen/dimen_5dp"
                     android:gravity="center"
-                    android:text="264"
+                    android:text="0"
                     android:textColor="@color/color_333333"
                     android:textSize="13sp" />
 
