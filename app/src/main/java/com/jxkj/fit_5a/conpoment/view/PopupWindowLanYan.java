@@ -307,6 +307,7 @@ public class PopupWindowLanYan extends PopupWindow {
                 mHistoryEquipmentData.setBrandId(ConstValues_Ly.BRAND_ID);
                 mHistoryEquipmentData.setServiceUUid(ble4Util.getServiceUUid());
                 mHistoryEquipmentData.setLyAddress(BleAddress);
+                mHistoryEquipmentData.setName_sb(ConstValues_Ly.SB_NAME );
                 lists.add(mHistoryEquipmentData);
             }
         }else{
@@ -339,6 +340,7 @@ public class PopupWindowLanYan extends PopupWindow {
             mHistoryEquipmentData.setBrandId(ConstValues_Ly.BRAND_ID);
             mHistoryEquipmentData.setServiceUUid(ble4Util.getServiceUUid());
             mHistoryEquipmentData.setLyAddress(BleAddress);
+            mHistoryEquipmentData.setName_sb(ConstValues_Ly.SB_NAME);
             lists.add(mHistoryEquipmentData);
         }
         SharedHistoryEquipment.singleton().putSharedHistoryEquipment(lists);

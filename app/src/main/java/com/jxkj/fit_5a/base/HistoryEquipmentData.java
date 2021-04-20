@@ -2,6 +2,7 @@ package com.jxkj.fit_5a.base;
 
 public class HistoryEquipmentData {
     String img;
+    String name_sb;
     String name;
     String time;
     String state;
@@ -9,6 +10,14 @@ public class HistoryEquipmentData {
     String LyAddress;
     String brandId;
     int id;
+
+    public String getName_sb() {
+        return name_sb;
+    }
+
+    public void setName_sb(String name_sb) {
+        this.name_sb = name_sb;
+    }
 
     public String getLyAddress() {
         return LyAddress;

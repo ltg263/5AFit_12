@@ -287,6 +287,7 @@ public class Ble4_0Util implements BleUtil {
             ConstValues_Ly.CURRENT_STATE = 0;
             ConstValues_Ly.maxLoad = 0;
             ConstValues_Ly.DEVICE_TYPE_ID = 0;
+            ConstValues_Ly.SB_NAME = "";
             initLsData();
         }
         mDevWriteCharacteristic = null;

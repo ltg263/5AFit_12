@@ -65,7 +65,9 @@ public class FacilityAddPpActivity extends BaseActivity {
     ImageView mIvD;
     private FacilityAddAdapter mFacilityAddAdapter;
     private FacilitySbAddAdapter mFacilitySbAddAdapter;
-
+    String sbName;//设备名称
+    String sbName_pp;//设备品牌
+    String sbName_xh;//设备型号
     @Override
     protected int getContentView() {
         return R.layout.activity_facility_add_pp;
@@ -75,7 +77,8 @@ public class FacilityAddPpActivity extends BaseActivity {
     protected void initViews() {
         Bundle bundle = getIntent().getBundleExtra("bundle");
         ConstValues_Ly.DEVICE_TYPE_ID_URL =  bundle.getString("id");//设备类型id
-        mTvTitle.setText(bundle.getString("name"));
+        sbName = bundle.getString("name");
+        mTvTitle.setText(sbName);
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         queryDeviceBrandLists();
         initRvUiXh();
@@ -145,6 +148,7 @@ public class FacilityAddPpActivity extends BaseActivity {
                         if(isDataInfoSucceed(result)){
                             if(result.getData()!=null && result.getData().getList()!=null && result.getData().getList().size()>0){
                                 result.getData().getList().get(0).setSelect(true);
+                                sbName_xh = result.getData().getList().get(0).getName();
                                 ConstValues_Ly.DEVICE_Model_ID_URL = result.getData().getList().get(0).getId()+"";
                                 mFacilitySbAddAdapter.setNewData(result.getData().getList());
                             }
@@ -178,6 +182,7 @@ public class FacilityAddPpActivity extends BaseActivity {
                 }
                 data.get(position).setSelect(true);
                 ConstValues_Ly.DEVICE_Model_ID_URL = data.get(position).getId()+"";
+                sbName_xh = data.get(position).getName();
                 mFacilitySbAddAdapter.notifyDataSetChanged();
             }
         });
@@ -205,7 +210,8 @@ public class FacilityAddPpActivity extends BaseActivity {
                 }
                 list.get(position).setSelect(true);
                 mFacilityAddAdapter.notifyDataSetChanged();
-                tv_name.setText("("+list.get(position).getName()+")");
+                sbName_pp = list.get(position).getName();
+                tv_name.setText("("+sbName_pp+")");
                 ConstValues_Ly.BRAND_ID = list.get(position).getId()+"";
                 queryDeviceModelLists(list.get(position).getId());
             }
@@ -241,6 +247,7 @@ public class FacilityAddPpActivity extends BaseActivity {
         mIv.setVisibility(View.VISIBLE);
         mTv.setVisibility(View.VISIBLE);
         mIvD.setVisibility(View.GONE);
+        ConstValues_Ly.SB_NAME = sbName+"-"+sbName_pp+"-"+sbName_xh;
         if(str.equals("连接成功")){
             TimeThreadUtils.sendDataA2();
         }
