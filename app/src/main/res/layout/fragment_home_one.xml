@@ -59,9 +59,9 @@
         app:srlPrimaryColor="#00000000">
 
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            app:srlClassicsSpinnerStyle="Scale"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:srlClassicsSpinnerStyle="Scale" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -82,7 +82,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="189dp"
                         android:scaleType="fitXY"
+                        android:visibility="gone"
                         android:src="@mipmap/ic_home_bj_cen" />
+
+                    <com.youth.banner.Banner
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="190dp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true" />
 
                     <TextView
                         android:id="@+id/tv_title"
@@ -91,7 +99,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/dimen_60dp"
                         android:layout_marginBottom="@dimen/dp_10"
-                        android:text="行动比决心更重要"
+                        android:text=""
                         android:textColor="@color/color_333333"
                         android:textStyle="bold" />
 
@@ -101,11 +109,13 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_title"
                         android:layout_centerHorizontal="true"
+                        android:visibility="gone"
                         android:text="Action is more important than determination"
                         android:textColor="@color/color_333333"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
+
 
 
                 <RelativeLayout

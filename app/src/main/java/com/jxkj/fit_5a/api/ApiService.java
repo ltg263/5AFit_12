@@ -27,6 +27,7 @@ import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.entity.AdListData;
 import com.jxkj.fit_5a.entity.AddressData;
 import com.jxkj.fit_5a.entity.AddressModel;
+import com.jxkj.fit_5a.entity.AdminInspireBean;
 import com.jxkj.fit_5a.entity.CircleDetailsBean;
 import com.jxkj.fit_5a.entity.CircleQueryBean;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
@@ -841,6 +842,12 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_21 + "api/v1/moment/query_popular")
     Observable<ResultList<QueryPopularBean>> getMomentQueryPopular(@Query("page")int page,@Query("pageSize")int pageSize);//首页1
+
+    /**
+     *查询激励语表
+     */
+    @GET(ConstValues.PORT_2 + "api/v1/admin/inspire/query")
+    Observable<Result<AdminInspireBean>> getAdminInspire(@Query("status") int status);
 
     /**
      * 获取热门(推荐)动态信息---话题
