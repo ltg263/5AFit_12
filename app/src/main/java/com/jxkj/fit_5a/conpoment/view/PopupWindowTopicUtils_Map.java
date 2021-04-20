@@ -21,8 +21,8 @@ import com.jxkj.fit_5a.R;
 public class PopupWindowTopicUtils_Map extends PopupWindow {
 
     Context mContext;
-    TextView tv_Distance, tv_speed, tv_time, tv_Calories, tv_Watt, tv_Pulse;
-    ImageView mIv;
+    TextView tv_Distance, tv_speed, tv_time, tv_Calories, tv_Watt, tv_Pulse,tv_load;
+    ImageView mIv,iv_jia,iv_jian;
     @SuppressLint("ClickableViewAccessibility")
     public PopupWindowTopicUtils_Map(Activity context, GiveDialogInterface dialogInterface) {
         super(context);
@@ -30,6 +30,8 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.dialog_exercise_layout_map, null);
         mIv = view.findViewById(R.id.iv);
+        iv_jian = view.findViewById(R.id.iv_jian);
+        iv_jia = view.findViewById(R.id.iv_jia);
         // 设置SelectPicPopupWindow的View
         this.setContentView(view);
         // 设置SelectPicPopupWindow弹出窗体的宽
@@ -50,6 +52,7 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
         tv_speed = view.findViewById(R.id.tv_speed);
         tv_time = view.findViewById(R.id.tv_time);
         tv_Calories = view.findViewById(R.id.tv_Calories);
+        tv_load = view.findViewById(R.id.tv_load);
         tv_Watt = view.findViewById(R.id.tv_Watt);
         tv_Pulse = view.findViewById(R.id.tv_Pulse);
         //mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框
@@ -66,11 +69,22 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
             public void onClick(View v) {
                 if (mIv.isSelected()) {
                     dialogInterface.btnConfirm(1);
-//                    mIv.setSelected(false);
                 } else {
                     dialogInterface.btnConfirm(0);
-//                    mIv.setSelected(true);
                 }
+            }
+        });
+        iv_jian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogInterface.btnConfirm(3);
+
+            }
+        });
+        iv_jia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogInterface.btnConfirm(2);
             }
         });
         rl.setOnTouchListener(new View.OnTouchListener() {
@@ -122,6 +136,9 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
     public void setIvSelect(boolean isSelect){
         mIv.setSelected(isSelect);
     }
+    public void setTextLoad(String strLoad){
+        tv_load.setText(strLoad);
+    }
 
     boolean isSuo = false;
     private float mPosX;
@@ -142,7 +159,7 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
         /**
          * 确定
          */
-        void btnConfirm(int type);
+        void btnConfirm(int type);//0:Start  1:Stop  2:加阻力  3：减阻力
     }
 
 

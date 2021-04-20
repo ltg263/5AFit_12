@@ -83,6 +83,8 @@ public class MapExerciseActivity extends Activity {
     String mapId;
     String boxId;
     private MyReceiver mMyReceiver;
+    int loadCurrent = 1;
+    int loadMax = ConstValues_Ly.maxLoad;
 
     int maxV = 220;
     double bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
@@ -168,7 +170,15 @@ public class MapExerciseActivity extends Activity {
                         PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
                     }
                 } else if (type == 2) {
-
+                    if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3])
+                            && loadCurrent<loadMax){
+                        PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A6, (byte)(loadCurrent+1)));
+                    }
+                }else if (type == 3) {
+                    if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3])
+                            && loadCurrent>1){
+                        PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A6, (byte)(loadCurrent-1)));
+                    }
                 }
 
             });
@@ -428,7 +438,7 @@ public class MapExerciseActivity extends Activity {
         int WattLow = dataList.get(13);//瓦特--佰,拾个小数点下一位
         double Watt = ConstValues_Ly.getBaiShiGeX(WattHi, WattLow);
 
-        Integer loadCurrent = dataList.get(14);//阻力
+        loadCurrent = dataList.get(14);//阻力
         ConstValues_Ly.CURRENT_STATE = dataList.get(15);
         String Unit = "Stop";
         if (dataList.get(15) == 1) {
@@ -443,6 +453,7 @@ public class MapExerciseActivity extends Activity {
             iv_img.setState(1);
             return;
         }
+        window.setTextLoad(loadCurrent+"/"+loadMax);
         window.setIvSelect(false);
         String str = ""+duration;
 
