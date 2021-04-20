@@ -467,7 +467,7 @@ public class MapExerciseActivity extends Activity {
                 quanNum =1;
             }
             tv_quan.setText(String.valueOf(quanNum));
-            iv_img.setRed(Math.round((distance -(Distance * 1000d-distance*(quanNum-1))) / (speed * 1000d) * 60d * 60d * 1000d));
+            iv_img.setRed(Math.round((distance -(Distance * 1000d-distance*(quanNum-1))) / (speed * 1000d) * 60d * 60d * 1000d),quanNum);
         } else {
             if (speed == 0) {
                 iv_img.setState(1);
@@ -531,7 +531,7 @@ public class MapExerciseActivity extends Activity {
                 quanNum =1;
             }
             tv_quan.setText(String.valueOf(quanNum));
-            iv_img.setRed(Math.round((distance -(Distance * 1000d-distance*(quanNum-1))) / (speed * 1000d) * 60d * 60d * 1000d));
+            iv_img.setRed(Math.round((distance -(Distance * 1000d-distance*(quanNum-1))) / (speed * 1000d) * 60d * 60d * 1000d),quanNum);
         } else {
             if (speed == 0) {
                 iv_img.setState(1);

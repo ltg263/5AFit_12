@@ -10,9 +10,10 @@ import android.util.Log;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.conpoment.utils.StyleKitName;
+import com.jxkj.fit_5a.conpoment.utils.ToastUtil;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 
 import java.util.ArrayList;
@@ -70,22 +71,24 @@ public class RobotView extends ImageView {
     private float lastAnimtionValue = 0;
 //
     long resetDuration = 0;
-    public void setRed(long resetDuration) {
+    int quanNum = 1;
+    public void setRed(long resetDuration,int quanNum) {
         Log.w("--->>>","时间准备改变:"+resetDuration);//392111
         if(resetDuration<4000 || this.resetDuration == resetDuration){
             return;
         }
-        Log.w("--->>>","时间改变了:"+resetDuration);//392111
+        ToastUtil.showLongStrToast(MainApplication.getContext(),"时间改变了:"+resetDuration);//392111
         if(infoJg == null){//
             infoJg = new ArrayList<>();
         }
         if(valueAnimator!=null){
-            if(this.resetDuration < resetDuration){
+            if(this.quanNum < quanNum){
                 lastAnimtionValue = 0;
             }
             valueAnimator.cancel();
             valueAnimator = null;
         }
+        this.quanNum = quanNum;
         this.resetDuration = resetDuration;
         valueAnimator = ValueAnimator.ofFloat(lastAnimtionValue, StyleKitName.mPathMeasure.getLength());
         valueAnimator.setDuration(resetDuration < 1000 ? 1000 : resetDuration);
@@ -107,11 +110,11 @@ public class RobotView extends ImageView {
             return;
         }
         if(state==1){
-            if(valueAnimator!=null && valueAnimator.isRunning()){
+            if( valueAnimator.isRunning()){
                 valueAnimator.pause();
             }
         }else{
-            if(valueAnimator!=null && !valueAnimator.isRunning()){
+            if(!valueAnimator.isRunning()){
                 valueAnimator.resume();
             }
         }
