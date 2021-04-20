@@ -1,24 +1,33 @@
 package com.jxkj.fit_5a.view.activity.home;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.entity.RankDetailsData;
 import com.jxkj.fit_5a.entity.RankListData;
+import com.jxkj.fit_5a.entity.RankStatsData;
+import com.jxkj.fit_5a.view.activity.exercise.ExerciseRecordActivity;
+import com.jxkj.fit_5a.view.activity.exercise.HistoryEquipmentActivity;
+import com.jxkj.fit_5a.view.adapter.HomeTwoBelowAdapter;
 
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -70,6 +79,18 @@ public class RankListActivity extends BaseActivity {
     @BindView(R.id.rv_two_list)
     RecyclerView mRvTwoList;
 
+    @BindView(R.id.iv_head)
+    ImageView iv_head;
+    @BindView(R.id.tv_mingc)
+    TextView mTvMingc;
+    @BindView(R.id.tv_name)
+    TextView mTvName;
+    @BindView(R.id.tv_dll)
+    TextView mTvDll;
+    @BindView(R.id.tv_zan)
+    TextView mTvZan;
+    int typeD = 0;
+    private HomeTwoBelowAdapter mHomeTwoBelowAdapter;
     @Override
     protected int getContentView() {
         return R.layout.activity_rank_list;
@@ -86,12 +107,41 @@ public class RankListActivity extends BaseActivity {
             }
         });
 
-        getRankList();
+        mHomeTwoBelowAdapter = new HomeTwoBelowAdapter(null);
+        mRvTwoList.setLayoutManager(new LinearLayoutManager(this));
+        mRvTwoList.setHasFixedSize(true);
+        mRvTwoList.setAdapter(mHomeTwoBelowAdapter);
+
+        mHomeTwoBelowAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                getStatsZan(mHomeTwoBelowAdapter.getData().get(position).getId()
+                        , typeD, mHomeTwoBelowAdapter.getData().get(position).isLike());
+            }
+        });
+        getRankList(3);
     }
 
-    private void getRankList() {
+
+    @OnClick({R.id.tv_two_ri, R.id.tv_two_zhou, R.id.tv_two_yue})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_two_ri:
+                getRankList(1);
+                break;
+            case R.id.tv_two_zhou:
+                getRankList(2);
+                break;
+            case R.id.tv_two_yue:
+                getRankList(3);
+                break;
+        }
+    }
+
+
+    private void getRankList(int type) {
         RetrofitUtil.getInstance().apiService()
-                .getRankList(3)
+                .getRankList(type)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<RankListData>>() {
@@ -103,10 +153,67 @@ public class RankListActivity extends BaseActivity {
                     @Override
                     public void onNext(Result<RankListData> result) {
                         if(isDataInfoSucceed(result)){
+                            getRankStatsList(type);
                             List<RankListData.ListBean> list = result.getData().getList();
-                            if(list!=null && list.size()>0){
+                            if (list != null && list.size() > 0) {
                                 getRankDetails(list.get(0).getId());
                             }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void getRankStatsList(int type) {
+        RetrofitUtil.getInstance().apiService()
+                .getRankStatsList(type)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<RankStatsData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<RankStatsData> result) {
+                        if (isDataInfoSucceed(result)) {
+                            typeD = type;
+                            RankStatsData.UserBean userData = result.getData().getUser();
+                            mTvName.setText(userData.getNickName());
+                            mTvZan.setText(result.getData().getLikeCount());
+                            mTvDll.setText(result.getData().getCalories()+"cal");
+                            mTvMingc.setText("未上榜");
+                            if (result.getData().getRanking()!=0) {
+                                mTvMingc.setText("No."+result.getData().getRanking());
+                            }
+//                            Glide.with(getActivity()).load(R.drawable.icon_zan_no).into((ImageView) helper.getView(R.id.iv_3));
+//                            if(result.getData().isLike()){
+//                                Glide.with(mContext).load(R.drawable.icon_zan_yes).into((ImageView) helper.getView(R.id.iv_3));
+//                            }
+                            GlideImageUtils.setGlideImage(RankListActivity.this,userData.getAvatar(),iv_head);
+                            mTvTwoYue.setBackgroundColor(getResources().getColor(R.color.transparent));
+                            mTvTwoZhou.setBackgroundColor(getResources().getColor(R.color.transparent));
+                            mTvTwoRi.setBackgroundColor(getResources().getColor(R.color.transparent));
+                            if (type == 3) {
+                                mTvTwoYue.setBackground(getResources().getDrawable(R.drawable.btn_shape_bj_theme_2));
+                            }
+                            if (type == 2) {
+                                mTvTwoZhou.setBackground(getResources().getDrawable(R.drawable.btn_shape_bj_theme_2));
+                            }
+                            if (type == 1) {
+                                mTvTwoRi.setBackground(getResources().getDrawable(R.drawable.btn_shape_bj_theme_2));
+                            }
+                            mHomeTwoBelowAdapter.setNewData(result.getData().getCaloriesRankingList());
                         }
                     }
 
@@ -182,6 +289,65 @@ public class RankListActivity extends BaseActivity {
                     }
                 });
 
+    }
+    private void getStatsZan(String calRankId, int dimension, boolean hasZan) {
+        if (!hasZan) {
+            RetrofitUtil.getInstance().apiService()
+                    .getStatsZan(calRankId, dimension)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Observer<Result>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(Result result) {
+                            if (isDataInfoSucceed(result)) {
+                                getRankStatsList(typeD);
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        } else {
+            RetrofitUtil.getInstance().apiService()
+                    .getCancelStatsZan(calRankId, dimension)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Observer<Result>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(Result result) {
+                            if (isDataInfoSucceed(result)) {
+                                getRankStatsList(typeD);
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
     }
 
 }
