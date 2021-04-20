@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<!--    ic_liezi  ic_mpg_image-->
+    <!--    ic_liezi  ic_mpg_image-->
     <com.jxkj.fit_5a.conpoment.view.RobotView
         android:id="@+id/iv_img"
         android:layout_width="wrap_content"
@@ -47,25 +47,28 @@
             android:id="@+id/tv_quan"
             android:layout_width="11dp"
             android:layout_height="11dp"
-            android:layout_margin="6dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/bj_circle_dot_999"
             android:gravity="center"
             android:text="1"
             android:textColor="@color/color_ffffff"
             android:textSize="8sp" />
 
-        <com.jxkj.fit_5a.conpoment.view.RobotView
-            android:id="@+id/rvLX"
-            android:layout_width="@dimen/dimen_50dp"
+        <com.jxkj.fit_5a.conpoment.view.RobotView11
+            android:id="@+id/iv_img_"
+            android:layout_width="@dimen/dimen_70dp"
             android:layout_height="@dimen/dimen_50dp"
-            android:layout_margin="@dimen/common_margin_6" />
+            android:layout_below="@id/tv_quan"/>
 
         <TextView
             android:id="@+id/tv_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/rvLX"
-            android:layout_alignBottom="@id/rvLX"
+            android:layout_below="@id/iv_img_"
+            android:layout_alignEnd="@id/iv_img_"
+            android:layout_marginEnd="@dimen/dimen_5dp"
+            android:layout_marginBottom="@dimen/dimen_5dp"
             android:drawableStart="@mipmap/ic_hp_yd_13"
             android:text="0km"
             android:textColor="@color/color_000000"

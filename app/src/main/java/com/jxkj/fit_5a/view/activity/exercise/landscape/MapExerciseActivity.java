@@ -36,6 +36,7 @@ import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils_Map;
 import com.jxkj.fit_5a.conpoment.view.RobotView;
+import com.jxkj.fit_5a.conpoment.view.RobotView11;
 import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.RatePatternBean;
@@ -71,6 +72,8 @@ public class MapExerciseActivity extends Activity {
     ImageView iv_dian;
     @BindView(R.id.iv_img)
     RobotView iv_img;
+    @BindView(R.id.iv_img_)
+    RobotView11 iv_img_;
     @BindView(R.id.ll)
     LinearLayout mLl;
     @BindView(R.id.tv_distance)
@@ -289,6 +292,7 @@ public class MapExerciseActivity extends Activity {
                             GlideImgLoader.loadImage(MapExerciseActivity.this, result.getData().getImgUrl(), iv_img);
                             if (result.getData().getInfo() != null && result.getData().getInfo().size() > 0) {
                                 iv_img.setData(result.getData().getInfo(), result.getData().getParam());
+                                iv_img_.setData(result.getData().getInfo(), result.getData().getParam());
                             }
                         }
                     }
