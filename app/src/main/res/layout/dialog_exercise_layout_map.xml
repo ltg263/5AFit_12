@@ -158,7 +158,7 @@
                     android:drawableStart="@mipmap/ic_hp_yd_4"
                     android:drawablePadding="@dimen/dimen_2dp"
                     android:text="当前心率"
-                    android:textColor="@color/color_000000"
+                    android:textColor="@color/color_666666"
                     android:textSize="10sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -169,9 +169,9 @@
             android:id="@+id/ll_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_ffffff"
+            android:layout_below="@id/ll"
             android:layout_marginTop="-1dp"
-            android:layout_below="@id/ll">
+            android:background="@color/color_ffffff">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -194,7 +194,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_3dp"
-                    android:drawableStart="@mipmap/ic_hp_yd_2"
+                    android:drawableStart="@mipmap/ic_hp_yd_3"
                     android:drawablePadding="@dimen/dimen_2dp"
                     android:text="功率"
                     android:textColor="@color/color_666666"
@@ -224,7 +224,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_3dp"
-                    android:drawableStart="@mipmap/ic_hp_yd_2"
                     android:drawablePadding="@dimen/dimen_2dp"
                     android:text="坡度"
                     android:textColor="@color/color_666666"
@@ -259,7 +258,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/dp_10">
+                android:padding="@dimen/dp_10"
+                android:visibility="gone">
 
 
                 <TextView
@@ -286,49 +286,53 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
-                android:orientation="vertical"
                 android:padding="@dimen/dp_10">
+
+                <ImageView
+                    android:id="@+id/iv_jian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_5dp"
+                    android:src="@mipmap/ic_hp_yd_5" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/iv_jian"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_hp_yd_5" />
 
                     <TextView
                         android:id="@+id/tv_load"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/dimen_60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/dimen_15dp"
+                        android:gravity="center"
                         android:text="0"
                         android:textColor="@color/color_000000"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/iv_jia"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_hp_yd_6" />
+                        android:layout_marginTop="@dimen/dimen_3dp"
+                        android:drawablePadding="@dimen/dimen_2dp"
+                        android:text="当前强度"
+                        android:textColor="@color/color_666666"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
 
-
-                <TextView
+                <ImageView
+                    android:id="@+id/iv_jia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_3dp"
-                    android:drawablePadding="@dimen/dimen_2dp"
-                    android:text="当前强度"
-                    android:textColor="#4D4D4D"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
+                    android:padding="@dimen/dimen_5dp"
+                    android:src="@mipmap/ic_hp_yd_6" />
 
             </LinearLayout>
 

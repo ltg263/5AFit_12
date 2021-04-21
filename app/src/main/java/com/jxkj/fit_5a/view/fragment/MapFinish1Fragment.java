@@ -61,7 +61,7 @@ public class MapFinish1Fragment extends BaseFragment {
         });
 
         List<String> list = new ArrayList<>();
-        list.add("总卡路里");
+        list.add("卡路里");
         list.add("运动里程");
         list.add("运动时间");
         list.add("功率");
