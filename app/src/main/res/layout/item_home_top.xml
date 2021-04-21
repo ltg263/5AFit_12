@@ -9,11 +9,12 @@
 
     <ImageView
         android:id="@+id/iv_icon"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:scaleType="center"
-        android:background="@drawable/bj_circle_fde5e5"
-        android:src="@drawable/icon_home_kll" />
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="centerCrop"
+        android:padding="@dimen/dimen_5dp"
+        android:background="@drawable/bj_circle_fdf7e5"
+        android:src="@mipmap/ic_ydxq_8" />
 
     <TextView
         android:id="@+id/tv_name"
