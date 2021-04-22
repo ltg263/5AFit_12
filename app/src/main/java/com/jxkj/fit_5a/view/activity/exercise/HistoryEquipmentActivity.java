@@ -72,7 +72,7 @@ public class HistoryEquipmentActivity extends BaseActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if(mHistoryEquipmentAdapter.getData().get(position).getState().equals("1")){
                     if(StringUtil.isNotBlank(PopupWindowLanYan.BleName)){
-                        ToastUtils.showShort("请想断开当前连接");
+                        ToastUtils.showShort("请先断开当前连接");
                         return;
                     }
                     goLianJie(mHistoryEquipmentAdapter.getData().get(position));
@@ -173,6 +173,10 @@ public class HistoryEquipmentActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_righttext:
+                if(StringUtil.isNotBlank(PopupWindowLanYan.BleName)){
+                    ToastUtils.showShort("请先断开当前连接");
+                    return;
+                }
                 FacilityAddSbActivity.intentActivity(this);
                 break;
         }

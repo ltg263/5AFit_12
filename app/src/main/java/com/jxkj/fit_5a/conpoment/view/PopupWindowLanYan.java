@@ -103,9 +103,11 @@ public class PopupWindowLanYan extends PopupWindow {
                 dismiss();
                 ble4Util.setServiceUUid("49535343-fe7d-4ae5-8fa9-9fafd205e455");
                 BluetoothDevice mBluetoothDevice = (BluetoothDevice) bleadapter.getItem(i);
-                if(mBluetoothDevice.getName().equals("i-Console+1357") || mBluetoothDevice.getName().equals("HEAD0233") ){
-                    ble4Util.setServiceUUid("0000fff0-0000-1000-8000-00805f9b34fb");
-                }
+//                if(mBluetoothDevice.getName().equals("i-Console+1357") || mBluetoothDevice.getName().equals("HEAD0233") ){
+//                }
+//                if(mBluetoothDevice.getName().contains("0000fff0")){
+//                }
+//                ble4Util.setServiceUUid("0000fff0-0000-1000-8000-00805f9b34fb");
                 ble4Util.stopScan();
 
                 ble4Util.connect(bleadapter.getDevice(i).getAddress(), new BleUtil.CallBack() {
@@ -158,7 +160,7 @@ public class PopupWindowLanYan extends PopupWindow {
                 case 99:
                     //连接
                     Ble4_0Util.OpenA2dp();
-                    Log.w("---》》》","错误："+ ble4Util.isConnect());
+                    Log.w("---》》》","连接："+ ble4Util.isConnect());
                     dialogInterface.btnConfirm(message.obj.toString());
                     break;
                 case 101:
@@ -264,18 +266,18 @@ public class PopupWindowLanYan extends PopupWindow {
         boolean isHave = false;
         List<HistoryEquipmentData> lists = SharedHistoryEquipment.singleton().getSharedHistoryEquipment();
         if(lists!=null){
-            int[] a = ConstValues_Ly.DEVICE_TYPE_IDS;
-            Arrays.sort(a); //首先对数组排序
+
             for(int i=0;i<lists.size();i++){
-                int result = Arrays.binarySearch(a, lists.get(i).getId());
-                Log.w("-->","result:"+result);
-                if(result>=0){
-                    isHave = true;
-                    PopupWindowLanYan.BleName = lists.get(i).getName();
-                    lists.get(i).setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
-                    lists.get(i).setState("0");
-                }else{
-                    lists.get(i).setState("1");
+                for(int j = 0; j<ConstValues_Ly.DEVICE_TYPE_IDS.length;j++){
+                    if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[j]){
+                        if(lists.get(i).getId()==ConstValues_Ly.DEVICE_TYPE_IDS[j]){
+                            isHave = true;
+                            PopupWindowLanYan.BleName = lists.get(i).getName();
+                            lists.get(i).setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
+                            lists.get(i).setState("0");
+                            break;
+                        }
+                    }
                 }
             }
             if(!isHave){

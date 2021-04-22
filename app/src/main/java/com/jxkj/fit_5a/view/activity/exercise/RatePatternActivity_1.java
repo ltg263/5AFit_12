@@ -253,8 +253,8 @@ public class RatePatternActivity_1 extends BaseActivity {
                                     MaxSpeed = Double.valueOf(logs.get(i).getSpeed());
                                 }
                             }
-                            mBpmDataBeans.get(0).setBpmTopData(
-                                    new BpmDataBean.BpmTopData(String.valueOf(Calories),String.valueOf(Distance),duration+"",pjDuration,String.valueOf(MaxSpeed),"--"));
+//                            mBpmDataBeans.get(0).setBpmTopData(
+//                                    new BpmDataBean.BpmTopData(String.valueOf(Calories),String.valueOf(Distance),duration+"",pjDuration,String.valueOf(MaxSpeed),"--"));
                             mIntent.putParcelableArrayListExtra("mBpmDataBeans",mBpmDataBeans);
                             startActivity(mIntent);
                             finish();

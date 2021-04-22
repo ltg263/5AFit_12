@@ -74,16 +74,68 @@ public class BpmDataBean implements Parcelable {
         String distance;//运动距离(单位KM)
         String duration;//运动总时长(单位秒)
         String pjDuration;//平均速度(单位H)
-        String maxSpeed;//最大的速度(单位KM/H)
+        String maxSpeed;//最大的速度(单位KM/
         String heartRate;//平均心跳
+        String watt;//功率
+        String load_dx;//段位(最小阻力-最大阻力)
+        String heartRate_qj;//心率区间
+        String bai;//BAI
 
-        public BpmTopData(String calories, String distance, String duration, String pjDuration, String maxSpeed, String heartRate) {
+//        list.add("卡路里");
+//        list.add("运动里程");
+//        list.add("运动时间");
+//        list.add("功率");
+//        list.add("段位");
+//        list.add("平均速度");
+//        list.add("最快速度");
+//        list.add("平均心跳");
+//        list.add("心率区间");
+//        list.add("BAI");
+
+        public BpmTopData(String calories, String distance, String duration, String pjDuration, String maxSpeed
+                , String heartRate, String watt, String load_dx, String heartRate_qj, String bai) {
             this.calories = calories;
             this.distance = distance;
             this.duration = duration;
             this.pjDuration = pjDuration;
             this.maxSpeed = maxSpeed;
             this.heartRate = heartRate;
+            this.watt = watt;
+            this.load_dx = load_dx;
+            this.heartRate_qj = heartRate_qj;
+            this.bai = bai;
+        }
+
+        public String getWatt() {
+            return watt;
+        }
+
+        public void setWatt(String watt) {
+            this.watt = watt;
+        }
+
+        public String getLoad_dx() {
+            return load_dx;
+        }
+
+        public void setLoad_dx(String load_dx) {
+            this.load_dx = load_dx;
+        }
+
+        public String getHeartRate_qj() {
+            return heartRate_qj;
+        }
+
+        public void setHeartRate_qj(String heartRate_qj) {
+            this.heartRate_qj = heartRate_qj;
+        }
+
+        public String getBai() {
+            return bai;
+        }
+
+        public void setBai(String bai) {
+            this.bai = bai;
         }
 
         public String getCalories() {
@@ -134,6 +186,7 @@ public class BpmDataBean implements Parcelable {
             this.heartRate = heartRate;
         }
 
+
         @Override
         public int describeContents() {
             return 0;
@@ -147,6 +200,10 @@ public class BpmDataBean implements Parcelable {
             dest.writeString(this.pjDuration);
             dest.writeString(this.maxSpeed);
             dest.writeString(this.heartRate);
+            dest.writeString(this.watt);
+            dest.writeString(this.load_dx);
+            dest.writeString(this.heartRate_qj);
+            dest.writeString(this.bai);
         }
 
         protected BpmTopData(Parcel in) {
@@ -156,6 +213,10 @@ public class BpmDataBean implements Parcelable {
             this.pjDuration = in.readString();
             this.maxSpeed = in.readString();
             this.heartRate = in.readString();
+            this.watt = in.readString();
+            this.load_dx = in.readString();
+            this.heartRate_qj = in.readString();
+            this.bai = in.readString();
         }
 
         public static final Creator<BpmTopData> CREATOR = new Creator<BpmTopData>() {

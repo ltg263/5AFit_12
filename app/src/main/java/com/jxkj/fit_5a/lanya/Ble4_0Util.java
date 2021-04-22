@@ -177,6 +177,9 @@ public class Ble4_0Util implements BleUtil {
                 List<BluetoothGattService> serviceList = gatt.getServices();
                 for (BluetoothGattService gattService : serviceList) {
                     Log.w("---》》》:",gattService.getUuid().toString());
+                    if(gattService.getUuid().toString().contains("0000fff0")){
+                        serviceUUid = gattService.getUuid().toString();
+                    }
                     if (gattService.getUuid().toString().indexOf(serviceUUid) < 0) {
                         continue;
                     }
@@ -234,6 +237,7 @@ public class Ble4_0Util implements BleUtil {
             @Override
             public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
                 super.onCharacteristicChanged(gatt, characteristic);
+                Log.w("characteristic","characteristic"+characteristic.getValue());
                 // 处理解释反馈指令
                 callback.ReadValue(characteristic.getValue());
             }

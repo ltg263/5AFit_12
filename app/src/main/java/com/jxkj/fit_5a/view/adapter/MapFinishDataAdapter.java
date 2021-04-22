@@ -35,11 +35,11 @@ public class MapFinishDataAdapter extends BaseQuickAdapter<String, BaseViewHolde
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.mipmap.ic_ydxq_3))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("功率")){
-            helper.setText(R.id.tv_v, "--W")
+            helper.setText(R.id.tv_v, stats.getWatt()+"W")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.mipmap.ic_ydxq_7))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("段位")){
-            helper.setText(R.id.tv_v, "--W")
+            helper.setText(R.id.tv_v, stats.getLoad_dx())
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.mipmap.ic_ydxq_8))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("平均速度")){
@@ -47,7 +47,7 @@ public class MapFinishDataAdapter extends BaseQuickAdapter<String, BaseViewHolde
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.mipmap.ic_ydxq_4))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("最快速度")){
-            helper.setText(R.id.tv_v,"--km/h")
+            helper.setText(R.id.tv_v,stats.getMaxSpeed()+"km/h")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.mipmap.ic_ydxq_4))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("平均心跳")){
@@ -55,11 +55,11 @@ public class MapFinishDataAdapter extends BaseQuickAdapter<String, BaseViewHolde
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.mipmap.ic_ydxq_9))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("心率区间")){
-            helper.setText(R.id.tv_v,"--次/分钟")
+            helper.setText(R.id.tv_v,stats.getHeartRate_qj()+"次/分钟")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.mipmap.ic_ydxq_9))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("BAI")){
-            helper.setText(R.id.tv_v,"--BAI")
+            helper.setText(R.id.tv_v,stats.getBai()+"BAI")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.mipmap.ic_ydxq_10))
                     .setBackgroundRes(R.id.iv_icon,0);
         }

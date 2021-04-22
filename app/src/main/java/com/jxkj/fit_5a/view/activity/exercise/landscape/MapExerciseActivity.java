@@ -340,19 +340,33 @@ public class MapExerciseActivity extends Activity {
         }
         PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x03));
         Intent mIntent = new Intent(this, MapExerciseFinishActivity.class);
-        String str = String.valueOf(Distance / duration * 60 * 60);
+        String str = String.valueOf(Distance / duration * 60d * 60d);
         String pjDuration = "0";
         if (str.equals(".")) {
             pjDuration = str.format("%.2f");
         }
         double MaxSpeed = 0;
+        int load_D = 0;
+        int load_X =  Integer.valueOf(logs.get(0).getResistanceLevel());
         for (int i = 0; i < logs.size(); i++) {
             if (Double.valueOf(logs.get(i).getSpeed()) > MaxSpeed) {
                 MaxSpeed = Double.valueOf(logs.get(i).getSpeed());
             }
+            if(load_D<Integer.valueOf(logs.get(i).getResistanceLevel())){
+                load_D = Integer.valueOf(logs.get(i).getResistanceLevel());
+            }
+            if(load_X>Integer.valueOf(logs.get(i).getResistanceLevel())){
+                load_X = Integer.valueOf(logs.get(i).getResistanceLevel());
+            }
         }
+        String load_dx = load_X+"-"+load_D;
+        if(load_X==load_D){
+            load_dx = load_D+"";
+        }
+
         mBpmDataBeans.get(0).setBpmTopData(
-                new BpmDataBean.BpmTopData(String.valueOf(Calories), String.valueOf(Distance), duration + "", pjDuration, String.valueOf(MaxSpeed), "--"));
+                new BpmDataBean.BpmTopData(String.valueOf(Calories), String.valueOf(Distance),
+                        duration + "", pjDuration, String.valueOf(MaxSpeed), "--","--",load_dx,"--","--"));
         mIntent.putParcelableArrayListExtra("mBpmDataBeans", mBpmDataBeans);
         mIntent.putParcelableArrayListExtra("logs",logs);
         startActivity(mIntent);
@@ -408,7 +422,7 @@ public class MapExerciseActivity extends Activity {
 
     Double distance = 0.0;//总距离
     double Distance;
-    int duration;
+    double duration;
     int Calories;
     long startTimestamp;
 
@@ -448,9 +462,8 @@ public class MapExerciseActivity extends Activity {
         if (dataList.get(15) == 1) {
             Unit = "Start";
         }
-
-        String re = "A2--->>>:时间：" + ZTime + ",速度：" + speed + ",转数：" + rpm + ",距离：" + Distance + ",卡路里：" + Calories
-                + ",脉跳：" + Pulse + ",瓦特：" + Watt + ",阻力：" + loadCurrent + ",状态：" + Unit;
+        // 时间   速度  转数  距离  卡路里   心率  功率    阻力  状态
+        String re = "A2--->>>:时间：" + ZTime + ",速度：" + speed + ",转数：" + rpm + ",距离：" + Distance + ",卡路里：" + Calories+ ",脉跳：" + Pulse + ",瓦特：" + Watt + ",阻力：" + loadCurrent + ",状态：" + Unit;
         Log.w("---》》》", re);
         if (Unit.equals("Stop")) {
             window.setIvSelect(true);
@@ -459,7 +472,7 @@ public class MapExerciseActivity extends Activity {
         }
         window.setTextLoad(loadCurrent+"/"+loadMax);
         window.setIvSelect(false);
-        String str = ""+duration;
+        String str = ""+(int)duration;
 
         if (speed != 0 && (str.substring(str.length() - 1).equals("5") || str.substring(str.length() - 1).equals("0"))) {
             int quanNum = (int) Math.ceil(Distance * 1000d/distance);

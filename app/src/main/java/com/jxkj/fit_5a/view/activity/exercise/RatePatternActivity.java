@@ -250,13 +250,27 @@ public class RatePatternActivity extends BaseActivity {
                                 pjDuration = str.format("%.2f");
                             }
                             double MaxSpeed = 0;
-                            for(int i=0;i<logs.size();i++){
+                            int load_D = 0;
+                            int load_X =  Integer.valueOf(logs.get(0).getResistanceLevel());
+                            for (int i = 0; i < logs.size(); i++) {
                                 if (Double.valueOf(logs.get(i).getSpeed()) > MaxSpeed) {
                                     MaxSpeed = Double.valueOf(logs.get(i).getSpeed());
                                 }
+                                if(load_D<Integer.valueOf(logs.get(i).getResistanceLevel())){
+                                    load_D = Integer.valueOf(logs.get(i).getResistanceLevel());
+                                }
+                                if(load_X>Integer.valueOf(logs.get(i).getResistanceLevel())){
+                                    load_X = Integer.valueOf(logs.get(i).getResistanceLevel());
+                                }
                             }
+                            String load_dx = load_X+"-"+load_D;
+                            if(load_X==load_D){
+                                load_dx = load_D+"";
+                            }
+
                             mBpmDataBeans.get(0).setBpmTopData(
-                                    new BpmDataBean.BpmTopData(String.valueOf(Calories),String.valueOf(Distance),duration+"",pjDuration,String.valueOf(MaxSpeed),"--"));
+                                    new BpmDataBean.BpmTopData(String.valueOf(Calories), String.valueOf(Distance),
+                                            duration + "", pjDuration, String.valueOf(MaxSpeed), "--","--",load_dx,"--","--"));
                             mIntent.putParcelableArrayListExtra("mBpmDataBeans",mBpmDataBeans);
                             startActivity(mIntent);
                             finish();
