@@ -19,16 +19,21 @@ import java.util.Set;
 
 public class MianJavaDame {
     public static void main(String[] args) {
-        int[] test = {10,-200,3,8,9,2,5};
-        Arrays.sort(test); //首先对数组排序
-        int result = Arrays.binarySearch(test, 100); //在数组中搜索是否含有5
-        System.out.println("-->>>:"+result); //这里的结果是 3
+//        int[] test = {10,-200,3,8,9,2,5};
+//        Arrays.sort(test); //首先对数组排序
+//        int result = Arrays.binarySearch(test, 100); //在数组中搜索是否含有5
+//        System.out.println("-->>>:"+result); //这里的结果是 3
 //        double a = 313.83333333333337;
 //        float b = 1.5f;
 ////        System.out.println("-->>>:"+(float)a*b); //这里的结果是 3
 //        int number = 10;
 //        System.out.println("-->>>:"+ Math.floor(1.4));
 //        System.out.println("-->>>:"+ Math.round((132.54*1 - 0 * 1000d)));
+
+
+        System.out.println("-->>>:"+"ABACde".toLowerCase());
+        System.out.println("-->>>:"+("0000fff1-0000-1000-8000-00805f9b34fb".indexOf("fff1")));
+
     }
 
     public static String getValue(double obj) {

@@ -26,6 +26,7 @@ import com.jxkj.fit_5a.base.HistoryEquipmentData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.SharedHistoryEquipment;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.entity.BluetoothChannelData;
 import com.jxkj.fit_5a.lanya.Ble4_0Util;
 import com.jxkj.fit_5a.lanya.BleAdapter;
 import com.jxkj.fit_5a.lanya.BleUtil;
@@ -50,10 +51,12 @@ public class PopupWindowLanYan extends PopupWindow {
     Context mcontext;
     BleAdapter bleadapter;
     GiveDialogInterface dialogInterface;
-    public PopupWindowLanYan(Activity context,  GiveDialogInterface dialogInterface) {
+    List<BluetoothChannelData> UUidData;
+    public PopupWindowLanYan(Activity context, List<BluetoothChannelData> UUidData, GiveDialogInterface dialogInterface) {
         super(context);
         this.mcontext = context;
         this.dialogInterface = dialogInterface;
+        this.UUidData = UUidData;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.dialog_exercise_lanya, null);
 
@@ -101,8 +104,9 @@ public class PopupWindowLanYan extends PopupWindow {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 dismiss();
-                ble4Util.setServiceUUid("49535343-fe7d-4ae5-8fa9-9fafd205e455");
-                BluetoothDevice mBluetoothDevice = (BluetoothDevice) bleadapter.getItem(i);
+
+                ble4Util.setUUidData(UUidData);
+//                BluetoothDevice mBluetoothDevice = (BluetoothDevice) bleadapter.getItem(i);
 //                if(mBluetoothDevice.getName().equals("i-Console+1357") || mBluetoothDevice.getName().equals("HEAD0233") ){
 //                }
 //                if(mBluetoothDevice.getName().contains("0000fff0")){
@@ -195,6 +199,20 @@ public class PopupWindowLanYan extends PopupWindow {
         Log.w("---》》》","接收resultData_0xff："+resultData_0xff);
         if(resultData.length > 2 && Integer.toHexString(resultData[1] & 0xFF).equals("b7")){
             Log.w("---》》》","接收：错误信息");
+            if(ConstValues_Ly.CLIENT_ID ==0){
+                ConstValues_Ly.CLIENT_ID = resultData[2];//Client ID
+                ConstValues_Ly.METER_ID = resultData[3];//Meter ID
+                postDeviceProtocolCheck();
+                for(int i=0;i < ConstValues_Ly.METER_ID_S.length;i++){
+                    if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[i]){
+                        ConstValues_Ly.DEVICE_TYPE_ID =ConstValues_Ly.DEVICE_TYPE_IDS[i];
+                    }
+                }
+                PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A0));
+//              postDeviceProtocolCheck();
+                initLsData();
+            }
+            startBroadcast("b2",data.getDataPayload());
             return;
         }
         if (Integer.toHexString(resultData[1] & 0xFF).equals("b0")) {
@@ -307,7 +325,9 @@ public class PopupWindowLanYan extends PopupWindow {
                 mHistoryEquipmentData.setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
                 mHistoryEquipmentData.setImg(ConstValues_Ly.DEVICE_IMG);
                 mHistoryEquipmentData.setBrandId(ConstValues_Ly.BRAND_ID);
-                mHistoryEquipmentData.setServiceUUid(ble4Util.getServiceUUid());
+                mHistoryEquipmentData.setServiceUUid(ble4Util.getUuidStr()[0]);
+                mHistoryEquipmentData.setReadUUID(ble4Util.getUuidStr()[1]);
+                mHistoryEquipmentData.setWriteUUID(ble4Util.getUuidStr()[2]);
                 mHistoryEquipmentData.setLyAddress(BleAddress);
                 mHistoryEquipmentData.setName_sb(ConstValues_Ly.SB_NAME );
                 lists.add(mHistoryEquipmentData);
@@ -340,7 +360,9 @@ public class PopupWindowLanYan extends PopupWindow {
             mHistoryEquipmentData.setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
             mHistoryEquipmentData.setImg(ConstValues_Ly.DEVICE_IMG);
             mHistoryEquipmentData.setBrandId(ConstValues_Ly.BRAND_ID);
-            mHistoryEquipmentData.setServiceUUid(ble4Util.getServiceUUid());
+            mHistoryEquipmentData.setServiceUUid(ble4Util.getUuidStr()[0]);
+            mHistoryEquipmentData.setReadUUID(ble4Util.getUuidStr()[1]);
+            mHistoryEquipmentData.setWriteUUID(ble4Util.getUuidStr()[2]);
             mHistoryEquipmentData.setLyAddress(BleAddress);
             mHistoryEquipmentData.setName_sb(ConstValues_Ly.SB_NAME);
             lists.add(mHistoryEquipmentData);

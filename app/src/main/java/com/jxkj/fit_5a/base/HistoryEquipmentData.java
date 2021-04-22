@@ -7,9 +7,27 @@ public class HistoryEquipmentData {
     String time;
     String state;
     String serviceUUid;
+    String readUUID;
+    String writeUUID;
     String LyAddress;
     String brandId;
     int id;
+
+    public String getReadUUID() {
+        return readUUID;
+    }
+
+    public void setReadUUID(String readUUID) {
+        this.readUUID = readUUID;
+    }
+
+    public String getWriteUUID() {
+        return writeUUID;
+    }
+
+    public void setWriteUUID(String writeUUID) {
+        this.writeUUID = writeUUID;
+    }
 
     public String getName_sb() {
         return name_sb;

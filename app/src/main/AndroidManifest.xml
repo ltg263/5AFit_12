@@ -444,6 +444,13 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+<!--    <uses-feature-->
+<!--        android:name="android.hardware.bluetooth_le"-->
+<!--        android:required="true" />-->
+
+<!--        <service-->
+<!--            android:name="com.inuker.bluetooth.library.BluetoothService" />-->
+
 
         <!--        <intent-filter>-->
         <!--            &lt;!&ndash; action 和category 必须这样写！！！ &ndash;&gt;-->

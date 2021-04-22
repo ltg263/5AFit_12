@@ -266,4 +266,7 @@ dependencies {
     implementation 'com.aliyun.video.android:upload:+'
     implementation 'com.aliyun.sdk.android:AliyunPlayer:4.5.0-full'
     implementation 'com.alivc.conan:AlivcConan:0.9.5'
+
+//    implementation 'com.inuker.bluetooth:library:1.4.0'
+    implementation 'com.stag:bluetooth:1.0.2'
 }

@@ -95,7 +95,11 @@ public class HistoryEquipmentActivity extends BaseActivity {
         ConstValues_Ly.BRAND_ID = historyEquipmentData.getBrandId();
         PopupWindowLanYan.ble4Util = new Ble4_0Util(this);
         PopupWindowLanYan.ble4Util.init();
-        PopupWindowLanYan.ble4Util.setServiceUUid(historyEquipmentData.getServiceUUid());
+        String[] uuidData = new String[3];
+        uuidData[0] = historyEquipmentData.getServiceUUid();
+        uuidData[1] = historyEquipmentData.getReadUUID();
+        uuidData[2] = historyEquipmentData.getWriteUUID();
+        PopupWindowLanYan.ble4Util.setUuidStr(uuidData);
         PopupWindowLanYan.ble4Util.stopScan();
         PopupWindowLanYan.ble4Util.connect(historyEquipmentData.getLyAddress(), new BleUtil.CallBack() {
             @Override

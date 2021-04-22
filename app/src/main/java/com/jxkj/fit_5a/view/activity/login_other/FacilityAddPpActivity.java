@@ -1,16 +1,12 @@
 package com.jxkj.fit_5a.view.activity.login_other;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,13 +21,16 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.DeviceData;
 import com.jxkj.fit_5a.base.DeviceDrandData;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
+import com.jxkj.fit_5a.entity.BluetoothChannelData;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.adapter.FacilityAddAdapter;
 import com.jxkj.fit_5a.view.adapter.FacilitySbAddAdapter;
+import com.stag.bluetooth.BluetoothController;
 
 import java.util.List;
 
@@ -68,6 +67,8 @@ public class FacilityAddPpActivity extends BaseActivity {
     String sbName;//设备名称
     String sbName_pp;//设备品牌
     String sbName_xh;//设备型号
+    private List<BluetoothChannelData> UUidData;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_facility_add_pp;
@@ -80,13 +81,48 @@ public class FacilityAddPpActivity extends BaseActivity {
         sbName = bundle.getString("name");
         mTvTitle.setText(sbName);
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
+        getBluetoothChannel();
         queryDeviceBrandLists();
         initRvUiXh();
     }
+
+    private void getBluetoothChannel() {
+        RetrofitUtil.getInstance().apiService()
+                .getBluetoothChannel(ConstValues_Ly.DEVICE_TYPE_ID_URL ,"iconsole")
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultList<BluetoothChannelData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultList<BluetoothChannelData> result) {
+                        if(isDataInfoSucceed(result)){
+                            if(result.getData()!=null && result.getData().size()>0){
+                                UUidData = result.getData();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
     PopupWindowLanYan window;
     private void initPopupWindw() {
+
         if(window==null){
-            window = new PopupWindowLanYan(this, new PopupWindowLanYan.GiveDialogInterface() {
+            window = new PopupWindowLanYan(this,UUidData, new PopupWindowLanYan.GiveDialogInterface() {
                 @Override
                 public void btnConfirm(String str) {
                     if(str.equals("连接设备中")){
@@ -101,6 +137,7 @@ public class FacilityAddPpActivity extends BaseActivity {
         }
         window.showAtLocation(mTv, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置
     }
+
     List<DeviceDrandData.ListBean> list;
     private void queryDeviceBrandLists() {
         RetrofitUtil.getInstance().apiService()
@@ -167,6 +204,7 @@ public class FacilityAddPpActivity extends BaseActivity {
                 });
     }
 
+
     private void initRvUiXh() {
         mFacilitySbAddAdapter = new FacilitySbAddAdapter(null);
         mRvSbxhList.setLayoutManager(new LinearLayoutManager(this));
@@ -187,7 +225,6 @@ public class FacilityAddPpActivity extends BaseActivity {
             }
         });
     }
-
 
     private void initRvUi() {
         if(list==null || list.size()==0){
@@ -236,6 +273,10 @@ public class FacilityAddPpActivity extends BaseActivity {
             case R.id.ll_connect:
                 if(StringUtil.isBlank(ConstValues_Ly.BRAND_ID)){
                     ToastUtils.showShort("请选择设备品牌");
+                    return;
+                }
+                if(UUidData==null){
+                    ToastUtils.showShort("获取蓝牙通道失败");
                     return;
                 }
                 initPopupWindw();

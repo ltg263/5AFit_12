@@ -28,6 +28,7 @@ import com.jxkj.fit_5a.entity.AdListData;
 import com.jxkj.fit_5a.entity.AddressData;
 import com.jxkj.fit_5a.entity.AddressModel;
 import com.jxkj.fit_5a.entity.AdminInspireBean;
+import com.jxkj.fit_5a.entity.BluetoothChannelData;
 import com.jxkj.fit_5a.entity.CircleDetailsBean;
 import com.jxkj.fit_5a.entity.CircleQueryBean;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
@@ -353,6 +354,14 @@ public interface ApiService {
     @GET(ConstValues.PORT_2 + "api/v1/device/model/query")
     Observable<Result<DeviceData>> queryDeviceModelLists(
             @Query("deviceBrandId") String deviceBrandId, @Query("deviceTypeId") String deviceTypeId);
+
+
+    /**
+     * 设备型号列表
+     * @return
+     */
+    @GET(ConstValues.PORT_2 + "api/v1/device/type/bluetooth/channel/query")
+    Observable<ResultList<BluetoothChannelData>> getBluetoothChannel(@Query("deviceTypeId") String deviceTypeId, @Query("protocolName") String protocolName);
 
 
     /**

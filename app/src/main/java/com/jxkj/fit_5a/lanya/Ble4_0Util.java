@@ -30,6 +30,7 @@ import com.jxkj.fit_5a.base.HistoryEquipmentData;
 import com.jxkj.fit_5a.conpoment.utils.SharedHistoryEquipment;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
+import com.jxkj.fit_5a.entity.BluetoothChannelData;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -41,16 +42,21 @@ import java.util.Timer;
 
 public class Ble4_0Util implements BleUtil {
 
-    private String serviceUUid = "49535343-fe7d-4ae5-8fa9-9fafd205e455";        // 服务uuid
-    private String readUUID = "";            // 读数据uuid
-    private String writeUUID = "49535343-8841-43f4-a8d4-ecbe34729bb3";    // 写数据uuid
-    private String clientCharConfig = "";
+//    private String serviceUUid = "0000fff0-0000-1000-8000-00805f9b34fb";        // 服务uuid
+//    private String readUUID = "0000fff1-0000-1000-8000-00805f9b34fb";            // 读数据uuid
+//    private String writeUUID = "0000fff2-0000-1000-8000-00805f9b34fb";    // 写数据uuid
+
+//    private String serviceUUid = "49535343-fe7d-4ae5-8fa9-9fafd205e455";        // 服务uuid
+//    private String readUUID = "49535343-1e4d-4bd9-ba61-23c647249616";            // 读数据uuid
+//    private String writeUUID = "49535343-8841-43f4-a8d4-ecbe34729bb3";    // 写数据uuid
+
+    private List<String> serviceUUid;// 服务uuid
+    private List<String> readUUID; // 读数据uuid
+    private List<String> writeUUID; // 写数据uuid
+
+    private String[] uuidStr = new String[3];
+
     private static final int PERMISSION_REQUEST_CODE = 0x114; // 系统权限管理页面的参数
-    public static final int READ_NOTIFY_CODE = 0x12;     //可读可通知
-    public static final int WRITE_READ_CODE = 0x0e;     //可写可读
-    public static final int WRITE_CODE = 0x04;     //可写可读
-    public static final int READ_CODE = 0x02;     //可写可读
-    public static final int WRITE_NOTIFY_CODE = 0x18;     //可写可通知
 
     private Activity context;
     private BluetoothAdapter mBluetoothAdapter;
@@ -61,6 +67,32 @@ public class Ble4_0Util implements BleUtil {
     private BluetoothAdapter.LeScanCallback leScanCallback;
     private BluetoothDevice curConnectDev;
     int newStates = -1;
+
+    public void setUUidData(List<BluetoothChannelData> UUidData) {
+        serviceUUid = new ArrayList<>();
+        readUUID = new ArrayList<>();
+        writeUUID = new ArrayList<>();
+        for(int i=0;i<UUidData.size();i++){
+            serviceUUid.add(UUidData.get(i).getServiceUuid().toLowerCase());
+            if(UUidData.get(i).getServiceUuid().length()<6){
+                readUUID.add(UUidData.get(i).getCharacteristicRead().toLowerCase());
+                writeUUID.add(UUidData.get(i).getCharacteristicWrite().toLowerCase());
+            } else {
+                readUUID.add(UUidData.get(i).getCharacteristicWrite().toLowerCase());
+                writeUUID.add(UUidData.get(i).getCharacteristicRead().toLowerCase());
+            }
+        }
+    }
+
+    public void setUuidStr(String[] uuidStr) {
+        serviceUUid = new ArrayList<>();
+        readUUID = new ArrayList<>();
+        writeUUID = new ArrayList<>();
+
+        serviceUUid.add(uuidStr[0]);
+        readUUID.add(uuidStr[1]);
+        writeUUID.add(uuidStr[2]);
+    }
 
     public Ble4_0Util(Activity context) {
         this.context = context;
@@ -94,28 +126,8 @@ public class Ble4_0Util implements BleUtil {
         return mBluetoothGatt != null;
     }
 
-    public String getServiceUUid() {
-        return serviceUUid;
-    }
-
-    public void setServiceUUid(String serviceUUid) {
-        this.serviceUUid = serviceUUid;
-    }
-
-    public String getReadUUID() {
-        return readUUID;
-    }
-
-    public void setReadUUID(String readUUID) {
-        this.readUUID = readUUID;
-    }
-
-    public String getWriteUUID() {
-        return writeUUID;
-    }
-
-    public void setWriteUUID(String writeUUID) {
-        this.writeUUID = writeUUID;
+    public String[] getUuidStr() {
+        return uuidStr;
     }
 
     @Override
@@ -176,18 +188,19 @@ public class Ble4_0Util implements BleUtil {
                 super.onServicesDiscovered(gatt, status);
                 List<BluetoothGattService> serviceList = gatt.getServices();
                 for (BluetoothGattService gattService : serviceList) {
-                    Log.w("---》》》:",gattService.getUuid().toString());
-                    if(gattService.getUuid().toString().contains("0000fff0")){
-                        serviceUUid = gattService.getUuid().toString();
-                    }
-                    if (gattService.getUuid().toString().indexOf(serviceUUid) < 0) {
+
+                    if(!isCurrentUuid(gattService.getUuid().toString(),serviceUUid)){
                         continue;
                     }
                     gattServiceMain = gattService;
+                    uuidStr[0] = gattServiceMain.getUuid().toString();
+                    Log.w("---》》》gattServiceMain:",gattService.getUuid().toString());
                     List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
                     for (final BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
-                        if (mDevReadCharacteristic == null && gattCharacteristic.getUuid().toString().indexOf(readUUID) >= 0) {
+                        if (mDevReadCharacteristic == null && isCurrentUuid(gattCharacteristic.getUuid().toString(),readUUID)) {
                             mDevReadCharacteristic = gattCharacteristic;
+                            uuidStr[1] = mDevReadCharacteristic.getUuid().toString();
+                            Log.w("---》》》","mDevReadCharacteristic:"+ mDevReadCharacteristic.getUuid().toString());
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -205,18 +218,25 @@ public class Ble4_0Util implements BleUtil {
 
                             lp:
                             for (BluetoothGattDescriptor descriptor : descriptorlist) {
-                                if (descriptor.getUuid().toString().indexOf(clientCharConfig) >= 0) {
+                                if (descriptor.getUuid().toString().contains("")) {
                                     descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                                     mBluetoothGatt.writeDescriptor(descriptor);
                                     break lp;
                                 }
                             }
                         }
+
+                        Log.w("---》》》1111",":"+ mDevWriteCharacteristic);
+                        Log.w("---》》》1111",":"+ gattCharacteristic.getProperties());
+                        Log.w("---》》》1111",":"+ BluetoothGattCharacteristic.PROPERTY_WRITE);
+                        Log.w("---》》》1111",":"+ BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE);
                         if (mDevWriteCharacteristic == null && (gattCharacteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_WRITE
                                 || gattCharacteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE
                                 || gattCharacteristic.getProperties() == 12)
-                                && gattCharacteristic.getUuid().toString().indexOf(readUUID) >= 0) {
+                                && isCurrentUuid(gattCharacteristic.getUuid().toString(),writeUUID)) {
                             mDevWriteCharacteristic = gattCharacteristic;
+                            uuidStr[2] = mDevWriteCharacteristic.getUuid().toString();
+                            Log.w("---》》》","mDevWriteCharacteristic:"+ mDevWriteCharacteristic.getUuid().toString());
                             Log.e("---》》》", "连接成功"+isConnect());
                             callback.StateChange(status, newStates);
                         }
@@ -278,6 +298,17 @@ public class Ble4_0Util implements BleUtil {
         return true;
     }
 
+    private boolean isCurrentUuid(String uuid,List<String> uuidList){
+        for(int i=0;i<uuidList.size();i++){
+            Log.w("---》》》gattService:","1:"+uuid);
+            Log.w("---》》》gattService:","2:"+uuidList.get(i));
+            Log.w("---》》》gattService:","3:"+uuid.contains(uuidList.get(i)));
+            if (uuid.contains(uuidList.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
     @Override
     public boolean disconnect() {
         Log.w("---》》》","---》》》");
@@ -355,7 +386,8 @@ public class Ble4_0Util implements BleUtil {
             if ((characteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_SIGNED_WRITE
                     || characteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_WRITE
                     || characteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) &&
-                    characteristic.getUuid().toString().indexOf(writeUUID) >= 0) {
+                        isCurrentUuid(characteristic.getUuid().toString(),writeUUID)) {
+//                    characteristic.getUuid().toString().indexOf(writeUUID) >= 0) {
                 mDevWriteCharacteristic = characteristic;
                 break;
             }
