@@ -158,18 +158,20 @@ public class MapExerciseActivity extends Activity {
 
         if (window == null) {
             window = new PopupWindowTopicUtils_Map(MapExerciseActivity.this, type -> {
+                if(ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[4]){
+                    DialogUtils.showDialogHint(this, "请按设备Start/开始按钮来开始", true, null);
+                    return;
+                }
                 if (type == 0) {
                     iv_img.setState(type);
-                    if ((ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[0]
-                            || ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[3]
-                            || ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[4])) {
+                    if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[0]
+                            || ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[3]) {
                         PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x02));
                     }
                 } else if (type == 1) {
                     iv_img.setState(type);
-                    if ((ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[0]
-                            || ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[3]
-                            || ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[4])) {
+                    if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[0]
+                            || ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[3]) {
                         PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
                     }
                 } else if (type == 2) {
@@ -600,6 +602,7 @@ public class MapExerciseActivity extends Activity {
 //        int duration1 = timeMinute * 60 + timeSecond;
         String time1 = ConstValues_Ly.getTime(timeMinute1,timeSecond1);
 
+        loadCurrent = dataList.get(16);//阻力
         ConstValues_Ly.CURRENT_STATE = dataList.get(17);
         String Unit ="Stop";
         if(dataList.get(17)==1){
@@ -651,7 +654,7 @@ public class MapExerciseActivity extends Activity {
 
         int DistanceHi = dataList.get(2);
         int DistanceLow = dataList.get(3);
-        Distance = Double.valueOf(DistanceHi+"."+DistanceLow);
+        Distance = DistanceHi+DistanceLow/100d;
 
         int CaloriesHi = dataList.get(4);// 卡路里 -千,佰
         int CaloriesLow = dataList.get(5);// 卡路里 -个十
@@ -683,7 +686,7 @@ public class MapExerciseActivity extends Activity {
             psotUserSportLog();
             return;
         }
-        window.setTextLoad(loadCurrent+"/"+loadMax);
+//        window.setTextLoad(loadCurrent+"/"+loadMax);
         window.setIvSelect(false);
         String str = ""+(int)duration;
 

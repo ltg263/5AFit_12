@@ -74,10 +74,10 @@ public class RobotView extends ImageView {
     int quanNum = 1;
     public void setRed(long resetDuration,int quanNum) {
         Log.w("--->>>","时间准备改变:"+resetDuration);//392111
-        if(resetDuration<4000 || this.resetDuration == resetDuration){
+        if(resetDuration<4000 || this.resetDuration == resetDuration || StyleKitName.mPathMeasure==null){
             return;
         }
-        ToastUtil.showLongStrToast(MainApplication.getContext(),"时间改变了:"+resetDuration);//392111
+//        ToastUtil.showLongStrToast(MainApplication.getContext(),"时间改变了:"+resetDuration);//392111
         if(infoJg == null){//
             infoJg = new ArrayList<>();
         }
@@ -90,6 +90,7 @@ public class RobotView extends ImageView {
         }
         this.quanNum = quanNum;
         this.resetDuration = resetDuration;
+
         valueAnimator = ValueAnimator.ofFloat(lastAnimtionValue, StyleKitName.mPathMeasure.getLength());
         valueAnimator.setDuration(resetDuration < 1000 ? 1000 : resetDuration);
         valueAnimator.setInterpolator(new LinearInterpolator());

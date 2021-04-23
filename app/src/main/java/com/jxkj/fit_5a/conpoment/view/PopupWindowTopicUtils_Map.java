@@ -23,6 +23,7 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
     Context mContext;
     TextView tv_Distance, tv_speed, tv_time, tv_Calories, tv_Watt, tv_Pulse,tv_load,tv_Incline;
     ImageView mIv,iv_jia,iv_jian;
+    LinearLayout ll_load;
     @SuppressLint("ClickableViewAccessibility")
     public PopupWindowTopicUtils_Map(Activity context, GiveDialogInterface dialogInterface) {
         super(context);
@@ -48,6 +49,7 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
         this.setBackgroundDrawable(dw);
         RelativeLayout rl = view.findViewById(R.id.rl);
         LinearLayout mLlBottom = view.findViewById(R.id.ll_bottom);
+        ll_load = view.findViewById(R.id.ll_load);
         tv_Distance = view.findViewById(R.id.tv_Distance);
         tv_speed = view.findViewById(R.id.tv_speed);
         tv_time = view.findViewById(R.id.tv_time);
@@ -138,6 +140,7 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
         mIv.setSelected(isSelect);
     }
     public void setTextLoad(String strLoad){
+        ll_load.setVisibility(View.VISIBLE);
         tv_load.setText(strLoad);
     }
 

@@ -118,6 +118,7 @@ public class RatePatternActivity extends BaseActivity {
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5));
         }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2]){
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+            ll_lat.setVisibility(View.GONE);
         }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]){
             ll_lat.setVisibility(View.GONE);
             DialogUtils.showDialogHint(this, "请按设备Start/开始按钮来开始", true, null);
@@ -507,7 +508,6 @@ public class RatePatternActivity extends BaseActivity {
         String re = "A2--->>>:时间："+ZTime+",速度："+speed+",转数1："+rpm1+",转数2："+rpm2+",距离："+Distance+",卡路里："+Calories
                 +",脉跳："+Pulse;
         Log.w("---》》》", re);
-        tv_v.setText(loadCurrent+"/"+loadMax);
         tv_time.setText(ZTime);
         tv_distance.setText(Distance+"KM");
         List<RatePatternBean> list = new ArrayList<>();
@@ -589,6 +589,7 @@ public class RatePatternActivity extends BaseActivity {
 //        int duration1 = timeMinute * 60 + timeSecond;
         String time1 = ConstValues_Ly.getTime(timeMinute1,timeSecond1);
 
+        loadCurrent = dataList.get(16);//阻力
         ConstValues_Ly.CURRENT_STATE = dataList.get(17);
         String Unit ="Stop";
         if(dataList.get(17)==1){
@@ -656,7 +657,8 @@ public class RatePatternActivity extends BaseActivity {
 
         int DistanceHi = dataList.get(2);
         int DistanceLow = dataList.get(3);
-        Distance = Double.valueOf(DistanceHi+"."+DistanceLow);
+        Distance = DistanceHi+DistanceLow/100d;
+//        Distance = Double.valueOf(DistanceHi+"."+DistanceLow);
 
         int CaloriesHi = dataList.get(4);// 卡路里 -千,佰
         int CaloriesLow = dataList.get(5);// 卡路里 -个十
