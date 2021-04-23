@@ -113,7 +113,7 @@ public class MapExerciseActivity extends Activity {
         } else if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[2]) {
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
         } else if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[4]) {
-            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+            DialogUtils.showDialogHint(this, "请按设备Start/开始按钮来开始", true, null);
         }
         startTimestamp = System.currentTimeMillis();
         StyleKitName.mPathMeasure = null;
@@ -407,15 +407,15 @@ public class MapExerciseActivity extends Activity {
                 if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[1] && dataList.size() == 14) {
                     setData56(dataList);
                 }
-                if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[2] && dataList.size() == 14) {
-                    //健腹轮
-                }
                 if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[3] && dataList.size() == 18) {
-//                    setData26(dataList);
+                    setData26(dataList);
                 }
-                if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[4] && dataList.size() == 13) {
-//                    setData46(dataList);
+                if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[4] && dataList.size() == 14) {
+                    setData46(dataList);
                 }
+//                if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[2] && dataList.size() == 14) {
+//                    //健腹轮
+//                }
             }
         }
     }
@@ -492,7 +492,7 @@ public class MapExerciseActivity extends Activity {
 
         setBpmDataBeanTime(Pulse);
         mTvTime.setText(ZTime);
-        window.setTextViewStr(Distance + "km", speed + "km/h", ZTime, Calories + "cal", Watt + "w", Pulse + "bpm");
+        window.setTextViewStr(Distance + "km", speed + "km/h", ZTime, Calories + "cal", Watt + "w", Pulse + "bpm","--");
 
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
                 String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
@@ -556,12 +556,163 @@ public class MapExerciseActivity extends Activity {
 
         setBpmDataBeanTime(Pulse);
         mTvTime.setText(ZTime);
-        window.setTextViewStr(Distance + "km", speed + "km/h", ZTime, Calories + "cal", 0 + "w", Pulse + "bpm");
+        window.setTextViewStr(Distance + "km", speed + "km/h", ZTime, Calories + "cal", 0 + "w", Pulse + "bpm","--");
 
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
                 String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
                 null,String.valueOf(0),String.valueOf(0),
                 String.valueOf(rpm1),String.valueOf(speed),String.valueOf(System.currentTimeMillis()),String.valueOf(0)));
+    }
+
+
+    private void setData26(ArrayList<Integer> dataList) {
+        int timeMinute =  dataList.get(0);//时间-分
+        int timeSecond =  dataList.get(1);//时间-秒
+        duration = timeMinute*60+timeSecond;
+        String ZTime = ConstValues_Ly.getTime(timeMinute,timeSecond);
+
+        int strokeHi = dataList.get(2);
+        int strokeLow = dataList.get(3);
+        double stroke = ConstValues_Ly.getQianBaiShiGe(strokeHi,strokeLow);
+
+        int spmHi = dataList.get(4);
+        int spmLow = dataList.get(5);
+        int spm = ConstValues_Ly.getQianBaiShiGe(spmHi,spmLow);
+
+        int DistanceHi = dataList.get(6);
+        int DistanceLow = dataList.get(7);
+        Distance = ConstValues_Ly.getQianBaiShiGe(DistanceHi,DistanceLow);
+
+        int CaloriesHi = dataList.get(8);// 卡路里 -千,佰
+        int CaloriesLow = dataList.get(9);// 卡路里 -个十
+        Calories = ConstValues_Ly.getQianBaiShiGe(CaloriesHi,CaloriesLow);
+
+        int PulseHi = dataList.get(10);//跳动 千,佰
+        int PulseLow = dataList.get(11);//跳动 千,佰 -个十
+        int Pulse = ConstValues_Ly.getQianBaiShiGe(PulseHi,PulseLow);
+
+        int WattHi = dataList.get(12);//瓦特--佰,拾
+        int WattLow = dataList.get(13);//瓦特--佰,拾个小数点下一位
+        double Watt = ConstValues_Ly.getBaiShiGeX(WattHi,WattLow);
+
+        int timeMinute1 =  dataList.get(14);//时间-分
+        int timeSecond1 =  dataList.get(15);//时间-秒
+//        int duration1 = timeMinute * 60 + timeSecond;
+        String time1 = ConstValues_Ly.getTime(timeMinute1,timeSecond1);
+
+        ConstValues_Ly.CURRENT_STATE = dataList.get(17);
+        String Unit ="Stop";
+        if(dataList.get(17)==1){
+            Unit ="Start";
+        }
+
+        String re = "A2--->>>:时间："+ZTime+",行程："+stroke+",spm："+spm+",距离："+Distance+",卡路里："+Calories
+                +",脉跳："+Pulse+",瓦特："+Watt+",time1："+time1+",状态："+Unit;
+        Log.w("---》》》", re);
+        if(Unit.equals("Stop")){
+            return;
+        }
+        window.setTextLoad(loadCurrent+"/"+loadMax);
+        window.setIvSelect(false);
+        String str = ""+(int)duration;
+
+        if (stroke != 0 && (str.substring(str.length() - 1).equals("5") || str.substring(str.length() - 1).equals("0"))) {
+            int quanNum = (int) Math.ceil(Distance * 1000d/distance);
+            if(quanNum==0){
+                quanNum =1;
+            }
+            tv_quan.setText(String.valueOf(quanNum));
+            iv_img.setRed(Math.round((distance -(Distance * 1000d-distance*(quanNum-1))) / (stroke * 1000d) * 60d * 60d * 1000d),quanNum);
+        } else {
+            if (stroke == 0) {
+                iv_img.setState(1);
+            } else {
+                iv_img.setState(0);
+            }
+        }
+
+
+        setBpmDataBeanTime(Pulse);
+        mTvTime.setText(ZTime);
+        window.setTextViewStr(Distance + "km", stroke + "km/h", ZTime, Calories + "cal", Watt + "w", Pulse + "bpm","--");
+
+        logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
+                String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
+                null,String.valueOf(loadCurrent),String.valueOf(loadCurrent),
+                String.valueOf(spm),String.valueOf(stroke),String.valueOf(System.currentTimeMillis()),String.valueOf(Watt)));
+        return;
+    }
+
+    private void setData46(ArrayList<Integer> dataList) {
+        int timeSecond =  dataList.get(0);//时间-秒
+        int timeMinute =  dataList.get(1);//时间-分
+        duration = timeMinute*60+timeSecond;
+        String ZTime = ConstValues_Ly.getTime(timeMinute,timeSecond);
+
+        int DistanceHi = dataList.get(2);
+        int DistanceLow = dataList.get(3);
+        Distance = Double.valueOf(DistanceHi+"."+DistanceLow);
+
+        int CaloriesHi = dataList.get(4);// 卡路里 -千,佰
+        int CaloriesLow = dataList.get(5);// 卡路里 -个十
+        Calories = ConstValues_Ly.getQianBaiShiGe(CaloriesHi,CaloriesLow);
+
+        int PulseHi = dataList.get(6);//跳动 千,佰
+        int PulseLow = dataList.get(7);//跳动 千,佰 -个十
+        int Pulse = ConstValues_Ly.getQianBaiShiGe(PulseHi,PulseLow);
+
+        int speedHi = dataList.get(8);//速度-百十
+        int speedLow = dataList.get(9);//速度-个小数点下一位
+        double speed = ConstValues_Ly.getBaiShiGeX(speedHi,speedLow);
+
+        int Incline = dataList.get(10);
+
+        ConstValues_Ly.CURRENT_STATE = dataList.get(11);
+        String Unit ="None";
+        if(dataList.get(11)==2){
+            Unit ="Start";
+        }else if(dataList.get(11)==1){
+            Unit ="Stop";
+        }else if(dataList.get(11)==3){
+            Unit ="pause";
+        }
+        //[52, 11, 0, 25, 0, 14, 0, 0, 0, 13, 3, 2, 3, 1]
+        String re = "A2--->>>:时间："+ZTime+",距离："+Distance+",坡度："+Incline+",卡路里："+Calories+",脉跳："+Pulse+",速度："+speed+",状态："+Unit;
+        Log.w("---》》》", re);
+        if(Unit.equals("Stop") && duration!=0){
+            psotUserSportLog();
+            return;
+        }
+        window.setTextLoad(loadCurrent+"/"+loadMax);
+        window.setIvSelect(false);
+        String str = ""+(int)duration;
+
+        if (speed != 0 && (str.substring(str.length() - 1).equals("5") || str.substring(str.length() - 1).equals("0"))) {
+            int quanNum = (int) Math.ceil(Distance * 1000d/distance);
+            if(quanNum==0){
+                quanNum =1;
+            }
+            tv_quan.setText(String.valueOf(quanNum));
+            iv_img.setRed(Math.round((distance -(Distance * 1000d-distance*(quanNum-1))) / (speed * 1000d) * 60d * 60d * 1000d),quanNum);
+        } else {
+            if (speed == 0) {
+                iv_img.setState(1);
+            } else {
+                iv_img.setState(0);
+            }
+        }
+
+
+        setBpmDataBeanTime(Pulse);
+        mTvTime.setText(ZTime);
+        window.setTextViewStr(Distance + "km", speed + "km/h", ZTime, Calories + "cal", 0 + "w", Pulse + "bpm",Incline+"");
+
+
+
+        logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
+                String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
+                null,String.valueOf(loadCurrent),String.valueOf(loadCurrent),
+                String.valueOf(speed),String.valueOf(Pulse),String.valueOf(System.currentTimeMillis()),String.valueOf(Incline)));
         return;
     }
 

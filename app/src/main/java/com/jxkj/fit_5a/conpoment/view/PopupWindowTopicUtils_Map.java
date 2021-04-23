@@ -21,7 +21,7 @@ import com.jxkj.fit_5a.R;
 public class PopupWindowTopicUtils_Map extends PopupWindow {
 
     Context mContext;
-    TextView tv_Distance, tv_speed, tv_time, tv_Calories, tv_Watt, tv_Pulse,tv_load;
+    TextView tv_Distance, tv_speed, tv_time, tv_Calories, tv_Watt, tv_Pulse,tv_load,tv_Incline;
     ImageView mIv,iv_jia,iv_jian;
     @SuppressLint("ClickableViewAccessibility")
     public PopupWindowTopicUtils_Map(Activity context, GiveDialogInterface dialogInterface) {
@@ -55,6 +55,7 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
         tv_load = view.findViewById(R.id.tv_load);
         tv_Watt = view.findViewById(R.id.tv_Watt);
         tv_Pulse = view.findViewById(R.id.tv_Pulse);
+        tv_Incline = view.findViewById(R.id.tv_Incline);
         //mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框
         view.findViewById(R.id.iv_1).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,13 +146,14 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
     private float mPosY;
     private float mCurrentPosX;
     private float mCurrentPosY;
-    public void setTextViewStr(String tv_Distance, String tv_speed, String tv_time, String tv_Calories, String tv_Watt, String tv_Pulse) {
+    public void setTextViewStr(String tv_Distance, String tv_speed, String tv_time, String tv_Calories, String tv_Watt, String tv_Pulse,String tv_Incline) {
         this.tv_Distance.setText(tv_Distance);
         this.tv_speed.setText(tv_speed);
         this.tv_time.setText(tv_time);
         this.tv_Calories.setText(tv_Calories);
         this.tv_Watt.setText(tv_Watt);
         this.tv_Pulse.setText(tv_Pulse);
+        this.tv_Incline.setText(tv_Incline);
     }
 
 
