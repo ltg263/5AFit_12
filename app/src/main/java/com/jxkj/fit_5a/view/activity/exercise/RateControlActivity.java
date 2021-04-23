@@ -79,7 +79,7 @@ public class RateControlActivity extends BaseActivity {
     private List<TemplateBean.ListBean> textList = new ArrayList<>();
     private List<BpmDataBean> mBpmDataBeans = new ArrayList<>();
     String movingTye = "";
-    int age = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_AGE,""));
+    int age = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_AGE,"0"));
     double bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
     @Override
     protected int getContentView() {

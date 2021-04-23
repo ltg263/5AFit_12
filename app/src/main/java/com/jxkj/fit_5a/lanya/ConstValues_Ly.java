@@ -13,6 +13,7 @@ public class ConstValues_Ly {
 
     public static byte START = (byte) 0xF0;//Start
 
+    public static ArrayList<Integer> data;//跑步机时
     public static Integer maxLoad = 0;
 
     //Message動車錶
@@ -41,10 +42,10 @@ public class ConstValues_Ly {
      * 腹健轮(健腹輪(AB Roller Wheel) Protocol_V1.6_0XB4 (2))
      * 滑雪机(iRower Protocol(手動電動划船器同一版通協) V1.1)
      */
-    public static byte[] METER_ID_S = new byte[]{1,-56,-76,-25,-46};//0X00+1  0XC8  0XB4  0XE6+1  0XD2
+    public static byte[] METER_ID_S = new byte[]{1,-56,-76,-25,-45};//0X00+1  0XC8  0XB4  0XE6+1  0XD2+1
     public static String[] METER_NAME_S = new String[]{"脚踏车/椭圆机","手动脚踏车/椭圆机","腹健轮","划船机","跑步机"};//0X00+1  0XC8  0XB4  0XE6+1
     public static String SB_NAME = "";//选择的设备名称=设备名称+设备品牌+设备型号
-    public static int[] DEVICE_TYPE_IDS = new int[]{0, 200, 180, 230, 210};//0X00+1  0XC8  0XB4  0XE6+1  0XD2
+    public static int[] DEVICE_TYPE_IDS = new int[]{0, 200, 180, 230, 210};//0X00+1  0XC8  0XB4  0XE6+1  0XD2+1
 
 
     /**

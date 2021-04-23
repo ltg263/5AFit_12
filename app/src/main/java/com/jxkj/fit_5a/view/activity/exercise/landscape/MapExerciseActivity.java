@@ -91,7 +91,7 @@ public class MapExerciseActivity extends Activity {
 
     int maxV = 220;
     double bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
-    int age = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_AGE,""));
+    int age = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_AGE,"0"));
     private ArrayList<BpmDataBean> mBpmDataBeans = new ArrayList<>();
 
     public static void intentStartActivity(Context mContext, String mapId) {

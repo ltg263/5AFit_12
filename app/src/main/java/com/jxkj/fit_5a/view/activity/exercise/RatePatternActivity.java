@@ -24,9 +24,11 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAOptions;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAScrollablePlotArea;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
@@ -35,6 +37,8 @@ import com.jxkj.fit_5a.conpoment.view.StepArcView;
 import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.entity.RatePatternBean;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
+import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
+import com.jxkj.fit_5a.view.activity.mine.MineSetActivity;
 import com.jxkj.fit_5a.view.adapter.RatePatternAdapter;
 
 import java.util.ArrayList;
@@ -116,7 +120,8 @@ public class RatePatternActivity extends BaseActivity {
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
         }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]){
             ll_lat.setVisibility(View.GONE);
-            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+            DialogUtils.showDialogHint(this, "请按设备Start/开始按钮来开始", true, null);
+//            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
         }
         startTimestamp = System.currentTimeMillis();
         time = getIntent().getLongExtra("time",0);
@@ -233,74 +238,22 @@ public class RatePatternActivity extends BaseActivity {
                 }
                 break;
             case R.id.view:
-                if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]
-                        || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]
-                        || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]) ){
+                if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]
+                        || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]){
                     PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x02));
+                }
+                if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]){
+                    DialogUtils.showDialogHint(this, "请按设备Stop/结束按钮来结束", true, null);
+                    return;
                 }
                 DialogUtils.showDialogStartYd(this, new DialogUtils.DialogInterfaceS() {
                     @Override
                     public void btnType(int pos) {
                         if (pos == 2) {
-                            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x03));
-                            Intent mIntent = new Intent(RatePatternActivity.this, TaskFinishActivity.class);
-                            String str = String.valueOf(Distance/duration*60*60);
-                            String pjDuration = "0";
-                            if(str.equals(".")){
-                                pjDuration = str.format("%.2f");
-                            }
-                            double MaxSpeed = 0;
-                            int load_D = 0;
-                            int load_X =  Integer.valueOf(logs.get(0).getResistanceLevel());
-                            for (int i = 0; i < logs.size(); i++) {
-                                if (Double.valueOf(logs.get(i).getSpeed()) > MaxSpeed) {
-                                    MaxSpeed = Double.valueOf(logs.get(i).getSpeed());
-                                }
-                                if(load_D<Integer.valueOf(logs.get(i).getResistanceLevel())){
-                                    load_D = Integer.valueOf(logs.get(i).getResistanceLevel());
-                                }
-                                if(load_X>Integer.valueOf(logs.get(i).getResistanceLevel())){
-                                    load_X = Integer.valueOf(logs.get(i).getResistanceLevel());
-                                }
-                            }
-                            String load_dx = load_X+"-"+load_D;
-                            if(load_X==load_D){
-                                load_dx = load_D+"";
-                            }
-
-                            mBpmDataBeans.get(0).setBpmTopData(
-                                    new BpmDataBean.BpmTopData(String.valueOf(Calories), String.valueOf(Distance),
-                                            duration + "", pjDuration, String.valueOf(MaxSpeed), "--","--",load_dx,"--","--"));
-                            mIntent.putParcelableArrayListExtra("mBpmDataBeans",mBpmDataBeans);
-                            startActivity(mIntent);
-                            finish();
-                            PostUser.SportLogInfo sportLogInfo= new PostUser.SportLogInfo();
-                            sportLogInfo.setBai("11");
-                            sportLogInfo.setDeviceBrandId(ConstValues_Ly.BRAND_ID);
-                            sportLogInfo.setCalories(String.valueOf(Calories));
-                            sportLogInfo.setDeviceTypeId(ConstValues_Ly.DEVICE_TYPE_ID+"");
-                            sportLogInfo.setDistance(String.valueOf(Distance));
-                            sportLogInfo.setDuration(String.valueOf(duration));
-                            sportLogInfo.setEndTimestamp(String.valueOf(System.currentTimeMillis()));
-                            sportLogInfo.setStartTimestamp(String.valueOf(startTimestamp));
-                            sportLogInfo.setProtocolDeviceBrandParamId(11+""+'1');
-                            sportLogInfo.setHeartRateSource("2");//1=器材;2=藍牙心跳;3=Apple Watch
-
-                            if(StringUtil.isNotBlank(movingTye)){
-                                sportLogInfo.setTrainingMode("HeartRate");//目前只有HeartRate(心率)、Program(课程)
-                            }else{
-                                sportLogInfo.setTrainingMode("Program");
-                            }
-                            sportLogInfo.setProtocolName("iconsole");
-                            PostUser.SportLogInfo.DetailsBean deleteDatabase = new PostUser.SportLogInfo.DetailsBean();
-                            deleteDatabase.setLogs(logs);
-                            sportLogInfo.setDetails(deleteDatabase);
-                            HttpRequestUtils.psotUserSportLog(sportLogInfo);
-                            PopupWindowLanYan.ble4Util.disconnect();
+                            startTaskFinishActivity();
                         }else{
-                            if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]
-                                    || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]
-                                    || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4])){
+                            if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]
+                                    || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]){
                                 PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
                             }
                             dismiss();
@@ -343,6 +296,65 @@ public class RatePatternActivity extends BaseActivity {
                 break;
         }
     }
+
+    private void startTaskFinishActivity() {
+        PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x03));
+        Intent mIntent = new Intent(this, TaskFinishActivity.class);
+        String str = String.valueOf(Distance/duration*60*60);
+        String pjDuration = "0";
+        if(str.equals(".")){
+            pjDuration = str.format("%.2f");
+        }
+        double MaxSpeed = 0;
+        int load_D = 0;
+        int load_X =  Integer.valueOf(logs.get(0).getResistanceLevel());
+        for (int i = 0; i < logs.size(); i++) {
+            if (Double.valueOf(logs.get(i).getSpeed()) > MaxSpeed) {
+                MaxSpeed = Double.valueOf(logs.get(i).getSpeed());
+            }
+            if(load_D<Integer.valueOf(logs.get(i).getResistanceLevel())){
+                load_D = Integer.valueOf(logs.get(i).getResistanceLevel());
+            }
+            if(load_X>Integer.valueOf(logs.get(i).getResistanceLevel())){
+                load_X = Integer.valueOf(logs.get(i).getResistanceLevel());
+            }
+        }
+        String load_dx = load_X+"-"+load_D;
+        if(load_X==load_D){
+            load_dx = load_D+"";
+        }
+
+        mBpmDataBeans.get(0).setBpmTopData(
+                new BpmDataBean.BpmTopData(String.valueOf(Calories), String.valueOf(Distance),
+                        duration + "", pjDuration, String.valueOf(MaxSpeed), "--","--",load_dx,"--","--"));
+        mIntent.putParcelableArrayListExtra("mBpmDataBeans",mBpmDataBeans);
+        startActivity(mIntent);
+        finish();
+        PostUser.SportLogInfo sportLogInfo= new PostUser.SportLogInfo();
+        sportLogInfo.setBai("11");
+        sportLogInfo.setDeviceBrandId(ConstValues_Ly.BRAND_ID);
+        sportLogInfo.setCalories(String.valueOf(Calories));
+        sportLogInfo.setDeviceTypeId(ConstValues_Ly.DEVICE_TYPE_ID+"");
+        sportLogInfo.setDistance(String.valueOf(Distance));
+        sportLogInfo.setDuration(String.valueOf(duration));
+        sportLogInfo.setEndTimestamp(String.valueOf(System.currentTimeMillis()));
+        sportLogInfo.setStartTimestamp(String.valueOf(startTimestamp));
+        sportLogInfo.setProtocolDeviceBrandParamId(11+""+'1');
+        sportLogInfo.setHeartRateSource("2");//1=器材;2=藍牙心跳;3=Apple Watch
+
+        if(StringUtil.isNotBlank(movingTye)){
+            sportLogInfo.setTrainingMode("HeartRate");//目前只有HeartRate(心率)、Program(课程)
+        }else{
+            sportLogInfo.setTrainingMode("Program");
+        }
+        sportLogInfo.setProtocolName("iconsole");
+        PostUser.SportLogInfo.DetailsBean deleteDatabase = new PostUser.SportLogInfo.DetailsBean();
+        deleteDatabase.setLogs(logs);
+        sportLogInfo.setDetails(deleteDatabase);
+        HttpRequestUtils.psotUserSportLog(sportLogInfo);
+        PopupWindowLanYan.ble4Util.disconnect();
+    }
+
     public class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -355,14 +367,14 @@ public class RatePatternActivity extends BaseActivity {
                 if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1] && dataList.size()==14){
                     setData56(dataList);
                 }
-                if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2] && dataList.size()==14){
-                    //健腹轮
-                }
                 if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3] && dataList.size()==18){
                     setData26(dataList);
                 }
-                if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4] && dataList.size()==13){
+                if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4] && dataList.size()==14){
                     setData46(dataList);
+                }
+                if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2] && dataList.size()==14){
+                    //健腹轮
                 }
             }
         }
@@ -577,7 +589,6 @@ public class RatePatternActivity extends BaseActivity {
 //        int duration1 = timeMinute * 60 + timeSecond;
         String time1 = ConstValues_Ly.getTime(timeMinute1,timeSecond1);
 
-        loadCurrent = dataList.get(16);//阻力
         ConstValues_Ly.CURRENT_STATE = dataList.get(17);
         String Unit ="Stop";
         if(dataList.get(17)==1){
@@ -585,7 +596,7 @@ public class RatePatternActivity extends BaseActivity {
         }
 
         String re = "A2--->>>:时间："+ZTime+",行程："+stroke+",spm："+spm+",距离："+Distance+",卡路里："+Calories
-                +",脉跳："+Pulse+",瓦特："+Watt+",阻力："+loadCurrent+",状态："+Unit;
+                +",脉跳："+Pulse+",瓦特："+Watt+",time1："+time1+",状态："+Unit;
         Log.w("---》》》", re);
         if(Unit.equals("Stop")){
             return;
@@ -597,8 +608,8 @@ public class RatePatternActivity extends BaseActivity {
         list.add(new RatePatternBean("卡路里",Calories+"cal"));
         list.add(new RatePatternBean("当前速度",stroke+"km/h"));
         list.add(new RatePatternBean("当前功率",Watt+"w"));
-        list.add(new RatePatternBean("当前段位",loadCurrent+""));
-        list.add(new RatePatternBean("RPM/SPM","--"));
+//        list.add(new RatePatternBean("当前段位",loadCurrent+""));
+        list.add(new RatePatternBean("RPM/SPM",spm+"kcal"));
 
         mRatePatternAdapter.setNewData(list);
         mRatePatternAdapter.notifyDataSetChanged();
@@ -638,8 +649,8 @@ public class RatePatternActivity extends BaseActivity {
     }
 
     private void setData46(ArrayList<Integer> dataList) {
-        int timeMinute =  dataList.get(0);//时间-分
-        int timeSecond =  dataList.get(1);//时间-秒
+        int timeSecond =  dataList.get(0);//时间-秒
+        int timeMinute =  dataList.get(1);//时间-分
         duration = timeMinute*60+timeSecond;
         String ZTime = ConstValues_Ly.getTime(timeMinute,timeSecond);
 
@@ -662,15 +673,19 @@ public class RatePatternActivity extends BaseActivity {
         int Incline = dataList.get(10);
 
         ConstValues_Ly.CURRENT_STATE = dataList.get(11);
-        String Unit ="Stop";
-        if(dataList.get(11)==1){
+        String Unit ="None";
+        if(dataList.get(11)==2){
             Unit ="Start";
+        }else if(dataList.get(11)==1){
+            Unit ="Stop";
+        }else if(dataList.get(11)==3){
+            Unit ="pause";
         }
-
-        String re = "A2--->>>:时间："+ZTime+",距离："+Distance+",坡度："+Incline+",卡路里："+Calories
-                +",脉跳："+Pulse+",速度："+speed+",状态："+Unit;
+        //[52, 11, 0, 25, 0, 14, 0, 0, 0, 13, 3, 2, 3, 1]
+        String re = "A2--->>>:时间："+ZTime+",距离："+Distance+",坡度："+Incline+",卡路里："+Calories+",脉跳："+Pulse+",速度："+speed+",状态："+Unit;
         Log.w("---》》》", re);
-        if(Unit.equals("Stop")){
+        if(Unit.equals("Stop") && duration!=0){
+            startTaskFinishActivity();
             return;
         }
 //        tv_v.setText(loadCurrent+"/"+loadMax);
@@ -679,9 +694,9 @@ public class RatePatternActivity extends BaseActivity {
         List<RatePatternBean> list = new ArrayList<>();
         list.add(new RatePatternBean("卡路里",Calories+"cal"));
         list.add(new RatePatternBean("当前速度",speed+"km/h"));
-        list.add(new RatePatternBean("当前功率",Incline+"w"));
-        list.add(new RatePatternBean("当前段位",loadCurrent+""));
-        list.add(new RatePatternBean("RPM/SPM","--"));
+        list.add(new RatePatternBean("当前功率","0w"));
+        list.add(new RatePatternBean("当前坡度",Incline+""));
+//        list.add(new RatePatternBean("RPM/SPM","--"));
 
         mRatePatternAdapter.setNewData(list);
         mRatePatternAdapter.notifyDataSetChanged();

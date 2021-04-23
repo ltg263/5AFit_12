@@ -25,7 +25,7 @@ public class HistoryEquipmentAdapter extends BaseQuickAdapter<HistoryEquipmentDa
     @Override
     protected void convert(@NonNull BaseViewHolder helper, HistoryEquipmentData item) {
         helper.setText(R.id.tv_user_name,item.getName())
-                .setText(R.id.tv_time,"上次连接时间:"+item.getTime())
+                .setText(R.id.tv_time,"上次连接时间:"+item.getTime()).setText(R.id.tv_user_name_f,item.getName_sb())
                 .addOnClickListener(R.id.tv_ygz);
         GlideImgLoader.loadImageViewRadius(mContext,item.getImg(),10,helper.getView(R.id.iv_head_img));
         if(item.getState().equals("0")){

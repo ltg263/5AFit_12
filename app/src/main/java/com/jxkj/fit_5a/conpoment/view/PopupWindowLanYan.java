@@ -33,6 +33,7 @@ import com.jxkj.fit_5a.lanya.BleUtil;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.lanya.DataManage;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -197,6 +198,7 @@ public class PopupWindowLanYan extends PopupWindow {
             resultData_0xff += Integer.toHexString(resultData[i] & 0xFF)+",";
         }
         Log.w("---》》》","接收resultData_0xff："+resultData_0xff);
+        Log.w("---》》》","接收resultData："+ Arrays.toString(resultData));
         if(resultData.length > 2 && Integer.toHexString(resultData[1] & 0xFF).equals("b7")){
             Log.w("---》》》","接收：错误信息");
             if(ConstValues_Ly.CLIENT_ID ==0){
@@ -223,6 +225,9 @@ public class PopupWindowLanYan extends PopupWindow {
         if (Integer.toHexString(data.getMessage() & 0xFF).equals("b1")) {
             Log.w("---》》》", "最大的阻力-------"+data.getDataPayload().get(0));
             ConstValues_Ly.maxLoad =data.getDataPayload().get(0);
+            if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]){
+                ConstValues_Ly.data =data.getDataPayload();
+            }
             return;
         }
         if (Integer.toHexString(data.getMessage() & 0xFF).equals("b5")) {
