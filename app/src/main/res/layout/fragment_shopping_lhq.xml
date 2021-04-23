@@ -124,6 +124,7 @@
             android:background="@color/line_color" />
 
         <LinearLayout
+            android:id="@+id/ll_dhjl"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

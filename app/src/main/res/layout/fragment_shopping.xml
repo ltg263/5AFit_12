@@ -163,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
                 android:padding="13dp"
-                android:text="88888"
+                android:text="0"
                 android:textColor="@color/color_333333"
                 android:textSize="18sp" />
 
@@ -176,6 +176,7 @@
             android:background="@color/line_color" />
 
         <LinearLayout
+            android:id="@+id/ll_dhjl"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

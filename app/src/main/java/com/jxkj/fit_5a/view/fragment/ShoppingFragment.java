@@ -1,6 +1,8 @@
 package com.jxkj.fit_5a.view.fragment;
 
+import android.content.Intent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -16,6 +18,7 @@ import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.entity.ProductListBean;
+import com.jxkj.fit_5a.view.activity.mine.MineIntegralActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
 import com.jxkj.fit_5a.view.adapter.ShoppingRmAdapter;
@@ -39,6 +42,8 @@ public class ShoppingFragment extends BaseFragment {
     RecyclerView mRvListAll;
     @BindView(R.id.banner)
     Banner mBanner;
+    @BindView(R.id.ll_dhjl)
+    LinearLayout ll_dhjl;
     @BindView(R.id.tv_integral)
     TextView tv_integral;
     private ShoppingRmAdapter mShoppingRmAdapter;
@@ -56,6 +61,12 @@ public class ShoppingFragment extends BaseFragment {
         getProductList(1);
         getProductList(null);
         tv_integral.setText(SharedUtils.singleton().get(ConstValues.MY_INTEGRAL,""));
+        ll_dhjl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MineIntegralActivity.class));
+            }
+        });
     }
 
     private void initBannerOne() {
