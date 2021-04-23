@@ -17,7 +17,6 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAOptionsConstructor;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AASeriesElement;
-import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartAnimationType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolStyleType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartType;
@@ -44,10 +43,10 @@ import com.jxkj.fit_5a.entity.SportLogStatsBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.association.VideoActivity;
 import com.jxkj.fit_5a.view.activity.exercise.HistoryEquipmentActivity;
-import com.jxkj.fit_5a.view.activity.exercise.RateControlActivity;
 import com.jxkj.fit_5a.view.activity.home.RankListActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
+import com.jxkj.fit_5a.view.activity.mine.ShoppingActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
@@ -320,7 +319,7 @@ public class HomeOneFragment extends BaseFragment {
         return homeFragment;
     }
 
-    @OnClick({R.id.tv_left_text, R.id.tv_right_text, R.id.tv_top_jyz,R.id.tv_phb_ck,
+    @OnClick({R.id.tv_left_text, R.id.tv_right_text, R.id.tv_top_jyz,R.id.tv_phb_ck,R.id.tv_gdsp,
             R.id.tv_top_jyy, R.id.on_rv_qd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -351,6 +350,9 @@ public class HomeOneFragment extends BaseFragment {
                 break;
             case R.id.tv_phb_ck:
                 startActivity(new Intent(getActivity(), RankListActivity.class));
+                break;
+            case R.id.tv_gdsp:
+                ShoppingActivity.intentStartActivity(getActivity());
                 break;
         }
     }

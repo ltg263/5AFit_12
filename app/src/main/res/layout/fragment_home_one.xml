@@ -509,6 +509,7 @@
                         android:background="@drawable/line_shape_bj_select" />
 
                     <TextView
+                        android:id="@+id/tv_gdsp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -517,8 +518,7 @@
                         android:paddingStart="@dimen/dimen_5dp"
                         android:text="更多"
                         android:textColor="@color/color_999999"
-                        android:textSize="14sp"
-                        android:visibility="invisible" />
+                        android:textSize="14sp" />
 
 
                 </RelativeLayout>
