@@ -321,8 +321,10 @@ public class MapExerciseActivity extends Activity {
         DialogUtils.showDialogOutRoom(MapExerciseActivity.this, new DialogUtils.DialogLyInterface() {
             @Override
             public void btnConfirm() {
+                if(window!=null && window.isShowing()){
+                    window.dismiss();
+                }
                 psotUserSportLog();
-                finish();
             }
         });
     }
@@ -347,11 +349,13 @@ public class MapExerciseActivity extends Activity {
         if (str.equals(".")) {
             pjDuration = str.format("%.2f");
         }
-        double MaxSpeed = 0;
+        double MaxSpeed = Double.valueOf(logs.get(0).getSpeed());
         int load_D = 0;
         int load_X =  Integer.valueOf(logs.get(0).getResistanceLevel());
         for (int i = 0; i < logs.size(); i++) {
+            Log.w("MaxSpeed:","logs："+logs.toString());
             if (Double.valueOf(logs.get(i).getSpeed()) > MaxSpeed) {
+                Log.w("MaxSpeed:","----");
                 MaxSpeed = Double.valueOf(logs.get(i).getSpeed());
             }
             if(load_D<Integer.valueOf(logs.get(i).getResistanceLevel())){
@@ -366,6 +370,7 @@ public class MapExerciseActivity extends Activity {
             load_dx = load_D+"";
         }
 
+        Log.w("MaxSpeed:","MaxSpeed"+MaxSpeed);
         mBpmDataBeans.get(0).setBpmTopData(
                 new BpmDataBean.BpmTopData(String.valueOf(Calories), String.valueOf(Distance),
                         duration + "", pjDuration, String.valueOf(MaxSpeed), "--","--",load_dx,"--","--"));
@@ -496,9 +501,8 @@ public class MapExerciseActivity extends Activity {
         mTvTime.setText(ZTime);
         window.setTextViewStr(Distance + "km", speed + "km/h", ZTime, Calories + "cal", Watt + "w", Pulse + "bpm","--");
 
-        logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
-                String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
-                null,String.valueOf(loadCurrent),String.valueOf(loadCurrent),
+        logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
+                "0",String.valueOf(loadCurrent),String.valueOf(loadCurrent),
                 String.valueOf(rpm),String.valueOf(speed),String.valueOf(System.currentTimeMillis()),String.valueOf(Watt)));
     }
 
@@ -562,8 +566,8 @@ public class MapExerciseActivity extends Activity {
 
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
                 String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
-                null,String.valueOf(0),String.valueOf(0),
-                String.valueOf(rpm1),String.valueOf(speed),String.valueOf(System.currentTimeMillis()),String.valueOf(0)));
+                "0",String.valueOf(0),String.valueOf(0),
+                String.valueOf(rpm1),String.valueOf(speed),String.valueOf(System.currentTimeMillis()),"0"));
     }
 
 
@@ -637,12 +641,10 @@ public class MapExerciseActivity extends Activity {
 
         setBpmDataBeanTime(Pulse);
         mTvTime.setText(ZTime);
-        window.setTextViewStr(Distance + "km", stroke + "km/h", ZTime, Calories + "cal", Watt + "w", Pulse + "bpm","--");
+        window.setTextViewStr(Distance + "km", stroke + "km/h", ZTime, Calories + "cal", Watt + "w", Pulse + "bpm","0");
 
-        logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
-                String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
-                null,String.valueOf(loadCurrent),String.valueOf(loadCurrent),
-                String.valueOf(spm),String.valueOf(stroke),String.valueOf(System.currentTimeMillis()),String.valueOf(Watt)));
+        logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
+                "0",String.valueOf(loadCurrent),String.valueOf(loadCurrent), String.valueOf(spm),String.valueOf(stroke),String.valueOf(System.currentTimeMillis()),String.valueOf(Watt)));
         return;
     }
 
@@ -710,12 +712,8 @@ public class MapExerciseActivity extends Activity {
         mTvTime.setText(ZTime);
         window.setTextViewStr(Distance + "km", speed + "km/h", ZTime, Calories + "cal", 0 + "w", Pulse + "bpm",Incline+"");
 
-
-
-        logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
-                String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
-                null,String.valueOf(loadCurrent),String.valueOf(loadCurrent),
-                String.valueOf(speed),String.valueOf(Pulse),String.valueOf(System.currentTimeMillis()),String.valueOf(Incline)));
+        logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
+                Incline+"",null,"0","0",String.valueOf(speed),String.valueOf(System.currentTimeMillis()),"0"));
         return;
     }
 

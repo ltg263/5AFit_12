@@ -544,6 +544,22 @@ public class PostUser {
                 private String timeStamp;
                 private String watt;
 
+                @Override
+                public String toString() {
+                    return "LogsBean{" +
+                            "calories='" + calories + '\'' +
+                            ", distance='" + distance + '\'' +
+                            ", heartRate='" + heartRate + '\'' +
+                            ", incline='" + incline + '\'' +
+                            ", intensity='" + intensity + '\'' +
+                            ", resistanceLevel='" + resistanceLevel + '\'' +
+                            ", rpm='" + rpm + '\'' +
+                            ", speed='" + speed + '\'' +
+                            ", timeStamp='" + timeStamp + '\'' +
+                            ", watt='" + watt + '\'' +
+                            '}';
+                }
+
                 public LogsBean(String calories, String distance, String heartRate, String incline, String intensity, String resistanceLevel, String rpm, String speed, String timeStamp, String watt) {
                     this.calories = calories;
                     this.distance = distance;
