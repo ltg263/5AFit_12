@@ -855,8 +855,8 @@ public interface ApiService {
     /**
      *查询激励语表
      */
-    @GET(ConstValues.PORT_2 + "api/v1/admin/inspire/query")
-    Observable<Result<AdminInspireBean>> getAdminInspire(@Query("status") int status);
+    @GET(ConstValues.PORT_2 + "api/v1/inspire/get")
+    Observable<Result<AdminInspireBean>> getAdminInspire();
 
     /**
      * 获取热门(推荐)动态信息---话题

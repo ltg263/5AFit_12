@@ -79,18 +79,11 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
+                        android:id="@+id/iv_top"
                         android:layout_width="match_parent"
                         android:layout_height="189dp"
                         android:scaleType="fitXY"
-                        android:visibility="gone"
                         android:src="@mipmap/ic_home_bj_cen" />
-
-                    <com.youth.banner.Banner
-                        android:id="@+id/banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="190dp"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true" />
 
                     <TextView
                         android:id="@+id/tv_title"

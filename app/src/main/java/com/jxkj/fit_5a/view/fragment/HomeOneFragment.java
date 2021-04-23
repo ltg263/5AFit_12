@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
@@ -29,7 +29,6 @@ import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
-import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
@@ -56,9 +55,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xiaosu.view.text.DataSetAdapter;
 import com.xiaosu.view.text.VerticalRollingTextView;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.listener.OnBannerListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -92,6 +88,8 @@ public class HomeOneFragment extends BaseFragment {
     TextView mTvTopJyz;
     @BindView(R.id.tv_title)
     TextView tv_title;
+    @BindView(R.id.iv_top)
+    ImageView iv_top;
     @BindView(R.id.tv_top_jyy)
     TextView mTvTopJyy;
     @BindView(R.id.ll_top)
@@ -128,8 +126,6 @@ public class HomeOneFragment extends BaseFragment {
     ImageView mIvPhb3;
     @BindView(R.id.tv_phb_33)
     TextView mTvPhb33;
-    @BindView(R.id.banner)
-    Banner mBanner;
     private HomeTopAdapter mHomeTopAdapter;
     private HomeShoppingAdapter mHomeShoppingAdapter;
     private HomeDynamicAdapter mHomeDynamicAdapter;
@@ -239,7 +235,7 @@ public class HomeOneFragment extends BaseFragment {
 
     private void getAdminInspire() {
         RetrofitUtil.getInstance().apiService()
-                .getAdminInspire(1)
+                .getAdminInspire()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<AdminInspireBean>>() {
@@ -251,9 +247,9 @@ public class HomeOneFragment extends BaseFragment {
                     @Override
                     public void onNext(Result<AdminInspireBean> result) {
                         if(isDataInfoSucceed(result)){
-                            if(result.getData()!=null && result.getData().getList()!=null && result.getData().getList().size()>0){
-                                initBannerOne(result.getData().getList());
-
+                            if(result.getData()!=null && result.getData()!=null){
+                                tv_title.setText(result.getData().getTitle());
+                                Glide.with(getActivity()).load(result.getData().getBackImg()).into(iv_top);
                             }
                         }
                     }
@@ -268,50 +264,6 @@ public class HomeOneFragment extends BaseFragment {
 
                     }
                 });
-    }
-    private void initBannerOne(List<AdminInspireBean.ListBean> list) {
-        tv_title.setText(list.get(0).getTitle());
-        ArrayList<String> list_path = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            list_path.add(list.get(i).getBackImg());
-        }
-        mBanner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-//                Log.i("tag", "你点了第" + position + "张轮播图:" + lists.get(position).getId());
-            }
-        });
-
-        mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-        mBanner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                tv_title.setText(list.get(position).getTitle());
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        mBanner.setIndicatorGravity(BannerConfig.CENTER);
-        //设置图片加载器
-        mBanner.setImageLoader(new GlideImageLoader());
-        //设置图片集合
-        mBanner.setImages(list_path);
-        //设置banner动画效果
-//        mTopBanner.setBannerAnimation(Transformer.Stack);
-        //设置自动轮播，默认为true
-        mBanner.isAutoPlay(true);
-        //设置轮播时间
-        mBanner.setDelayTime(3000);
-        //banner设置方法全部调用完毕时最后调用
-        mBanner.start();
     }
 
     public static HomeOneFragment newInstance() {

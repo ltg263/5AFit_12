@@ -2,8 +2,11 @@ package com.jxkj.fit_5a.view.activity.exercise;
 
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
@@ -28,6 +32,7 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.DeviceTypeData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.CustomPopWindow;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
@@ -36,6 +41,7 @@ import com.jxkj.fit_5a.entity.SportLogBean;
 import com.jxkj.fit_5a.entity.SportLogStatsBean;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.adapter.HomeTopAdapter;
+import com.jxkj.fit_5a.view.adapter.PopupWindwSbAdapter;
 import com.jxkj.fit_5a.view.adapter.TwoJlxqAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -396,7 +402,12 @@ public class ExerciseRecordActivity extends BaseActivity {
                 break;
             case R.id.tv_sb:
                 if(dataSbType!=null &&dataSbType.size()>0){
-                    popupWindw();
+//                    popupWindw();
+                    if (distancePopWindow == null)
+                        showDistancePopup();
+                    else {
+                        distancePopWindow.showAsDropDown(tv_sb);
+                    }
                 }
                 break;
             case R.id.tv_top_jyz:
@@ -467,5 +478,43 @@ public class ExerciseRecordActivity extends BaseActivity {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         window.setOutsideTouchable(true);
         window.showAsDropDown(tv_sb, Gravity.BOTTOM,  0, 0);
+    }
+    private CustomPopWindow distancePopWindow;
+    private void showDistancePopup() {
+
+        View view = getLayoutInflater().inflate(R.layout.popup_window_sb, null, false);
+
+        RecyclerView mRvList = view.findViewById(R.id.rv_list);
+        PopupWindwSbAdapter mPopupWindwSbAdapter = new PopupWindwSbAdapter(dataSbType);
+        mRvList.setLayoutManager(new LinearLayoutManager(this));
+        mRvList.setHasFixedSize(true);
+        mRvList.setAdapter(mPopupWindwSbAdapter);
+
+        mPopupWindwSbAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                window.dismiss();
+                deviceType = dataSbType.get(position).getId()+"";
+                tv_sb.setText(dataSbType.get(position).getName());
+                page = 1;
+                getSportLogStats();
+                getTemplateList();
+            }
+        });
+
+        //创建并显示popWindow
+        distancePopWindow = new CustomPopWindow.PopupWindowBuilder(this)
+                .setView(view)
+                .setFocusable(true)//是否获取焦点，默认为ture
+                .setOnDissmissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+//                        rbDistance.setChecked(false);
+                    }
+                })
+                .setOutsideTouchable(true)//是否PopupWindow 以外触摸dissmiss
+                .size(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)//显示大小
+                .create()//创建PopupWindow
+                .showAsDropDown(tv_sb, 0, 0);//显示PopupWindow
     }
 }
