@@ -38,7 +38,7 @@ public class HomeTwoBelowAdapter extends BaseQuickAdapter<RankStatsData.Calories
             helper.setGone(R.id.tv,true).setGone(R.id.iv_1,false);
             helper.setText(R.id.tv,"No."+item.getRanking());
         }
-        helper.setText(R.id.tv_1,item.getUser().getNickName()).setText(R.id.tv_2,item.getCalories()+"cal").setText(R.id.tv_3,item.getLikeCount()+"");
+        helper.setText(R.id.tv_1,item.getUser().getNickName()).setText(R.id.tv_2,item.getCalories()+"kcal").setText(R.id.tv_3,item.getLikeCount()+"");
         GlideImageUtils.setGlideImage(mContext,item.getUser().getAvatar(),helper.getView(R.id.iv_2));
         Glide.with(mContext).load(R.drawable.icon_zan_no).into((ImageView) helper.getView(R.id.iv_3));
         if(item.isLike()){

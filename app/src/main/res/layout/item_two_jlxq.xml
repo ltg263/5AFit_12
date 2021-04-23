@@ -89,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_5dp"
-            android:text="卡路里/cal"
+            android:text="卡路里/kcal"
             android:textColor="@color/color_999999"
             android:textSize="10sp" />
 

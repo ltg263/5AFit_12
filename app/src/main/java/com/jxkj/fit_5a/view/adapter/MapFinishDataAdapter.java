@@ -23,7 +23,7 @@ public class MapFinishDataAdapter extends BaseQuickAdapter<String, BaseViewHolde
     protected void convert(@NonNull BaseViewHolder helper, String item) {
         helper.setText(R.id.tv_name,item);
         if(item.equals("卡路里")){
-            helper.setText(R.id.tv_v,stats.getCalories()+"cal")
+            helper.setText(R.id.tv_v,stats.getCalories()+"kcal")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.mipmap.ic_ydxq_1))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("运动里程")){

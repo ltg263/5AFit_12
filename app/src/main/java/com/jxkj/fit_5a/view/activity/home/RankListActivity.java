@@ -191,7 +191,7 @@ public class RankListActivity extends BaseActivity {
                             RankStatsData.UserBean userData = result.getData().getUser();
                             mTvName.setText(userData.getNickName());
                             mTvZan.setText(result.getData().getLikeCount());
-                            mTvDll.setText(result.getData().getCalories()+"cal");
+                            mTvDll.setText(result.getData().getCalories()+"kcal");
                             mTvMingc.setText("未上榜");
                             if (result.getData().getRanking()!=0) {
                                 mTvMingc.setText("No."+result.getData().getRanking());

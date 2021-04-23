@@ -87,7 +87,7 @@ public class TaskFinishActivity extends BaseActivity {
     private void initTopData() {
         BpmDataBean.BpmTopData mBpmTopData = mBpmDataBeans.get(0).getBpmTopData();
         Ztime = Integer.valueOf(mBpmTopData.getDuration());
-        mTv1.setText(mBpmTopData.getCalories() + "cal");
+        mTv1.setText(mBpmTopData.getCalories() + "kcal");
         mTv2.setText(mBpmTopData.getDistance() + "km");
         mTv3.setText(StringUtil.getTimeGeShi(Ztime));
         mTv4.setText(mBpmTopData.getPjDuration() + "km/h");

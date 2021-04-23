@@ -25,7 +25,7 @@ public class ExerciseRecordAdapter extends BaseQuickAdapter<String, BaseViewHold
     protected void convert(@NonNull BaseViewHolder helper, String item) {
         helper.setText(R.id.tv_name,item);
         if(item.equals("卡路里")){
-            helper.setText(R.id.tv_v,stats.getCalories()+"cal")
+            helper.setText(R.id.tv_v,stats.getCalories()+"kcal")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.mipmap.ic_ydxq_1));
         }else if(item.equals("路程")){
             helper.setText(R.id.tv_v,StringUtil.getValue(stats.getDistance())+"km")

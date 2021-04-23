@@ -432,7 +432,7 @@ public class RatePatternActivity extends BaseActivity {
         tv_time.setText(ZTime);
         tv_distance.setText(Distance+"KM");
         List<RatePatternBean> list = new ArrayList<>();
-        list.add(new RatePatternBean("卡路里",Calories+"cal"));
+        list.add(new RatePatternBean("卡路里",Calories+"kcal"));
         list.add(new RatePatternBean("当前速度",speed+"km/h"));
         list.add(new RatePatternBean("当前功率",Watt+"w"));
         list.add(new RatePatternBean("当前段位",loadCurrent+""));
@@ -511,7 +511,7 @@ public class RatePatternActivity extends BaseActivity {
         tv_time.setText(ZTime);
         tv_distance.setText(Distance+"KM");
         List<RatePatternBean> list = new ArrayList<>();
-        list.add(new RatePatternBean("卡路里",Calories+"cal"));
+        list.add(new RatePatternBean("卡路里",Calories+"kcal"));
         list.add(new RatePatternBean("当前速度",speed+"km/h"));
         list.add(new RatePatternBean("当前功率","0w"));
         list.add(new RatePatternBean("当前段位","0"));
@@ -606,7 +606,7 @@ public class RatePatternActivity extends BaseActivity {
         tv_time.setText(ZTime);
         tv_distance.setText(Distance+"KM");
         List<RatePatternBean> list = new ArrayList<>();
-        list.add(new RatePatternBean("卡路里",Calories+"cal"));
+        list.add(new RatePatternBean("卡路里",Calories+"kcal"));
         list.add(new RatePatternBean("当前速度",stroke+"km/h"));
         list.add(new RatePatternBean("当前功率",Watt+"w"));
 //        list.add(new RatePatternBean("当前段位",loadCurrent+""));
@@ -694,7 +694,7 @@ public class RatePatternActivity extends BaseActivity {
         tv_time.setText(ZTime);
         tv_distance.setText(Distance+"KM");
         List<RatePatternBean> list = new ArrayList<>();
-        list.add(new RatePatternBean("卡路里",Calories+"cal"));
+        list.add(new RatePatternBean("卡路里",Calories+"kcal"));
         list.add(new RatePatternBean("当前速度",speed+"km/h"));
         list.add(new RatePatternBean("当前功率","0w"));
         list.add(new RatePatternBean("当前坡度",Incline+""));

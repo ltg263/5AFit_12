@@ -5,7 +5,7 @@ import java.util.List;
 public class StatsZanBean {
 
     /**
-     * list : [{"id":1,"userId":1,"nickName":"daixiping","avatar":"https://avatar.csdnimg.cn/C/5/9/2_ltg263.jpg","type":1,"cal":1,"zan":2,"ranking":1,"hasZan":true}]
+     * list : [{"id":1,"userId":1,"nickName":"daixiping","avatar":"https://avatar.csdnimg.cn/C/5/9/2_ltg263.jpg","type":1,"kcal":1,"zan":2,"ranking":1,"hasZan":true}]
      * totalCount : 0
      */
 

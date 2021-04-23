@@ -23,11 +23,11 @@ public class HomeTopAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     protected void convert(@NonNull BaseViewHolder helper, String item) {
         helper.setText(R.id.tv_name,item);
         if(item.equals("总卡路里")){
-            helper.setText(R.id.tv_v,stats.getTotalCalories()+"cal")
+            helper.setText(R.id.tv_v,stats.getTotalCalories()+"kcal")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_1))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fde5e5);
         }else if(item.equals("平均卡路里")){
-            helper.setText(R.id.tv_v,stats.getAvgCalories()+"cal")
+            helper.setText(R.id.tv_v,stats.getAvgCalories()+"kcal")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_1))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fde5e5);
         }else if(item.equals("总里程")){
