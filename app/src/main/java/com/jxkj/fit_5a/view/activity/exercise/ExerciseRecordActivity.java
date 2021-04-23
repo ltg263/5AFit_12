@@ -83,7 +83,6 @@ public class ExerciseRecordActivity extends BaseActivity {
     private AAChartModel aaChartModel;
     private HomeTopAdapter mHomeTopAdapter;
     String deviceType = null;
-    private PopupWindowSb window;
     private List<DeviceTypeData.ListBean> dataSbType;
 
     @Override
@@ -458,27 +457,6 @@ public class ExerciseRecordActivity extends BaseActivity {
                     }
                 });
     }
-    private void popupWindw() {
-        if(window!=null && !window.isShowing()){
-            window.showAsDropDown(tv_sb, Gravity.BOTTOM,  0, 0);
-            return;
-        }
-        if(window != null) {
-            window.dismiss();
-            return;
-        }
-        window = new PopupWindowSb(this, dataSbType,(topicId, str) -> {
-            window.dismiss();
-            deviceType = topicId+"";
-            tv_sb.setText(str);
-            page = 1;
-            getSportLogStats();
-            getTemplateList();
-        });
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        window.setOutsideTouchable(true);
-        window.showAsDropDown(tv_sb, Gravity.BOTTOM,  0, 0);
-    }
     private CustomPopWindow distancePopWindow;
     private void showDistancePopup() {
 
@@ -493,7 +471,7 @@ public class ExerciseRecordActivity extends BaseActivity {
         mPopupWindwSbAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                window.dismiss();
+                distancePopWindow.dissmiss();
                 deviceType = dataSbType.get(position).getId()+"";
                 tv_sb.setText(dataSbType.get(position).getName());
                 page = 1;
