@@ -189,7 +189,7 @@ public class ExerciseRecordActivity extends BaseActivity {
                         "        var colorDot2 = '<span style=\\\"' + 'color:#FFA1A1; font-size:13px\\\"' + '>◉</span> ';\n" +
                         "        var colorDot3 = '<span style=\\\"' + 'color:#A1DFFF; font-size:13px\\\"' + '>◉</span> ';\n" +
                         "        var s1 = colorDot1 + this.points[0].series.name + ': ' + str + '<br/>';\n" +
-                        "        var s2 = colorDot2 + this.points[1].series.name + ': ' + this.points[1].y + 'cal' + '<br/>';\n" +
+                        "        var s2 = colorDot2 + this.points[1].series.name + ': ' + this.points[1].y + 'kcal' + '<br/>';\n" +
                         "        var s3 = colorDot3 + this.points[2].series.name + ': ' + this.points[2].y + 'km';\n" +
                         "        s0 += (s1 + s2+ s3);\n" +
                         "        return s0;\n" +
