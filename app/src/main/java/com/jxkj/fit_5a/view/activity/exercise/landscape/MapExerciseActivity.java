@@ -648,7 +648,6 @@ public class MapExerciseActivity extends Activity {
                 "0",String.valueOf(loadCurrent),String.valueOf(loadCurrent), String.valueOf(spm),String.valueOf(stroke),String.valueOf(System.currentTimeMillis()),String.valueOf(Watt)));
         return;
     }
-    DecimalFormat df = new DecimalFormat("######0.00");
     private void setData46(ArrayList<Integer> dataList) {
         int timeSecond =  dataList.get(0);//时间-秒
         int timeMinute =  dataList.get(1);//时间-分
