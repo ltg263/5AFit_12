@@ -203,31 +203,31 @@ public class MineInfoActivity extends BaseActivity {
                 MatisseUtils.gotoSelectPhotoBl(this, 1, true);
                 break;
             case R.id.ll_info_5:
-                DialogUtils.showEditTextDialog(this, 1,"绑定手机号","输入您的手机号", season -> {
-                    mTvInfo5.setText(season);
-                    userThirdBind(season);
-
-                });
+//                DialogUtils.showEditTextDialog(this, 1,"绑定手机号","输入您的手机号", season -> {
+//                    mTvInfo5.setText(season);
+//                    userThirdBind(season);
+//
+//                });
                 break;
             case R.id.ll_info_6:
-                DialogUtils.showEditTextDialog(this, 0,"绑定微信","输入您的微信", season -> {
-                    mTvInfo6.setText(season);
-                });
+//                DialogUtils.showEditTextDialog(this, 0,"绑定微信","输入您的微信", season -> {
+//                    mTvInfo6.setText(season);
+//                });
                 break;
             case R.id.ll_info_7:
-                DialogUtils.showEditTextDialog(this, 1,"绑定QQ","输入您的QQ", season -> {
-                    mTvInfo7.setText(season);
-                });
+//                DialogUtils.showEditTextDialog(this, 1,"绑定QQ","输入您的QQ", season -> {
+//                    mTvInfo7.setText(season);
+//                });
                 break;
             case R.id.ll_info_8:
-                DialogUtils.showEditTextDialog(this, 0,"绑定微博","输入您的微博", season -> {
-                    mTvInfo8.setText(season);
-                });
+//                DialogUtils.showEditTextDialog(this, 0,"绑定微博","输入您的微博", season -> {
+//                    mTvInfo8.setText(season);
+//                });
                 break;
             case R.id.ll_info_9:
-                DialogUtils.showEditTextDialog(this, 0,"绑定iconsole","输入您的iconsole", season -> {
-                    mTvInfo9.setText(season);
-                });
+//                DialogUtils.showEditTextDialog(this, 0,"绑定iconsole","输入您的iconsole", season -> {
+//                    mTvInfo9.setText(season);
+//                });
                 break;
             case R.id.tv_go_find:
                 postUserUpdate();
