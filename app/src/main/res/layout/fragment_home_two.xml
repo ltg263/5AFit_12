@@ -199,8 +199,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/bj_shape_line_f2_5"
-                    android:padding="@dimen/dimen_5dp">
+                    android:background="@drawable/shape_yy_ff_all_2">
 
                     <TextView
                         android:id="@+id/tv_two_ri"

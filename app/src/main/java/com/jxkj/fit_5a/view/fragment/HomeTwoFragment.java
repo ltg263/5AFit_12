@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
@@ -112,7 +113,8 @@ public class HomeTwoFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (list.get(position).equals("在线运动")) {
-                    MotorPatternActivity.startIntentActivity(getActivity());
+                    ToastUtils.showShort("在线运动暂未开放");
+//                    MotorPatternActivity.startIntentActivity(getActivity());
                 } else {
                     IntentUtils.getInstence().
                             intent(getActivity(), TaskSelectionActivity.class, "exercise_type", list.get(position));
@@ -304,9 +306,9 @@ public class HomeTwoFragment extends BaseFragment {
 //                                Glide.with(mContext).load(R.drawable.icon_zan_yes).into((ImageView) helper.getView(R.id.iv_3));
 //                            }
                             GlideImageUtils.setGlideImage(getActivity(),userData.getAvatar(),iv_head);
-                            mTvTwoYue.setBackgroundColor(getResources().getColor(R.color.color_ffffff));
-                            mTvTwoZhou.setBackgroundColor(getResources().getColor(R.color.color_ffffff));
-                            mTvTwoRi.setBackgroundColor(getResources().getColor(R.color.color_ffffff));
+                            mTvTwoYue.setBackgroundColor(0);
+                            mTvTwoZhou.setBackgroundColor(0);
+                            mTvTwoRi.setBackgroundColor(0);
                             if (typeD == 3) {
                                 mTvTwoYue.setBackground(getResources().getDrawable(R.drawable.btn_shape_bj_theme_2));
                             }
