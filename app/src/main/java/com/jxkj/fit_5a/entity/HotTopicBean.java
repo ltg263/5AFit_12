@@ -22,7 +22,16 @@ public class HotTopicBean implements Serializable {
     private int pageviews;
     private String introduction;
     private String imgUrl;
+    private boolean isSelect;
     private List<UserBean> user;
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
 
     public int getId() {
         return id;

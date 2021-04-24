@@ -116,10 +116,6 @@ public class RateControlActivity extends BaseActivity {
     }
 
     private void initRvUi() {
-        //亲, 您的年纪是30岁, 参考最大心跳值110下/min
-        if(!SharedUtils.singleton().get(ConstValues.USER_AGE,"").equals("0")){
-//            age = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_AGE,""));
-        }
         String str = "亲, 您的年纪是<font color=\"#000000\"><big><big>"+age+"</big></big></font>" +
                 "参考最大心跳值<font color=\"#000000\"><big><big>"+209+"</big></big></font>下/min";
         mTvXlzb.setText(Html.fromHtml(str));

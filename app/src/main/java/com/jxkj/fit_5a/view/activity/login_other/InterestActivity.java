@@ -9,19 +9,17 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.BaseActivity;
-import com.jxkj.fit_5a.base.InterestLists;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
-import com.jxkj.fit_5a.view.activity.mine.MineInfoActivity;
+import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.entity.HotTopicBean;
 import com.jxkj.fit_5a.view.adapter.ImgAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,6 +39,8 @@ public class InterestActivity extends BaseActivity {
     private ImgAdapter mImgAdapter;
     String sbType,csrq,sg,tz,interest;
 
+    int page = 1;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_interest;
@@ -57,35 +57,66 @@ public class InterestActivity extends BaseActivity {
     }
 
     private void getInterestList() {
+//        RetrofitUtil.getInstance().apiService()
+//                .getInterestList()
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(new Observer<Result<InterestLists>>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(Result<InterestLists> result) {
+//                        if(isDataInfoSucceed(result)){
+//                            initRvUi(result.getData().getList());
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+
         RetrofitUtil.getInstance().apiService()
-                .getInterestList()
+                .getHotTopicList(null,page,6)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result<InterestLists>>() {
+                .subscribe(new Observer<ResultList<HotTopicBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result<InterestLists> result) {
+                    public void onNext(ResultList<HotTopicBean> result) {
                         if(isDataInfoSucceed(result)){
-                            initRvUi(result.getData().getList());
+                            if(result.getData()!=null && result.getData().size()>0){
+                                initRvUi(result.getData());
+                            }else{
+                                page = 1;
+                                ToastUtils.showShort("暂无更多兴趣了");
+                            }
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
                     }
 
                     @Override
                     public void onComplete() {
-
                     }
                 });
     }
-    private void initRvUi(List<InterestLists.ListBean> list) {
+    private void initRvUi(List<HotTopicBean> list) {
         if(list.size()>0){
             list.get(0).setSelect(true);
         }
@@ -119,7 +150,7 @@ public class InterestActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.tv_go_xyb:
                 if(mImgAdapter!=null &&mImgAdapter.getData()!=null){
-                    List<InterestLists.ListBean> data = mImgAdapter.getData();
+                    List<HotTopicBean> data = mImgAdapter.getData();
                     interest = "";
                     for(int i=0;i<data.size();i++){
                         if (data.get(i).isSelect()){
@@ -134,6 +165,7 @@ public class InterestActivity extends BaseActivity {
                 postUserUpdate();
                 break;
             case R.id.tv_refresh:
+                page++;
                 getInterestList();
                 break;
         }
