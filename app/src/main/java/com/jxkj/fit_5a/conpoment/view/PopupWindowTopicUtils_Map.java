@@ -64,7 +64,6 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
             public void onClick(View v) {
                 isSuo = true;
                 mLlBottom.setVisibility(View.GONE);
-//                mLlBottom.setAnimation(AnimationUtil.makeOutAnimation(mContext,true));
             }
         });
         mIv.setOnClickListener(new View.OnClickListener() {

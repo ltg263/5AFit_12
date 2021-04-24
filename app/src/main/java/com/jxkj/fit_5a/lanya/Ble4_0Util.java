@@ -177,8 +177,12 @@ public class Ble4_0Util implements BleUtil {
                         mBluetoothGatt.requestMtu(512);
                     }
                 }
-                if (newState == BluetoothGatt.STATE_DISCONNECTED && StringUtil.isBlank(PopupWindowLanYan.BleName)) {
-                    callback.StateChange(status, newStates);
+                if (newState == BluetoothGatt.STATE_DISCONNECTED) {
+                    if(StringUtil.isBlank(PopupWindowLanYan.BleName)){
+                        callback.StateChange(status, newStates);
+                    }else{
+                        ToastUtils.showShort("蓝牙断开连接");
+                    }
                     disconnect();
                 }
             }
@@ -226,10 +230,6 @@ public class Ble4_0Util implements BleUtil {
                             }
                         }
 
-                        Log.w("---》》》1111",":"+ mDevWriteCharacteristic);
-                        Log.w("---》》》1111",":"+ gattCharacteristic.getProperties());
-                        Log.w("---》》》1111",":"+ BluetoothGattCharacteristic.PROPERTY_WRITE);
-                        Log.w("---》》》1111",":"+ BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE);
                         if (mDevWriteCharacteristic == null && (gattCharacteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_WRITE
                                 || gattCharacteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE
                                 || gattCharacteristic.getProperties() == 12)
@@ -300,9 +300,6 @@ public class Ble4_0Util implements BleUtil {
 
     private boolean isCurrentUuid(String uuid,List<String> uuidList){
         for(int i=0;i<uuidList.size();i++){
-            Log.w("---》》》gattService:","1:"+uuid);
-            Log.w("---》》》gattService:","2:"+uuidList.get(i));
-            Log.w("---》》》gattService:","3:"+uuid.contains(uuidList.get(i)));
             if (uuid.contains(uuidList.get(i))) {
                 return true;
             }
