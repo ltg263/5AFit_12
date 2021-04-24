@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -112,7 +113,7 @@ public class RateControlActivity extends BaseActivity {
         mBpmDataBeans.add(new BpmDataBean("无氧耐力心率区间(80~90%)",bfb8,bfb9,0));
         mBpmDataBeans.add(new BpmDataBean("极限心率区间(90~100%)",bfb9,bfb,0));
 
-        setMovingTye(120);
+        setMovingTye(60);
     }
 
     private void initRvUi() {
@@ -136,7 +137,6 @@ public class RateControlActivity extends BaseActivity {
         mRvLsydsbList.setAdapter(mFacilityManageAdapter);
         //187
         mRulerWeight.setOnValueChangeListener(value -> {
-            mTvTz.setText((int) Math.ceil(value) + "");
             setMovingTye((int) Math.ceil(value));
             double ab = value / maxV;
             for (int i = 0; i < textList.size(); i++) {
@@ -161,6 +161,7 @@ public class RateControlActivity extends BaseActivity {
     }
 
     private void setMovingTye(int value) {
+        mTvTz.setText(value+ "");
         if(value>0 && value<bfb5){
             movingTye = "非运动区间(0~50%)(0bpm~"+bfb5+"bpm)";
         }else if(value>bfb5 && value<bfb6){
