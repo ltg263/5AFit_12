@@ -306,13 +306,13 @@ public class AAChartModel {
         return this;
     }
 
-    public AAChartModel yAxisMax(Float prop) {
-        yAxisMax = prop;
+    public AAChartModel yAxisAllowDecimals(Boolean prop) {
+        yAxisAllowDecimals = prop;
         return this;
     }
 
-    public AAChartModel yAxisAllowDecimals(Boolean prop) {
-        yAxisAllowDecimals = prop;
+    public AAChartModel yAxisMax(Float prop) {
+        yAxisMax = prop;
         return this;
     }
 
