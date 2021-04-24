@@ -43,6 +43,7 @@ import com.jxkj.fit_5a.entity.RatePatternBean;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.activity.exercise.TaskFinishActivity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +91,7 @@ public class MapExerciseActivity extends Activity {
     int loadMax = ConstValues_Ly.maxLoad;
 
     int maxV = 220;
-    double bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
+    int bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
     int age = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_AGE,"0"));
     private ArrayList<BpmDataBean> mBpmDataBeans = new ArrayList<>();
 
@@ -130,12 +131,12 @@ public class MapExerciseActivity extends Activity {
     }
 
     private void initBpmData() {
-        bfb5 = (maxV-age)*0.5+40;
-        bfb6 = (maxV-age)*0.6+40;
-        bfb7 = (maxV-age)*0.7+40;
-        bfb8 = (maxV-age)*0.8+40;
-        bfb9 = (maxV-age)*0.9+40;
-        bfb  = (maxV-age)*1+40;
+        bfb5 = (int) ((maxV-age)*0.5);
+        bfb6 = (int) ((maxV-age)*0.6);
+        bfb7 = (int) ((maxV-age)*0.7);
+        bfb8 = (int) ((maxV-age)*0.8);
+        bfb9 = (int) ((maxV-age)*0.9);
+        bfb  = maxV-age;
         mBpmDataBeans.add(new BpmDataBean("非运动区间(0~50%)",0,bfb5,0));
         mBpmDataBeans.add(new BpmDataBean("热身心率区间(50~60%)",bfb5,bfb6,0));
         mBpmDataBeans.add(new BpmDataBean("燃脂心率区间(60~70%)",bfb6,bfb7,0));
@@ -647,7 +648,7 @@ public class MapExerciseActivity extends Activity {
                 "0",String.valueOf(loadCurrent),String.valueOf(loadCurrent), String.valueOf(spm),String.valueOf(stroke),String.valueOf(System.currentTimeMillis()),String.valueOf(Watt)));
         return;
     }
-
+    DecimalFormat df = new DecimalFormat("######0.00");
     private void setData46(ArrayList<Integer> dataList) {
         int timeSecond =  dataList.get(0);//时间-秒
         int timeMinute =  dataList.get(1);//时间-分
@@ -657,6 +658,7 @@ public class MapExerciseActivity extends Activity {
         int DistanceHi = dataList.get(2);
         int DistanceLow = dataList.get(3);
         Distance = DistanceHi+DistanceLow/100d;
+        Distance = Double.valueOf(String.format("%.2f", Distance));
 
         int CaloriesHi = dataList.get(4);// 卡路里 -千,佰
         int CaloriesLow = dataList.get(5);// 卡路里 -个十

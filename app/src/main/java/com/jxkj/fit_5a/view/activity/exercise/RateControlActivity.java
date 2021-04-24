@@ -80,7 +80,7 @@ public class RateControlActivity extends BaseActivity {
     private List<BpmDataBean> mBpmDataBeans = new ArrayList<>();
     String movingTye = "";
     int age = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_AGE,"0"));
-    double bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
+    int bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
     @Override
     protected int getContentView() {
         return R.layout.activity_rate_control;
@@ -93,15 +93,15 @@ public class RateControlActivity extends BaseActivity {
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         mIvRightimg.setImageDrawable(getResources().getDrawable(R.drawable.icon_add_right));
         mTvRighttext.setText("新增");
-        initRvUi();
 
-        bfb5 = (maxV-age)*0.5+40;
-        bfb6 = (maxV-age)*0.6+40;
-        bfb7 = (maxV-age)*0.7+40;
-        bfb8 = (maxV-age)*0.8+40;
-        bfb9 = (maxV-age)*0.9+40;
-        bfb  = (maxV-age)*1+40;
+        bfb5 = (int) ((maxV-age)*0.5);
+        bfb6 = (int) ((maxV-age)*0.6);
+        bfb7 = (int) ((maxV-age)*0.7);
+        bfb8 = (int) ((maxV-age)*0.8);
+        bfb9 = (int) ((maxV-age)*0.9);
+        bfb  = maxV-age;
         initBpmData();
+        initRvUi();
     }
 
     private void initBpmData() {
@@ -112,12 +112,12 @@ public class RateControlActivity extends BaseActivity {
         mBpmDataBeans.add(new BpmDataBean("无氧耐力心率区间(80~90%)",bfb8,bfb9,0));
         mBpmDataBeans.add(new BpmDataBean("极限心率区间(90~100%)",bfb9,bfb,0));
 
-        setMovingTye(120.0f);
+        setMovingTye(120);
     }
 
     private void initRvUi() {
         String str = "亲, 您的年纪是<font color=\"#000000\"><big><big>"+age+"</big></big></font>" +
-                "参考最大心跳值<font color=\"#000000\"><big><big>"+209+"</big></big></font>下/min";
+                "参考最大心跳值<font color=\"#000000\"><big><big>"+bfb+"</big></big></font>下/min";
         mTvXlzb.setText(Html.fromHtml(str));
         //0h0m表示无时间限制
         //(220-11)*131
@@ -134,10 +134,10 @@ public class RateControlActivity extends BaseActivity {
         mRvLsydsbList.setLayoutManager(new LinearLayoutManager(this));
         mRvLsydsbList.setHasFixedSize(true);
         mRvLsydsbList.setAdapter(mFacilityManageAdapter);
-
+        //187
         mRulerWeight.setOnValueChangeListener(value -> {
-            mTvTz.setText(value + "");
-            setMovingTye(value);
+            mTvTz.setText((int) Math.ceil(value) + "");
+            setMovingTye((int) Math.ceil(value));
             double ab = value / maxV;
             for (int i = 0; i < textList.size(); i++) {
                 TemplateBean.ListBean data = textList.get(i);
@@ -160,19 +160,19 @@ public class RateControlActivity extends BaseActivity {
         mRulerWeight.setValue(60, 40, 220, 1);
     }
 
-    private void setMovingTye(float value) {
+    private void setMovingTye(int value) {
         if(value>0 && value<bfb5){
-            movingTye = "非运动区间(0~50%)(0bpm~"+(int) Math.ceil(bfb5)+"bpm)";
+            movingTye = "非运动区间(0~50%)(0bpm~"+bfb5+"bpm)";
         }else if(value>bfb5 && value<bfb6){
-            movingTye = "热身心率区间(50~60%)("+(int) Math.ceil(bfb5)+"bpm~"+(int) Math.ceil(bfb6)+"bpm)";
+            movingTye = "热身心率区间(50~60%)("+bfb5+"bpm~"+bfb6+"bpm)";
         }else if(value>bfb6 && value<bfb7){
-            movingTye = "燃脂心率区间(60~70%)("+(int) Math.ceil(bfb6)+"bpm~"+(int) Math.ceil(bfb7)+"bpm)";
+            movingTye = "燃脂心率区间(60~70%)("+bfb6+"bpm~"+bfb7+"bpm)";
         }else if(value>bfb7 && value<bfb8){
-            movingTye = "有氧耐力心率区间(70~80%)("+(int) Math.ceil(bfb7)+"bpm~"+(int) Math.ceil(bfb8)+"bpm)";
+            movingTye = "有氧耐力心率区间(70~80%)("+bfb7+"bpm~"+bfb8+"bpm)";
         }else if(value>bfb8 && value<bfb9){
-            movingTye = "无氧耐力心率区间(80~90%)("+(int) Math.ceil(bfb8)+"bpm~"+(int) Math.ceil(bfb9)+"bpm)";
+            movingTye = "无氧耐力心率区间(80~90%)("+bfb8+"bpm~"+bfb9+"bpm)";
         }else if(value>bfb9){
-            movingTye = "极限心率区间(90~100%)("+(int) Math.ceil(bfb9)+"bpm~"+(int) Math.ceil(bfb)+"bpm)";
+            movingTye = "极限心率区间(90~100%)("+bfb9+"bpm~"+bfb+"bpm)";
         }
     }
 

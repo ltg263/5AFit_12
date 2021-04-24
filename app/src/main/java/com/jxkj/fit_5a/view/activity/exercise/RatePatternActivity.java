@@ -658,7 +658,7 @@ public class RatePatternActivity extends BaseActivity {
         int DistanceHi = dataList.get(2);
         int DistanceLow = dataList.get(3);
         Distance = DistanceHi+DistanceLow/100d;
-//        Distance = Double.valueOf(DistanceHi+"."+DistanceLow);
+        Distance = Double.valueOf(String.format("%.2f", Distance));
 
         int CaloriesHi = dataList.get(4);// 卡路里 -千,佰
         int CaloriesLow = dataList.get(5);// 卡路里 -个十

@@ -138,7 +138,7 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
     private ExerciseRecordAdapter mExerciseRecordAdapter;
     private TaskFinishListAdapter mTaskFinishListAdapter;
 
-    double bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
+    int bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
     int maxV = 220;
     int age = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_AGE,""));
     private List<BpmDataBean> mBpmDataBeans = new ArrayList<>();
@@ -153,12 +153,12 @@ public class ExerciseRecordDetailsActivity extends BaseActivity {
     protected void initViews() {
 
 
-        bfb5 = (maxV-age)*0.5;
-        bfb6 = (maxV-age)*0.6;
-        bfb7 = (maxV-age)*0.7;
-        bfb8 = (maxV-age)*0.8;
-        bfb9 = (maxV-age)*0.9;
-        bfb  = (maxV-age)*1;
+        bfb5 = (int) ((maxV-age)*0.5);
+        bfb6 = (int) ((maxV-age)*0.6);
+        bfb7 = (int) ((maxV-age)*0.7);
+        bfb8 = (int) ((maxV-age)*0.8);
+        bfb9 = (int) ((maxV-age)*0.9);
+        bfb  = maxV-age;
         initBpmData();
 
         mExerciseRecordAdapter = new ExerciseRecordAdapter(null);

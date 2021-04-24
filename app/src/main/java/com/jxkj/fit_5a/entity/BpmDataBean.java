@@ -6,8 +6,8 @@ import android.os.Parcelable;
 public class BpmDataBean implements Parcelable {
 
     String name;
-    double startV;
-    double endV;
+    int startV;
+    int endV;
     long time;
     BpmTopData mBpmTopData;
 
@@ -19,7 +19,7 @@ public class BpmDataBean implements Parcelable {
         return mBpmTopData;
     }
 
-    public BpmDataBean(String name, double startV, double endV, long time) {
+    public BpmDataBean(String name, int startV, int endV, long time) {
         this.name = name;
         this.startV = startV;
         this.endV = endV;
@@ -56,7 +56,7 @@ public class BpmDataBean implements Parcelable {
         return startV;
     }
 
-    public void setStartV(double startV) {
+    public void setStartV(int startV) {
         this.startV = startV;
     }
 
@@ -64,7 +64,7 @@ public class BpmDataBean implements Parcelable {
         return endV;
     }
 
-    public void setEndV(double endV) {
+    public void setEndV(int endV) {
         this.endV = endV;
     }
 
@@ -240,16 +240,16 @@ public class BpmDataBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
-        dest.writeDouble(this.startV);
-        dest.writeDouble(this.endV);
+        dest.writeInt(this.startV);
+        dest.writeInt(this.endV);
         dest.writeLong(this.time);
         dest.writeParcelable(this.mBpmTopData, flags);
     }
 
     protected BpmDataBean(Parcel in) {
         this.name = in.readString();
-        this.startV = in.readDouble();
-        this.endV = in.readDouble();
+        this.startV = in.readInt();
+        this.endV = in.readInt();
         this.time = in.readLong();
         this.mBpmTopData = in.readParcelable(BpmTopData.class.getClassLoader());
     }
