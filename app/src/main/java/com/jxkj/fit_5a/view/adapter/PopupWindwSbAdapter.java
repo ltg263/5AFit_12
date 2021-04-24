@@ -22,7 +22,10 @@ public class PopupWindwSbAdapter extends BaseQuickAdapter<DeviceTypeData.ListBea
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, DeviceTypeData.ListBean item) {
-        helper.setText(R.id.tv1,item.getName());
+        helper.setText(R.id.tv1,item.getName()).setGone(R.id.view,true);
+        if(helper.getLayoutPosition()==mData.size()-1){
+            helper.setGone(R.id.view,false);
+        }
     }
 
 }

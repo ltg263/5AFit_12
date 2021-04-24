@@ -6,7 +6,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list"
-        android:layout_width="@dimen/dimen_200dp"
+        android:layout_width="@dimen/dimen_140dp"
         android:layout_height="wrap_content"
-        android:background="#80000000" />
+        android:background="@drawable/ic_car_select" />
 </RelativeLayout>
