@@ -60,6 +60,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -142,7 +143,7 @@ public class HomeOneFragment extends BaseFragment {
     @Override
     protected void initViews() {
         str7 = StringUtil.getDays(7, "dd").toArray(new String[7]);
-        str30 = StringUtil.getDays(30, "dd").toArray(new String[30]);
+        str30 = StringUtil.getDays(StringUtil.getMonthLastDay(), "dd").toArray(new String[StringUtil.getMonthLastDay()]);
         initRvUi();
         getProductList(1);
         getAdList();
@@ -316,7 +317,7 @@ public class HomeOneFragment extends BaseFragment {
         if (isDay7) {
             calendar.add(Calendar.DAY_OF_YEAR, -7);
         } else {
-            calendar.add(Calendar.DAY_OF_YEAR, -30);
+            calendar.add(Calendar.DAY_OF_YEAR, -StringUtil.getMonthLastDay());
         }
 
         RetrofitUtil.getInstance().apiService()
@@ -423,8 +424,8 @@ public class HomeOneFragment extends BaseFragment {
                     .yAxisGridLineWidth(0f)
                     .xAxisGridLineWidth(0f)
                     .legendEnabled(false)
-                    .yAxisGridLineWidth(0f)
-                    .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)
+                    .xAxisReversed(true)
+                    .markerSymbolStyle(AAChartSymbolStyleType.InnerBlank)
                     .gradientColorEnable(true)
                     .markerRadius(0f)
                     .markerSymbol(AAChartSymbolType.Circle)
@@ -445,7 +446,7 @@ public class HomeOneFragment extends BaseFragment {
                     .yAxisGridLineWidth(0f)
                     .xAxisGridLineWidth(0f)
                     .legendEnabled(false)
-                    .yAxisGridLineWidth(0f)
+                    .xAxisReversed(true)
                     .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)
                     .gradientColorEnable(true)
                     .markerRadius(0f)
@@ -463,7 +464,7 @@ public class HomeOneFragment extends BaseFragment {
         ArrayList<String> a = StringUtil.getDays(7, "yyyyMMdd");
         if (!isDay7) {
             a.clear();
-            a = StringUtil.getDays(30, "yyyyMMdd");
+            a = StringUtil.getDays(StringUtil.getMonthLastDay(), "yyyyMMdd");
         }
         Object[] ydsc = new Object[a.size()];
         Object[] kll = new Object[a.size()];

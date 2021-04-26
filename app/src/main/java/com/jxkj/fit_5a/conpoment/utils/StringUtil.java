@@ -37,6 +37,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -508,15 +509,15 @@ public class StringUtil {
         //除以 1000 返回是秒
         int duration;
         try {
-            MediaMetadataRetriever mmr = new  MediaMetadataRetriever();
+            MediaMetadataRetriever mmr = new MediaMetadataRetriever();
             mmr.setDataSource(videoPath);
-            duration = Integer.parseInt(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION))/1000;
+            duration = Integer.parseInt(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)) / 1000;
 
             //时长(毫秒)
 //            String duration = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION);
             //宽
             String width = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
-                //高
+            //高
             String height = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
 
         } catch (Exception e) {
@@ -527,71 +528,101 @@ public class StringUtil {
     }
 
     /**
-     * 获取过去7天内的日期数组
-     * @param intervals      intervals天内
-     * @return              日期数组
+     * 获取上个月的天数
+     * @return
      */
-    public static ArrayList<String> getDays(int intervals,String type) {
+    public static int getMonthLastDay() {
+        Calendar cal = Calendar.getInstance();
+//        int day = cal.get(Calendar.DATE);
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
+//        int dow = cal.get(Calendar.DAY_OF_WEEK);
+//        int dom = cal.get(Calendar.DAY_OF_MONTH);
+//        int doy = cal.get(Calendar.DAY_OF_YEAR);
+//
+//        System.out.println("当期时间: " + cal.getTime());
+//        System.out.println("日期: " + day);
+//        System.out.println("月份: " + month);
+//        System.out.println("年份: " + year);
+//        System.out.println("一周的第几天: " + dow);  // 星期日为一周的第一天输出为 1，星期一输出为 2，以此类推
+//        System.out.println("一月中的第几天: " + dom);
+//        System.out.println("一年的第几天: " + doy);
+        Date day = new Date(year, month, 0);
+        return day.getDate();
+    }
+
+    /**
+     * 获取过去7天内的日期数组
+     *
+     * @param intervals intervals天内
+     * @return 日期数组
+     */
+    public static ArrayList<String> getDays(int intervals, String type) {
         ArrayList<String> pastDaysList = new ArrayList<>();
-        for (int i = intervals -1; i >= 0; i--) {
-            pastDaysList.add(getPastDate(i,type));
+        for (int i = intervals - 1; i >= 0; i--) {
+            pastDaysList.add(getPastDate(i, type));
         }
         return pastDaysList;
     }
-    public static String getTimeGeShiYw(long date){
-        if (date<60) {
-            return date+"s";
-        }else if (date>60&&date<3600) {
-            long m = date/60;
-            long s = date%60;
-            return m+"m"+s+"s";
-        }else {
-            long h = date/3600;
-            long m = (date%3600)/60;
-            long s = (date%3600)%60;
-            return h+"h"+m+"m"+s+"s";
-        }
-    }
-    public static String getTimeGeShi(long date){
-        if (date<60) {
-            return date+"秒";
-        }else if (date>60&&date<3600) {
-            long m = date/60;
-            long s = date%60;
-            return m+"分"+s+"秒";
-        }else {
-            long h = date/3600;
-            long m = (date%3600)/60;
-            long s = (date%3600)%60;
-            return h+"小时"+m+"分"+s+"秒";
-        }
-    }
-    public static String getTimeGeShiH(long date){
-        if (date<60) {
-            return date+"'";
-        }else if (date>60&&date<3600) {
-            long m = date/60;
-            long s = date%60;
-            return m+"'"+s+"'";
-        }else {
-            long h = date/3600;
-            long m = (date%3600)/60;
-            long s = (date%3600)%60;
-            return h+"'"+m+"'"+s+"'";
+
+    public static String getTimeGeShiYw(long date) {
+        if (date < 60) {
+            return date + "s";
+        } else if (date > 60 && date < 3600) {
+            long m = date / 60;
+            long s = date % 60;
+            return m + "m" + s + "s";
+        } else {
+            long h = date / 3600;
+            long m = (date % 3600) / 60;
+            long s = (date % 3600) % 60;
+            return h + "h" + m + "m" + s + "s";
         }
     }
 
-    public static Double getTimeFenMiao(long date){
-        if (date<60) {
-            return Double.valueOf("0."+date);
-        }else{
-            long m = date/60;
-            long s = date%60;
-            return Double.valueOf(m+"."+s);
+    public static String getTimeGeShi(long date) {
+        if (date < 60) {
+            return date + "秒";
+        } else if (date > 60 && date < 3600) {
+            long m = date / 60;
+            long s = date % 60;
+            return m + "分" + s + "秒";
+        } else {
+            long h = date / 3600;
+            long m = (date % 3600) / 60;
+            long s = (date % 3600) % 60;
+            return h + "小时" + m + "分" + s + "秒";
         }
     }
+
+    public static String getTimeGeShiH(long date) {
+        if (date < 60) {
+            return date + "'";
+        } else if (date > 60 && date < 3600) {
+            long m = date / 60;
+            long s = date % 60;
+            return m + "'" + s + "'";
+        } else {
+            long h = date / 3600;
+            long m = (date % 3600) / 60;
+            long s = (date % 3600) % 60;
+            return h + "'" + m + "'" + s + "'";
+        }
+    }
+
+    public static Double getTimeFenMiao(long date) {
+        if (date < 60) {
+            return Double.valueOf("0." + date);
+        } else {
+            long m = date / 60;
+            long s = date % 60;
+            return Double.valueOf(m + "." + s);
+        }
+    }
+
     /**
      * 获取过去第几天的日期
+     *
      * @param past
      * @param type
      * @return
@@ -606,43 +637,44 @@ public class StringUtil {
     }
 
 
-
-    public static ArrayList<String> getDayMonth7(){
+    public static ArrayList<String> getDayMonth7() {
         ArrayList<String> lists = new ArrayList<>();
         Calendar cal = Calendar.getInstance();
         int flag = cal.get(Calendar.DAY_OF_WEEK);
-        cal.add(Calendar.DATE, 1-flag);
-        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
+        cal.add(Calendar.DATE, 1 - flag);
+        lists.add(cal.get(Calendar.YEAR) + getDayMonth7(cal.get(Calendar.MONTH) + 1) + getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         cal.add(Calendar.DATE, 1);
-        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
+        lists.add(cal.get(Calendar.YEAR) + getDayMonth7(cal.get(Calendar.MONTH) + 1) + getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         cal.add(Calendar.DATE, 1);
-        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
+        lists.add(cal.get(Calendar.YEAR) + getDayMonth7(cal.get(Calendar.MONTH) + 1) + getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         cal.add(Calendar.DATE, 1);
-        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
+        lists.add(cal.get(Calendar.YEAR) + getDayMonth7(cal.get(Calendar.MONTH) + 1) + getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         cal.add(Calendar.DATE, 1);
-        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
+        lists.add(cal.get(Calendar.YEAR) + getDayMonth7(cal.get(Calendar.MONTH) + 1) + getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         cal.add(Calendar.DATE, 1);
-        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
+        lists.add(cal.get(Calendar.YEAR) + getDayMonth7(cal.get(Calendar.MONTH) + 1) + getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         cal.add(Calendar.DATE, 1);
-        lists.add(cal.get(Calendar.YEAR)+getDayMonth7(cal.get(Calendar.MONTH) + 1)+getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
+        lists.add(cal.get(Calendar.YEAR) + getDayMonth7(cal.get(Calendar.MONTH) + 1) + getDayMonth7(cal.get(Calendar.DAY_OF_MONTH)));
         return lists;
     }
-    public static String getDayMonth7(int day){
+
+    public static String getDayMonth7(int day) {
         String str = String.valueOf(day);
-        if(str.length()==1){
-            str = "0"+str;
+        if (str.length() == 1) {
+            str = "0" + str;
         }
         return str;
     }
 
     /**
      * int double 两位小时
+     *
      * @param obj
      * @return
      */
     public static String getValue(String obj) {
-        Log.w("getValue","obj:"+obj);
-        if(isIntegerForDouble(Double.valueOf(obj))){
+        Log.w("getValue", "obj:" + obj);
+        if (isIntegerForDouble(Double.valueOf(obj))) {
             return getValue(Double.valueOf(obj));
         }
         return String.format("%.2f", Double.valueOf(obj));
@@ -650,12 +682,13 @@ public class StringUtil {
 
     /**
      * int double 两位小时
+     *
      * @param obj
      * @return
      */
     public static String getValue(double obj) {
-        Log.w("getValue","obj:"+obj);
-        if(isIntegerForDouble(obj)){
+        Log.w("getValue", "obj:" + obj);
+        if (isIntegerForDouble(obj)) {
             return String.valueOf((int) obj);
         }
         return String.format("%.2f", obj);
@@ -663,12 +696,13 @@ public class StringUtil {
 
     /**
      * 判断double是否是整数
+     *
      * @param obj
      * @return
      */
     public static boolean isIntegerForDouble(double obj) {
         double eps = 1e-10;  // 精度范围
-        return obj-Math.floor(obj) < eps;
+        return obj - Math.floor(obj) < eps;
     }
 
 
