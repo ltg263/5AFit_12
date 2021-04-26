@@ -692,6 +692,14 @@ public interface ApiService {
     Observable<Result<MapDetailsBean>> getMapDetails(@Query("id") String id);
 
     /**
+     * 地图详情
+     *
+     * @param deviceTypeId
+     */
+    @GET(ConstValues.PORT_4 + "api/v1/user/sport/map/random")
+    Observable<Result<MapDetailsBean>> getMapRandomDetails(@Query("deviceTypeId") String deviceTypeId);
+
+    /**
      * 运动记录统计
      */
     @GET(ConstValues.PORT_4 + "api/v1/user/sport/log/stats")

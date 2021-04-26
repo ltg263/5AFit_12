@@ -20,6 +20,7 @@ public class HomeTwoTopAdapter extends BaseQuickAdapter<String, BaseViewHolder> 
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, String item) {
+        helper.addOnClickListener(R.id.tv_go_1).addOnClickListener(R.id.tv_go_2);
         if(item.equals("在线运动")){
             helper.setText(R.id.tv_title,item).setText(R.id.tv_title_f,"Online Sports");
         }else{

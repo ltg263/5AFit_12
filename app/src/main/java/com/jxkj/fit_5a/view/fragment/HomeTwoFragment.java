@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.view.fragment;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
@@ -26,7 +24,8 @@ import com.jxkj.fit_5a.entity.RankStatsData;
 import com.jxkj.fit_5a.view.activity.exercise.ExerciseRecordActivity;
 import com.jxkj.fit_5a.view.activity.exercise.HistoryEquipmentActivity;
 import com.jxkj.fit_5a.view.activity.exercise.TaskSelectionActivity;
-import com.jxkj.fit_5a.view.activity.exercise.landscape.MotorPatternActivity;
+import com.jxkj.fit_5a.view.activity.exercise.TaskStartActivity;
+import com.jxkj.fit_5a.view.activity.exercise.landscape.MapExerciseActivity;
 import com.jxkj.fit_5a.view.activity.home.RankListActivity;
 import com.jxkj.fit_5a.view.adapter.HomeTwoBelowAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeTwoTopAdapter;
@@ -121,6 +120,26 @@ public class HomeTwoFragment extends BaseFragment {
                 }
             }
         });
+        mHomeTwoTopAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (list.get(position).equals("在线运动")) {
+                    ToastUtils.showShort("在线运动暂未开放");
+//                    MotorPatternActivity.startIntentActivity(getActivity());
+                } else {
+                    if(tv_lianjie.getText().toString().equals("暂未连接设备")){
+                        ToastUtils.showShort("请先链接运动设备");
+                        return;
+                    }
+                    if(view.getId()==R.id.tv_go_1){
+                        MapExerciseActivity.intentStartActivity(getActivity(),null);
+                    }else if(view.getId()==R.id.tv_go_2){
+                        startActivity(new Intent(getActivity(), TaskStartActivity.class));
+                    }
+
+                }
+            }
+        });
         mHomeTwoBelowAdapter = new HomeTwoBelowAdapter(null);
         mRvTwoList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvTwoList.setHasFixedSize(true);
@@ -178,6 +197,12 @@ public class HomeTwoFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), ExerciseRecordActivity.class));
                 break;
         }
+
+
+//        if(tv_lianjie.getText().toString().equals("暂未连接设备")){
+//            ToastUtils.showShort("请先链接运动设备");
+//            return;
+//        }
     }
 
     int typeD = 0;

@@ -155,7 +155,11 @@ public class MapExerciseActivity extends Activity {
     @SuppressLint("ClickableViewAccessibility")
     private void initViews() {
         mapId = getIntent().getStringExtra("mapId");
-        getMapDetails();
+        if(StringUtil.isNotBlank(mapId)){
+            getMapDetails();
+        }else{
+            getMapRandomDetails();
+        }
 
         if (window == null) {
             window = new PopupWindowTopicUtils_Map(MapExerciseActivity.this, type -> {
@@ -270,6 +274,45 @@ public class MapExerciseActivity extends Activity {
                 }
                 break;
         }
+    }
+
+    private void getMapRandomDetails() {
+        RetrofitUtil.getInstance().apiService()
+                .getMapRandomDetails("")
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<MapDetailsBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<MapDetailsBean> result) {
+                        if (result.getCode() == 0 && result.getData() != null) {
+                            distance = Double.valueOf(result.getData().getDistance());
+//                            distance = 910d;
+                            mTvDistance.setText(distance + "m");
+                            if (Double.valueOf(result.getData().getDistance()) > 1000) {
+                                mTvDistance.setText(StringUtil.getValue(Double.valueOf(distance) / 1000d) + "km");
+                            }
+                            GlideImgLoader.loadImage(MapExerciseActivity.this, result.getData().getImgUrl(), iv_img);
+                            if (result.getData().getInfo() != null && result.getData().getInfo().size() > 0) {
+                                iv_img.setData(result.getData().getInfo(), result.getData().getParam());
+                                iv_img_.setData(result.getData().getInfo(), result.getData().getParam());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
     }
 
     private void getMapDetails() {
