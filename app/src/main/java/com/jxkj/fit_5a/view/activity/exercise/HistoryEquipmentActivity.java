@@ -127,7 +127,7 @@ public class HistoryEquipmentActivity extends BaseActivity {
                     message.obj = value;
                     linkHandler.sendMessage(message);
                 }
-//                ToastUtils.showShort(value);
+                ToastUtils.showShort(value);
             }
 
             @Override
