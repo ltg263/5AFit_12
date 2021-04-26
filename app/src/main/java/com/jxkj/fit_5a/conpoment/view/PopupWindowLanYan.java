@@ -329,6 +329,7 @@ public class PopupWindowLanYan extends PopupWindow {
                 }
                 mHistoryEquipmentData.setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
                 mHistoryEquipmentData.setImg(ConstValues_Ly.DEVICE_IMG);
+                mHistoryEquipmentData.setDeviceTypeId(ConstValues_Ly.DEVICE_TYPE_ID_URL);
                 mHistoryEquipmentData.setBrandId(ConstValues_Ly.BRAND_ID);
                 mHistoryEquipmentData.setServiceUUid(ble4Util.getUuidStr()[0]);
                 mHistoryEquipmentData.setReadUUID(ble4Util.getUuidStr()[1]);
@@ -362,6 +363,7 @@ public class PopupWindowLanYan extends PopupWindow {
                 mHistoryEquipmentData.setName(ConstValues_Ly.METER_NAME_S[4]);
                 PopupWindowLanYan.BleName = ConstValues_Ly.METER_NAME_S[4];
             }
+            mHistoryEquipmentData.setDeviceTypeId(ConstValues_Ly.DEVICE_TYPE_ID_URL);
             mHistoryEquipmentData.setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
             mHistoryEquipmentData.setImg(ConstValues_Ly.DEVICE_IMG);
             mHistoryEquipmentData.setBrandId(ConstValues_Ly.BRAND_ID);

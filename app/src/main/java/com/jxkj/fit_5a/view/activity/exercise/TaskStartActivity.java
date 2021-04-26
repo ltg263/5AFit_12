@@ -117,6 +117,7 @@ public class TaskStartActivity extends BaseActivity {
                 if (newState == BluetoothGatt.STATE_CONNECTED){
                     dismiss();
                     PopupWindowLanYan.BleName = historyEquipmentData.getName();
+                    ConstValues_Ly.DEVICE_TYPE_ID_URL = historyEquipmentData.getDeviceTypeId();
                     value = "连接成功";
                 } else if (newState == BluetoothGatt.STATE_DISCONNECTED){
                     dismiss();

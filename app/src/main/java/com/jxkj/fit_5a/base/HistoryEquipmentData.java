@@ -12,6 +12,15 @@ public class HistoryEquipmentData {
     String LyAddress;
     String brandId;
     int id;
+    String deviceTypeId;
+
+    public void setDeviceTypeId(String deviceTypeId) {
+        this.deviceTypeId = deviceTypeId;
+    }
+
+    public String getDeviceTypeId() {
+        return deviceTypeId;
+    }
 
     public String getReadUUID() {
         return readUUID;

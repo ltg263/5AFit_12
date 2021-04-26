@@ -1,6 +1,5 @@
 package com.jxkj.fit_5a.view.activity.exercise.landscape;
 
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -8,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -39,13 +37,9 @@ import com.jxkj.fit_5a.conpoment.view.RobotView;
 import com.jxkj.fit_5a.conpoment.view.RobotView11;
 import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
-import com.jxkj.fit_5a.entity.RatePatternBean;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
-import com.jxkj.fit_5a.view.activity.exercise.TaskFinishActivity;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -278,7 +272,7 @@ public class MapExerciseActivity extends Activity {
 
     private void getMapRandomDetails() {
         RetrofitUtil.getInstance().apiService()
-                .getMapRandomDetails("")
+                .getMapRandomDetails(ConstValues_Ly.DEVICE_TYPE_ID_URL)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<MapDetailsBean>>() {
@@ -301,6 +295,14 @@ public class MapExerciseActivity extends Activity {
                                 iv_img.setData(result.getData().getInfo(), result.getData().getParam());
                                 iv_img_.setData(result.getData().getInfo(), result.getData().getParam());
                             }
+                        }else{
+                            DialogUtils.showDialogHint(MapExerciseActivity.this, result.getMesg(), true,
+                                    new DialogUtils.ErrorDialogInterface() {
+                                @Override
+                                public void btnConfirm() {
+                                    finish();
+                                }
+                            });
                         }
                     }
 
