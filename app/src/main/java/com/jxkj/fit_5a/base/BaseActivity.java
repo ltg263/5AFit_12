@@ -111,6 +111,15 @@ public abstract class BaseActivity extends AppCompatActivity {
             dialog.show();
         }
     }
+    public void show(String show) {
+        if(dialog==null){
+            dialog = new LoadDialog(this, show);
+        }
+
+        if (!isFinishing()) {
+            dialog.show();
+        }
+    }
     public void dismiss() {
         if (dialog != null)
             dialog.dismiss();

@@ -10,9 +10,13 @@ import com.google.gson.reflect.TypeToken;
 import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.HistoryEquipmentData;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
+import com.jxkj.fit_5a.lanya.Ble4_0Util;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -39,10 +43,25 @@ public class SharedHistoryEquipment {
     }
 
     public void putSharedHistoryEquipment(List<HistoryEquipmentData> lists) {
-
+        List<HistoryEquipmentData> listNew = new ArrayList<>();
+        if(lists!=null){
+            for(int i=0;i<lists.size();i++){
+                if(StringUtil.isBlank(PopupWindowLanYan.BleName)){
+                    lists.get(i).setState("1");
+                }
+                if(StringUtil.isNotBlank(lists.get(i).getLyAddress())){
+                    listNew.add(lists.get(i));
+                }
+            }
+        }
+        Collections.sort(listNew, (o1, o2) -> {
+            long str1=StringUtil.getMsToTime(o1.getTime(),"yyyy-MM-dd HH:mm:ss");
+            long str2=StringUtil.getMsToTime(o2.getTime(),"yyyy-MM-dd HH:mm:ss");
+            return (int) (str2 - str1);
+        });
         SharedPreferences.Editor editor = mSharedPrefs.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(lists);
+        String json = gson.toJson(listNew);
         editor.putString("String", json);
         editor.commit();
     }

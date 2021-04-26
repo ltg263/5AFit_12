@@ -114,7 +114,7 @@ public class HistoryEquipmentActivity extends BaseActivity {
                     dismiss();
                     value = "连接失败";
                 } else if(newState == BluetoothGatt.STATE_CONNECTING){
-                    show();
+                    show("蓝牙连接中...");
                     value = "连接设备中";
                 } else if(newState == BluetoothGatt.STATE_DISCONNECTING){
                     value = "断开连接中";
@@ -127,7 +127,7 @@ public class HistoryEquipmentActivity extends BaseActivity {
                     message.obj = value;
                     linkHandler.sendMessage(message);
                 }
-                ToastUtils.showShort(value);
+//                ToastUtils.showShort(value);
             }
 
             @Override

@@ -334,7 +334,7 @@ public class PopupWindowLanYan extends PopupWindow {
                 mHistoryEquipmentData.setReadUUID(ble4Util.getUuidStr()[1]);
                 mHistoryEquipmentData.setWriteUUID(ble4Util.getUuidStr()[2]);
                 mHistoryEquipmentData.setLyAddress(BleAddress);
-                mHistoryEquipmentData.setName_sb(ConstValues_Ly.SB_NAME );
+                mHistoryEquipmentData.setName_sb(ConstValues_Ly.SB_NAME);
                 lists.add(mHistoryEquipmentData);
             }
         }else{

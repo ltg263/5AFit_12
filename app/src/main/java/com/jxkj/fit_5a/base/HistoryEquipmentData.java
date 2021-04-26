@@ -110,6 +110,7 @@ public class HistoryEquipmentData {
                 ", state='" + state + '\'' +
                 ", serviceUUid='" + serviceUUid + '\'' +
                 ", LyAddress='" + LyAddress + '\'' +
+                ", name_sb='" + name_sb + '\'' +
                 ", id=" + id +
                 '}';
     }

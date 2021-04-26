@@ -326,13 +326,8 @@ public class Ble4_0Util implements BleUtil {
         return true;
     }
     public static void initLsData() {
-        List<HistoryEquipmentData> lists = SharedHistoryEquipment.singleton().getSharedHistoryEquipment();
-        if(lists!=null){
-            for(int i=0;i<lists.size();i++){
-                lists.get(i).setState("1");
-            }
-        }
-        SharedHistoryEquipment.singleton().putSharedHistoryEquipment(lists);
+        SharedHistoryEquipment.singleton()
+                .putSharedHistoryEquipment(SharedHistoryEquipment.singleton().getSharedHistoryEquipment());
     }
 
     @Override

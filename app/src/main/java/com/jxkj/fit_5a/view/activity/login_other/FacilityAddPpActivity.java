@@ -126,7 +126,7 @@ public class FacilityAddPpActivity extends BaseActivity {
                 @Override
                 public void btnConfirm(String str) {
                     if(str.equals("连接设备中")){
-                        show();
+                        show("蓝牙连接中...");
                         return;
                     }
                     dismiss();
