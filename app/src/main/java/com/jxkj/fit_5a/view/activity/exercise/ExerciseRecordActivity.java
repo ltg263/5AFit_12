@@ -84,7 +84,7 @@ public class ExerciseRecordActivity extends BaseActivity {
     private HomeTopAdapter mHomeTopAdapter;
     String deviceType = null;
     private List<DeviceTypeData.ListBean> dataSbType;
-
+    Calendar calendar;
     @Override
     protected int getContentView() {
         return R.layout.activity_exercise_record;
@@ -97,7 +97,7 @@ public class ExerciseRecordActivity extends BaseActivity {
             deviceType =ConstValues_Ly.DEVICE_TYPE_ID+"";
             tv_sb.setText(PopupWindowLanYan.BleName);
         }
-        str30 = StringUtil.getDays(30, "dd").toArray(new String[30]);
+        str30 = StringUtil.getDays(StringUtil.getMonthLastDay(), "dd").toArray(new String[StringUtil.getMonthLastDay()]);
 
         mHomeTopAdapter = new HomeTopAdapter(null);
         mRvTopList.setLayoutManager(new GridLayoutManager(this, 3));
@@ -124,21 +124,30 @@ public class ExerciseRecordActivity extends BaseActivity {
                         "id",mTwoJlxqAdapter.getData().get(position).getId());
             }
         });
+
+        calendar = Calendar.getInstance();
+
         getSportLogStats();
-        getTemplateList();
         queryDeviceTypeLists();
 
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 page++;
+                calendar.clear();
+                calendar.setTime(new Date());
+                if (isDay7) {
+                    calendar.add(Calendar.DAY_OF_YEAR, -7);
+                } else {
+                    calendar.add(Calendar.DAY_OF_YEAR, -StringUtil.getMonthLastDay());
+                }
                 getTemplateList();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
-                getTemplateList();
+                getSportLogStats();
             }
         });
     }
@@ -213,15 +222,15 @@ public class ExerciseRecordActivity extends BaseActivity {
                     .yAxisGridLineWidth(0f)
                     .xAxisGridLineWidth(0f)
                     .legendEnabled(false)
-                    .yAxisGridLineWidth(0f)
+                    .xAxisReversed(true)
                     .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)
                     .gradientColorEnable(true)
                     .markerRadius(0f)
                     .markerSymbol(AAChartSymbolType.Circle)
                     .scrollablePlotArea(
                             new AAScrollablePlotArea()
-                                    .minWidth(1000)
-                                    .scrollPositionX(1f)
+                                    .minWidth(str.length*30)
+                                    .scrollPositionX(0f)
                     )
                     .series(configureTheStyleForDifferentTypeChart(lists));
         } else {
@@ -235,7 +244,7 @@ public class ExerciseRecordActivity extends BaseActivity {
                     .yAxisGridLineWidth(0f)
                     .xAxisGridLineWidth(0f)
                     .legendEnabled(false)
-                    .yAxisGridLineWidth(0f)
+                    .xAxisReversed(true)
                     .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)
                     .gradientColorEnable(true)
                     .markerRadius(0f)
@@ -253,7 +262,7 @@ public class ExerciseRecordActivity extends BaseActivity {
         ArrayList<String> a = StringUtil.getDays(7, "yyyyMMdd");
         if (!isDay7) {
             a.clear();
-            a = StringUtil.getDays(30, "yyyyMMdd");
+            a = StringUtil.getDays(StringUtil.getMonthLastDay(), "yyyyMMdd");
         }
         Object[] ydsc = new Object[a.size()];
         Object[] kll = new Object[a.size()];
@@ -302,9 +311,57 @@ public class ExerciseRecordActivity extends BaseActivity {
         return new AASeriesElement[]{element1, element2, element3};
     }
 
+    private boolean isDay7 = true;
+
+    private void getSportLogStats() {
+        calendar.clear();
+        calendar.setTime(new Date());
+        if (isDay7) {
+            calendar.add(Calendar.DAY_OF_YEAR, -7);
+        } else {
+            calendar.add(Calendar.DAY_OF_YEAR, -StringUtil.getMonthLastDay());
+        }
+        getTemplateList();
+        RetrofitUtil.getInstance().apiService()
+                .getSportLogStats(String.valueOf(calendar.getTime().getTime()), String.valueOf(System.currentTimeMillis()), deviceType)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<SportLogStatsBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<SportLogStatsBean> result) {
+                        if (isDataInfoSucceed(result)) {
+                            List<SportLogStatsBean.ListBean> lists = result.getData().getList();
+                            initAAChar(lists);
+                            List<String> list = new ArrayList<>();
+                            list.add("总卡路里");
+                            list.add("平均卡路里");
+                            list.add("总里程");
+                            list.add("总计时间");
+                            list.add("平均时间");
+                            list.add("BAI");
+                            mHomeTopAdapter.setNewData(list, result.getData().getStats());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
+    }
+
     private void getTemplateList() {
         RetrofitUtil.getInstance().apiService()
-                .geSportLogList(deviceType,page, ConstValues.PAGE_SIZE)
+                .geSportLogList(String.valueOf(calendar.getTime().getTime()), String.valueOf(System.currentTimeMillis()), deviceType,page, ConstValues.PAGE_SIZE)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<SportLogBean>>() {
@@ -341,56 +398,6 @@ public class ExerciseRecordActivity extends BaseActivity {
 
                     }
                 });
-    }
-
-
-    private boolean isDay7 = true;
-
-    private void getSportLogStats() {
-        Date nowDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(nowDate);
-        if (isDay7) {
-            calendar.add(Calendar.DAY_OF_YEAR, -7);
-        } else {
-            calendar.add(Calendar.DAY_OF_YEAR, -30);
-        }
-
-        RetrofitUtil.getInstance().apiService()
-                .getSportLogStats(String.valueOf(calendar.getTime().getTime()), String.valueOf(System.currentTimeMillis()), deviceType)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result<SportLogStatsBean>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Result<SportLogStatsBean> result) {
-                        if (isDataInfoSucceed(result)) {
-                            List<SportLogStatsBean.ListBean> lists = result.getData().getList();
-                            initAAChar(lists);
-                            List<String> list = new ArrayList<>();
-                            list.add("总卡路里");
-                            list.add("平均卡路里");
-                            list.add("总里程");
-                            list.add("总计时间");
-                            list.add("平均时间");
-                            list.add("BAI");
-                            mHomeTopAdapter.setNewData(list, result.getData().getStats());
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-
     }
 
     @OnClick({R.id.iv_back, R.id.tv_sb, R.id.tv_top_jyz, R.id.tv_top_jyy})
@@ -476,7 +483,6 @@ public class ExerciseRecordActivity extends BaseActivity {
                 tv_sb.setText(dataSbType.get(position).getName());
                 page = 1;
                 getSportLogStats();
-                getTemplateList();
             }
         });
 

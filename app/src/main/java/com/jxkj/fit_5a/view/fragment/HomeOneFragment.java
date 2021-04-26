@@ -431,8 +431,8 @@ public class HomeOneFragment extends BaseFragment {
                     .markerSymbol(AAChartSymbolType.Circle)
                     .scrollablePlotArea(
                             new AAScrollablePlotArea()
-                                    .minWidth(str.length*50)
-                                    .scrollPositionX(1f)
+                                    .minWidth(str.length*30)
+                                    .scrollPositionX(0f)
                     )
                     .series(configureTheStyleForDifferentTypeChart(lists));
         } else {

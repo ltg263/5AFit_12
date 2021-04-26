@@ -24,7 +24,7 @@ public class TwoJlxqAdapter extends BaseQuickAdapter<SportLogBean.ListBean, Base
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, SportLogBean.ListBean item) {
-        GlideImageUtils.setGlideImage(mContext, item.getDeviceImg(), helper.getView(R.id.iv_imgUrl));
+        GlideImgLoader.loadImageViewRadius(mContext, item.getDeviceImg(),10, helper.getView(R.id.iv_imgUrl));
         helper.setText(R.id.tv_name, item.getDeviceName())
                 .setText(R.id.tv_time, StringUtil.getTimeToYMD(item.getStartTimestamp(), "yyyy-MM-dd HH:mm"))
                 .setText(R.id.tv_distance, StringUtil.getValue(item.getDistance()))

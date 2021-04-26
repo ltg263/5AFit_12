@@ -696,7 +696,7 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_4 + "api/v1/user/sport/log/stats")
     Observable<Result<SportLogStatsBean>> getSportLogStats(@Query("beignCreateTimestamp") String beignCreateTimestamp,
-                                                           @Query("endCreateTimestamp") String endCreateTimestamp, @Query("deviceType") String deviceType);
+                                                           @Query("endCreateTimestamp") String endCreateTimestamp, @Query("deviceTypeId") String deviceTypeId);
 
     /**
      * 宝箱领取
@@ -730,7 +730,8 @@ public interface ApiService {
      * 运动记录列表
      */
     @GET(ConstValues.PORT_4 + "api/v1/user/sport/log/list")
-    Observable<Result<SportLogBean>> geSportLogList(@Query("deviceType") String deviceType,@Query("page") int page, @Query("pageSize") int pageSize);
+    Observable<Result<SportLogBean>> geSportLogList(@Query("beignCreateTimestamp") String beignCreateTimestamp,
+                                                    @Query("endCreateTimestamp") String endCreateTimestamp,@Query("deviceTypeId") String deviceTypeId,@Query("page") int page, @Query("pageSize") int pageSize);
 
     /**
      * 运动记录详情
