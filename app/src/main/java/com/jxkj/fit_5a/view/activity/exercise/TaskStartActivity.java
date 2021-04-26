@@ -171,7 +171,7 @@ public class TaskStartActivity extends BaseActivity {
                     byte[] resultData = (byte[]) message.obj;
                     if(resultData.length>4){
                         PopupWindowLanYan.setData(resultData);
-                    }else{
+                    } else {
                         Log.w("---》》》","错误："+ Arrays.toString(resultData));
                     }
                     break;
