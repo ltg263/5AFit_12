@@ -358,7 +358,7 @@ public interface ApiService {
 
     /**
      * 设备型号列表
-     * @return
+     * @return  [-16, -96, 56, -45, -101]
      */
     @GET(ConstValues.PORT_2 + "api/v1/device/type/bluetooth/channel/query")
     Observable<ResultList<BluetoothChannelData>> getBluetoothChannel(@Query("deviceTypeId") String deviceTypeId, @Query("protocolName") String protocolName);

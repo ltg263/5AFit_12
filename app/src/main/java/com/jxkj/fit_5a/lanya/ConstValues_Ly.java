@@ -41,6 +41,7 @@ public class ConstValues_Ly {
      * 手动脚踏车/椭圆机(iB+ Protocol(手動車錶) V1.2)
      * 腹健轮(健腹輪(AB Roller Wheel) Protocol_V1.6_0XB4 (2))
      * 滑雪机(iRower Protocol(手動電動划船器同一版通協) V1.1)
+     * 跑步机(iR+ Protocol(電跑).pdf)
      */
     public static byte[] METER_ID_S = new byte[]{1,-56,-76,-25,-45};//0X00+1  0XC8  0XB4  0XE6+1  0XD2+1
     public static String[] METER_NAME_S = new String[]{"脚踏车/椭圆机","手动脚踏车/椭圆机","腹健轮","划船机","跑步机"};//0X00+1  0XC8  0XB4  0XE6+1

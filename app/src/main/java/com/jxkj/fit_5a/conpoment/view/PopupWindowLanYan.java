@@ -27,6 +27,7 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.SharedHistoryEquipment;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.BluetoothChannelData;
+import com.jxkj.fit_5a.entity.DeviceProtocolCheckData;
 import com.jxkj.fit_5a.lanya.Ble4_0Util;
 import com.jxkj.fit_5a.lanya.BleAdapter;
 import com.jxkj.fit_5a.lanya.BleUtil;
@@ -204,14 +205,13 @@ public class PopupWindowLanYan extends PopupWindow {
             if(ConstValues_Ly.CLIENT_ID ==0){
                 ConstValues_Ly.CLIENT_ID = resultData[2];//Client ID
                 ConstValues_Ly.METER_ID = resultData[3];//Meter ID
-                postDeviceProtocolCheck();
                 for(int i=0;i < ConstValues_Ly.METER_ID_S.length;i++){
                     if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[i]){
                         ConstValues_Ly.DEVICE_TYPE_ID =ConstValues_Ly.DEVICE_TYPE_IDS[i];
                     }
                 }
+                postDeviceProtocolCheck();
                 PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A0));
-//              postDeviceProtocolCheck();
                 initLsData();
             }
             startBroadcast("b2",data.getDataPayload());
@@ -240,14 +240,13 @@ public class PopupWindowLanYan extends PopupWindow {
             if(ConstValues_Ly.CLIENT_ID ==0){
                 ConstValues_Ly.CLIENT_ID = resultData[2];//Client ID
                 ConstValues_Ly.METER_ID = resultData[3];//Meter ID
-                postDeviceProtocolCheck();
                 for(int i=0;i < ConstValues_Ly.METER_ID_S.length;i++){
                     if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[i]){
                         ConstValues_Ly.DEVICE_TYPE_ID =ConstValues_Ly.DEVICE_TYPE_IDS[i];
                     }
                 }
+                postDeviceProtocolCheck();
                 PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteData(ConstValues_Ly.MESSAGE_A0));
-//              postDeviceProtocolCheck();
                 initLsData();
             }
             startBroadcast("b2",data.getDataPayload());
@@ -256,20 +255,34 @@ public class PopupWindowLanYan extends PopupWindow {
     }
 
     public static void postDeviceProtocolCheck() {
+        int deviceBrandParamId = ConstValues_Ly.CLIENT_ID;
+        int deviceTypeParamId = ConstValues_Ly.METER_ID;
+        if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3])  || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]){
+            deviceBrandParamId--;
+            deviceTypeParamId--;
+        }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2]){
+
+        }
         RetrofitUtil.getInstance().apiService()
-                .postDeviceProtocolCheck(ConstValues_Ly.BRAND_ID, (ConstValues_Ly.CLIENT_ID-1)+"",
+                .postDeviceProtocolCheck(ConstValues_Ly.BRAND_ID, deviceBrandParamId+"",
                         ConstValues_Ly.DEVICE_Model_ID_URL,ConstValues_Ly.DEVICE_TYPE_ID_URL,
-                        (ConstValues_Ly.METER_ID-1)+"","iconsole",null)
+                        ConstValues_Ly.DEVICE_TYPE_ID+"","iconsole",null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result>() {
+                .subscribe(new Observer<Result<DeviceProtocolCheckData>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result result) {
+                    public void onNext(Result<DeviceProtocolCheckData> result) {
+                        if(result.getCode()==0 && result.getData()!=null){
+//                            if(result.getData().getDeviceBrandTypeModel()){
+//
+//                            }
+                        }
+
                     }
 
                     @Override
