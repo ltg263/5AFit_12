@@ -5,69 +5,69 @@
     android:layout_height="match_parent"
     android:background="#F7F7F7">
 
-    <RelativeLayout
-        android:id="@+id/rl_actionbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_220dp"
-        android:background="@mipmap/ic_mine_top">
-
-        <ImageView
-            android:id="@+id/iv_backImg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_mine_top"
-            android:visibility="invisible" />
-
-        <ImageView
-            android:id="@+id/iv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/btn_shape_bj_f7f" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:padding="@dimen/dimen_15dp"
-            android:text="个人资料"
-            android:textColor="@color/color_ffffff"
-            android:textSize="@dimen/dimen_20dp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="@dimen/dimen_25dp"
-            android:layout_height="@dimen/dimen_25dp"
-            android:layout_margin="@dimen/dimen_15dp"
-            android:layout_marginStart="@dimen/dimen_25dp"
-            android:src="@drawable/icon_jiantou_zuo_ff" />
-
-    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="85dp"
         android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dimen_30dp"
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/rl_actionbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="@dimen/dimen_220dp"
+                android:background="@mipmap/ic_mine_top">
+
+                <ImageView
+                    android:id="@+id/iv_backImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_mine_top"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_shape_bj_f7f" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_15dp"
+                    android:text="个人资料"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="@dimen/dimen_20dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="@dimen/dimen_25dp"
+                    android:layout_height="@dimen/dimen_25dp"
+                    android:layout_margin="@dimen/dimen_15dp"
+                    android:layout_marginStart="@dimen/dimen_25dp"
+                    android:src="@drawable/icon_jiantou_zuo_ff" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-100dp">
 
                 <LinearLayout
                     android:id="@+id/ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_15dp"
-                    android:layout_marginTop="@dimen/dimen_25dp"
+                    android:layout_marginTop="@dimen/dp_40"
                     android:background="@drawable/bj_circle_fff_10"
                     android:orientation="vertical">
 

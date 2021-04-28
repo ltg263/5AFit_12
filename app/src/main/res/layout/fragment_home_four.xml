@@ -144,7 +144,7 @@
                         android:id="@+id/ll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_25dp"
+                        android:layout_marginTop="@dimen/dp_40"
                         android:background="@drawable/bj_circle_fff_10"
                         android:orientation="vertical">
 
