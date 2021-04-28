@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +38,7 @@ import com.jxkj.fit_5a.view.adapter.HomeThreeRmhtAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeTopAdapter;
 import com.jxkj.fit_5a.view.search.SearchGoodsActivity;
+import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -60,6 +64,10 @@ public class HomeThreeFragment extends BaseFragment {
     RecyclerView mRvRmhtList;
     @BindView(R.id.rv_sq_list)
     RecyclerView mRvSqList;
+    @BindView(R.id.rl_actionbar)
+    LinearLayout mRlActionbar;
+    @BindView(R.id.mNestedScrollView)
+    NestedScrollView mNestedScrollView;
     private HomeThreeTopAdapter mHomeThreeTopAdapter;
     private HomeThreeRmhtAdapter mHomeThreeRmhtAdapter;
     private HomeThreeSqAdapter mHomeThreeSqAdapter;
@@ -77,6 +85,19 @@ public class HomeThreeFragment extends BaseFragment {
         getMomentQueryPopular();
 
 
+
+        mRlActionbar.setAlpha(1);
+        mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(scrollY<=500){
+                    mRlActionbar.setAlpha(1.0f-(float) scrollY / 500.0f);
+                }else{
+                    mRlActionbar.setAlpha(0);
+                }
+            }
+        });
+        refreshLayout.setRefreshHeader(new MaterialHeader(getActivity()).setShowBezierWave(false));
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
