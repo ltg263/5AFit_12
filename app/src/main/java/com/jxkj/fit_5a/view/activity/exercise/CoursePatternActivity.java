@@ -81,6 +81,7 @@ public class CoursePatternActivity extends BaseActivity {
     List<DeviceCourseData.ListBean.DetailsBean.ResistancesBean> resistances;
     Integer currentLoad = 1;
     Integer currentTime = 20;
+    double bl = ConstValues_Ly.maxLoad/10.0d;
 
     @Override
     protected int getContentView() {
@@ -130,7 +131,7 @@ public class CoursePatternActivity extends BaseActivity {
                 .xAxisLabelsEnabled(false)
                 .yAxisLabelsEnabled(false)
                 .legendEnabled(false)
-                .yAxisMax(10f)
+                .yAxisMax(Float.valueOf(ConstValues_Ly.maxLoad))
                 .yAxisGridLineWidth(0f)
                 .markerRadius(0f)
                 .scrollablePlotArea(
@@ -210,7 +211,7 @@ public class CoursePatternActivity extends BaseActivity {
     //设置值动画 progressbar动起来
 
     private void initProgressBar(int pos,VerticalSeekBar verticalProgressbar) {
-        verticalProgressbar.setMax(10);
+        verticalProgressbar.setMax(ConstValues_Ly.maxLoad);
         verticalProgressbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {//设置滑动监听
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -271,12 +272,10 @@ public class CoursePatternActivity extends BaseActivity {
 
     private void initProgress() {
         for(int i=0;i<resistances.size();i++){
-            a[i] = Byte.valueOf(resistances.get(i).getValue());
+            a[i] = (byte) (Double.valueOf(resistances.get(i).getValue())*bl);
         }
-        AASeriesElement element1 = new AASeriesElement()
-                .lineWidth(1f)
-                .data(a);
-        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(new AASeriesElement[]{element1});
+        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(
+                        new AASeriesElement[]{ new AASeriesElement().lineWidth(1f).data(a)});
 
         mVerticalProgressbar1.setProgress(a[0]);
         initProgressBar(0,mVerticalProgressbar1);

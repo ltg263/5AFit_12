@@ -77,6 +77,12 @@ public class TaskStartActivity extends BaseActivity {
                     ToastUtils.showShort("请先链接运动设备");
                     return;
                 }
+
+                if(ConstValues_Ly.METER_ID!=ConstValues_Ly.METER_ID_S[0] && ConstValues_Ly.METER_ID!=ConstValues_Ly.METER_ID_S[3]){
+                    ToastUtils.showShort("该设备不支持课程模式");
+                    return;
+                }
+
                 startActivity(new Intent(this, CourseSelectionActivity.class));
                 break;
             case R.id.ll_xlkz:

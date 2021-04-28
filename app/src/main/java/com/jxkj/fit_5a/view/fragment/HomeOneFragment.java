@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.fragment;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -60,7 +61,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -152,6 +152,7 @@ public class HomeOneFragment extends BaseFragment {
         getRankList();
         getAdminInspire();
 
+        mRlActionbar.setAlpha(1);
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
