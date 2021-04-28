@@ -100,16 +100,16 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dimen_5dp"
                     android:adjustViewBounds="true"
-                    android:src="@mipmap/ic_2" />
+                    android:src="@mipmap/icon_app_logo" />
 
                 <TextView
                     android:id="@+id/tv_ydjl"
-                    android:layout_width="@dimen/dimen_70dp"
-                    android:layout_height="@dimen/dimen_25dp"
+                    android:layout_width="@dimen/dimen_80dp"
+                    android:layout_height="35dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/dp_10"
-                    android:background="@drawable/bj_shape_line_66_6"
+                    android:background="@drawable/shape_yy_ff_all_2"
                     android:gravity="center"
                     android:text="运动记录"
                     android:textColor="@color/color_666666"
@@ -160,7 +160,7 @@
                         android:layout_height="22dp"
                         android:background="@drawable/btn_shape_bj_theme_2"
                         android:gravity="center"
-                        android:text="日"
+                        android:text="天"
                         android:textColor="@color/color_000000"
                         android:textSize="12sp" />
 

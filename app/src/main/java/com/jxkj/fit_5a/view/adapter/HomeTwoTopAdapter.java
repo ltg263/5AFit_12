@@ -22,9 +22,9 @@ public class HomeTwoTopAdapter extends BaseQuickAdapter<String, BaseViewHolder> 
     protected void convert(@NonNull BaseViewHolder helper, String item) {
         helper.addOnClickListener(R.id.tv_go_1).addOnClickListener(R.id.tv_go_2);
         if(item.equals("在线运动")){
-            helper.setText(R.id.tv_title,item).setText(R.id.tv_title_f,"Online Sports");
+            helper.setText(R.id.tv_title,item).setText(R.id.tv_title_f,"Online \nSports");
         }else{
-            helper.setText(R.id.tv_title,item).setText(R.id.tv_title_f,"Classic Sports");
+            helper.setText(R.id.tv_title,item).setText(R.id.tv_title_f,"Classic \nSports");
         }
 
     }

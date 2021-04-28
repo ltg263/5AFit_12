@@ -224,7 +224,7 @@
                             android:id="@+id/tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="卡路里排名"
+                            android:text="排行榜奖品"
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -430,7 +430,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_margin="@dimen/dp_10"
-                            android:text="注：此榜为周榜奖品"
+                            android:text="注：此榜为月榜奖品"
                             android:textColor="@color/color_ffffff"
                             android:textSize="12sp" />
 
