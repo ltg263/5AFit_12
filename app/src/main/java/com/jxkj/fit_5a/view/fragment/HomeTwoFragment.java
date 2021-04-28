@@ -3,8 +3,10 @@ package com.jxkj.fit_5a.view.fragment;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +52,8 @@ public class HomeTwoFragment extends BaseFragment {
     TextView mTvTwoZhou;
     @BindView(R.id.tv_two_yue)
     TextView mTvTwoYue;
+    @BindView(R.id.rl_actionbar)
+    RelativeLayout mRlActionbar;
     @BindView(R.id.tv_lianjie)
     TextView tv_lianjie;
     @BindView(R.id.rv_two_list)
@@ -82,6 +86,8 @@ public class HomeTwoFragment extends BaseFragment {
     TextView mTvDll;
     @BindView(R.id.tv_zan)
     TextView mTvZan;
+    @BindView(R.id.mNestedScrollView)
+    NestedScrollView mNestedScrollView;
     private HomeTwoTopAdapter mHomeTwoTopAdapter;
     private HomeTwoBelowAdapter mHomeTwoBelowAdapter;
 
@@ -100,6 +106,19 @@ public class HomeTwoFragment extends BaseFragment {
         List<String> list = new ArrayList<>();
         list.add("在线运动");
         list.add("经典运动");
+
+
+        mRlActionbar.setAlpha(1);
+        mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(scrollY<=500){
+                    mRlActionbar.setAlpha(1.0f-(float) scrollY / 500.0f);
+                }else{
+                    mRlActionbar.setAlpha(0);
+                }
+            }
+        });
 
         mHomeTwoTopAdapter = new HomeTwoTopAdapter(list);
         LinearLayoutManager ms = new LinearLayoutManager(getActivity());

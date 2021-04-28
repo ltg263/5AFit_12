@@ -71,6 +71,7 @@ public class MainActivity extends BaseActivity {
     private HomeTwoFragment mHomeTwoFragment;
     private HomeThreeFragment mHomeThreeFragment;
     private HomeFourFragment mHomeFourFragment;
+    private HomeOneFragment mHomeLsFragment;
 
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
@@ -82,15 +83,20 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initViews() {
         mHomeOneFragment = HomeOneFragment.newInstance();
+        mHomeLsFragment = HomeOneFragment.newInstance();
         mHomeTwoFragment = HomeTwoFragment.newInstance();
         mHomeThreeFragment = HomeThreeFragment.newInstance();
         mHomeFourFragment = HomeFourFragment.newInstance();
 
-        howFragment(1,mIvMain1,mTvMain1,mLlMain1);
+//        howFragment(1,mIvMain1,mTvMain1,mLlMain1);
         fragmentManager = getSupportFragmentManager();
 
-        mFragments = mHomeOneFragment;
-        fragmentManager.beginTransaction().replace(R.id.fl_content, mHomeOneFragment, "A").commitAllowingStateLoss();
+        mFragments = mHomeLsFragment;
+        fragmentManager.beginTransaction().replace(R.id.fl_content, mHomeLsFragment, "LS").commitAllowingStateLoss();
+
+        howFragment(1,mIvMain1,mTvMain1,mLlMain1);
+        switchFragment(mHomeOneFragment,"A");
+
         Ble4_0Util.initLsData();
         openLocation();
     }

@@ -31,7 +31,7 @@ public class MianJavaDame {
 //        System.out.println("-->>>:"+ Math.floor(1.4));
 //        System.out.println("-->>>:"+ Math.round((132.54*1 - 0 * 1000d)));
 
-//        System.out.println("-->>>:"+"getDate"+ StringUtil.getDaysOfMonth());
+        System.out.println("-->>>:"+"getDate"+ (float) 300 / 500.0f);
 //        System.out.println("-->>>:"+("0000fff1-0000-1000-8000-00805f9b34fb".indexOf("fff1")));
 
     }
