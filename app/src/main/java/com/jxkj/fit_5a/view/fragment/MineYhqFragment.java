@@ -113,7 +113,13 @@ public class MineYhqFragment extends BaseFragment {
                     @Override
                     public void onNext(Result<PrizeListData> result) {
                         if(isDataInfoSucceed(result)){
-                            mBaseQuickAdapter.setNewData(result.getData().getList());
+                            mRefreshLayout.setVisibility(View.GONE);
+                            mLvNot.setVisibility(View.VISIBLE);
+                            if(result.getData().getList()!=null && result.getData().getList().size()>0){
+                                mRefreshLayout.setVisibility(View.VISIBLE);
+                                mLvNot.setVisibility(View.GONE);
+                                mBaseQuickAdapter.setNewData(result.getData().getList());
+                            }
                         }
                     }
 
