@@ -2,6 +2,7 @@ package com.jxkj.fit_5a.view.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,10 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseFragment;
-import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.entity.BpmDataBean;
-import com.jxkj.fit_5a.entity.SportLogStatsBean;
-import com.jxkj.fit_5a.view.adapter.HomeTopAdapter;
 import com.jxkj.fit_5a.view.adapter.MapFinishDataAdapter;
 
 import java.util.ArrayList;
@@ -23,6 +23,9 @@ import butterknife.BindView;
 public class MapFinish1Fragment extends BaseFragment {
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
+    @BindView(R.id.iv_xb)
+    ImageView iv_xb;
+
     private MapFinishDataAdapter mMapFinishDataAdapter;
 
     private ArrayList<BpmDataBean> mBpmDataBeans;
@@ -34,6 +37,10 @@ public class MapFinish1Fragment extends BaseFragment {
 
     @Override
     protected void initViews() {
+        Integer gender = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_GENDER, "0"));
+        if(gender==1){
+            iv_xb.setImageDrawable(getResources().getDrawable(R.mipmap.ic_ren_nan));
+        }
 
         Bundle bundle = getArguments();
         if (bundle != null) {

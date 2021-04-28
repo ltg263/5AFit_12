@@ -301,6 +301,7 @@ public class HomeFourFragment extends BaseFragment {
         mTvNickName.setText(data.getNickName());
         mTvExplain.setText(data.getExplain());
         SharedUtils.singleton().put(ConstValues.USER_AGE,data.getAge());
+        SharedUtils.singleton().put(ConstValues.USER_GENDER,data.getGender());
 
         if(StringUtil.isBlank(data.getLevelExpireTime())){
             return;
