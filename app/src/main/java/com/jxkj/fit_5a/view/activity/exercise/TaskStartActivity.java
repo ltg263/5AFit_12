@@ -23,6 +23,7 @@ import com.jxkj.fit_5a.lanya.Ble4_0Util;
 import com.jxkj.fit_5a.lanya.BleUtil;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.activity.exercise.landscape.MotorPatternActivity;
+import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
 
 import java.util.Arrays;
@@ -63,7 +64,12 @@ public class TaskStartActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.rl_sbgl:
-                IntentUtils.getInstence().intent(this,HistoryEquipmentActivity.class);
+                List<HistoryEquipmentData> lists = SharedHistoryEquipment.singleton().getSharedHistoryEquipment();
+                if(lists!=null && lists.size()>0){
+                    IntentUtils.getInstence().intent(this,HistoryEquipmentActivity.class);
+                    return;
+                }
+                FacilityAddSbActivity.intentActivity(this);
                 break;
             case R.id.btn_start:
                 if(tv_lianjie.getText().toString().equals("暂未连接设备")){

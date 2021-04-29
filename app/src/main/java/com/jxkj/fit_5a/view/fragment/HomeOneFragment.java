@@ -29,11 +29,13 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AATooltip;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
+import com.jxkj.fit_5a.base.HistoryEquipmentData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
+import com.jxkj.fit_5a.conpoment.utils.SharedHistoryEquipment;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.AdListData;
 import com.jxkj.fit_5a.entity.AdminInspireBean;
@@ -301,7 +303,12 @@ public class HomeOneFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_left_text:
-                IntentUtils.getInstence().intent(getActivity(),HistoryEquipmentActivity.class);
+                List<HistoryEquipmentData> lists = SharedHistoryEquipment.singleton().getSharedHistoryEquipment();
+                if(lists!=null && lists.size()>0){
+                    IntentUtils.getInstence().intent(getActivity(),HistoryEquipmentActivity.class);
+                    return;
+                }
+                FacilityAddSbActivity.intentActivity(getActivity());
                 break;
             case R.id.tv_right_text:
                 IntentUtils.getInstence().intent(getActivity(), FacilityAddSbActivity.class,"type","00");
