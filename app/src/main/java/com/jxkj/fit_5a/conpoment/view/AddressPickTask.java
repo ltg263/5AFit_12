@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import com.alibaba.fastjson.JSON;
+import com.jxkj.fit_5a.R;
 
 import java.util.ArrayList;
 
@@ -106,6 +107,7 @@ public class AddressPickTask extends AsyncTask<String, Void, ArrayList<Province>
         if (result.size() > 0) {
             AddressPicker picker = new AddressPicker(activity, result);
             picker.setCanLoop(true);
+            picker.setSelectedTextColor(activity.getResources().getColor(R.color.color_text_theme));
             picker.setHideProvince(hideProvince);
             picker.setHideCounty(hideCounty);
             picker.setWheelModeEnable(true);

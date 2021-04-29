@@ -164,7 +164,7 @@ public class ShoppingActivity extends BaseActivity {
                     @Override
                     public void onNext(Result result) {
                         if(isDataInfoSucceed(result)){
-                            getusable_not_obtained();
+//                            getusable_not_obtained();
                             ToastUtils.showShort("领取成功");
                         }
                     }

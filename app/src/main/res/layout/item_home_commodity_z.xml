@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/dimen_15dp"
     android:layout_marginTop="@dimen/dp_10"
-    android:gravity="center_vertical"
     android:layout_marginBottom="@dimen/dp_10"
     android:background="@color/color_ffffff"
+    android:gravity="center_vertical"
     android:orientation="vertical">
 
 
@@ -22,21 +22,34 @@
 
     <TextView
         android:id="@+id/tv_shop_title"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+
         android:maxLines="1"
-        android:padding="@dimen/dp_10"
+        android:padding="@dimen/dimen_5dp"
         android:singleLine="true"
-        android:text="XXXX运动手环积分专..."
+        android:text="0"
         android:textColor="@color/color_333333"
         android:textSize="@dimen/dimen_14dp" />
+
+    <TextView
+        android:id="@+id/tv_shop_titlef"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dimen_5dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:minLines="2"
+        android:text=""
+        android:textColor="@color/color_666666"
+        android:textSize="12sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_3dp"
         android:layout_marginTop="@dimen/dimen_5dp"
+        android:layout_marginLeft="@dimen/dimen_3dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -50,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_5dp"
-            android:text="4890"
+            android:text="0"
             android:textColor="@color/color_333333"
             android:textSize="@dimen/sp_14" />
 
@@ -60,21 +73,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginStart="@dimen/dimen_5dp"
-            android:text="￥368"
-            android:textColor="#cccccc"
+            android:text="￥0"
+            android:textColor="@color/color_333333"
             android:textSize="11dp" />
-        <TextView
-            android:id="@+id/tv_shop_titlef"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dimen_3dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:visibility="gone"
-            android:minLines="2"
-            android:text=""
-            android:textColor="@color/color_666666"
-            android:textSize="12sp" />
 
 
     </LinearLayout>

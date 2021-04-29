@@ -17,6 +17,8 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.SignLogData;
 import com.jxkj.fit_5a.base.TaskListBase;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.view.adapter.HomeSignHdrwAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeSignRcrwAdapter;
@@ -63,6 +65,7 @@ public class TaskSignActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        mTvJifenNum.setText(SharedUtils.singleton().get(ConstValues.MY_INTEGRAL,""));
         getUserSignLog();
         getUserTaskList(2);
         getUserTaskList(4);
