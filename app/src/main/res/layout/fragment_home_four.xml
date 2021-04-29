@@ -54,6 +54,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -69,19 +70,21 @@
                     android:id="@+id/on_iv_set"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:layout_alignTop="@id/tv_title"
+                    android:layout_alignBottom="@id/tv_title"
                     android:layout_toStartOf="@id/on_iv_msg"
-                    android:padding="@dimen/dp_10"
+                    android:padding="@dimen/dimen_12dp"
                     android:src="@drawable/icon_mine_set" />
 
                 <ImageView
                     android:id="@+id/on_iv_msg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/tv_title"
+                    android:layout_alignBottom="@id/tv_title"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/dimen_15dp"
                     android:layout_marginEnd="@dimen/dp_10"
-                    android:padding="@dimen/dp_10"
+                    android:padding="@dimen/dimen_12dp"
                     android:src="@drawable/icon_mine_msg" />
             </RelativeLayout>
 
@@ -154,7 +157,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/dimen_60dp"
-                            android:text="用户昵称"
+                            android:text="无"
                             android:textColor="@color/color_000000"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -165,7 +168,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/dp_10"
-                            android:text="加入内部圈子，结识同行，一起交流成长。"
+                            android:text="暂无个性签名"
                             android:textColor="@color/color_808080"
                             android:textSize="12sp" />
 
@@ -298,7 +301,6 @@
                         android:layout_height="@dimen/dimen_25dp"
                         android:layout_alignBottom="@id/rl"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="@dimen/dimen_15dp"
                         android:background="@drawable/shape_mine_jb"
                         android:gravity="center"
                         android:text="个人主页"

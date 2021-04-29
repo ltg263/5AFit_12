@@ -137,7 +137,7 @@
                             android:drawablePadding="@dimen/dp_10"
                             android:gravity="end"
                             android:padding="@dimen/dp_10"
-                            android:text=""
+                            android:text="暂无个性签名"
                             android:textColor="@color/color_999999"
                             android:textSize="14sp" />
                     </LinearLayout>

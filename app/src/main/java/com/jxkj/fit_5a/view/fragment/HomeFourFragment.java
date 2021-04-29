@@ -299,7 +299,9 @@ public class HomeFourFragment extends BaseFragment {
         }
         GlideImageUtils.setGlideImage(getActivity(),data.getAvatar(),mIvAvatar);
         mTvNickName.setText(data.getNickName());
-        mTvExplain.setText(data.getExplain());
+        if(StringUtil.isNotBlank(data.getExplain())){
+            mTvExplain.setText(data.getExplain());
+        }
         SharedUtils.singleton().put(ConstValues.USER_AGE,data.getAge());
         SharedUtils.singleton().put(ConstValues.USER_GENDER,data.getGender());
 

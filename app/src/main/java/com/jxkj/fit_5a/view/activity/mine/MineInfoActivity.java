@@ -168,7 +168,9 @@ public class MineInfoActivity extends BaseActivity {
 
                 });
         mTvInfo1.setText(data.getNickName());
-        mTvInfo2.setText(data.getExplain());
+        if(StringUtil.isNotBlank(data.getExplain())){
+            mTvInfo2.setText(data.getExplain());
+        }
         mTvInfo3.setText(data.getRegion());
 
     }
