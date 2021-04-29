@@ -6,90 +6,14 @@
     android:background="@color/color_ffffff"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rl_actionbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/ic_exercord_top">
-
-        <ImageView
-            android:id="@+id/iv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_exercord_top"
-            android:visibility="invisible" />
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp_10"
-            android:src="@drawable/icon_jiantou_zuo_ff" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignTop="@id/iv"
-            android:layout_alignBottom="@id/iv"
-            android:adjustViewBounds="true"
-            android:background="@drawable/btn_shape_bj_fff" />
-
-
-        <TextView
-            android:id="@id/tv1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/iv_back"
-            android:gravity="center"
-            android:padding="@dimen/dp_10"
-            android:text="运动记录"
-            android:textColor="@color/color_ffffff"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv1"
-            android:gravity="center"
-            android:paddingHorizontal="@dimen/dp_10"
-            android:text="Heart rate pattern"
-            android:textColor="#F5F5F5"
-            android:textSize="12sp"/>
-
-        <TextView
-            android:id="@+id/tv_sb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:drawableStart="@drawable/icon_home_left_b"
-            android:drawableEnd="@drawable/icon_jiantou_xia_ff"
-            android:layout_alignBottom="@id/iv_back"
-            android:drawablePadding="@dimen/dimen_5dp"
-            android:layout_alignTop="@id/iv_back"
-            android:gravity="center"
-            android:text="器材筛选"
-            android:textColor="@color/color_ffffff"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dimen_60dp"
         app:srlAccentColor="#00000000"
         app:srlEnablePreviewInEditMode="true"
         app:srlPrimaryColor="#00000000">
-
-        <com.jxkj.fit_5a.conpoment.view.ClassicsHeader
-
-            android:layout_width="match_parent"
-            android:layout_height="35dp" />
-
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -101,10 +25,80 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/rl_actionbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/ic_exercord_top">
+
+                    <ImageView
+                        android:id="@+id/iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_exercord_top"
+                        android:visibility="invisible" />
+
+                    <ImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:src="@drawable/icon_jiantou_zuo_ff" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignTop="@id/iv"
+                        android:layout_alignBottom="@id/iv"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/btn_shape_bj_fff" />
+
+
+                    <TextView
+                        android:id="@id/tv1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/iv_back"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_10"
+                        android:text="运动记录"
+                        android:textColor="@color/color_ffffff"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv1"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/dp_10"
+                        android:text="Heart rate pattern"
+                        android:textColor="#F5F5F5"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_sb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/iv_back"
+                        android:layout_alignBottom="@id/iv_back"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:drawableStart="@drawable/icon_home_left_b"
+                        android:drawableEnd="@drawable/icon_jiantou_xia_ff"
+                        android:drawablePadding="@dimen/dimen_5dp"
+                        android:gravity="center"
+                        android:text="器材筛选"
+                        android:textColor="@color/color_ffffff"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="270dp"
                     android:layout_marginHorizontal="@dimen/dimen_15dp"
-                    android:layout_marginTop="@dimen/dimen_75dp"
+                    android:layout_marginTop="-80dp"
                     android:background="@drawable/ic_shade_img">
 
                     <com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView

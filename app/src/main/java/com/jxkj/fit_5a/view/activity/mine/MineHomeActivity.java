@@ -263,7 +263,7 @@ public class MineHomeActivity extends BaseActivity {
         mTvGz.setText(data.getFollowCount());
         mTvFs.setText(data.getFansCount());
         mTvSc.setText(data.getFavoriteCount());
-        mTvLw.setText(data.getGiftCount());
+        mTvLw.setText(data.getLikeCount());
 //        if(data.getRelation()==4){
 //
 //        }

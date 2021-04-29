@@ -216,7 +216,9 @@ public class CreateCircleActivity extends BaseActivity {
                     public void onNext(Result<TaskCircleQueryBean> result) {
                         if (isDataInfoSucceed(result)) {
                             List<TaskCircleQueryBean.ListBean> data = result.getData().getList();
-
+                            if(data==null || data.size()==0){
+                                return;
+                            }
                             List<String> listMblx = new ArrayList<>();
                             for (int i = 0; i < data.size(); i++) {
                                 listMblx.add(data.get(i).getDeviceTypeStr() + "");
@@ -288,7 +290,6 @@ public class CreateCircleActivity extends BaseActivity {
         }
         show();
         PostUser.CreateCircle postUser = new PostUser.CreateCircle();
-        avatar = "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1091405991,859863778&fm=26&gp=0.jpg";
         postUser.setBgImg(avatar);
         postUser.setDeviceType(deviceType);
         postUser.setName(mEt1.getText().toString());

@@ -43,6 +43,7 @@ import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.adapter.HomeTopAdapter;
 import com.jxkj.fit_5a.view.adapter.PopupWindwSbAdapter;
 import com.jxkj.fit_5a.view.adapter.TwoJlxqAdapter;
+import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -130,6 +131,7 @@ public class ExerciseRecordActivity extends BaseActivity {
         getSportLogStats();
         queryDeviceTypeLists();
 
+        refreshLayout.setRefreshHeader(new MaterialHeader(this).setShowBezierWave(false));
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
