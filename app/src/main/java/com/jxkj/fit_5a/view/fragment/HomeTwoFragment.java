@@ -99,6 +99,7 @@ public class HomeTwoFragment extends BaseFragment {
         return R.layout.fragment_home_two;
     }
 
+
     @Override
     protected void initViews() {
         initRvUi();
