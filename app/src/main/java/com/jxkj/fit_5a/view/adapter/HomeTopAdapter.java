@@ -39,9 +39,9 @@ public class HomeTopAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_4))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("平均时间")){
-            helper.setText(R.id.tv_v,stats.getAvgDuration()+"s")
+            helper.setText(R.id.tv_v, StringUtil.getTimeGeShiYw(stats.getAvgDuration()))
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_4))
-                    .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
+                    .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fde5e5);
         }else if(item.equals("BAI")){
             helper.setText(R.id.tv_v,stats.getBai()+"BAI")
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.drawable.ic_home_top_4))
