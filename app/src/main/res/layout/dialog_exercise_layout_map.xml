@@ -32,7 +32,7 @@
                     android:id="@+id/tv_Distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0km"
+                    android:text="N/A"
                     android:textColor="@color/color_000000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -63,7 +63,7 @@
                     android:id="@+id/tv_speed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0km/h"
+                    android:text="N/A"
                     android:textColor="@color/color_000000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -115,7 +115,7 @@
                     android:id="@+id/tv_Calories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0cal"
+                    android:text="N/A"
                     android:textColor="@color/color_000000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -146,7 +146,7 @@
                     android:id="@+id/tv_Pulse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0dpm"
+                    android:text="N/A"
                     android:textColor="@color/color_000000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -185,7 +185,7 @@
                     android:id="@+id/tv_Watt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0w"
+                    android:text="N/A"
                     android:textColor="@color/color_000000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -205,10 +205,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_hcj"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:visibility="invisible"
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
 
@@ -216,7 +218,7 @@
                     android:id="@+id/tv_Incline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="--"
+                    android:text="N/A"
                     android:textColor="@color/color_000000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -226,7 +228,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_3dp"
                     android:drawablePadding="@dimen/dimen_2dp"
-                    android:text="坡度"
+                    android:text="划桨次数"
                     android:textColor="@color/color_666666"
                     android:textSize="10sp"
                     android:textStyle="bold" />
@@ -313,7 +315,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/dimen_15dp"
                         android:gravity="center"
-                        android:text="0"
+                        android:text="N/A"
                         android:textColor="@color/color_000000"
                         android:textSize="18sp"
                         android:textStyle="bold" />

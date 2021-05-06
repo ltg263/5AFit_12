@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 
 
 public class PopupWindowTopicUtils_Map extends PopupWindow {
@@ -49,6 +50,7 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
         this.setBackgroundDrawable(dw);
         RelativeLayout rl = view.findViewById(R.id.rl);
         LinearLayout mLlBottom = view.findViewById(R.id.ll_bottom);
+        LinearLayout mll_hcj = view.findViewById(R.id.ll_hcj);
         ll_load = view.findViewById(R.id.ll_load);
         tv_Distance = view.findViewById(R.id.tv_Distance);
         tv_speed = view.findViewById(R.id.tv_speed);
@@ -58,6 +60,9 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
         tv_Watt = view.findViewById(R.id.tv_Watt);
         tv_Pulse = view.findViewById(R.id.tv_Pulse);
         tv_Incline = view.findViewById(R.id.tv_Incline);
+        if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]){
+            mll_hcj.setVisibility(View.VISIBLE);
+        }
         //mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框
         view.findViewById(R.id.iv_1).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,13 +154,32 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
     private float mCurrentPosX;
     private float mCurrentPosY;
     public void setTextViewStr(String tv_Distance, String tv_speed, String tv_time, String tv_Calories, String tv_Watt, String tv_Pulse,String tv_Incline) {
-        this.tv_Distance.setText(tv_Distance);
-        this.tv_speed.setText(tv_speed);
-        this.tv_time.setText(tv_time);
-        this.tv_Calories.setText(tv_Calories);
-        this.tv_Watt.setText(tv_Watt);
-        this.tv_Pulse.setText(tv_Pulse);
+        this.tv_Distance.setText(tv_Distance+ "km");//km
+        this.tv_speed.setText(tv_speed+ "km/h");//km/h
+        this.tv_Calories.setText(tv_Calories+ "kcal");//kcal
+        this.tv_Watt.setText(tv_Watt+ "w");//w
+        this.tv_Pulse.setText(tv_Pulse+ "bpm");//bpm
         this.tv_Incline.setText(tv_Incline);
+        if(Double.parseDouble(tv_Distance)==0){
+            this.tv_Distance.setText("N/A");
+        }
+        if(Double.parseDouble(tv_speed)==0){
+            this.tv_speed.setText("N/A");
+        }
+        if(Double.parseDouble(tv_Calories)==0){
+            this.tv_Calories.setText("N/A");
+        }
+        if(Double.parseDouble(tv_Watt)==0){
+            this.tv_Watt.setText("N/A");
+        }
+        if(Double.parseDouble(tv_Pulse)==0){
+            this.tv_Pulse.setText("N/A");
+        }
+        if(Double.parseDouble(tv_Incline)==0){
+            this.tv_Incline.setText("N/A");
+        }
+
+        this.tv_time.setText(tv_time);
     }
 
 

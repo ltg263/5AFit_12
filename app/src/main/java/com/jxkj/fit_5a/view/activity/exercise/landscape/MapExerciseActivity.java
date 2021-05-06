@@ -545,7 +545,7 @@ public class MapExerciseActivity extends Activity {
 
         setBpmDataBeanTime(Pulse);
         mTvTime.setText(ZTime);
-        window.setTextViewStr(Distance + "km", speed + "km/h", ZTime, Calories + "kcal", Watt + "w", Pulse + "bpm","--");
+        window.setTextViewStr(Distance+"", speed + "", ZTime, Calories + "", Watt + "", Pulse + "","0");
 
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
                 "0",String.valueOf(loadCurrent),String.valueOf(loadCurrent),
@@ -608,7 +608,7 @@ public class MapExerciseActivity extends Activity {
 
         setBpmDataBeanTime(Pulse);
         mTvTime.setText(ZTime);
-        window.setTextViewStr(Distance + "km", speed + "km/h", ZTime, Calories + "kcal", 0 + "w", Pulse + "bpm","--");
+        window.setTextViewStr(Distance + "", speed + "", ZTime, Calories + "", 0 + "", Pulse + "","0");
 
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
                 String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
@@ -687,7 +687,7 @@ public class MapExerciseActivity extends Activity {
 
         setBpmDataBeanTime(Pulse);
         mTvTime.setText(ZTime);
-        window.setTextViewStr(Distance + "km", stroke + "km/h", ZTime, Calories + "kcal", Watt + "w", Pulse + "bpm","0");
+        window.setTextViewStr(Distance + "", stroke + "", ZTime, Calories + "", Watt + "", Pulse + "","0");
 
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
                 "0",String.valueOf(loadCurrent),String.valueOf(loadCurrent), String.valueOf(spm),String.valueOf(stroke),String.valueOf(System.currentTimeMillis()),String.valueOf(Watt)));
@@ -756,7 +756,7 @@ public class MapExerciseActivity extends Activity {
 
         setBpmDataBeanTime(Pulse);
         mTvTime.setText(ZTime);
-        window.setTextViewStr(Distance + "km", speed + "km/h", ZTime, Calories + "kcal", 0 + "w", Pulse + "bpm",Incline+"");
+        window.setTextViewStr(Distance + "", speed + "", ZTime, Calories + "", 0 + "", Pulse + "",Incline+"");
 
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
                 Incline+"",null,"0","0",String.valueOf(speed),String.valueOf(System.currentTimeMillis()),"0"));
