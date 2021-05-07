@@ -12,7 +12,7 @@
         android:layout_height="@dimen/dimen_0.5dp"
         android:background="@color/line_color" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.jxkj.fit_5a.conpoment.view.SwipeRecyclerView
         android:id="@+id/rv_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

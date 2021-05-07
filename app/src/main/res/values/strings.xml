@@ -15,7 +15,7 @@
     <string name="current_time">当前时间</string>
 
 
-    <string name="course_patten">1.课程模式每段时间 = 用户设定总时间/10\n2.课程模式强度可由用户自定义调整\n （1）选择“-”，“+”为整体调整\n （2）手动触屏提拉为单个时间段的调整\n （3）选择“   ”为恢复初始默认值</string>
+    <string name="course_patten">1.间歇训练每段时间 = 用户设定总时间/10\n2.间歇训练强度可由用户自定义调整\n （1）选择“-”，“+”为整体调整\n （2）手动触屏提拉为单个时间段的调整\n （3）选择“   ”为恢复初始默认值</string>
     <string name="jianli_shuoming">1.输入目标完成的奖励积分\n2.完成每日目标均有奖励积分\n3.奖励积分每日递增</string>
     <string name="error_gif">x or y bound size should be at least %1$dpx and file size should be no more than %2$sM</string>
 

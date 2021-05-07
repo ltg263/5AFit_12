@@ -85,7 +85,7 @@ public class TaskStartActivity extends BaseActivity {
                 }
 
                 if(ConstValues_Ly.METER_ID!=ConstValues_Ly.METER_ID_S[0] && ConstValues_Ly.METER_ID!=ConstValues_Ly.METER_ID_S[3]){
-                    ToastUtils.showShort("该设备不支持课程模式");
+                    ToastUtils.showShort("该设备不支持间歇训练");
                     return;
                 }
 
