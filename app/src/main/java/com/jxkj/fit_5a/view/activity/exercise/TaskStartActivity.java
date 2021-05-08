@@ -25,6 +25,7 @@ import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.activity.exercise.landscape.MotorPatternActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
+import com.jxkj.fit_5a.view.fragment.HomeTwoFragment;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,9 +51,8 @@ public class TaskStartActivity extends BaseActivity {
     protected void initViews() {
         mTvTitle.setText("经典运动");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
-        List<HistoryEquipmentData> lists = SharedHistoryEquipment.singleton().getSharedHistoryEquipment();
-        if(lists!=null && lists.size()>0 && StringUtil.isBlank(PopupWindowLanYan.BleName)){
-            goLianJie(lists.get(0));
+        if(StringUtil.isBlank(PopupWindowLanYan.BleName)){
+            goLianJie(this,tv_lianjie);
         }
     }
 
@@ -112,11 +112,18 @@ public class TaskStartActivity extends BaseActivity {
             tv_lianjie.setText(PopupWindowLanYan.BleName);
         }
     }
-
-    private void goLianJie(HistoryEquipmentData historyEquipmentData) {
+    public static TextView tv;
+    public static void goLianJie(BaseActivity mBaseActivity,TextView tv) {
+        TaskStartActivity.tv = tv;
+        List<HistoryEquipmentData> historyEquipment = SharedHistoryEquipment.singleton().getSharedHistoryEquipment();
+        if(historyEquipment==null || historyEquipment.size()==0){
+            ToastUtils.showLong("请先链接设备");
+            return;
+        }
+        HistoryEquipmentData historyEquipmentData = historyEquipment.get(0);
         Log.w("historyEquipmentData","historyEquipmentData:"+historyEquipmentData.toString());
         ConstValues_Ly.BRAND_ID = historyEquipmentData.getBrandId();
-        PopupWindowLanYan.ble4Util = new Ble4_0Util(this);
+        PopupWindowLanYan.ble4Util = new Ble4_0Util(mBaseActivity);
         PopupWindowLanYan.ble4Util.init();
         String[] uuidData = new String[3];
         uuidData[0] = historyEquipmentData.getServiceUUid();
@@ -130,15 +137,15 @@ public class TaskStartActivity extends BaseActivity {
                 String value = null;
                 PopupWindowLanYan.BleName = "";
                 if (newState == BluetoothGatt.STATE_CONNECTED){
-                    dismiss();
+                    mBaseActivity.dismiss();
                     PopupWindowLanYan.BleName = historyEquipmentData.getName();
                     ConstValues_Ly.DEVICE_TYPE_ID_URL = historyEquipmentData.getDeviceTypeId();
                     value = "连接成功";
                 } else if (newState == BluetoothGatt.STATE_DISCONNECTED){
-                    dismiss();
+                    mBaseActivity.dismiss();
                     value = "连接失败";
                 } else if(newState == BluetoothGatt.STATE_CONNECTING){
-                    show("蓝牙连接中...");
+                    mBaseActivity.show("蓝牙连接中...");
                     value = "连接设备中";
                 } else if(newState == BluetoothGatt.STATE_DISCONNECTING){
                     value = "断开连接中";
@@ -156,7 +163,7 @@ public class TaskStartActivity extends BaseActivity {
 
             @Override
             public void ReadValue(byte[] value) {
-                dismiss();
+                mBaseActivity.dismiss();
                 if (linkHandler != null){
                     Message message = new Message();
                     message.what = 101;
@@ -168,7 +175,7 @@ public class TaskStartActivity extends BaseActivity {
         });
     }
 
-    private Handler linkHandler = new Handler(new Handler.Callback() {
+    public static Handler linkHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
             switch (message.what) {
@@ -178,7 +185,9 @@ public class TaskStartActivity extends BaseActivity {
                     if(message.obj.toString().equals("连接成功")){
                         TimeThreadUtils.sendDataA2();
                         if(StringUtil.isNotBlank(PopupWindowLanYan.BleName)){
-                            tv_lianjie.setText(PopupWindowLanYan.BleName);
+                            if(TaskStartActivity.tv!=null){
+                                TaskStartActivity.tv.setText(PopupWindowLanYan.BleName);
+                            }
                         }
                     }
                     break;

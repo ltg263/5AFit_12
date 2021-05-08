@@ -603,6 +603,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_yundong_go" />
+        android:src="@drawable/ic_yundong_go_h" />
 
 </RelativeLayout>

@@ -139,7 +139,7 @@ public class RatePatternActivity extends BaseActivity {
         }
         tv_movingTye.setText(movingType);
 //        GlideImgLoader.setGlideImage(this,);
-        Glide.with(this).load(R.drawable.ic_yundong_go).listener(new RequestListener() {
+        Glide.with(this).load(R.drawable.ic_yundong_go_h).listener(new RequestListener() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                 return false;

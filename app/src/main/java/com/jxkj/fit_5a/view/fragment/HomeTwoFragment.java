@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
+import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.HistoryEquipmentData;
 import com.jxkj.fit_5a.base.Result;
@@ -155,7 +156,7 @@ public class HomeTwoFragment extends BaseFragment {
 //                    MotorPatternActivity.startIntentActivity(getActivity());
                 } else {
                     if (tv_lianjie.getText().toString().equals("暂未连接设备")) {
-                        ToastUtils.showShort("请先链接运动设备");
+                        TaskStartActivity.goLianJie((BaseActivity) getActivity(),tv_lianjie);
                         return;
                     }
                     if (view.getId() == R.id.tv_go_1) {
