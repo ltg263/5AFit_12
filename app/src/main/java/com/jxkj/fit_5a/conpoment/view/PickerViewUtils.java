@@ -23,6 +23,37 @@ public class PickerViewUtils {
     /**
      * 自定义选择器
      * @param mContext
+     * @param title
+     */
+    public static void selectorCustomSf(Context mContext, final List<String> listS,final List<String> listF, String title, final TextView tv1, final TextView tv2){
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(mContext, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3 , View v) {
+                tv1.setText(listS.get(options1).replace("h",""));
+                tv2.setText(listF.get(option2).replace("min",""));
+            }
+        }) .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
+            @Override
+            public void onOptionsSelectChanged(int options1, int options2, int options3) {
+
+            }
+        })
+                .setTitleText(title)
+                .setDividerColor(Color.BLACK)
+                .setSubmitColor(Color.BLACK)
+                .setCancelColor(Color.BLACK)
+                .setTextColorCenter(mContext.getResources().getColor(R.color.color_text_theme)) //设置选中项文字颜色
+                .setContentTextSize(16)
+                .build();
+
+        pvOptions.setNPicker(listS,listF,null);//添加数据源
+        pvOptions.show();
+    }
+
+
+    /**
+     * 自定义选择器
+     * @param mContext
      * @param list
      * @param title
      * @param textView
@@ -39,7 +70,7 @@ public class PickerViewUtils {
 
             }
         })
-        .setTitleText(title)
+                .setTitleText(title)
                 .setDividerColor(Color.BLACK)
                 .setSubmitColor(Color.BLACK)
                 .setCancelColor(Color.BLACK)

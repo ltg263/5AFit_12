@@ -89,12 +89,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_25dp"
-                    android:layout_marginTop="@dimen/dimen_25dp">
-
+                    android:layout_marginTop="@dimen/dimen_15dp">
+                    <TextView
+                        android:id="@+id/tv_text_top"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/jb_shape_line_fff_zx"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_10"
+                        android:text="无"
+                        android:textColor="@color/color_666666"
+                        android:textSize="12sp" />
                     <TextView
                         android:id="@+id/tv_tz"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_5dp"
+                        android:layout_below="@id/tv_text_top"
                         android:layout_centerHorizontal="true"
                         android:text="60"
                         android:textColor="@color/color_ffffff"

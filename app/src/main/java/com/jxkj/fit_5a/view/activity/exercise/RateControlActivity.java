@@ -19,7 +19,6 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
-import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
@@ -30,7 +29,6 @@ import com.jxkj.fit_5a.view.adapter.FacilityManageAdapter;
 import com.zkk.view.rulerview.RulerView;
 
 import java.util.ArrayList;
-import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -69,6 +67,8 @@ public class RateControlActivity extends BaseActivity {
     TextView mTvTz;
     @BindView(R.id.tv_xlzb)
     TextView mTvXlzb;
+    @BindView(R.id.tv_text_top)
+    TextView tv_text_top;
     @BindView(R.id.tv_ydsj)
     TextView mTvYdsj;
     @BindView(R.id.tv_text)
@@ -79,7 +79,7 @@ public class RateControlActivity extends BaseActivity {
     private FacilityManageAdapter mFacilityManageAdapter;
     private List<TemplateBean.ListBean> textList = new ArrayList<>();
     private List<BpmDataBean> mBpmDataBeans = new ArrayList<>();
-    String movingTye = "";
+    String movingType = "";
     int age = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_AGE,"0"));
     int bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
     @Override
@@ -93,7 +93,30 @@ public class RateControlActivity extends BaseActivity {
         mTvTitle.setText("心率控制");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         mIvRightimg.setImageDrawable(getResources().getDrawable(R.drawable.icon_add_right));
-        mTvRighttext.setText("新增");
+//        mTvRighttext.setText("新增");
+
+        listTimeS.clear();
+        listTimeS.add("0h");
+        listTimeS.add("1h");
+        listTimeS.add("2h");
+        listTimeS.add("3h");
+        listTimeS.add("4h");
+        listTimeS.add("5h");
+        listTimeS.add("6h");
+        listTimeF.clear();
+        listTimeF.add("0min");
+        listTimeF.add("5min");
+        listTimeF.add("10min");
+        listTimeF.add("15min");
+        listTimeF.add("20min");
+        listTimeF.add("25min");
+        listTimeF.add("30min");
+        listTimeF.add("35min");
+        listTimeF.add("40min");
+        listTimeF.add("45min");
+        listTimeF.add("50min");
+        listTimeF.add("55min");
+
 
         bfb5 = (int) ((maxV-age)*0.5);
         bfb6 = (int) ((maxV-age)*0.6);
@@ -163,21 +186,28 @@ public class RateControlActivity extends BaseActivity {
     private void setMovingTye(int value) {
         mTvTz.setText(value+ "");
         if(value>0 && value<bfb5){
-            movingTye = "非运动区间(0~50%)(0bpm~"+bfb5+"bpm)";
+            movingType = "非运动区间(0~50%)(0bpm~"+bfb5+"bpm)";
+            tv_text_top.setText("非运动区间(0~50%)(0次/分钟~"+bfb5+"次/分钟)");
         }else if(value>bfb5 && value<bfb6){
-            movingTye = "热身心率区间(50~60%)("+bfb5+"bpm~"+bfb6+"bpm)";
+            movingType = "热身心率区间(50~60%)("+bfb5+"bpm~"+bfb6+"bpm)";
+            tv_text_top.setText("非运动区间(50~60%)("+bfb5+"次/分钟~"+bfb6+"次/分钟)");
         }else if(value>bfb6 && value<bfb7){
-            movingTye = "燃脂心率区间(60~70%)("+bfb6+"bpm~"+bfb7+"bpm)";
+            movingType = "燃脂心率区间(60~70%)("+bfb6+"bpm~"+bfb7+"bpm)";
+            tv_text_top.setText("非运动区间(60~70%)("+bfb6+"次/分钟~"+bfb7+"次/分钟)");
         }else if(value>bfb7 && value<bfb8){
-            movingTye = "有氧耐力心率区间(70~80%)("+bfb7+"bpm~"+bfb8+"bpm)";
+            movingType = "有氧耐力心率区间(70~80%)("+bfb7+"bpm~"+bfb8+"bpm)";
+            tv_text_top.setText("非运动区间(70~80%)("+bfb7+"次/分钟~"+bfb8+"次/分钟)");
         }else if(value>bfb8 && value<bfb9){
-            movingTye = "无氧耐力心率区间(80~90%)("+bfb8+"bpm~"+bfb9+"bpm)";
+            movingType = "无氧耐力心率区间(80~90%)("+bfb8+"bpm~"+bfb9+"bpm)";
+            tv_text_top.setText("非运动区间(80~90%)("+bfb8+"次/分钟~"+bfb9+"次/分钟)");
         }else if(value>bfb9){
-            movingTye = "极限心率区间(90~100%)("+bfb9+"bpm~"+bfb+"bpm)";
+            movingType = "极限心率区间(90~100%)("+bfb9+"bpm~"+bfb+"bpm)";
+            tv_text_top.setText("非运动区间(90~100%)("+bfb9+"次/分钟~"+bfb+"次/分钟)");
         }
     }
 
-    List<String> listTime = new ArrayList<>();
+    List<String> listTimeS = new ArrayList<>();
+    List<String> listTimeF = new ArrayList<>();
 
     @OnClick({R.id.ll_back,R.id.tv_righttext, R.id.iv_rightimg, R.id.tv_ok, R.id.rl_1, R.id.rl_2})
     public void onViewClicked(View view) {
@@ -192,32 +222,18 @@ public class RateControlActivity extends BaseActivity {
             case R.id.tv_ok:
                 if(PopupWindowLanYan.ble4Util!=null && PopupWindowLanYan.ble4Util.isConnect()){
                     Intent mIntent = new Intent(this, RatePatternActivity.class);
-                    mIntent.putExtra("movingTye",movingTye);
+                    mIntent.putExtra("movingType",movingType);
+                    int ZTimeOK =  Integer.parseInt(mTvSj.getText().toString())*60*60+Integer.parseInt(mTvJl.getText().toString())*60;
+                    mIntent.putExtra("movingType",movingType);
+                    mIntent.putExtra("ZTimeOK",ZTimeOK);
                     mIntent.putParcelableArrayListExtra("mBpmDataBeans", (ArrayList<? extends Parcelable>) mBpmDataBeans);
                     startActivity(mIntent);
                     finish();
                 }
                 break;
             case R.id.rl_1:
-                listTime.clear();
-                listTime.add("0");
-                listTime.add("1");
-                listTime.add("2");
-                listTime.add("3");
-                listTime.add("4");
-                listTime.add("5");
-                listTime.add("6");
-                PickerViewUtils.selectorCustom(this, listTime, "运动时间", mTvSj);
-                break;
             case R.id.rl_2:
-                listTime.clear();
-                listTime.add("0");
-                listTime.add("20");
-                listTime.add("30");
-                listTime.add("40");
-                listTime.add("50");
-                listTime.add("60");
-                PickerViewUtils.selectorCustom(this, listTime, "运动时间", mTvJl);
+                PickerViewUtils.selectorCustomSf(this, listTimeS,listTimeF, "请选择", mTvSj,mTvJl);
                 break;
         }
     }

@@ -4,16 +4,26 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
@@ -27,6 +37,9 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.PostUser;
+import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
+import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
@@ -40,6 +53,7 @@ import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineSetActivity;
 import com.jxkj.fit_5a.view.adapter.RatePatternAdapter;
+import com.jxkj.fit_5a.view.adapter.TaskFinishListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,14 +66,16 @@ public class RatePatternActivity extends BaseActivity {
 
     @BindView(R.id.AAChartView)
     AAChartView mAAChartView;
-    @BindView(R.id.rv_list)
-    RecyclerView mRvList;
+    @BindView(R.id.rv_list_bpm)
+    RecyclerView mRvListBpm;
     @BindView(R.id.sv)
     StepArcView mSv;
     @BindView(R.id.ll_xl)
     ImageView mLlXl;
     @BindView(R.id.ll_zh)
     ImageView mLlZh;
+    @BindView(R.id.iv_go_img)
+    ImageView iv_go_img;
     @BindView(R.id.ll_qd)
     LinearLayout mLlQd;
     @BindView(R.id.tv_top_xl)
@@ -76,18 +92,31 @@ public class RatePatternActivity extends BaseActivity {
     TextView tv_movingTye;
     @BindView(R.id.tv_distance)
     TextView tv_distance;
+    @BindView(R.id.tv_current_xz)
+    TextView tv_current_xz;
+    @BindView(R.id.tv_ztime)
+    TextView tv_ztime;
+    @BindView(R.id.tv_kcal)
+    TextView tv_kcal;
+    @BindView(R.id.tv_rpm)
+    TextView tv_rpm;
+    @BindView(R.id.tv_load)
+    TextView tv_load;
     @BindView(R.id.ll_lat)
     LinearLayout ll_lat;
+    @BindView(R.id.ll_zh_top)
+    LinearLayout ll_zh_top;
     int loadCurrent = 1;
     int loadMax = ConstValues_Ly.maxLoad;
-    private RatePatternAdapter mRatePatternAdapter;
+    private TaskFinishListAdapter mTaskFinishListAdapter;
 //130528199003037903
     int currentPos = 1;
     long time = 0;
     private List<Byte> mData1 = new ArrayList<>();
     private List<Byte> mData2 = new ArrayList<>();
     private List<Byte> mData3 = new ArrayList<>();
-    private String movingTye;
+    private String movingType;
+    private int ZTimeOK;
     private ArrayList<BpmDataBean> mBpmDataBeans;
 
     @Override
@@ -103,14 +132,28 @@ public class RatePatternActivity extends BaseActivity {
             return;
         }
         initAAChar();
-        movingTye = getIntent().getStringExtra("movingTye");
+        movingType = getIntent().getStringExtra("movingType");
+        ZTimeOK = getIntent().getIntExtra("ZTimeOK",0);
+        if(ZTimeOK>0){
+            isXl = true;
+        }
+        tv_movingTye.setText(movingType);
+//        GlideImgLoader.setGlideImage(this,);
+        Glide.with(this).load(R.drawable.ic_yundong_go).listener(new RequestListener() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                return false;
+            }
+            @Override
+            public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
+                if (resource instanceof GifDrawable) {
+                    //加载一次
+                    ((GifDrawable)resource).setLoopCount(1);
+                }
+                return false;
+            }
+        }).into(iv_go_img);
         mBpmDataBeans = getIntent().getParcelableArrayListExtra("mBpmDataBeans");
-        if(StringUtil.isBlank(movingTye) || mBpmDataBeans==null){
-            return;
-        }
-        if(StringUtil.isNotBlank(movingTye)){
-            tv_movingTye.setText(movingTye);
-        }
         if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]) ){
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
         }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
@@ -131,12 +174,12 @@ public class RatePatternActivity extends BaseActivity {
             TimeThreadUtils.sendDataA6(time,data);
         }
         mSv.setCurrentCount(100, 0);
-        mRatePatternAdapter = new RatePatternAdapter(null);
-        mRvList.setLayoutManager(new GridLayoutManager(this, 2));
-        mRvList.setHasFixedSize(true);
-        mRvList.setAdapter(mRatePatternAdapter);
+        mTaskFinishListAdapter = new TaskFinishListAdapter(mBpmDataBeans);
+        mRvListBpm.setLayoutManager(new LinearLayoutManager(this));
+        mRvListBpm.setHasFixedSize(true);
+        mRvListBpm.setAdapter(mTaskFinishListAdapter);
 
-        mRatePatternAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mTaskFinishListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 //                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
@@ -200,13 +243,13 @@ public class RatePatternActivity extends BaseActivity {
             element = new AASeriesElement()
                     .name("心率")
                     .lineWidth(1f)
-                    .color("#FFA1A1")
+                    .color("#FFB300")
                     .data(data1.toArray());
         }else if(currentPos==2){
             element = new AASeriesElement()
-                    .name("强度")
+                    .name("速度")
                     .lineWidth(1f)
-                    .color("#A1DFFF")
+                    .color("#00A2FF")
                     .data(data2.toArray());
         }else if(currentPos==3){
             element = new AASeriesElement()
@@ -342,12 +385,7 @@ public class RatePatternActivity extends BaseActivity {
         sportLogInfo.setStartTimestamp(String.valueOf(startTimestamp));
         sportLogInfo.setProtocolDeviceBrandParamId(11+""+'1');
         sportLogInfo.setHeartRateSource("2");//1=器材;2=藍牙心跳;3=Apple Watch
-
-        if(StringUtil.isNotBlank(movingTye)){
-            sportLogInfo.setTrainingMode("HeartRate");//目前只有HeartRate(心率)、Program(课程)
-        }else{
-            sportLogInfo.setTrainingMode("Program");
-        }
+        sportLogInfo.setTrainingMode("HeartRate");//目前只有HeartRate(心率)、Program(课程)
         sportLogInfo.setProtocolName("iconsole");
         PostUser.SportLogInfo.DetailsBean deleteDatabase = new PostUser.SportLogInfo.DetailsBean();
         deleteDatabase.setLogs(logs);
@@ -428,22 +466,10 @@ public class RatePatternActivity extends BaseActivity {
         if(Unit.equals("Stop")){
             return;
         }
-        tv_v.setText(loadCurrent+"/"+loadMax);
-        tv_time.setText(ZTime);
-        tv_distance.setText(Distance+"KM");
-        List<RatePatternBean> list = new ArrayList<>();
-        list.add(new RatePatternBean("卡路里",Calories+"kcal"));
-        list.add(new RatePatternBean("当前速度",speed+"km/h"));
-        list.add(new RatePatternBean("当前功率",Watt+"w"));
-        list.add(new RatePatternBean("当前段位",loadCurrent+""));
-        list.add(new RatePatternBean("RPM/SPM","--"));
-
-        mRatePatternAdapter.setNewData(list);
-        mRatePatternAdapter.notifyDataSetChanged();
-
+        setTextViewString(Calories+"",rpm+"",Pulse+"",speed+"",Distance+"",loadCurrent+"/"+loadMax,ZTime);
         setBpmDataBeanTime(Pulse);
         mData1.add((byte) Pulse);
-        mData2.add((byte) rpm);
+        mData2.add((byte) speed);
         mData3.add((byte) Watt);
         List<Byte> mData11= new ArrayList<>();
         if(mData1.size()>10){
@@ -473,7 +499,6 @@ public class RatePatternActivity extends BaseActivity {
                 String.valueOf(rpm),String.valueOf(speed),String.valueOf(System.currentTimeMillis()),String.valueOf(Watt)));
         return;
     }
-
 
     private void setData56(ArrayList<Integer> dataList) {
         int timeMinute =  dataList.get(0);//时间-分
@@ -508,21 +533,11 @@ public class RatePatternActivity extends BaseActivity {
         String re = "A2--->>>:时间："+ZTime+",速度："+speed+",转数1："+rpm1+",转数2："+rpm2+",距离："+Distance+",卡路里："+Calories
                 +",脉跳："+Pulse;
         Log.w("---》》》", re);
-        tv_time.setText(ZTime);
-        tv_distance.setText(Distance+"KM");
-        List<RatePatternBean> list = new ArrayList<>();
-        list.add(new RatePatternBean("卡路里",Calories+"kcal"));
-        list.add(new RatePatternBean("当前速度",speed+"km/h"));
-        list.add(new RatePatternBean("当前功率","0w"));
-        list.add(new RatePatternBean("当前段位","0"));
-        list.add(new RatePatternBean("RPM/SPM","0"));
 
-        mRatePatternAdapter.setNewData(list);
-        mRatePatternAdapter.notifyDataSetChanged();
-
+        setTextViewString(Calories+"","0",Pulse+"",speed+"",Distance+"",loadCurrent+"/"+loadMax,ZTime);
         setBpmDataBeanTime(Pulse);
         mData1.add((byte) Pulse);
-        mData2.add((byte) rpm1);
+        mData2.add((byte) speed);
         mData3.add((byte) rpm2);
         List<Byte> mData11= new ArrayList<>();
         if(mData1.size()>10){
@@ -602,22 +617,10 @@ public class RatePatternActivity extends BaseActivity {
         if(Unit.equals("Stop")){
             return;
         }
-        tv_v.setText(loadCurrent+"/"+loadMax);
-        tv_time.setText(ZTime);
-        tv_distance.setText(Distance+"KM");
-        List<RatePatternBean> list = new ArrayList<>();
-        list.add(new RatePatternBean("卡路里",Calories+"kcal"));
-        list.add(new RatePatternBean("当前速度",stroke+"km/h"));
-        list.add(new RatePatternBean("当前功率",Watt+"w"));
-//        list.add(new RatePatternBean("当前段位",loadCurrent+""));
-        list.add(new RatePatternBean("RPM/SPM",spm+"kcal"));
-
-        mRatePatternAdapter.setNewData(list);
-        mRatePatternAdapter.notifyDataSetChanged();
-
+        setTextViewString(Calories+"",0+"",Pulse+"",0+"",Distance+"",loadCurrent+"/"+loadMax,ZTime);
         setBpmDataBeanTime(Pulse);
         mData1.add((byte) Pulse);
-        mData2.add((byte) spm);
+        mData2.add((byte) stroke);
         mData3.add((byte) Watt);
         List<Byte> mData11= new ArrayList<>();
         if(mData1.size()>10){
@@ -690,19 +693,7 @@ public class RatePatternActivity extends BaseActivity {
             startTaskFinishActivity();
             return;
         }
-//        tv_v.setText(loadCurrent+"/"+loadMax);
-        tv_time.setText(ZTime);
-        tv_distance.setText(Distance+"KM");
-        List<RatePatternBean> list = new ArrayList<>();
-        list.add(new RatePatternBean("卡路里",Calories+"kcal"));
-        list.add(new RatePatternBean("当前速度",speed+"km/h"));
-        list.add(new RatePatternBean("当前功率","0w"));
-        list.add(new RatePatternBean("当前坡度",Incline+""));
-//        list.add(new RatePatternBean("RPM/SPM","--"));
-
-        mRatePatternAdapter.setNewData(list);
-        mRatePatternAdapter.notifyDataSetChanged();
-
+        setTextViewString(Calories+"",0+"",Pulse+"",speed+"",Distance+"",loadCurrent+"/"+loadMax,ZTime);
         setBpmDataBeanTime(Pulse);
         mData1.add((byte) Pulse);
         mData2.add((byte) speed);
@@ -736,9 +727,55 @@ public class RatePatternActivity extends BaseActivity {
                 String.valueOf(speed),String.valueOf(Pulse),String.valueOf(System.currentTimeMillis()),String.valueOf(Incline)));
         return;
     }
+    private void setTextViewString(String kcal,String rpm,String Pulse,String speed,String distance,String load,String time){
+        if(currentPos==1){
+            String str1 = "即时心跳：<font color=\"#FFB300\"><big><big>"+Pulse+"</big></big></font>bpm";
+            tv_current_xz.setText(Html.fromHtml(str1));
+            tv_current_xz.setVisibility(View.VISIBLE);
+            ll_zh_top.setVisibility(View.GONE);
+        }else if(currentPos==2){
+            String str1 = "即时速度：<font color=\"#00A2FF\"><big><big>"+speed+"</big></big></font>km/h";
+            tv_current_xz.setText(Html.fromHtml(str1));
+            tv_current_xz.setVisibility(View.VISIBLE);
+            ll_zh_top.setVisibility(View.GONE);
+        }else{
+            ll_zh_top.setVisibility(View.VISIBLE);
+            tv_current_xz.setVisibility(View.GONE);
+        }
+        tv_kcal.setText(kcal);
+        tv_rpm.setText(rpm);
+        tv_distance.setText(distance);
+        tv_load.setText(load);
+        tv_time.setText(time);
+    }
+
+    long durationLs = 0;
+    boolean isXl = false;
 
     private void setBpmDataBeanTime(int pulse){
-        Log.w("-->>","mBpmDataBeans"+mBpmDataBeans.toString());
+        if(duration>=ZTimeOK && isXl){
+            isXl = false;
+            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x02));
+            DialogUtils.showDialogHintYunDong(this, new DialogUtils.DialogInterfaceYhq() {
+                @Override
+                public void btnConfirm(int type) {
+                    if(type ==0){
+                        startTaskFinishActivity();
+                    }else{
+                        PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+                    }
+                }
+            });
+            return;
+        }
+        if(durationLs==duration){
+            return;
+        }
+        durationLs = duration;
+        mTaskFinishListAdapter.setZtime(Integer.valueOf(duration));
+        tv_ztime.setText("总时间："+StringUtil.getTimeGeShi(duration));
+        mTaskFinishListAdapter.setNewData(mBpmDataBeans);
+
         if(pulse>=mBpmDataBeans.get(0).getStartV() && pulse<mBpmDataBeans.get(0).getEndV()){
             mBpmDataBeans.get(0).setTime(mBpmDataBeans.get(0).getTime()+1);
             return;
@@ -763,6 +800,7 @@ public class RatePatternActivity extends BaseActivity {
             mBpmDataBeans.get(5).setTime(mBpmDataBeans.get(5).getTime()+1);
             return;
         }
+
     }
 
 }

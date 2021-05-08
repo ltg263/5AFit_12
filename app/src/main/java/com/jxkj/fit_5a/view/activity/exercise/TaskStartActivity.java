@@ -83,8 +83,7 @@ public class TaskStartActivity extends BaseActivity {
                     ToastUtils.showShort("请先链接运动设备");
                     return;
                 }
-
-                if(ConstValues_Ly.METER_ID!=ConstValues_Ly.METER_ID_S[0] && ConstValues_Ly.METER_ID!=ConstValues_Ly.METER_ID_S[3]){
+                if(ConstValues_Ly.maxLoad<=1){
                     ToastUtils.showShort("该设备不支持间歇训练");
                     return;
                 }
@@ -94,6 +93,10 @@ public class TaskStartActivity extends BaseActivity {
             case R.id.ll_xlkz:
                 if(tv_lianjie.getText().toString().equals("暂未连接设备")){
                     ToastUtils.showShort("请先链接运动设备");
+                    return;
+                }
+                if(ConstValues_Ly.maxLoad<=1){
+                    ToastUtils.showShort("该设备不支持心率模式");
                     return;
                 }
                 RateControlActivity.intentActivity(this);

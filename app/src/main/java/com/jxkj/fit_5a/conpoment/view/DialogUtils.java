@@ -115,7 +115,7 @@ public class DialogUtils {
 
         LinearLayout rl_parent = view.findViewById(R.id.rl_parent);
         Bitmap bitmap=screenShotWithoutStatusBar(context);
-        rl_parent.setBackground(new BitmapDrawable(context.getResources(),blurBitmap(context,bitmap,10)));
+        rl_parent.setBackground(new BitmapDrawable(context.getResources(),blurBitmap(context,bitmap,5)));
         ImageView tv = view.findViewById(R.id.iv_1);
         ImageView tv1 = view.findViewById(R.id.iv_2);
         StepArcView_Btn mSv = view.findViewById(R.id.sv);
@@ -496,6 +496,34 @@ public class DialogUtils {
             public void onClick(View v) {
                 if(dialogConfirm!=null){
                     dialogConfirm.btnConfirm();
+                }
+                dialog5.dismiss();
+            }
+        });
+        dialog5.setCancelable(false);
+        dialog5.setContentView(view);
+        dialog5.show();
+    }
+
+    public static void showDialogHintYunDong(Context context, final DialogInterfaceYhq dialogConfirm) {
+
+        final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_hine_yundong, null);
+        TextView bt_ok = (TextView) view.findViewById(R.id.bt_confirm);
+        TextView suanle = (TextView) view.findViewById(R.id.bt_suanle);
+        suanle.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialogConfirm.btnConfirm(1);
+                dialog5.dismiss();
+            }
+        });
+        bt_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(dialogConfirm!=null){
+                    dialogConfirm.btnConfirm(0);
                 }
                 dialog5.dismiss();
             }

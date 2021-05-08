@@ -20,6 +20,12 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.PostUser;
@@ -65,6 +71,8 @@ public class MapExerciseActivity extends Activity {
     ImageView mIv;
     @BindView(R.id.iv_dian)
     ImageView iv_dian;
+    @BindView(R.id.iv_go_img)
+    ImageView iv_go_img;
     @BindView(R.id.iv_img)
     RobotView iv_img;
     @BindView(R.id.iv_img_)
@@ -100,7 +108,21 @@ public class MapExerciseActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landscape_map_exercise);
         ButterKnife.bind(this);
+        Glide.with(this).load(R.drawable.ic_yundong_go).listener(new RequestListener() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                return false;
+            }
 
+            @Override
+            public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
+                if (resource instanceof GifDrawable) {
+                    //加载一次
+                    ((GifDrawable)resource).setLoopCount(1);
+                }
+                return false;
+            }
+        }).into(iv_go_img);
         if ((ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[3])) {
             PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
         } else if (ConstValues_Ly.METER_ID == ConstValues_Ly.METER_ID_S[1]) {

@@ -34,6 +34,9 @@ public class TaskFinishListAdapter extends BaseQuickAdapter<BpmDataBean, BaseVie
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, BpmDataBean item) {
+        if(Ztime==0){
+            Ztime = 1;
+        }
         double xlfx = item.getTime()/Ztime;
         DecimalFormat df = new DecimalFormat("######0.00");
         helper.setText(R.id.tv1,item.getName()).setText(R.id.tv4, StringUtil.getTimeGeShi(item.getTime()))

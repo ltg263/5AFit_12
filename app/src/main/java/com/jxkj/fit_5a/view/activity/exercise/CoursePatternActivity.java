@@ -181,14 +181,7 @@ public class CoursePatternActivity extends BaseActivity {
                 break;
             case R.id.tv_ok:
                 long time = currentTime/10*60*1000;
-                Intent intent = new Intent(this, RatePatternActivity.class);
-                byte[] data = new byte[a.length];
-                for(int i=0;i<a.length;i++){
-                    data[i]=a[i];
-                }
-                intent.putExtra("data",data);
-                intent.putExtra("time",time);
-                startActivity(intent);
+
                 finish();
                 break;
             case R.id.iv_hfmr:

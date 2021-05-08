@@ -159,4 +159,12 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_hp_yd_11" />
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_go_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_yundong_go" />
 </RelativeLayout>

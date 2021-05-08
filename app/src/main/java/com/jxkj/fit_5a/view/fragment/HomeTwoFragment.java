@@ -18,13 +18,17 @@ import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.HistoryEquipmentData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedHistoryEquipment;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
+import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.RankDetailsData;
 import com.jxkj.fit_5a.entity.RankListData;
 import com.jxkj.fit_5a.entity.RankStatsData;
+import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.activity.exercise.ExerciseRecordActivity;
 import com.jxkj.fit_5a.view.activity.exercise.HistoryEquipmentActivity;
 import com.jxkj.fit_5a.view.activity.exercise.TaskSelectionActivity;
@@ -116,9 +120,9 @@ public class HomeTwoFragment extends BaseFragment {
         mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(scrollY<=500){
-                    mRlActionbar.setAlpha(1.0f-(float) scrollY / 500.0f);
-                }else{
+                if (scrollY <= 500) {
+                    mRlActionbar.setAlpha(1.0f - (float) scrollY / 500.0f);
+                } else {
                     mRlActionbar.setAlpha(0);
                 }
             }
@@ -150,13 +154,13 @@ public class HomeTwoFragment extends BaseFragment {
                     ToastUtils.showShort("在线运动暂未开放");
 //                    MotorPatternActivity.startIntentActivity(getActivity());
                 } else {
-                    if(tv_lianjie.getText().toString().equals("暂未连接设备")){
+                    if (tv_lianjie.getText().toString().equals("暂未连接设备")) {
                         ToastUtils.showShort("请先链接运动设备");
                         return;
                     }
-                    if(view.getId()==R.id.tv_go_1){
-                        MapExerciseActivity.intentStartActivity(getActivity(),null);
-                    }else if(view.getId()==R.id.tv_go_2){
+                    if (view.getId() == R.id.tv_go_1) {
+                        goStartMap();
+                    } else if (view.getId() == R.id.tv_go_2) {
                         startActivity(new Intent(getActivity(), TaskStartActivity.class));
                     }
 
@@ -176,6 +180,37 @@ public class HomeTwoFragment extends BaseFragment {
             }
         });
         getRankList(3);
+    }
+
+    private void goStartMap() {
+        RetrofitUtil.getInstance().apiService()
+                .getMapRandomDetails(ConstValues_Ly.DEVICE_TYPE_ID_URL)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<MapDetailsBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<MapDetailsBean> result) {
+                        if (result.getCode() == 0 && result.getData() != null) {
+                            MapExerciseActivity.intentStartActivity(getActivity(), null);
+                        } else {
+                            DialogUtils.showDialogHint(getActivity(), result.getMesg(), true,null);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
     }
 
     @Override
@@ -203,8 +238,8 @@ public class HomeTwoFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.rl_sbgl:
                 List<HistoryEquipmentData> lists = SharedHistoryEquipment.singleton().getSharedHistoryEquipment();
-                if(lists!=null && lists.size()>0){
-                    IntentUtils.getInstence().intent(getActivity(),HistoryEquipmentActivity.class);
+                if (lists != null && lists.size() > 0) {
+                    IntentUtils.getInstence().intent(getActivity(), HistoryEquipmentActivity.class);
                     return;
                 }
                 FacilityAddSbActivity.intentActivity(getActivity());
@@ -349,16 +384,16 @@ public class HomeTwoFragment extends BaseFragment {
                             RankStatsData.UserBean userData = result.getData().getUser();
                             mTvName.setText(userData.getNickName());
                             mTvZan.setText(result.getData().getLikeCount());
-                            mTvDll.setText(result.getData().getCalories()+"kcal");
+                            mTvDll.setText(result.getData().getCalories() + "kcal");
                             mTvMingc.setText("未上榜");
-                            if (result.getData().getRanking()!=0) {
-                                mTvMingc.setText("No."+result.getData().getRanking());
+                            if (result.getData().getRanking() != 0) {
+                                mTvMingc.setText("No." + result.getData().getRanking());
                             }
 //                            Glide.with(getActivity()).load(R.drawable.icon_zan_no).into((ImageView) helper.getView(R.id.iv_3));
 //                            if(result.getData().isLike()){
 //                                Glide.with(mContext).load(R.drawable.icon_zan_yes).into((ImageView) helper.getView(R.id.iv_3));
 //                            }
-                            GlideImageUtils.setGlideImage(getActivity(),userData.getAvatar(),iv_head);
+                            GlideImageUtils.setGlideImage(getActivity(), userData.getAvatar(), iv_head);
                             mTvTwoYue.setBackgroundColor(0);
                             mTvTwoZhou.setBackgroundColor(0);
                             mTvTwoRi.setBackgroundColor(0);
