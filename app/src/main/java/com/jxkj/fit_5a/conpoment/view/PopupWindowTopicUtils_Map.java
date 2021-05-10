@@ -144,7 +144,6 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
      * 从控件所在位置移动到控件的底部
      *
      * @return
-     * @param rl
      */
     public static TranslateAnimation moveToViewBottom() {
         TranslateAnimation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
