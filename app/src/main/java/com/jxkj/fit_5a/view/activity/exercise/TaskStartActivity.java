@@ -73,10 +73,11 @@ public class TaskStartActivity extends BaseActivity {
                 break;
             case R.id.btn_start:
                 if(tv_lianjie.getText().toString().equals("暂未连接设备")){
-                    ToastUtils.showShort("请先链接运动设备");
+                    goLianJie(this,tv_lianjie);
                     return;
                 }
-                startActivity(new Intent(this, CourseStartActivity.class));
+//                startActivity(new Intent(this, CourseStartActivity.class));
+                HomeTwoFragment.goStartMap(this);
                 break;
             case R.id.ll_kcxz:
                 if(tv_lianjie.getText().toString().equals("暂未连接设备")){

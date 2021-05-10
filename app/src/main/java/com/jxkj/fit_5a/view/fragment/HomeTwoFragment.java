@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
@@ -160,11 +161,10 @@ public class HomeTwoFragment extends BaseFragment {
                         return;
                     }
                     if (view.getId() == R.id.tv_go_1) {
-                        goStartMap();
+                        goStartMap(getActivity());
                     } else if (view.getId() == R.id.tv_go_2) {
                         startActivity(new Intent(getActivity(), TaskStartActivity.class));
                     }
-
                 }
             }
         });
@@ -183,7 +183,7 @@ public class HomeTwoFragment extends BaseFragment {
         getRankList(3);
     }
 
-    private void goStartMap() {
+    public static void goStartMap(Context mContext) {
         RetrofitUtil.getInstance().apiService()
                 .getMapRandomDetails(ConstValues_Ly.DEVICE_TYPE_ID_URL)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -197,9 +197,9 @@ public class HomeTwoFragment extends BaseFragment {
                     @Override
                     public void onNext(Result<MapDetailsBean> result) {
                         if (result.getCode() == 0 && result.getData() != null) {
-                            MapExerciseActivity.intentStartActivity(getActivity(), null);
+                            MapExerciseActivity.intentStartActivity(mContext, null);
                         } else {
-                            DialogUtils.showDialogHint(getActivity(), result.getMesg(), true,null);
+                            DialogUtils.showDialogHint(mContext, result.getMesg(), true,null);
                         }
                     }
 

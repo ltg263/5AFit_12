@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -68,7 +70,7 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
             @Override
             public void onClick(View v) {
                 isSuo = true;
-                mLlBottom.setVisibility(View.GONE);
+                rl.setAnimation(moveToViewBottom());
             }
         });
         mIv.setOnClickListener(new View.OnClickListener() {
@@ -115,17 +117,15 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
                             Log.e("", "向左");
                         else if (mCurrentPosY - mPosY > 0 && Math.abs(mCurrentPosX - mPosX) < 10){
                             Log.e("", "向下");
-//                            if(!isSuo){
-//                                isSuo = true;
-//                                mLlBottom.setVisibility(View.GONE);
-//                                mLlBottom.setAnimation(AnimationUtil.makeOutAnimation(mContext,false));
-//                            }
+                            if(!isSuo){
+                                isSuo = true;
+                                rl.setAnimation(moveToViewBottom());
+                            }
                         }else if (mCurrentPosY - mPosY < 0 && Math.abs(mCurrentPosX - mPosX) < 10){
                             Log.e("", "向上");
                             if(isSuo){
                                 isSuo = false;
-                                mLlBottom.setVisibility(View.VISIBLE);
-//                                mLlBottom.setAnimation(AnimationUtil.makeOutAnimation(mContext,true));
+                                rl.setAnimation(moveToViewBottomS());
                             }
                         }
                         break;
@@ -140,6 +140,29 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
             }
         });
     }
+    /**
+     * 从控件所在位置移动到控件的底部
+     *
+     * @return
+     * @param rl
+     */
+    public static TranslateAnimation moveToViewBottom() {
+        TranslateAnimation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, 0.3f);
+        mHiddenAction.setDuration(500);
+        mHiddenAction.setFillAfter(true);
+        return mHiddenAction;
+    }
+    public static TranslateAnimation moveToViewBottomS() {
+        TranslateAnimation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                0.3f, Animation.RELATIVE_TO_SELF, 0.0f);
+        mHiddenAction.setDuration(500);
+        mHiddenAction.setFillAfter(true);
+        return mHiddenAction;
+    }
+
     public void setIvSelect(boolean isSelect){
         mIv.setSelected(isSelect);
     }
