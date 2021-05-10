@@ -96,10 +96,19 @@ public class MapExerciseActivity extends Activity {
     int bfb5,bfb6,bfb7,bfb8,bfb9,bfb;
     int age = Integer.valueOf(SharedUtils.singleton().get(ConstValues.USER_AGE,"0"));
     private ArrayList<BpmDataBean> mBpmDataBeans = new ArrayList<>();
+    private int time_z;
+    private byte[] loadLists;
 
     public static void intentStartActivity(Context mContext, String mapId) {
         Intent intent = new Intent(mContext, MapExerciseActivity.class);
         intent.putExtra("mapId", mapId);
+        mContext.startActivity(intent);
+    }
+
+    public static void intentStartActivityKc(Context mContext, int time, byte[] loadLists) {
+        Intent intent = new Intent(mContext, MapExerciseActivity.class);
+        intent.putExtra("time", time);
+        intent.putExtra("loadLists",loadLists);
         mContext.startActivity(intent);
     }
 
@@ -171,10 +180,17 @@ public class MapExerciseActivity extends Activity {
     @SuppressLint("ClickableViewAccessibility")
     private void initViews() {
         mapId = getIntent().getStringExtra("mapId");
+        time_z = getIntent().getIntExtra("time",0);
+        loadLists = getIntent().getByteArrayExtra("loadLists");
         if(StringUtil.isNotBlank(mapId)){
             getMapDetails();
         }else{
             getMapRandomDetails();
+        }
+        if(time_z!=0 && loadLists!=null){
+            time_z=time_z*60;
+            loadCurrent = loadLists[0];
+            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A6, loadLists[0]));
         }
 
         if (window == null) {
@@ -199,6 +215,7 @@ public class MapExerciseActivity extends Activity {
                     if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3])
                             && loadCurrent<loadMax){
                         PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A6, (byte)(loadCurrent+1)));
+
                     }
                 }else if (type == 3) {
                     if((ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0] || ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3])
@@ -564,7 +581,7 @@ public class MapExerciseActivity extends Activity {
             }
         }
 
-
+        setLoad(duration);
         setBpmDataBeanTime(Pulse);
         mTvTime.setText(ZTime);
         window.setTextViewStr(Distance+"", speed + "", ZTime, Calories + "", Watt + "", Pulse + "","0");
@@ -627,7 +644,7 @@ public class MapExerciseActivity extends Activity {
             }
         }
 
-
+        setLoad(duration);
         setBpmDataBeanTime(Pulse);
         mTvTime.setText(ZTime);
         window.setTextViewStr(Distance + "", speed + "", ZTime, Calories + "", 0 + "", Pulse + "","0");
@@ -706,7 +723,7 @@ public class MapExerciseActivity extends Activity {
             }
         }
 
-
+        setLoad(duration);
         setBpmDataBeanTime(Pulse);
         mTvTime.setText(ZTime);
         window.setTextViewStr(Distance + "", stroke + "", ZTime, Calories + "", Watt + "", Pulse + "","0");
@@ -775,7 +792,7 @@ public class MapExerciseActivity extends Activity {
             }
         }
 
-
+        setLoad(duration);
         setBpmDataBeanTime(Pulse);
         mTvTime.setText(ZTime);
         window.setTextViewStr(Distance + "", speed + "", ZTime, Calories + "", 0 + "", Pulse + "",Incline+"");
@@ -784,7 +801,42 @@ public class MapExerciseActivity extends Activity {
                 Incline+"",null,"0","0",String.valueOf(speed),String.valueOf(System.currentTimeMillis()),"0"));
         return;
     }
+    boolean isXl = true;
+    private void setLoad(double duration){
+        if(loadLists==null){
+            return;
+        }
 
+        if(duration>=time_z && isXl){
+            isXl = false;
+            PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x02));
+            DialogUtils.showDialogHintYunDong(this, new DialogUtils.DialogInterfaceYhq() {
+                @Override
+                public void btnConfirm(int type) {
+                    if(type ==0){
+                        psotUserSportLog();
+                    }else{
+                        PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A5, (byte) 0x01));
+                    }
+                }
+            });
+            return;
+        }
+        if(duration%5!=0){
+            Log.w("setLoad","不是5的倍数");
+            return;
+        }
+        int time_index = (int) (duration/(time_z/10));
+        if(time_index<10){
+            if(loadCurrent>loadLists[time_index]){
+                PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A6, (byte)(loadCurrent-1)));
+            }
+            if(loadCurrent<loadLists[time_index]){
+                PopupWindowLanYan.ble4Util.sendData(ConstValues_Ly.getByteDataJia(ConstValues_Ly.MESSAGE_A6, (byte)(loadCurrent+1)));
+            }
+        }
+
+    }
     private void setBpmDataBeanTime(int pulse){
         Log.w("-->>","mBpmDataBeans"+mBpmDataBeans.toString());
         if(pulse>=mBpmDataBeans.get(0).getStartV() && pulse<mBpmDataBeans.get(0).getEndV()){

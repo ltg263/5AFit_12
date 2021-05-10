@@ -22,10 +22,13 @@ import com.jxkj.fit_5a.base.DeviceCourseData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.view.VerticalSeekBar;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
+import com.jxkj.fit_5a.view.activity.exercise.landscape.MapExerciseActivity;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -77,7 +80,7 @@ public class CoursePatternActivity extends BaseActivity {
     @BindView(R.id.tv_ok)
     TextView mTvOk;
     AAOptions aaOptions;
-    private Byte[] a;
+    private Byte[] loadLists;
     List<DeviceCourseData.ListBean.DetailsBean.ResistancesBean> resistances;
     Integer currentLoad = 1;
     Integer currentTime = 20;
@@ -90,7 +93,7 @@ public class CoursePatternActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        a = new Byte[]{0, 0, 0, 0, 0, 0,0, 0, 0, 0};
+        loadLists = new Byte[]{0, 0, 0, 0, 0, 0,0, 0, 0, 0};
         if(ConstValues_Ly.maxLoad==0){
             mLL.setVisibility(View.INVISIBLE);
         }else {
@@ -121,7 +124,7 @@ public class CoursePatternActivity extends BaseActivity {
                 .name("Tokyo")
                 .lineWidth(2f)
                 .color("#FF9933")
-                .data(a);
+                .data(loadLists);
 
         AAChartModel aaChartModel = new AAChartModel()
                 .chartType(AAChartType.Spline)
@@ -180,24 +183,70 @@ public class CoursePatternActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_ok:
-                long time = currentTime/10*60*1000;
-
+                byte[] loadLista = new byte[loadLists.length];
+                for(int i=0;i<loadLists.length;i++){
+                    loadLista[i]=loadLists[i];
+                }
+                MapExerciseActivity.intentStartActivityKc(this, currentTime,loadLista);
                 finish();
                 break;
             case R.id.iv_hfmr:
                 initProgress();
                 break;
             case R.id.iv_jian:
-                if(currentLoad>0){
+                if(currentLoad>1){
                     currentLoad--;
                     mTvV.setText(currentLoad+"/"+ConstValues_Ly.maxLoad);
                 }
+
+                for(int i = 0;i<loadLists.length;i++){
+                    if(loadLists[i]>1){
+                        int a = loadLists[i];
+                        loadLists[i] = Byte.valueOf((a-1)+"");
+                    }else{
+                        loadLists[i] = loadLists[i];
+                    }
+                }
+                mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(
+                        new AASeriesElement[]{ new AASeriesElement().lineWidth(1f).data(loadLists)});
+
+                mVerticalProgressbar1.setProgress(loadLists[0]);
+                mVerticalProgressbar2.setProgress(loadLists[1]);
+                mVerticalProgressbar3.setProgress(loadLists[2]);
+                mVerticalProgressbar4.setProgress(loadLists[3]);
+                mVerticalProgressbar5.setProgress(loadLists[4]);
+                mVerticalProgressbar6.setProgress(loadLists[5]);
+                mVerticalProgressbar7.setProgress(loadLists[6]);
+                mVerticalProgressbar8.setProgress(loadLists[7]);
+                mVerticalProgressbar9.setProgress(loadLists[8]);
+                mVerticalProgressbar10.setProgress(loadLists[9]);
                 break;
             case R.id.iv_jia:
                 if(currentLoad<ConstValues_Ly.maxLoad){
                     currentLoad++;
                     mTvV.setText(currentLoad+"/"+ConstValues_Ly.maxLoad);
                 }
+                for(int i = 0;i<loadLists.length;i++){
+                    if(loadLists[i]<ConstValues_Ly.maxLoad){
+                        int a = loadLists[i];
+                        loadLists[i] = Byte.valueOf((a+1)+"");
+                    }else{
+                        loadLists[i] = loadLists[i];
+                    }
+                }
+                mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(
+                        new AASeriesElement[]{ new AASeriesElement().lineWidth(1f).data(loadLists)});
+
+                mVerticalProgressbar1.setProgress(loadLists[0]);
+                mVerticalProgressbar2.setProgress(loadLists[1]);
+                mVerticalProgressbar3.setProgress(loadLists[2]);
+                mVerticalProgressbar4.setProgress(loadLists[3]);
+                mVerticalProgressbar5.setProgress(loadLists[4]);
+                mVerticalProgressbar6.setProgress(loadLists[5]);
+                mVerticalProgressbar7.setProgress(loadLists[6]);
+                mVerticalProgressbar8.setProgress(loadLists[7]);
+                mVerticalProgressbar9.setProgress(loadLists[8]);
+                mVerticalProgressbar10.setProgress(loadLists[9]);
                 break;
         }
     }
@@ -210,10 +259,10 @@ public class CoursePatternActivity extends BaseActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 Log.w("123", "正在拖动" + progress + "\n");
 
-                a[pos] = (byte)progress;
+                loadLists[pos] = (byte)progress;
                 AASeriesElement element1 = new AASeriesElement()
                         .lineWidth(1f)
-                        .data(a);
+                        .data(loadLists);
                 mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(new AASeriesElement[]{element1});
             }
 
@@ -265,30 +314,30 @@ public class CoursePatternActivity extends BaseActivity {
 
     private void initProgress() {
         for(int i=0;i<resistances.size();i++){
-            a[i] = (byte) (Double.valueOf(resistances.get(i).getValue())*bl);
+            loadLists[i] = (byte) (Double.valueOf(resistances.get(i).getValue())*bl);
         }
         mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(
-                        new AASeriesElement[]{ new AASeriesElement().lineWidth(1f).data(a)});
+                        new AASeriesElement[]{ new AASeriesElement().lineWidth(1f).data(loadLists)});
 
-        mVerticalProgressbar1.setProgress(a[0]);
+        mVerticalProgressbar1.setProgress(loadLists[0]);
         initProgressBar(0,mVerticalProgressbar1);
-        mVerticalProgressbar2.setProgress(a[1]);
+        mVerticalProgressbar2.setProgress(loadLists[1]);
         initProgressBar(1,mVerticalProgressbar2);
-        mVerticalProgressbar3.setProgress(a[2]);
+        mVerticalProgressbar3.setProgress(loadLists[2]);
         initProgressBar(2,mVerticalProgressbar3);
-        mVerticalProgressbar4.setProgress(a[3]);
+        mVerticalProgressbar4.setProgress(loadLists[3]);
         initProgressBar(3,mVerticalProgressbar4);
-        mVerticalProgressbar5.setProgress(a[4]);
+        mVerticalProgressbar5.setProgress(loadLists[4]);
         initProgressBar(4,mVerticalProgressbar5);
-        mVerticalProgressbar6.setProgress(a[5]);
+        mVerticalProgressbar6.setProgress(loadLists[5]);
         initProgressBar(5,mVerticalProgressbar6);
-        mVerticalProgressbar7.setProgress(a[6]);
+        mVerticalProgressbar7.setProgress(loadLists[6]);
         initProgressBar(6,mVerticalProgressbar7);
-        mVerticalProgressbar8.setProgress(a[7]);
+        mVerticalProgressbar8.setProgress(loadLists[7]);
         initProgressBar(7,mVerticalProgressbar8);
-        mVerticalProgressbar9.setProgress(a[8]);
+        mVerticalProgressbar9.setProgress(loadLists[8]);
         initProgressBar(8,mVerticalProgressbar9);
-        mVerticalProgressbar10.setProgress(a[9]);
+        mVerticalProgressbar10.setProgress(loadLists[9]);
         initProgressBar(9,mVerticalProgressbar10);
     }
 }
