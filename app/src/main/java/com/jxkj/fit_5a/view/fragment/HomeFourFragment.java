@@ -304,6 +304,8 @@ public class HomeFourFragment extends BaseFragment {
         }
         SharedUtils.singleton().put(ConstValues.USER_AGE,data.getAge());
         SharedUtils.singleton().put(ConstValues.USER_GENDER,data.getGender());
+        SharedUtils.singleton().put(ConstValues.USER_IMG,data.getAvatar());
+
 
         if(StringUtil.isBlank(data.getLevelExpireTime())){
             return;

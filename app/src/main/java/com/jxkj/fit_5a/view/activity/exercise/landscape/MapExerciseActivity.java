@@ -6,6 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -31,6 +33,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
@@ -41,6 +44,7 @@ import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils_Map;
 import com.jxkj.fit_5a.conpoment.view.RobotView;
 import com.jxkj.fit_5a.conpoment.view.RobotView11;
+import com.jxkj.fit_5a.conpoment.view.RoundImageView;
 import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
@@ -250,6 +254,7 @@ public class MapExerciseActivity extends Activity {
                             Log.e("", "向下");
                             if (!isSuo) {
                                 isSuo = true;
+                                PopupWindowTopicUtils_Map.isTop = true;
                                 mTvTime.setVisibility(View.VISIBLE);
 //                                mIv2.setImageDrawable(MapExerciseActivity.this.getResources().getDrawable(R.mipmap.ic_hp_yd_99));
                                 if (window != null && window.isShowing()) {
@@ -260,6 +265,7 @@ public class MapExerciseActivity extends Activity {
                             Log.e("", "向上");
                             if (isSuo) {
                                 isSuo = false;
+                                PopupWindowTopicUtils_Map.isTop = true;
 //                                mIv2.setImageDrawable(MapExerciseActivity.this.getResources().getDrawable(R.mipmap.ic_hp_yd_9));
                                 window.showAtLocation(mLl, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置
                                 mTvTime.setVisibility(View.GONE);
@@ -315,6 +321,7 @@ public class MapExerciseActivity extends Activity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<MapDetailsBean>>() {
+
                     @Override
                     public void onSubscribe(Disposable d) {
 
@@ -331,7 +338,8 @@ public class MapExerciseActivity extends Activity {
                             }
                             GlideImgLoader.loadImage(MapExerciseActivity.this, result.getData().getImgUrl(), iv_img);
                             if (result.getData().getInfo() != null && result.getData().getInfo().size() > 0) {
-                                iv_img.setData(result.getData().getInfo(), result.getData().getParam());
+
+                                iv_img.setData(result.getData().getInfo(), getImgBitmap(),result.getData().getParam());
                                 iv_img_.setData(result.getData().getInfo(), result.getData().getParam());
                             }
                         }else{
@@ -354,6 +362,18 @@ public class MapExerciseActivity extends Activity {
                     }
                 });
 
+    }
+    public Bitmap getImgBitmap() {
+        View view = View.inflate(this, R.layout.item_img_head, null);
+        RoundImageView image_iv =  view.findViewById(R.id.image_iv);
+        GlideImageUtils.setGlideImage(this,SharedUtils.singleton().get(ConstValues.USER_IMG,""),image_iv);
+        view.destroyDrawingCache();
+        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        view.setBackgroundColor(Color.TRANSPARENT);
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        view.setDrawingCacheEnabled(true);
+        return view.getDrawingCache(true);
     }
 
     private void getMapDetails() {
@@ -378,7 +398,7 @@ public class MapExerciseActivity extends Activity {
                             }
                             GlideImgLoader.loadImage(MapExerciseActivity.this, result.getData().getImgUrl(), iv_img);
                             if (result.getData().getInfo() != null && result.getData().getInfo().size() > 0) {
-                                iv_img.setData(result.getData().getInfo(), result.getData().getParam());
+                                iv_img.setData(result.getData().getInfo(),getImgBitmap(), result.getData().getParam());
                                 iv_img_.setData(result.getData().getInfo(), result.getData().getParam());
                             }
                         }

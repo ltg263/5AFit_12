@@ -41,13 +41,13 @@ public class SportLogStatsBean {
          */
 
         private String datestr;
-        private int avgCalories;
+        private double avgCalories;
         private int totalCalories;
         private int avgDuration;
         private int totalDuration;
         private double totalDistance;
         private double avgDistance;
-        private int bai;
+        private double bai;
 
         public String getDatestr() {
             return datestr;
@@ -57,11 +57,11 @@ public class SportLogStatsBean {
             this.datestr = datestr;
         }
 
-        public int getAvgCalories() {
+        public double getAvgCalories() {
             return avgCalories;
         }
 
-        public void setAvgCalories(int avgCalories) {
+        public void setAvgCalories(double avgCalories) {
             this.avgCalories = avgCalories;
         }
 
@@ -105,11 +105,11 @@ public class SportLogStatsBean {
             this.avgDistance = avgDistance;
         }
 
-        public int getBai() {
+        public double getBai() {
             return bai;
         }
 
-        public void setBai(int bai) {
+        public void setBai(double bai) {
             this.bai = bai;
         }
     }
@@ -133,7 +133,7 @@ public class SportLogStatsBean {
         private int totalDuration;
         private double totalDistance;
         private double avgDistance;
-        private int bai;
+        private double bai;
 
         public String getDatestr() {
             return datestr;
@@ -191,11 +191,11 @@ public class SportLogStatsBean {
             this.avgDistance = avgDistance;
         }
 
-        public int getBai() {
+        public double getBai() {
             return bai;
         }
 
-        public void setBai(int bai) {
+        public void setBai(double bai) {
             this.bai = bai;
         }
     }

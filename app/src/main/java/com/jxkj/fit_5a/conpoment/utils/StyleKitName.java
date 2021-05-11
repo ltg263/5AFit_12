@@ -37,7 +37,7 @@ public class StyleKitName {
         private static Path _3Path = new Path();
     }
 
-    public static void draw_1100900Canvas(Canvas canvas, List<List<Float>> info, MapDetailsBean.ParamBean param, List<List<Float>> infoJg) {
+    public static void draw_1100900Canvas(Canvas canvas, List<List<Float>> info, MapDetailsBean.ParamBean param, List<List<Float>> infoJg,Bitmap bitmap) {
         float bl =  param.getReferenceWidth()/param.getReferenceHeight();
 //        Log.w("--->>>>>", "屏幕宽:" + canvas.getWidth());//1920 1852*700 900*600
 //        Log.w("--->>>>>", "屏幕高:" + canvas.getHeight());//1080
@@ -98,10 +98,9 @@ public class StyleKitName {
             mCurrentPosition[0] = info.get(0).get(0) * (bl+0.05f);
             mCurrentPosition[1] = info.get(0).get(1) * (bl+0.05f);
         }
-
-        Bitmap bitmap = ((BitmapDrawable) MainApplication.getContext().getResources().getDrawable(R.drawable.ic_d_red)).getBitmap();
-        bitmap = StringUtil.zoomImage(bitmap, 30, 50);
-        canvas.drawBitmap(bitmap, mCurrentPosition[0] - 15, mCurrentPosition[1] - 50, CacheFor_1100900Canvas.paint);
+//        Bitmap bitmap = ((BitmapDrawable) MainApplication.getContext().getResources().getDrawable(R.drawable.ic_d_red)).getBitmap();
+        bitmap = StringUtil.zoomImage(bitmap, 80, 90);
+        canvas.drawBitmap(bitmap, mCurrentPosition[0] - 40, mCurrentPosition[1] - 90, CacheFor_1100900Canvas.paint);
 
         if (mPathMeasure == null) {
             mPathMeasure = new PathMeasure(CacheFor_1100900Canvas._2Path, true);

@@ -17,16 +17,17 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
-
-
 public class PopupWindowTopicUtils_Map extends PopupWindow {
+
 
     Context mContext;
     TextView tv_Distance, tv_speed, tv_time, tv_Calories, tv_Watt, tv_Pulse,tv_load,tv_Incline;
     ImageView mIv,iv_jia,iv_jian;
     LinearLayout ll_load;
+    public static boolean isTop = true;
     @SuppressLint("ClickableViewAccessibility")
     public PopupWindowTopicUtils_Map(Activity context, GiveDialogInterface dialogInterface) {
         super(context);
@@ -69,7 +70,6 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
         view.findViewById(R.id.iv_1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isSuo = true;
                 rl.setAnimation(moveToViewBottom());
             }
         });
@@ -117,14 +117,12 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
                             Log.e("", "向左");
                         else if (mCurrentPosY - mPosY > 0 && Math.abs(mCurrentPosX - mPosX) < 10){
                             Log.e("", "向下");
-                            if(!isSuo){
-                                isSuo = true;
+                            if(isTop){
                                 rl.setAnimation(moveToViewBottom());
                             }
                         }else if (mCurrentPosY - mPosY < 0 && Math.abs(mCurrentPosX - mPosX) < 10){
                             Log.e("", "向上");
-                            if(isSuo){
-                                isSuo = false;
+                            if(!isTop){
                                 rl.setAnimation(moveToViewBottomS());
                             }
                         }
@@ -151,6 +149,7 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
                 0.0f, Animation.RELATIVE_TO_SELF, 0.3f);
         mHiddenAction.setDuration(500);
         mHiddenAction.setFillAfter(true);
+        isTop = false;
         return mHiddenAction;
     }
     public static TranslateAnimation moveToViewBottomS() {
@@ -159,6 +158,7 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
                 0.3f, Animation.RELATIVE_TO_SELF, 0.0f);
         mHiddenAction.setDuration(500);
         mHiddenAction.setFillAfter(true);
+        isTop = true;
         return mHiddenAction;
     }
 
@@ -170,7 +170,6 @@ public class PopupWindowTopicUtils_Map extends PopupWindow {
         tv_load.setText(strLoad);
     }
 
-    boolean isSuo = false;
     private float mPosX;
     private float mPosY;
     private float mCurrentPosX;

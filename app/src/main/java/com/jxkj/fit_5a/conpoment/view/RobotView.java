@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -26,6 +27,7 @@ import java.util.List;
 public class RobotView extends ImageView {
 
     private Canvas mCanvas;
+    Bitmap mBitmap;
     List<List<Float>> info;
     List<List<Float>> infoJg;
     MapDetailsBean.ParamBean param;
@@ -52,9 +54,10 @@ public class RobotView extends ImageView {
         a.recycle();
     }
 
-    public void setData(List<List<Float>> info, MapDetailsBean.ParamBean param) {
+    public void setData(List<List<Float>> info, Bitmap mBitmap, MapDetailsBean.ParamBean param) {
         this.info = info;
         this.param = param;
+        this.mBitmap = mBitmap;
         invalidate();
     }
 
@@ -63,9 +66,10 @@ public class RobotView extends ImageView {
         super.onDraw(canvas);
         this.mCanvas = canvas;
         if (info != null) {
-            StyleKitName.draw_1100900Canvas(mCanvas, info, param,infoJg);
+            StyleKitName.draw_1100900Canvas(mCanvas, info, param,infoJg,mBitmap);
         }
     }
+
 
     ValueAnimator valueAnimator;
     private float lastAnimtionValue = 0;
