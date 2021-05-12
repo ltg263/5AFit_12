@@ -3,9 +3,12 @@ package com.jxkj.fit_5a.view.fragment;
 import android.content.Intent;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
@@ -20,6 +23,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.conpoment.utils.CustomPopWindow;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
@@ -41,6 +45,7 @@ import com.jxkj.fit_5a.view.adapter.HomeThreeRmhtAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeTopAdapter;
 import com.jxkj.fit_5a.view.adapter.ListVideoAdapter;
+import com.jxkj.fit_5a.view.adapter.PopupWindwSbAdapter;
 import com.jxkj.fit_5a.view.search.SearchGoodsActivity;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -72,10 +77,14 @@ public class HomeThreeFragment extends BaseFragment {
     LinearLayout mRlActionbar;
     @BindView(R.id.mNestedScrollView)
     NestedScrollView mNestedScrollView;
+    @BindView(R.id.tv_right_text)
+    TextView tv_right_text;
     private HomeThreeTopAdapter mHomeThreeTopAdapter;
     private HomeThreeRmhtAdapter mHomeThreeRmhtAdapter;
     private HomeThreeSqAdapter mHomeThreeSqAdapter;
     int page = 1;
+    private CustomPopWindow distancePopWindow;
+
     @Override
     protected int getContentView() {
         return R.layout.fragment_home_three;
@@ -238,33 +247,47 @@ public class HomeThreeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), TopicAllActivity.class));
                 break;
             case R.id.tv_right_text:
+                if(distancePopWindow!=null){
+                    distancePopWindow.showAsDropDown(tv_right_text, 0, 0);
+                    return;
+                }
                 initPopupWindow();
                 break;
         }
     }
-    PopupWindowTy window;
 
     List<String> list = new ArrayList<>();
     private void initPopupWindow() {
-        list.clear();
-        list.add("相册");
-        list.add("视频");
-        if (window == null) {
-            window = new PopupWindowTy(getActivity(), list, new PopupWindowTy.GiveDialogInterface() {
-                @Override
-                public void btnConfirm(int position) {
-                    int type = 3;
-                    if (position == 0) {
-                        type = 2;
+        View view = getLayoutInflater().inflate(R.layout.popup_window_cqxc, null, false);
+        view.findViewById(R.id.tv_tp).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentUtils.getInstence().intent(getActivity(), AssociationAddActivity.class,"type",2);
+                distancePopWindow.dissmiss();
+
+            }
+        });
+        view.findViewById(R.id.tv_sp).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentUtils.getInstence().intent(getActivity(), AssociationAddActivity.class,"type",3);
+                distancePopWindow.dissmiss();
+            }
+        });
+        //创建并显示popWindow
+        distancePopWindow = new CustomPopWindow.PopupWindowBuilder(getActivity())
+                .setView(view)
+                .setFocusable(true)//是否获取焦点，默认为ture
+                .setOnDissmissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+//                        rbDistance.setChecked(false);
                     }
-                    IntentUtils.getInstence().intent(getActivity(), AssociationAddActivity.class,"type",type);
-                }
-            });
-
-            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        }
-
-        window.showAtLocation(mRvTopList, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置10464.66
+                })
+                .setOutsideTouchable(true)//是否PopupWindow 以外触摸dissmiss
+                .size(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)//显示大小
+                .create()//创建PopupWindow
+                .showAsDropDown(tv_right_text, 0, 0);//显示PopupWindow
     }
 
     private int totalPage;
