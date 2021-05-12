@@ -13,6 +13,7 @@ import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.view.MyVideoPlayer;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
 import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
+import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class ListVideoAdapter extends VideoBaseAdapter<VideoPlayInfoBean.PlayInf
         holder.tv_liuyan.setText(data.getCommentCount()+"");
         holder.tv_shoucang.setText(data.getFavoriteCount()+"");
 
-        GlideImgLoader.loadImageViewRadius(context,data.getUser().getAvatar(),holder.iv_head);
+        GlideImgLoader.loadImageViewWithCirclr(context,data.getUser().getAvatar(),holder.iv_head);
         holder.iv_shoucang.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_share_sc_d));
         if(data.isIsFavorite()){
             holder.iv_shoucang.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_share_sc_dx));
@@ -72,7 +73,18 @@ public class ListVideoAdapter extends VideoBaseAdapter<VideoPlayInfoBean.PlayInf
         if(holder.mp_video.bottomProgressBar.getProgress()!=0){
             holder.bottom_progress.setProgress(holder.mp_video.bottomProgressBar.getProgress());
         }
-
+        holder.tv_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserHomeActivity.startActivity(context,bean.getData().getUser().getUserId()+"");
+            }
+        });
+        holder.iv_head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserHomeActivity.startActivity(context,bean.getData().getUser().getUserId()+"");
+            }
+        });
         holder.tv_liuyan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

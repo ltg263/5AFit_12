@@ -36,6 +36,9 @@ public class HomeDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, BaseV
                 .setGone(R.id.tv_topic,false)
                 .setGone(R.id.rv_img_list,false)
                 .setGone(R.id.iv_baofang,false)
+                .addOnClickListener(R.id.iv_head_img)
+                .addOnClickListener(R.id.tv_name)
+                .addOnClickListener(R.id.tv_time)
                 .setText(R.id.tv_browse_num,"浏览 "+item.getPageviews()+" 次");
 
         helper.setGone(R.id.siv_1,false).setGone(R.id.siv_2,false)

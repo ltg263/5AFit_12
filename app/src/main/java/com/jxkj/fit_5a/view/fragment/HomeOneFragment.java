@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.view.fragment;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.gyf.immersionbar.ImmersionBar;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAOptionsConstructor;
@@ -52,18 +50,13 @@ import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
+import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeShoppingAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeTopAdapter;
-import com.scwang.smartrefresh.header.BezierCircleHeader;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
-import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xiaosu.view.text.DataSetAdapter;
 import com.xiaosu.view.text.VerticalRollingTextView;
@@ -231,6 +224,13 @@ public class HomeOneFragment extends BaseFragment {
         mRvDtrmList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvDtrmList.setHasFixedSize(true);
         mRvDtrmList.setAdapter(mHomeDynamicAdapter);
+
+        mHomeDynamicAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                UserHomeActivity.startActivity(getActivity(),mHomeDynamicAdapter.getData().get(position).getUser().getUserId()+"");
+            }
+        });
 
         mHomeDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
