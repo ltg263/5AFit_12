@@ -20,6 +20,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
@@ -27,6 +28,7 @@ import com.jxkj.fit_5a.conpoment.view.PopupWindowTy;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.CommunityHomeInfoBean;
 import com.jxkj.fit_5a.entity.HotTopicBean;
+import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.association.AssociationAddActivity;
 import com.jxkj.fit_5a.view.activity.association.InterestAllActivity;
@@ -34,9 +36,11 @@ import com.jxkj.fit_5a.view.activity.association.MineCircleActivity;
 import com.jxkj.fit_5a.view.activity.association.MineTopicActivity;
 import com.jxkj.fit_5a.view.activity.association.TopicAllActivity;
 import com.jxkj.fit_5a.view.activity.association.VideoActivity;
+import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 import com.jxkj.fit_5a.view.adapter.HomeThreeRmhtAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeTopAdapter;
+import com.jxkj.fit_5a.view.adapter.ListVideoAdapter;
 import com.jxkj.fit_5a.view.search.SearchGoodsActivity;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -157,6 +161,20 @@ public class HomeThreeFragment extends BaseFragment {
         mHomeThreeSqAdapter = new HomeThreeSqAdapter(null);
         mRvSqList.setAdapter(mHomeThreeSqAdapter);
 
+        mHomeThreeSqAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.iv_head_img:
+                    case R.id.tv_name:
+                        UserHomeActivity.startActivity(getActivity(),mHomeThreeSqAdapter.getData().get(position).getUser().getUserId()+"");
+                        break;
+                    case R.id.ll_xh:
+                        xihuan(mHomeThreeSqAdapter.getData().get(position),mHomeThreeSqAdapter);
+                        break;
+                }
+            }
+        });
         mHomeThreeSqAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -172,7 +190,31 @@ public class HomeThreeFragment extends BaseFragment {
             }
         });
     }
-
+    public static void xihuan(QueryPopularBean data,HomeThreeSqAdapter mAdapter){
+        if(data.isIsLike()){
+            HttpRequestUtils.postLikeCancel1("0",data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                @Override
+                public void succeed(String path) {
+                    if(path.equals("0")){
+                        data.setIsLike(false);
+                        data.setLikeCount((Integer.parseInt(data.getLikeCount())-1)+"");
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
+        }else{
+            HttpRequestUtils.postLike1("0",data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                @Override
+                public void succeed(String path) {
+                    if(path.equals("0")) {
+                        data.setIsLike(true);
+                        data.setLikeCount((Integer.parseInt(data.getLikeCount())+1)+"");
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
+        }
+    }
     @Override
     public void initImmersionBar() {
 

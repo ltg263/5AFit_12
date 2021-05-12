@@ -34,6 +34,7 @@ import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
 import com.jxkj.fit_5a.view.adapter.UserTopAdapter;
 import com.jxkj.fit_5a.view.adapter.UserTopXAdapter;
+import com.jxkj.fit_5a.view.fragment.HomeThreeFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -173,6 +174,22 @@ public class MineHomeActivity extends BaseActivity {
                 VideoActivity.startActivity(MineHomeActivity.this,
                         mHomeThreeSqAdapter.getData().get(position).getPublisherId(),
                         mHomeThreeSqAdapter.getData().get(position).getMomentId());
+            }
+        });
+
+
+        mHomeThreeSqAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.iv_head_img:
+                    case R.id.tv_name:
+                        UserHomeActivity.startActivity(MineHomeActivity.this,mHomeThreeSqAdapter.getData().get(position).getUser().getUserId()+"");
+                        break;
+                    case R.id.ll_xh:
+                        HomeThreeFragment.xihuan(mHomeThreeSqAdapter.getData().get(position),mHomeThreeSqAdapter);
+                        break;
+                }
             }
         });
         getUserProfileOwn();

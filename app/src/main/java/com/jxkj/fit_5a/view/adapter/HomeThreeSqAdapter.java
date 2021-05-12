@@ -47,9 +47,14 @@ public class HomeThreeSqAdapter extends BaseQuickAdapter<QueryPopularBean, BaseV
 
         helper.setText(R.id.tv_title,item.getSimpleContent()).setText(R.id.tv_name,item.getUser().getNickName())
                 .setGone(R.id.iv_icon_sp,false).setGone(R.id.iv_icon,true)
+                .addOnClickListener(R.id.iv_head_img).addOnClickListener(R.id.tv_name).addOnClickListener(R.id.ll_xh)
+                .setImageResource(R.id.iv_select_xh,R.drawable.icon_xin_99_d)
                 .setGone(R.id.iv_baofang,false).setText(R.id.tv_num,item.getLikeCount()+"");
         GlideImgLoader.loadImageViewWithCirclr(mContext,item.getUser().getAvatar(),helper.getView(R.id.iv_head_img));
 
+        if(item.isIsLike()){
+            helper.setImageResource(R.id.iv_select_xh,R.drawable.ic_celect_xh_yes);
+        }
         if(item.getContentType().equals("3")){
             helper.setGone(R.id.iv_baofang,true)
                     .setGone(R.id.iv_icon_sp,true).setGone(R.id.iv_icon,false);

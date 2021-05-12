@@ -37,8 +37,10 @@ import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.TopicAllBean;
 import com.jxkj.fit_5a.view.activity.mine.MineHomeActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineInfoActivity;
+import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 import com.jxkj.fit_5a.view.adapter.CircleDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeThreeSqAdapter;
+import com.jxkj.fit_5a.view.fragment.HomeThreeFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,6 +126,22 @@ public class MineTopicActivity extends BaseActivity {
                 VideoActivity.startActivity(MineTopicActivity.this,
                         mHomeThreeSqAdapter.getData().get(position).getPublisherId(),
                         mHomeThreeSqAdapter.getData().get(position).getMomentId());
+            }
+        });
+
+
+        mHomeThreeSqAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.iv_head_img:
+                    case R.id.tv_name:
+                        UserHomeActivity.startActivity(MineTopicActivity.this,mHomeThreeSqAdapter.getData().get(position).getUser().getUserId()+"");
+                        break;
+                    case R.id.ll_xh:
+                        HomeThreeFragment.xihuan(mHomeThreeSqAdapter.getData().get(position),mHomeThreeSqAdapter);
+                        break;
+                }
             }
         });
 

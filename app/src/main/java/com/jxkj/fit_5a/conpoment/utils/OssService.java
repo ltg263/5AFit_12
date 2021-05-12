@@ -93,8 +93,7 @@ public class OssService {
                 ToastUtils.showShort("UploadFailure");
                 if (clientExcepion != null) {
                     // 本地异常如网络异常等
-                    LogUtil.e("UploadFailure：表示向OSS发送请求或解析来自OSS的响应时发生错误。\n" +
-                            "  *例如，当网络不可用时，这个异常将被抛出");
+                    LogUtil.e("UploadFailure：表示向OSS发送请求或解析来自OSS的响应时发生错误。 例如，当网络不可用时，这个异常将被抛出");
                     clientExcepion.printStackTrace();
                 }
                 if (serviceException != null) {
@@ -107,8 +106,8 @@ public class OssService {
                 }
             }
         });
-        //task.cancel(); // 可以取消任务
-        //task.waitUntilFinished(); // 可以等待直到任务完成
+//        task.cancel(); // 可以取消任务
+//        task.waitUntilFinished(); // 可以等待直到任务完成
     }
 
 
