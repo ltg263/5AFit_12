@@ -2,6 +2,7 @@ package com.jxkj.fit_5a.view.activity.association;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -54,7 +55,6 @@ public class VideoActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        postBrows();
         snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(rvPage2);
         videoAdapter = new ListVideoAdapter(null, new ListVideoAdapter.VideoInterface() {
@@ -65,6 +65,7 @@ public class VideoActivity extends BaseActivity {
 
             @Override
             public void position(int position) {
+                Log.w("ListVideoAdapter","ListVideoAdapter"+position);
                 if(position==infoList.size()-1 && jobId.equals(infoList.get(infoList.size()-1).getJobId())){
                     jobId = "";
                     getQuery_next_graphic(videoAdapter.getData().get(position).getData().getMomentId());
@@ -78,14 +79,14 @@ public class VideoActivity extends BaseActivity {
         addListener();
         type = getIntent().getIntExtra("type",0);
         if(type==2){
-            circleId = getIntent().getStringExtra("circleId");
         }
         if(type==1){
             getMomentDetails();
         }else if(type==2){
+            circleId = getIntent().getStringExtra("circleId");
             getMomentDetailsCircle();
         }
-
+        postBrows();
     }
 
 
@@ -134,7 +135,7 @@ public class VideoActivity extends BaseActivity {
                             try {
                                 nextParam = null;
                                 JSONArray jsonArray = new JSONArray(media);
-                                getPlay_info(result.getData(),jsonArray.getJSONObject(0).getString("vedioId")
+                                getPlay_infos(result.getData(),jsonArray.getJSONObject(0).getString("vedioId")
                                         , jsonArray.getJSONObject(0).getString("imageUrl"));
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -171,7 +172,7 @@ public class VideoActivity extends BaseActivity {
                             String media = result.getData().getMedia();
                             try {
                                 JSONArray jsonArray = new JSONArray(media);
-                                getPlay_info(result.getData(),jsonArray.getJSONObject(0).getString("vedioId")
+                                getPlay_infos(result.getData(),jsonArray.getJSONObject(0).getString("vedioId")
                                         , jsonArray.getJSONObject(0).getString("imageUrl"));
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -211,7 +212,7 @@ public class VideoActivity extends BaseActivity {
                                 String media = lists.get(i).getMedia();
                                 try {
                                     JSONArray jsonArray = new JSONArray(media);
-                                    getPlay_info(lists.get(i),jsonArray.getJSONObject(0).getString("vedioId")
+                                    getPlay_infos(lists.get(i),jsonArray.getJSONObject(0).getString("vedioId")
                                             , jsonArray.getJSONObject(0).getString("imageUrl"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -237,7 +238,7 @@ public class VideoActivity extends BaseActivity {
     }
     String jobId = "";
     List<VideoPlayInfoBean.PlayInfoListBean> infoList = new ArrayList<>();
-    private void getPlay_info(MomentDetailsBean data,String videoId, String imageUrl) {
+    private void getPlay_infos(MomentDetailsBean data,String videoId, String imageUrl) {
         RetrofitUtil.getInstance().apiService()
                 .getPlay_info(null, videoId)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -252,7 +253,7 @@ public class VideoActivity extends BaseActivity {
                     public void onNext(Result<VideoPlayInfoBean> result) {
                         if (isDataInfoSucceed(result)) {
                             if(StringUtil.isBlank(nextParam)){
-                                getQuery_next_graphic(data.getMomentId());
+//                                getQuery_next_graphic(data.getMomentId());
                             }
                             List<VideoPlayInfoBean.PlayInfoListBean> info = result.getData().getPlayInfoList();
                             info.get(0).setImageUrl(imageUrl);

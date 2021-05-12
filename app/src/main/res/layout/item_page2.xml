@@ -34,6 +34,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_gz"
             android:layout_width="@dimen/dimen_60dp"
             android:layout_height="@dimen/dimen_25dp"
             android:layout_marginTop="@dimen/dimen_25dp"

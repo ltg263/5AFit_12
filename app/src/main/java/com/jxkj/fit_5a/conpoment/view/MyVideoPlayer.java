@@ -139,7 +139,7 @@ public class MyVideoPlayer extends JzvdStd {
             iv_start.setBackgroundResource(R.mipmap.video_play_parse);
         } else {
             ll_start.setVisibility(VISIBLE);
-            iv_start.setBackgroundResource(R.mipmap.stop);
+            iv_start.setBackgroundResource(R.drawable.ic_baofang);
         }
     }
 

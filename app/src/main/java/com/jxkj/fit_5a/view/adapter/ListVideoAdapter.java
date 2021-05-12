@@ -48,6 +48,14 @@ public class ListVideoAdapter extends VideoBaseAdapter<VideoPlayInfoBean.PlayInf
         Glide.with(context).load(bean.getImageUrl()).into(holder.mp_video.thumbImageView);
         holder.tv_name.setText(data.getUser().getNickName());
         holder.tv_content.setText(data.getContent());
+        holder.tv_gz.setText("关注");
+        holder.tv_gz.setVisibility(View.VISIBLE);
+        if(data.getUser().getRelation()==1 || data.getUser().getRelation()==3){
+            holder.tv_gz.setText("已关注");
+        }else if(data.getUser().getRelation()==4){
+            holder.tv_gz.setVisibility(View.GONE);
+        }
+
         holder.tv_xihuan.setText(data.getLikeCount()+"");
         holder.tv_liuyan.setText(data.getCommentCount()+"");
         holder.tv_shoucang.setText(data.getFavoriteCount()+"");
@@ -87,6 +95,32 @@ public class ListVideoAdapter extends VideoBaseAdapter<VideoPlayInfoBean.PlayInf
             @Override
             public void onClick(View v) {
                 shoucang(holder);
+            }
+        });
+        holder.tv_gz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(data.getUser().getRelation()==1 || data.getUser().getRelation()==3){
+                    HttpRequestUtils.postfollowCancel(data.getUser().getUserId() + "", new HttpRequestUtils.LoginInterface() {
+                        @Override
+                        public void succeed(String path) {
+                            if(path.equals("1")){
+                                data.getUser().setRelation(0);
+                                holder.tv_gz.setText("关注");
+                            }
+                        }
+                    });
+                    return;
+                }
+                HttpRequestUtils.postfollow(data.getUser().getUserId() + "", new HttpRequestUtils.LoginInterface() {
+                    @Override
+                    public void succeed(String path) {
+                        if(path.equals("0")){
+                            data.getUser().setRelation(1);
+                            holder.tv_gz.setText("已关注");
+                        }
+                    }
+                });
             }
         });
     }
@@ -162,7 +196,7 @@ public class ListVideoAdapter extends VideoBaseAdapter<VideoPlayInfoBean.PlayInf
         public View rootView;
         public MyVideoPlayer mp_video;
         public TextView tv_name;
-        public TextView tv_liuyan,tv_content,tv_xihuan,tv_shoucang,tv_fenxiang;
+        public TextView tv_liuyan,tv_content,tv_xihuan,tv_shoucang,tv_fenxiang,tv_gz;
         public ProgressBar bottom_progress;
         public ImageView iv_head,iv_xihuan,iv_shoucang;
         public VideoViewHolder(View rootView) {
@@ -172,6 +206,7 @@ public class ListVideoAdapter extends VideoBaseAdapter<VideoPlayInfoBean.PlayInf
             this.tv_content = rootView.findViewById(R.id.tv_content);
             this.tv_name = rootView.findViewById(R.id.tv_name);
             this.iv_head = rootView.findViewById(R.id.iv_head);
+            this.tv_gz = rootView.findViewById(R.id.tv_gz);
             this.iv_xihuan = rootView.findViewById(R.id.iv_xihuan);
             this.iv_shoucang = rootView.findViewById(R.id.iv_shoucang);
             this.bottom_progress = rootView.findViewById(R.id.bottom_progress);

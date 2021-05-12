@@ -40,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/dimen_10dp"
+            android:visibility="invisible"
             android:drawableStart="@drawable/ic_share"
             android:drawablePadding="@dimen/dimen_5dp"
             android:padding="@dimen/dimen_15dp"
