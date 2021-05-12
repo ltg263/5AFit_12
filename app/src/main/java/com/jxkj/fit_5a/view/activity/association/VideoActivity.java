@@ -262,6 +262,10 @@ public class VideoActivity extends BaseActivity {
                             infoList.addAll(info);
                             videoAdapter.setNewData(infoList);
                             videoAdapter.notifyDataSetChanged();
+                        }else{
+                            if(infoList.size()==0){
+                                finish();
+                            }
                         }
                     }
 

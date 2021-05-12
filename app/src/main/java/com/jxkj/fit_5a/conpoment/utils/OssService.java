@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.conpoment.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.ClientException;
@@ -48,8 +49,8 @@ public class OssService {
 
         OSSStsTokenCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(accessKeyId, accessKeySecret, SecurityToken);
         ClientConfiguration conf = new ClientConfiguration();
-        conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
-        conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
+        conf.setConnectionTimeout(30 * 1000); // 连接超时，默认15秒
+        conf.setSocketTimeout(30 * 1000); // socket超时，默认15秒
         conf.setMaxConcurrentRequest(8); // 最大并发请求数，默认5个
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
         // oss为全局变量，endpoint是一个OSS区域地址
@@ -63,6 +64,8 @@ public class OssService {
             LogUtil.d("请选择图片....");
             return;
         }
+        Log.w("ppppppp","bucketName:"+bucketName);
+        Log.w("ppppppp","dir+ File.separator+filename:"+(dir+ File.separator+filename));
         //下面3个参数依次为bucket名，Object名，上传文件路径
         PutObjectRequest put = new PutObjectRequest(bucketName, dir+ File.separator+filename, path);
         LogUtil.d("正在上传中....");
