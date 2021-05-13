@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.gyf.immersionbar.ImmersionBar;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
@@ -24,6 +25,7 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.UserOwnInfo;
@@ -65,7 +67,7 @@ public class UserHomeActivity extends BaseActivity {
     @BindView(R.id.toolbar1)
     Toolbar mToolbar1;
     @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout mCollapsingToolbar;
+    View mCollapsingToolbar;
     @BindView(R.id.rl_actionbar)
     AppBarLayout mAppbar;
     @BindView(R.id.refreshLayout)
@@ -200,6 +202,7 @@ public class UserHomeActivity extends BaseActivity {
                 float fraction = Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange();
                 mCollapsingToolbar.setAlpha(fraction);
                 mToolbar1.setAlpha(fraction);
+//                mRlAllinfo.setAlpha(fraction);
                 mToolbar.setAlpha(1 - fraction);
 
             }
@@ -313,11 +316,13 @@ public class UserHomeActivity extends BaseActivity {
             mTvGzZt.setText("已关注");
         }
         mNickname.setText(data.getNickName());
-        mTvState.setText(data.getExplain());
+        if(StringUtil.isNotBlank(data.getExplain())){
+            mTvState.setText(data.getExplain());
+        }
         mTvGz.setText(data.getFollowCount());
         mTvFs.setText(data.getFansCount());
         mTvSc.setText(data.getFavoriteCount());
-        mTvLw.setText(data.getGiftCount());
+        mTvLw.setText(data.getLikeCount());
 //        if(data.getRelation()==4){
 //
 //        }
