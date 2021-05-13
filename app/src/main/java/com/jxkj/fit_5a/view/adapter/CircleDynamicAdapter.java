@@ -10,6 +10,7 @@ import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
+import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +36,7 @@ public class CircleDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, Bas
                 .setText(R.id.tv_xihuan,item.getLikeCount()+"")
                 .setText(R.id.tv_liuyan,item.getCommentCount()+"")
                 .setText(R.id.tv_browse_num,"浏览 "+item.getPageviews()+" 次")
-                .addOnClickListener(R.id.iv_head_img).addOnClickListener(R.id.tv_name)
+                .addOnClickListener(R.id.iv_head_img).addOnClickListener(R.id.tv_name).setVisible(R.id.tv_wgz,true)
                 .addOnClickListener(R.id.tv_time).addOnClickListener(R.id.tv_wgz).addOnClickListener(R.id.ll_xihuan);
 
 
@@ -55,6 +56,9 @@ public class CircleDynamicAdapter extends BaseQuickAdapter<QueryPopularBean, Bas
             helper.setImageDrawable(R.id.iv_xihuan,mContext.getResources().getDrawable(R.drawable.ic_celect_xh_yes));
         }else{
             helper.setImageDrawable(R.id.iv_xihuan,mContext.getResources().getDrawable(R.drawable.icon_xin_99_d));
+        }
+        if(mContext instanceof UserHomeActivity){
+            helper.setVisible(R.id.tv_wgz,false);
         }
         GlideImageUtils.setGlideImage(mContext,item.getUser().getAvatar(),helper.getView(R.id.iv_head_img));
         if(StringUtil.isNotBlank(item.getMedia())){
