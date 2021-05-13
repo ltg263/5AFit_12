@@ -90,6 +90,7 @@ public class AssociationListAdapter extends BaseQuickAdapter<MomentDetailsBean, 
                 .setText(R.id.tv_xihuan, item.getLikeCount() + "")
                 .setText(R.id.tv_liuyan, item.getCommentCount() + "")
                 .setText(R.id.tv_all, "全部评论(" + item.getCommentCount() + ")")
+                .setText(R.id.tv_browse_num,"浏览 "+item.getPageviews()+" 次")
                 .setText(R.id.tv_fenxiang, "0")
                 .setGone(R.id.tv_address, false)
                 .setImageDrawable(R.id.iv_xihuan, mContext.getResources().getDrawable(R.drawable.icon_xin_99_d))
