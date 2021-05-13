@@ -34,7 +34,9 @@ public class UserScAdapter extends BaseQuickAdapter<FavoriteQueryList, BaseViewH
                 .setGone(R.id.rv_img_list,false)
                 .setText(R.id.tv_xihuan,item.getMoment().getLikeCount()+"")
                 .setText(R.id.tv_liuyan,item.getMoment().getCommentCount()+"")
-                .setText(R.id.tv_browse_num,item.getMoment().getPageviews()+"");
+                .setText(R.id.tv_browse_num,item.getMoment().getPageviews()+"")
+                .addOnClickListener(R.id.ll_xihuan)
+                .addOnClickListener(R.id.iv_head_img).addOnClickListener(R.id.tv_name).addOnClickListener(R.id.tv_time);
 
 //        if(item.getMoment().getUser().getRelation()==4){
 //            helper.setVisible(R.id.tv_wgz,false).setVisible(R.id.tv_ygz,false);

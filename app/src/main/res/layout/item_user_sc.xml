@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dp_10"
     android:orientation="vertical">
+
     <com.jxkj.fit_5a.conpoment.view.RoundImageView
         android:id="@+id/iv_head_img"
         android:layout_width="38dp"
@@ -19,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/iv_head_img"
         android:layout_toEndOf="@id/iv_head_img"
-        android:text="吴帅帅"
+        android:text="用户"
         android:textColor="@color/color_333333"
         android:textSize="14sp" />
 
@@ -29,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/iv_head_img"
         android:layout_toEndOf="@id/iv_head_img"
-        android:text="2002-15-16"
+        android:text="0000-00-00"
         android:textColor="@color/color_999999"
         android:textSize="12sp" />
 
@@ -40,7 +41,7 @@
         android:layout_below="@id/iv_head_img"
         android:layout_marginHorizontal="@dimen/dp_10"
         android:maxLines="2"
-        android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
+        android:text="内容"
         android:textColor="@color/color_808080"
         android:textSize="15sp" />
 
@@ -92,7 +93,7 @@
         android:drawableStart="@drawable/icon_liu_y_1"
         android:drawablePadding="@dimen/dimen_5dp"
         android:gravity="center"
-        android:text="123"
+        android:text="0"
         android:textColor="@color/color_808080"
         android:textSize="10sp" />
 
@@ -153,8 +154,8 @@
                 android:layout_width="@dimen/dimen_45dp"
                 android:layout_height="@dimen/dimen_45dp"
                 android:layout_centerInParent="true"
-                android:visibility="gone"
-                android:src="@drawable/ic_baofang" />
+                android:src="@drawable/ic_baofang"
+                android:visibility="gone" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -163,13 +164,12 @@
         android:id="@+id/tv_topic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rv_img_list"
+        android:layout_alignBaseline="@id/tv_browse_num"
         android:layout_marginStart="@dimen/dimen_5dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/btn_shape_bj_theme_99"
         android:paddingHorizontal="@dimen/dp_10"
         android:paddingVertical="@dimen/dimen_3dp"
-        android:text="#运动"
+        android:text="#0"
         android:textColor="@color/color_666666"
         android:textSize="14sp" />
 
@@ -178,13 +178,14 @@
         android:id="@+id/tv_browse_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_topic"
+        android:layout_below="@id/rv_img_list"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/dp_10"
         android:drawableStart="@drawable/icon_yl"
         android:drawablePadding="@dimen/dimen_5dp"
         android:gravity="center_vertical"
-        android:padding="@dimen/dp_10"
-        android:text="1358"
+        android:padding="@dimen/dimen_5dp"
+        android:text="0"
         android:textColor="@color/color_999999" />
 
 

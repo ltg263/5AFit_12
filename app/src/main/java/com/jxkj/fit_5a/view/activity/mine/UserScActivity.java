@@ -19,8 +19,13 @@ import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.entity.FavoriteQueryList;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
+import com.jxkj.fit_5a.view.activity.association.VideoActivity;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.UserScAdapter;
+import com.jxkj.fit_5a.view.fragment.HomeThreeFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,25 +62,61 @@ public class UserScActivity extends BaseActivity {
         mUserScAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-                AssociationActivity.startActivity(UserScActivity.this,
-                        mUserScAdapter.getData().get(position).getMoment().getPublisherId()+"",
-                        mUserScAdapter.getData().get(position).getMoment().getMomentId()+"");
+                if (mUserScAdapter.getData().get(position).getMoment().getContentType()==3) {
+                    String media = mUserScAdapter.getData().get(position).getMoment().getMedia();
+                    try {
+                        JSONArray jsonArray = new JSONArray(media);
+//                        VideoActivity.startActivity(getActivity(), jsonArray.getJSONObject(0).getString("vedioId"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    VideoActivity.startActivity(UserScActivity.this,
+                            mUserScAdapter.getData().get(position).getMoment().getPublisherId()+"",
+                            mUserScAdapter.getData().get(position).getMoment().getMomentId()+"");
+                } else {
+                    AssociationActivity.startActivity(UserScActivity.this,
+                            mUserScAdapter.getData().get(position).getMoment().getPublisherId()+"",
+                            mUserScAdapter.getData().get(position).getMoment().getMomentId()+"");
+                }
             }
         });
 
         mUserScAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                FavoriteQueryList data = mUserScAdapter.getData().get(position);
-                show();
-                HttpRequestUtils.postFavorit("0", data.getMomentId() + "",
-                        data.getUserId() + "", new HttpRequestUtils.LoginInterface() {
-                            @Override
-                            public void succeed(String path) {
-                                dismiss();
-                            }
-                        });
+                FavoriteQueryList.MomentBean data = mUserScAdapter.getData().get(position).getMoment();
+                switch (view.getId()){
+                    case R.id.iv_head_img:
+                    case R.id.tv_name:
+                    case R.id.tv_time:
+                        UserHomeActivity.startActivity(UserScActivity.this,data.getUser().getUserId()+"");
+                        break;
+                    case R.id.ll_xihuan:
+                        if(data.isIsLike()){
+                            HttpRequestUtils.postLikeCancel1("0",data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                                @Override
+                                public void succeed(String path) {
+                                    if(path.equals("0")){
+                                        data.setIsLike(false);
+                                        data.setLikeCount(data.getLikeCount()-1);
+                                        mUserScAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }else{
+                            HttpRequestUtils.postLike1("0",data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                                @Override
+                                public void succeed(String path) {
+                                    if(path.equals("0")) {
+                                        data.setIsLike(true);
+                                        data.setLikeCount(data.getLikeCount()+1);
+                                        mUserScAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }
+                        break;
+                }
             }
         });
 
