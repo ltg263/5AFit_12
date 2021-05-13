@@ -137,8 +137,7 @@ public class LoginActivity extends BaseActivity {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
         //Verify if app XYZ has this screen path
         PackageManager packageManager = getPackageManager();
-        List<ResolveInfo> activities =
-                packageManager.queryIntentActivities(mapIntent, 0);
+        List<ResolveInfo> activities = packageManager.queryIntentActivities(mapIntent, 0);
         boolean isIntentSafe = activities.size() > 0;
 
         if (isIntentSafe) {
