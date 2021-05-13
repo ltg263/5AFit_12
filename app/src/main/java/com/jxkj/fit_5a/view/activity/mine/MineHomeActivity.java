@@ -20,6 +20,7 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.RoundImageView;
@@ -28,6 +29,7 @@ import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.UserOwnInfo;
 import com.jxkj.fit_5a.view.activity.association.AssociationActivity;
 import com.jxkj.fit_5a.view.activity.association.MineCircleActivity;
+import com.jxkj.fit_5a.view.activity.association.MineTopicActivity;
 import com.jxkj.fit_5a.view.activity.association.VideoActivity;
 import com.jxkj.fit_5a.view.adapter.CircleDynamicAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeDynamicAdapter;
@@ -149,6 +151,57 @@ public class MineHomeActivity extends BaseActivity {
                 AssociationActivity.startActivity(MineHomeActivity.this,
                         mCircleDynamicAdapter.getData().get(position).getPublisherId(),
                         mCircleDynamicAdapter.getData().get(position).getMomentId());
+            }
+        });
+        mCircleDynamicAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                QueryPopularBean data = mCircleDynamicAdapter.getData().get(position);
+                switch (view.getId()){
+                    case R.id.iv_head_img:
+                    case R.id.tv_name:
+                    case R.id.tv_time:
+                        UserHomeActivity.startActivity(MineHomeActivity.this,data.getUser().getUserId()+"");
+                        break;
+                    case R.id.tv_wgz:
+                        show();
+                        HttpRequestUtils.postfollowCancel(data.getUser().getUserId() + "", new HttpRequestUtils.LoginInterface() {
+                            @Override
+                            public void succeed(String path) {
+                                dismiss();
+                                if(path.equals("1")){
+                                    data.getUser().setRelation(0);
+                                    mCircleDynamicAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        });
+                        break;
+                    case R.id.ll_xihuan:
+                        if(data.isIsLike()){
+                            HttpRequestUtils.postLikeCancel1("0",data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                                @Override
+                                public void succeed(String path) {
+                                    if(path.equals("0")){
+                                        data.setIsLike(false);
+                                        data.setLikeCount((Integer.parseInt(data.getLikeCount())-1)+"");
+                                        mCircleDynamicAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }else{
+                            HttpRequestUtils.postLike1("0",data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                                @Override
+                                public void succeed(String path) {
+                                    if(path.equals("0")) {
+                                        data.setIsLike(true);
+                                        data.setLikeCount((Integer.parseInt(data.getLikeCount())+1)+"");
+                                        mCircleDynamicAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }
+                        break;
+                }
             }
         });
 

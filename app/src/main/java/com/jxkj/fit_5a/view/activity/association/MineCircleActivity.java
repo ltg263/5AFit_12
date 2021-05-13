@@ -2,7 +2,9 @@ package com.jxkj.fit_5a.view.activity.association;
 
 
 import android.graphics.Typeface;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,10 +23,19 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.view.BlurringView;
+import com.jxkj.fit_5a.conpoment.view.PopupWindowTy;
 import com.jxkj.fit_5a.entity.CircleDetailsBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
+import com.jxkj.fit_5a.view.activity.mine.MineHomeActivity;
+import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 import com.jxkj.fit_5a.view.adapter.CircleDynamicAdapter;
+import com.jxkj.fit_5a.view.fragment.HomeThreeFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -117,6 +128,57 @@ public class MineCircleActivity extends BaseActivity {
                         mCircleDynamicAdapter.getData().get(position).getMomentId());
             }
         });
+        mCircleDynamicAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                QueryPopularBean data = mCircleDynamicAdapter.getData().get(position);
+                switch (view.getId()){
+                    case R.id.iv_head_img:
+                    case R.id.tv_name:
+                    case R.id.tv_time:
+                        UserHomeActivity.startActivity(MineCircleActivity.this,data.getUser().getUserId()+"");
+                        break;
+                    case R.id.tv_wgz:
+                        show();
+                        HttpRequestUtils.postfollowCancel(data.getUser().getUserId() + "", new HttpRequestUtils.LoginInterface() {
+                            @Override
+                            public void succeed(String path) {
+                                dismiss();
+                                if(path.equals("1")){
+                                    data.getUser().setRelation(0);
+                                    mCircleDynamicAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        });
+                        break;
+                    case R.id.ll_xihuan:
+                        if(data.isIsLike()){
+                            HttpRequestUtils.postLikeCancel1("0",data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                                @Override
+                                public void succeed(String path) {
+                                    if(path.equals("0")){
+                                        data.setIsLike(false);
+                                        data.setLikeCount((Integer.parseInt(data.getLikeCount())-1)+"");
+                                        mCircleDynamicAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }else{
+                            HttpRequestUtils.postLike1("0",data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                                @Override
+                                public void succeed(String path) {
+                                    if(path.equals("0")) {
+                                        data.setIsLike(true);
+                                        data.setLikeCount((Integer.parseInt(data.getLikeCount())+1)+"");
+                                        mCircleDynamicAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }
+                        break;
+                }
+            }
+        });
         mBlurringView.setBlurredView(mRvList);
         rl11.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +212,30 @@ public class MineCircleActivity extends BaseActivity {
                 initView(mTv2, mView2);
                 break;
         }
+    }
+
+    PopupWindowTy window;
+    List<String> list = new ArrayList<>();
+    private void initPopupWindow() {
+        list.clear();
+        list.add("相册");
+        list.add("视频");
+        if (window == null) {
+            window = new PopupWindowTy(this, list, new PopupWindowTy.GiveDialogInterface() {
+                @Override
+                public void btnConfirm(int position) {
+                    int type = 3;
+                    if (position == 0) {
+                        type = 2;
+                    }
+//                    IntentUtils.getInstence().intent(this, AssociationAddActivity.class,"type",type,"topic",mHotTopicBean.getName());
+                }
+            });
+
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        }
+
+        window.showAtLocation(mTv, Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置10464.66
     }
 
     private void initView(TextView tv, View v) {

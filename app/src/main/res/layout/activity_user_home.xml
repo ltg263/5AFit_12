@@ -118,7 +118,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="5dp"
-                                android:text="我的日记"
+                                android:text="Ta的日记"
                                 android:textColor="@color/color_000000"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -517,7 +517,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
-                android:text="我的日记"
+                android:text="Ta的日记"
                 android:textColor="@color/color_ffffff"
                 android:textSize="18sp"
                 android:textStyle="bold" />

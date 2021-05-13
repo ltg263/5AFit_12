@@ -136,6 +136,7 @@
         android:textSize="14sp" />
 
     <LinearLayout
+        android:id="@+id/ll_xihuan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/tv_browse_num"
