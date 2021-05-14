@@ -129,7 +129,7 @@ public class DeviceProtocolCheckData {
             private int id;
             private String name;
             private String protocolName;
-            private String paramId;
+            private int paramId;
             private String img;
 
             public int getId() {
@@ -156,11 +156,11 @@ public class DeviceProtocolCheckData {
                 this.protocolName = protocolName;
             }
 
-            public String getParamId() {
+            public int getParamId() {
                 return paramId;
             }
 
-            public void setParamId(String paramId) {
+            public void setParamId(int paramId) {
                 this.paramId = paramId;
             }
 

@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.app.MainApplication;
@@ -246,7 +247,6 @@ public class PopupWindowLanYan extends PopupWindow {
             return;
         }
     }
-
     public static void postDeviceProtocolCheck() {
         int deviceBrandParamId = ConstValues_Ly.CLIENT_ID;
         int deviceTypeParamId = ConstValues_Ly.METER_ID;
@@ -270,15 +270,18 @@ public class PopupWindowLanYan extends PopupWindow {
 
                     @Override
                     public void onNext(Result<DeviceProtocolCheckData> result) {
-                        if(result.getCode()==0 && result.getData()!=null){
+                        if(result.getCode()==0 && result.getData()!=null && !result.getData().isResult()){
                             DeviceProtocolCheckData.DeviceBrandTypeModelBean data = result.getData().getDeviceBrandTypeModel();
-
                             if(data!=null){
                                 PopupWindowLanYan.BleName =data.getDeviceType().getName();
                                 ConstValues_Ly.SB_NAME = data.getDeviceBrand().getName();
                                 ConstValues_Ly.DEVICE_IMG = data.getDeviceType().getImg();
+                                ConstValues_Ly.DEVICE_TYPE_ID = data.getDeviceType().getParamId();
                                 initLsData();
                             }
+                        }else{
+                            PopupWindowLanYan.ble4Util.disconnect();
+                            ToastUtils.showLong("类型匹配失败");
                         }
 
                     }
@@ -300,34 +303,20 @@ public class PopupWindowLanYan extends PopupWindow {
         boolean isHave = false;
         List<HistoryEquipmentData> lists = SharedHistoryEquipment.singleton().getSharedHistoryEquipment();
         if(lists!=null){
-
             for(int i=0;i<lists.size();i++){
-                for(int j = 0; j<ConstValues_Ly.DEVICE_TYPE_IDS.length;j++){
-                    if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[j]){
-                        if(lists.get(i).getId()==ConstValues_Ly.DEVICE_TYPE_IDS[j]){
-                            isHave = true;
-                            lists.get(i).setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
-                            lists.get(i).setState("0");
-                            break;
-                        }
-                    }
+                if(lists.get(i).getId()==ConstValues_Ly.DEVICE_TYPE_ID){
+                    isHave = true;
+                    lists.get(i).setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
+                    lists.get(i).setState("0");
+                    break;
                 }
             }
+            Log.w("--->>>","isHave:"+isHave);
             if(!isHave){
                 HistoryEquipmentData mHistoryEquipmentData = new HistoryEquipmentData();
                 mHistoryEquipmentData.setState("0");
                 mHistoryEquipmentData.setName(PopupWindowLanYan.BleName);
-                if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]){
-                    mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[0]);
-                }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
-                    mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[1]);
-                }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2]){
-                    mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[2]);
-                }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]){
-                    mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[3]);
-                }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]){
-                    mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[4]);
-                }
+                mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_ID);
                 mHistoryEquipmentData.setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
                 mHistoryEquipmentData.setImg(ConstValues_Ly.DEVICE_IMG);
                 mHistoryEquipmentData.setDeviceTypeId(ConstValues_Ly.DEVICE_TYPE_ID_URL);
@@ -344,17 +333,7 @@ public class PopupWindowLanYan extends PopupWindow {
             HistoryEquipmentData mHistoryEquipmentData = new HistoryEquipmentData();
             mHistoryEquipmentData.setState("0");
             mHistoryEquipmentData.setName(PopupWindowLanYan.BleName);
-            if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[0]){
-                mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[0]);
-            }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[1]){
-                mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[1]);
-            }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[2]){
-                mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[2]);
-            }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[3]){
-                mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[3]);
-            }else if(ConstValues_Ly.METER_ID==ConstValues_Ly.METER_ID_S[4]){
-                mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_IDS[4]);
-            }
+            mHistoryEquipmentData.setId(ConstValues_Ly.DEVICE_TYPE_ID);
             mHistoryEquipmentData.setDeviceTypeId(ConstValues_Ly.DEVICE_TYPE_ID_URL);
             mHistoryEquipmentData.setTime(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
             mHistoryEquipmentData.setImg(ConstValues_Ly.DEVICE_IMG);

@@ -3,6 +3,7 @@ package com.jxkj.fit_5a.conpoment.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -41,6 +42,7 @@ public class SharedHistoryEquipment {
     public void putSharedHistoryEquipment(List<HistoryEquipmentData> lists) {
         List<HistoryEquipmentData> listNew = new ArrayList<>();
         if(lists!=null){
+            Log.w("--->>>","PopupWindowLanYan.BleName:"+PopupWindowLanYan.BleName);
             for(int i=0;i<lists.size();i++){
                 if(StringUtil.isBlank(PopupWindowLanYan.BleName)){
                     lists.get(i).setState("1");
