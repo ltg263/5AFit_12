@@ -118,7 +118,6 @@ public class PopupWindowLanYan extends PopupWindow {
                     @Override
                     public void StateChange(int state, int newState) {
                         String value = null;
-                        BleName = "";
                         if (newState == BluetoothGatt.STATE_CONNECTED){
                             BleAddress = bleadapter.getDevice(i).getAddress();
                             value = "连接成功";
@@ -247,6 +246,8 @@ public class PopupWindowLanYan extends PopupWindow {
             return;
         }
     }
+
+    //deviceBrandId=56&deviceBrandParamId=55&deviceModelId=21&deviceTypeId=6&deviceTypeParamId=230&protocolName=iconsole
     public static void postDeviceProtocolCheck() {
         int deviceBrandParamId = ConstValues_Ly.CLIENT_ID;
         int deviceTypeParamId = ConstValues_Ly.METER_ID;
@@ -273,15 +274,14 @@ public class PopupWindowLanYan extends PopupWindow {
                         if(result.getCode()==0 && result.getData()!=null && !result.getData().isResult()){
                             DeviceProtocolCheckData.DeviceBrandTypeModelBean data = result.getData().getDeviceBrandTypeModel();
                             if(data!=null){
-                                PopupWindowLanYan.BleName =data.getDeviceType().getName();
+                                PopupWindowLanYan.BleName = data.getDeviceType().getName();
                                 ConstValues_Ly.SB_NAME = data.getDeviceBrand().getName();
                                 ConstValues_Ly.DEVICE_IMG = data.getDeviceType().getImg();
                                 ConstValues_Ly.DEVICE_TYPE_ID = data.getDeviceType().getParamId();
                                 initLsData();
                             }
                         }else{
-                            PopupWindowLanYan.ble4Util.disconnect();
-                            ToastUtils.showLong("类型匹配失败");
+                            initLsData();
                         }
 
                     }

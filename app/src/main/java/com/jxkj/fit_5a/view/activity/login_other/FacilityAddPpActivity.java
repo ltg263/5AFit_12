@@ -78,6 +78,7 @@ public class FacilityAddPpActivity extends BaseActivity {
         Bundle bundle = getIntent().getBundleExtra("bundle");
         ConstValues_Ly.DEVICE_TYPE_ID_URL =  bundle.getString("id");//设备类型id
         sbName = bundle.getString("name");
+        PopupWindowLanYan.BleName = sbName;
         mTvTitle.setText(sbName);
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         getBluetoothChannel();
@@ -181,11 +182,13 @@ public class FacilityAddPpActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result<DeviceData> result) {
-                        if(isDataInfoSucceed(result)){
-                            if(result.getData()!=null && result.getData().getList()!=null && result.getData().getList().size()>0){
-                                result.getData().getList().get(0).setSelect(true);
-                                sbName_xh = result.getData().getList().get(0).getName();
-                                ConstValues_Ly.DEVICE_Model_ID_URL = result.getData().getList().get(0).getId()+"";
+                        if(isDataInfoSucceed(result) && result.getData()!=null){
+                            List<DeviceData.ListBean> listData = result.getData().getList();
+                            if(listData!=null && listData.size()>0){
+                                listData.get(0).setSelect(true);
+                                sbName_xh = listData.get(0).getName();
+                                ConstValues_Ly.DEVICE_Model_ID_URL = listData.get(0).getId()+"";
+                                ConstValues_Ly.BRAND_ID = list.get(0).getId()+"";
                                 mFacilitySbAddAdapter.setNewData(result.getData().getList());
                             }
                         }
@@ -229,8 +232,9 @@ public class FacilityAddPpActivity extends BaseActivity {
         if(list==null || list.size()==0){
             return;
         }
-
+        list.get(0).setSelect(true);
         queryDeviceModelLists(list.get(0).getId());
+        ConstValues_Ly.SB_NAME = list.get(0).getName();
         tv_name.setText("("+list.get(0).getName()+")");
         int length = list.size()<9?list.size():9;
         mFacilityAddAdapter = new FacilityAddAdapter(list.subList(0,length));

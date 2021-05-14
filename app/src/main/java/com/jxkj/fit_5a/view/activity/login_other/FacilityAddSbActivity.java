@@ -109,7 +109,7 @@ public class FacilityAddSbActivity extends BaseActivity {
                 Bundle mBundle = new Bundle();
                 mBundle.putString("name",list.get(position).getName());
                 mBundle.putString("id",list.get(position).getId()+"");
-//                ConstValues_Ly.DEVICE_IMG = list.get(position).getImg();
+                ConstValues_Ly.DEVICE_IMG = list.get(position).getImg();
                 IntentUtils.getInstence().intent(FacilityAddSbActivity.this, FacilityAddPpActivity.class,"bundle",mBundle);
             }
         });
