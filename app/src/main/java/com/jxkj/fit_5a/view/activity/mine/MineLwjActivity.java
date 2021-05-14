@@ -58,7 +58,7 @@ public class MineLwjActivity extends BaseActivity {
                     @Override
                     public void onNext(ResultList<MedalListData> result) {
                         if(isDataInfoSucceed(result)){
-                            mMineLwzAdapter.setNewData(result.getData());
+//                            mMineLwzAdapter.setNewData(result.getData());
                         }
                     }
 

@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.jxkj.fit_5a"
         minSdkVersion 21
@@ -29,11 +28,11 @@ android {
         }
     }
     signingConfigs {
-        config {                       // 签名配置的名字，可以随意起，比如myconfig等
-            keyAlias '5AFit_key'            // 签名别名
-            keyPassword '5afit123456'       // 别名对应的密码
-            storeFile file('D:/JianXuan/5AFit/app/5AFit.jks')  // 正式签名文件位置
-            storePassword '5afit123456'     // 签名密码
+        release {
+            storeFile file('5AFit.jks') //绝对路径
+            storePassword "5afit123456"
+            keyAlias "5AFit_key"
+            keyPassword "5afit123456"
         }
 
 //        MD5:  24:39:44:D1:14:41:EC:75:28:94:B8:B1:C5:0E:4C:87
@@ -42,17 +41,16 @@ android {
 
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            //signingConfig signingConfigs.config
-            signingConfig signingConfigs.config
-        }
-        debug {
-            minifyEnabled false
-            //signingConfig signingConfigs.config
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+            signingConfig signingConfigs.release
         }
     }
     lintOptions {
@@ -69,23 +67,23 @@ android {
             outputFileName = fileName
         }
     }
-    packagingOptions {
-        exclude 'META-INF/rxjava.properties'
-        exclude 'META-INF/DEPENDENCIES'
-        pickFirst 'META-INF/*'
-        pickFirst 'lib/armeabi-v7a/libRSSupport.so'
-        pickFirst 'lib/arm64-v8a/libRSSupport.so'
-        pickFirst 'lib/x86_64/libRSSupport.so'
-        pickFirst 'lib/x86/libRSSupport.so'
-        pickFirst 'lib/arm64-v8a/librsjni.so'
-        pickFirst 'lib/x86/librsjni.so'
-        pickFirst 'lib/x86_64/librsjni.so'
-        pickFirst 'lib/armeabi-v7a/librsjni.so'
-        pickFirst 'lib/x86_64/librsjni_androidx.so'
-        pickFirst 'lib/armeabi-v7a/librsjni_androidx.so'
-        pickFirst 'lib/x86/librsjni_androidx.so'
-        pickFirst 'lib/arm64-v8a/librsjni_androidx.so'
-    }
+//    packagingOptions {
+//        exclude 'META-INF/rxjava.properties'
+//        exclude 'META-INF/DEPENDENCIES'
+//        pickFirst 'META-INF/*'
+//        pickFirst 'lib/armeabi-v7a/libRSSupport.so'
+//        pickFirst 'lib/arm64-v8a/libRSSupport.so'
+//        pickFirst 'lib/x86_64/libRSSupport.so'
+//        pickFirst 'lib/x86/libRSSupport.so'
+//        pickFirst 'lib/arm64-v8a/librsjni.so'
+//        pickFirst 'lib/x86/librsjni.so'
+//        pickFirst 'lib/x86_64/librsjni.so'
+//        pickFirst 'lib/armeabi-v7a/librsjni.so'
+//        pickFirst 'lib/x86_64/librsjni_androidx.so'
+//        pickFirst 'lib/armeabi-v7a/librsjni_androidx.so'
+//        pickFirst 'lib/x86/librsjni_androidx.so'
+//        pickFirst 'lib/arm64-v8a/librsjni_androidx.so'
+//    }
     productFlavors {
     }
 }
@@ -158,7 +156,7 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
 
     //搜索
-    implementation 'com.wenwenwen888:searchbox:1.0.1'
+//    implementation 'com.wenwenwen888:searchbox:1.0.1'
 
     //底部导航栏
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.0.4'
@@ -256,8 +254,8 @@ dependencies {
     implementation 'com.danikula:videocache:2.7.1'
     implementation 'com.wx.wheelview:wheelview:1.3.3'//api:https://github.com/venshine/WheelView
 
-    implementation project(':blurringview')
-    implementation project(':bthelper')
+//    implementation project(':blurringview')
+//    implementation project(':bthelper')
 
     implementation 'com.github.1993hzw:Androids:1.3'
 //    implementation 'com.changyow:consolelib:1.1'
@@ -267,6 +265,6 @@ dependencies {
     implementation 'com.aliyun.sdk.android:AliyunPlayer:4.5.0-full'
     implementation 'com.alivc.conan:AlivcConan:0.9.5'
 
-//    implementation 'com.inuker.bluetooth:library:1.4.0'
+//  implementation 'com.inuker.bluetooth:library:1.4.0'
     implementation 'com.stag:bluetooth:1.0.2'
 }

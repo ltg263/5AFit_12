@@ -40,7 +40,7 @@ public class UserLwActivity extends BaseActivity {
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         List<String> list = new ArrayList<>();
         for(int i = 0;i<10;i++){
-            list.add("");
+//            list.add("");
         }
         UserLwAdapter mUserLwAdapter = new UserLwAdapter(list);
         mRvList.setLayoutManager(new GridLayoutManager(this, 4));

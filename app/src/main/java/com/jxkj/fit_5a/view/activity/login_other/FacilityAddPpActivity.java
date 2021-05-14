@@ -287,7 +287,7 @@ public class FacilityAddPpActivity extends BaseActivity {
         mIv.setVisibility(View.VISIBLE);
         mTv.setVisibility(View.VISIBLE);
         mIvD.setVisibility(View.GONE);
-        ConstValues_Ly.SB_NAME = sbName+"-"+sbName_pp+"-"+sbName_xh;
+//        ConstValues_Ly.SB_NAME = sbName+"-"+sbName_pp+"-"+sbName_xh;
         if(str.equals("连接成功")){
             TimeThreadUtils.sendDataA2();
         }

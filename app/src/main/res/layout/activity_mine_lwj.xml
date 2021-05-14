@@ -69,9 +69,9 @@
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_15dp"
             android:layout_marginTop="@dimen/dimen_15dp"
             android:text="历史记录"
-            android:layout_marginStart="@dimen/dimen_15dp"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -80,8 +80,8 @@
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dimen_2dp"
             android:layout_below="@id/tv1"
-            android:layout_marginTop="-5dp"
             android:layout_marginStart="@dimen/dimen_15dp"
+            android:layout_marginTop="-5dp"
             android:layout_marginBottom="@dimen/dimen_20dp"
             android:background="@drawable/line_shape_bj_select" />
 
@@ -89,7 +89,14 @@
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:overScrollMode="never" />
+            android:overScrollMode="never"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_150dp"
+            android:gravity="center"
+            android:text="暂无数据" />
 
 
     </LinearLayout>
