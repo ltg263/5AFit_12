@@ -1,6 +1,5 @@
 package com.jxkj.fit_5a.view.activity.exercise;
 
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,9 +25,7 @@ import com.jxkj.fit_5a.view.activity.exercise.landscape.MapExerciseActivity;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
