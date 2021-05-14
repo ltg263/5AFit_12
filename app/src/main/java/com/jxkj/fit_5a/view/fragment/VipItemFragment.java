@@ -7,17 +7,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
-import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.entity.SpecListBaen;
 
 import butterknife.BindView;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class VipItemFragment extends BaseFragment {
     @BindView(R.id.iv_icon)

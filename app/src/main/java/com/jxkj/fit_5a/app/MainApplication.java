@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.app;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 

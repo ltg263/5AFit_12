@@ -15,7 +15,6 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.HotTopicBean;
-import com.jxkj.fit_5a.view.adapter.TopicListAdapter;
 import com.jxkj.fit_5a.view.adapter.TopicListAdapter_1;
 
 import butterknife.BindView;

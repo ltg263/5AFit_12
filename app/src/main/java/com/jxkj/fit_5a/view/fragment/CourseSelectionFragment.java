@@ -1,6 +1,5 @@
 package com.jxkj.fit_5a.view.fragment;
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,13 +11,11 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.DeviceCourseData;
-import com.jxkj.fit_5a.base.DeviceCourseTypeData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.view.activity.exercise.CoursePatternActivity;
 import com.jxkj.fit_5a.view.adapter.CourseSelectionAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

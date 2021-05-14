@@ -15,9 +15,6 @@ import com.jxkj.fit_5a.base.HelpListData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.view.adapter.MineIssueAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observer;

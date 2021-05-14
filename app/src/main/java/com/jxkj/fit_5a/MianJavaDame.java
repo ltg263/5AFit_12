@@ -1,22 +1,10 @@
 package com.jxkj.fit_5a;
 
 
-import android.util.ArraySet;
-
-import androidx.core.content.res.TypedArrayUtils;
-
-import com.jxkj.fit_5a.conpoment.utils.StringUtil;
-import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
-import com.jxkj.fit_5a.lanya.ConstValues_Ly;
-
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 public class MianJavaDame {
     public static void main(String[] args) {

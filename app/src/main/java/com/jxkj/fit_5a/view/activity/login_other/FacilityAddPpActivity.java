@@ -30,7 +30,6 @@ import com.jxkj.fit_5a.entity.BluetoothChannelData;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 import com.jxkj.fit_5a.view.adapter.FacilityAddAdapter;
 import com.jxkj.fit_5a.view.adapter.FacilitySbAddAdapter;
-import com.stag.bluetooth.BluetoothController;
 
 import java.util.List;
 

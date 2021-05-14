@@ -17,9 +17,6 @@ import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.view.adapter.ShoppingIntegralJlAdapter;
 import com.jxkj.fit_5a.view.adapter.ShoppingIntegralRmAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observer;

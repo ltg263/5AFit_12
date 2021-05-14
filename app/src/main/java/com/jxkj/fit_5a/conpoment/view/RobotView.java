@@ -12,9 +12,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.conpoment.utils.StyleKitName;
-import com.jxkj.fit_5a.conpoment.utils.ToastUtil;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 
 import java.util.ArrayList;

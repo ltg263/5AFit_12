@@ -28,7 +28,6 @@ import com.jxkj.fit_5a.entity.CommentMomentBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean_X;
 import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
-import com.jxkj.fit_5a.view.activity.mine.order.AddressActivity;
 import com.jxkj.fit_5a.view.adapter.AssociationListAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;

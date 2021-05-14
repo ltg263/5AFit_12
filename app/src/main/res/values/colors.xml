@@ -33,6 +33,8 @@
     <color name="red40">#FF4040</color>
     <color name="color_DF2E0E">#DF2E0E</color>
 
+    <color name="default_overlay_color">#AAFFFFFF</color>
+
 
     <color name="color_F65532">#F65532</color>
     <color name="color_FF7F00">#FF7F00</color>

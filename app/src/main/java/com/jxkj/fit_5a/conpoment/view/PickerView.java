@@ -1,4 +1,5 @@
 package com.jxkj.fit_5a.conpoment.view;
+
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
@@ -12,7 +13,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
 
 import androidx.core.content.ContextCompat;
 

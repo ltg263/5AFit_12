@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.base.GiftListData;
 import com.jxkj.fit_5a.base.GiftLogListData;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 

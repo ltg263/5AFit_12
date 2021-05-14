@@ -1,7 +1,5 @@
 package com.jxkj.fit_5a.entity;
 
-import com.jxkj.fit_5a.conpoment.utils.StringUtil;
-
 import java.util.List;
 
 public class CircleTaskData {

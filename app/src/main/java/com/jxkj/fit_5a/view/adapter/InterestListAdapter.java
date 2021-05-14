@@ -8,7 +8,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.entity.CircleQueryBean;
-import com.jxkj.fit_5a.entity.ViewPagerTopBean;
 
 import java.util.List;
 

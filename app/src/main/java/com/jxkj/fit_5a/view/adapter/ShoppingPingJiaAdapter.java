@@ -9,7 +9,6 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.CommentListBean;
-import com.jxkj.fit_5a.entity.ProductDetailsBean;
 
 import java.util.List;
 

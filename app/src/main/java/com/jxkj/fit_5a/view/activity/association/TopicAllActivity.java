@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.view.activity.association;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,7 +20,6 @@ import com.jxkj.fit_5a.view.adapter.TopicListAdapter;
 import com.jxkj.fit_5a.view.adapter.TopicListTAdapter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

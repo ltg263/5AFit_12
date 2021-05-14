@@ -10,7 +10,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.view.adapter.TaskFinishPjAdapter;
-import com.jxkj.fit_5a.view.adapter.TopicListTAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

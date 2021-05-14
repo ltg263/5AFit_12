@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class AddressData implements Serializable {
 

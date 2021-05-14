@@ -2,8 +2,6 @@ package com.jxkj.fit_5a.view.activity.login_other;
 
 import android.content.Intent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;

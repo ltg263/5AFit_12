@@ -174,4 +174,9 @@
         <attr name="trend_view_color_text" format="color"/>
         <attr name="trend_view_text_size" format="dimension"/>
     </declare-styleable>
+    <declare-styleable name="PxBlurringView">
+        <attr name="blurRadius" format="integer"/>
+        <attr name="downsampleFactor" format="integer"/>
+        <attr name="overlayColor" format="color"/>
+    </declare-styleable>
 </resources>

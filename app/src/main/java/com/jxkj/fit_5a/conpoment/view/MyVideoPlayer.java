@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.app.MainApplication;

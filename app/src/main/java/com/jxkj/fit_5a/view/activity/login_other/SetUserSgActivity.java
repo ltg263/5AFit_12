@@ -5,23 +5,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.BaseActivity;
-import com.jxkj.fit_5a.base.PostUser;
-import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.view.RulerView_xz;
-import com.jxkj.fit_5a.view.activity.mine.MineInfoActivity;
 import com.zkk.view.rulerview.RulerView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class SetUserSgActivity extends BaseActivity {
 

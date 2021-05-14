@@ -8,7 +8,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.entity.RatePatternBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

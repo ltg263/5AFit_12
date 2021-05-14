@@ -18,7 +18,6 @@ import com.jxkj.fit_5a.base.OrderInfoData;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.view.activity.mine.order.OrderDetailsActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

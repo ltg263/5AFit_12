@@ -25,7 +25,6 @@ import com.jxkj.fit_5a.view.adapter.HomeSignRcrwAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeSignRlAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeSignTopAdapter;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;

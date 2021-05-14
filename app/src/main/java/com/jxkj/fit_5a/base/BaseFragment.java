@@ -18,7 +18,6 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.LoadDialog;
-import com.luck.picture.lib.permissions.RxPermissions;
 
 import butterknife.ButterKnife;
 

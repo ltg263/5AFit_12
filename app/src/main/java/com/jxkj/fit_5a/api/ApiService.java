@@ -1,9 +1,6 @@
 package com.jxkj.fit_5a.api;
 
 
-import android.content.Intent;
-
-import com.alipay.tscenter.biz.rpc.vkeydfp.result.BaseResult;
 import com.jxkj.fit_5a.base.DeviceCourseData;
 import com.jxkj.fit_5a.base.DeviceCourseTypeData;
 import com.jxkj.fit_5a.base.DeviceData;
@@ -75,7 +72,6 @@ import com.jxkj.fit_5a.entity.VideoPlayAuthBean;
 import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
 import com.jxkj.fit_5a.entity.WalletDetailsBean;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 

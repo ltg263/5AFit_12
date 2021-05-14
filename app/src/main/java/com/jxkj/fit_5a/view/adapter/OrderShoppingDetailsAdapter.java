@@ -2,7 +2,6 @@ package com.jxkj.fit_5a.view.adapter;
 
 import android.content.Context;
 import android.text.Html;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

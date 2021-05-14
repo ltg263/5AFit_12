@@ -18,12 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
-import com.jxkj.fit_5a.base.GiftListData;
 import com.jxkj.fit_5a.base.Result;
-import com.jxkj.fit_5a.conpoment.utils.OssService;
-import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
-import com.jxkj.fit_5a.entity.SpecListBaen;
-import com.jxkj.fit_5a.entity.StsTokenBean;
 import com.jxkj.fit_5a.lanya.Ble4_0Util;
 import com.jxkj.fit_5a.view.fragment.HomeFourFragment;
 import com.jxkj.fit_5a.view.fragment.HomeOneFragment;
@@ -32,7 +27,6 @@ import com.jxkj.fit_5a.view.fragment.HomeTwoFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.forward.androids.utils.LogUtil;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

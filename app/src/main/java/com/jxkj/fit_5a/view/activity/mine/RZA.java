@@ -2,7 +2,6 @@ package com.jxkj.fit_5a.view.activity.mine;
 
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.jxkj.fit_5a.R;

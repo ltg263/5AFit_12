@@ -7,7 +7,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
-import com.jxkj.fit_5a.entity.NotObtainedBean;
 import com.jxkj.fit_5a.entity.ShowOrderInfo;
 
 import java.util.List;

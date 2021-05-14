@@ -16,7 +16,6 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
 import com.jxkj.fit_5a.entity.MapListSposrt;
-import com.jxkj.fit_5a.view.activity.exercise.landscape.ClassicExerciseActivity;
 import com.jxkj.fit_5a.view.activity.exercise.landscape.MapExerciseActivity;
 import com.jxkj.fit_5a.view.fragment.SelectMapFragment;
 
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

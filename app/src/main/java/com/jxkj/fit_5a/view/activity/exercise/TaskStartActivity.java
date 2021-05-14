@@ -22,9 +22,7 @@ import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.lanya.Ble4_0Util;
 import com.jxkj.fit_5a.lanya.BleUtil;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
-import com.jxkj.fit_5a.view.activity.exercise.landscape.MotorPatternActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
-import com.jxkj.fit_5a.view.activity.login_other.FacilityManageActivity;
 import com.jxkj.fit_5a.view.fragment.HomeTwoFragment;
 
 import java.util.Arrays;

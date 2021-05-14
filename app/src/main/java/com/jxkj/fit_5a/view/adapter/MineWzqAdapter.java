@@ -2,7 +2,6 @@ package com.jxkj.fit_5a.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -12,12 +11,9 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
-import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.entity.MedalListData;
-import com.jxkj.fit_5a.view.activity.login_other.FacilityAddPpActivity;
 
 import java.util.List;
 

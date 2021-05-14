@@ -25,7 +25,6 @@ import com.jxkj.fit_5a.entity.BpmDataBean;
 import com.jxkj.fit_5a.view.adapter.TaskFinishListHpAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 

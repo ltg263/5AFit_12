@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
-import com.jxkj.fit_5a.lanya.Ble4_0Util;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
 
 

@@ -19,9 +19,6 @@ import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTopicUtils;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
-import com.jxkj.fit_5a.entity.MapListSposrt;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

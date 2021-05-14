@@ -2,9 +2,7 @@ package com.jxkj.fit_5a.conpoment.view;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.ContentResolver;
 import android.text.Html;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +17,6 @@ import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.SDUIUtil;
 import com.jxkj.fit_5a.entity.ProductDetailsBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

@@ -1,7 +1,6 @@
 package com.jxkj.fit_5a.view.activity.mine;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 

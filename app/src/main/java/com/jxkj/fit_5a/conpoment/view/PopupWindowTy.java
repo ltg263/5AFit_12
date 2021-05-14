@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.view.activity.association.MineTopicActivity;
-import com.jxkj.fit_5a.view.activity.association.TopicAllActivity;
 import com.jxkj.fit_5a.view.adapter.PopupListAdapter;
 
 import java.util.List;

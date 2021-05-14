@@ -14,6 +14,8 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.jxkj.fit_5a.R;
+
 /**
  * A custom view for presenting a dynamically blurred version of another view's content.
  * <p/>
@@ -30,17 +32,17 @@ public class BlurringView extends View {
         super(context, attrs);
 
         final Resources res = getResources();
-        final int defaultBlurRadius = res.getInteger(com.fivehundredpx.android.blur.R.integer.default_blur_radius);
-        final int defaultDownsampleFactor = res.getInteger(com.fivehundredpx.android.blur.R.integer.default_downsample_factor);
-        final int defaultOverlayColor = res.getColor(com.fivehundredpx.android.blur.R.color.default_overlay_color);
+        final int defaultBlurRadius = 15;
+        final int defaultDownsampleFactor = 8;
+        final int defaultOverlayColor = res.getColor(R.color.default_overlay_color);
 
         initializeRenderScript(context);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, com.fivehundredpx.android.blur.R.styleable.PxBlurringView);
-        setBlurRadius(a.getInt(com.fivehundredpx.android.blur.R.styleable.PxBlurringView_blurRadius, defaultBlurRadius));
-        setDownsampleFactor(a.getInt(com.fivehundredpx.android.blur.R.styleable.PxBlurringView_downsampleFactor,
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PxBlurringView);
+        setBlurRadius(a.getInt(R.styleable.PxBlurringView_blurRadius, defaultBlurRadius));
+        setDownsampleFactor(a.getInt(R.styleable.PxBlurringView_downsampleFactor,
                 defaultDownsampleFactor));
-        setOverlayColor(a.getColor(com.fivehundredpx.android.blur.R.styleable.PxBlurringView_overlayColor, defaultOverlayColor));
+        setOverlayColor(a.getColor(R.styleable.PxBlurringView_overlayColor, defaultOverlayColor));
         a.recycle();
     }
 

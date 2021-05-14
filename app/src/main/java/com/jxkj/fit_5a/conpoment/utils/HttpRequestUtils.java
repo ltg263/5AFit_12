@@ -2,8 +2,6 @@ package com.jxkj.fit_5a.conpoment.utils;
 
 import android.content.Context;
 
-import com.alibaba.sdk.android.oss.common.OSSLog;
-import com.alibaba.sdk.android.vod.upload.ResumableVODUploadCallback;
 import com.alibaba.sdk.android.vod.upload.VODUploadCallback;
 import com.alibaba.sdk.android.vod.upload.VODUploadClientImpl;
 import com.alibaba.sdk.android.vod.upload.model.UploadFileInfo;
@@ -27,7 +25,6 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.forward.androids.utils.LogUtil;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

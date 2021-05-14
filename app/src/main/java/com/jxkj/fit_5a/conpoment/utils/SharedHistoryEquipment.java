@@ -3,20 +3,16 @@ package com.jxkj.fit_5a.conpoment.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.HistoryEquipmentData;
-import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
-import com.jxkj.fit_5a.lanya.Ble4_0Util;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**

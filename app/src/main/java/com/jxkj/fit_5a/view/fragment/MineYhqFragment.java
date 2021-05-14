@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,16 +13,8 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
 import com.jxkj.fit_5a.base.PrizeListData;
 import com.jxkj.fit_5a.base.Result;
-import com.jxkj.fit_5a.base.SignLogData;
-import com.jxkj.fit_5a.conpoment.utils.StringUtil;
-import com.jxkj.fit_5a.view.adapter.UserLwMineAdapter;
 import com.jxkj.fit_5a.view.adapter.MineYhqAdapter;
-import com.jxkj.fit_5a.view.adapter.UserLwSongAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 import butterknife.BindView;
 import io.reactivex.Observer;

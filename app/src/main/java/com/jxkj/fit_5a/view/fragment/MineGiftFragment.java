@@ -8,11 +8,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
-import com.jxkj.fit_5a.base.DeviceTypeData;
 import com.jxkj.fit_5a.base.GiftListData;
 import com.jxkj.fit_5a.base.GiftLogListData;
 import com.jxkj.fit_5a.base.Result;
@@ -20,9 +18,6 @@ import com.jxkj.fit_5a.view.adapter.UserLwMineAdapter;
 import com.jxkj.fit_5a.view.adapter.UserLwShouAdapter;
 import com.jxkj.fit_5a.view.adapter.UserLwSongAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import io.reactivex.Observer;

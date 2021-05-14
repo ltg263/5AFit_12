@@ -2,7 +2,6 @@ package com.jxkj.fit_5a.conpoment.utils;
 
 import android.graphics.Color;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;

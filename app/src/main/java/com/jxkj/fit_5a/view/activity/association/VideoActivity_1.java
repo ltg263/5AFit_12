@@ -21,7 +21,6 @@ import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.MyVideoPlayer;
-import com.jxkj.fit_5a.entity.MomentDetailsBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.StsTokenBean;
 import com.jxkj.fit_5a.entity.VideoPlayInfoBean;

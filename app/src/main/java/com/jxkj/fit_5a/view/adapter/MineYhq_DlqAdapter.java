@@ -6,9 +6,6 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.base.PrizeListData;
-import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
-import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.entity.DiscountUsableNotBean;
 

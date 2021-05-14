@@ -23,7 +23,6 @@ import android.widget.TextView;
 
 import com.jxkj.fit_5a.R;
 import com.wx.wheelview.adapter.BaseWheelAdapter;
-import com.wx.wheelview.widget.WheelItem;
 
 /**
  * 滚轮文本适配器

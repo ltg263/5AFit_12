@@ -18,7 +18,6 @@ import com.jxkj.fit_5a.conpoment.utils.GlideImageLoader;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.entity.DiscountUsableNotBean;
 import com.jxkj.fit_5a.view.activity.mine.MineIntegralActivity;
-import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.HomeShoppingLhqAdapter;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;

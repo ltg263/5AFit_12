@@ -1,7 +1,5 @@
 package com.jxkj.fit_5a.view.adapter;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 

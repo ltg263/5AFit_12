@@ -25,8 +25,6 @@ import com.jxkj.fit_5a.view.activity.mine.MineGiftActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineHomeActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineInfoActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineIntegralActivity;
-import com.jxkj.fit_5a.view.activity.mine.MineIssueActivity;
-import com.jxkj.fit_5a.view.activity.mine.MineIssueQcActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineJinDouActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineLwjActivity;
 import com.jxkj.fit_5a.view.activity.mine.MineMessageActivity;
@@ -39,8 +37,6 @@ import com.jxkj.fit_5a.view.activity.mine.MineYhqActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingActivity;
 import com.jxkj.fit_5a.view.activity.mine.order.AddressActivity;
 import com.jxkj.fit_5a.view.activity.mine.order.OrderActivity;
-
-import java.sql.SQLData;
 
 import butterknife.BindView;
 import butterknife.OnClick;

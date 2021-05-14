@@ -8,7 +8,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.SportLogDetailBean;
-import com.jxkj.fit_5a.entity.SportLogStatsBean;
 
 import java.util.List;
 

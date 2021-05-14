@@ -14,11 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.base.DeviceTypeData;
 import com.jxkj.fit_5a.entity.NotObtainedBean;
-import com.jxkj.fit_5a.view.adapter.MineYhqAdapter;
 import com.jxkj.fit_5a.view.adapter.MineYhq_ScAdapter;
-import com.jxkj.fit_5a.view.adapter.PopupWindwSbAdapter;
 
 import java.util.List;
 

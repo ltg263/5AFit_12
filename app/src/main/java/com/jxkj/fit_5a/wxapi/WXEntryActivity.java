@@ -2,16 +2,9 @@ package com.jxkj.fit_5a.wxapi;
 
 import android.util.Log;
 
-import com.jxkj.fit_5a.api.RetrofitUtil;
-import com.jxkj.fit_5a.base.Result;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.umeng.socialize.weixin.view.WXCallbackActivity;
-
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 
 public class WXEntryActivity extends WXCallbackActivity {

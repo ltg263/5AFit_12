@@ -14,13 +14,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
-import com.jxkj.fit_5a.base.Result;
-import com.jxkj.fit_5a.conpoment.utils.StringUtil;
-import com.jxkj.fit_5a.entity.CircleQueryJoinedBean;
 import com.jxkj.fit_5a.entity.FollowFansList;
 import com.jxkj.fit_5a.view.adapter.UserGzAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

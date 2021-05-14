@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.view.adapter.HistoryEquipmentAdapter;
 
 public class SwipeRecyclerView extends RecyclerView {
 

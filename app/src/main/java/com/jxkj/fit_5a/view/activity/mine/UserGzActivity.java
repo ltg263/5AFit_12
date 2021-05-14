@@ -18,7 +18,6 @@ import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.entity.FollowFansList;
 import com.jxkj.fit_5a.view.adapter.UserGzAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

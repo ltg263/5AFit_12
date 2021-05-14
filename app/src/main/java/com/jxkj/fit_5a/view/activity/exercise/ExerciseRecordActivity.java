@@ -1,12 +1,9 @@
 package com.jxkj.fit_5a.view.activity.exercise;
 
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
@@ -36,7 +32,6 @@ import com.jxkj.fit_5a.conpoment.utils.CustomPopWindow;
 import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
-import com.jxkj.fit_5a.conpoment.view.PopupWindowSb;
 import com.jxkj.fit_5a.entity.SportLogBean;
 import com.jxkj.fit_5a.entity.SportLogStatsBean;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;

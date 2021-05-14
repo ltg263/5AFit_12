@@ -11,17 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
-import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseFragment;
-import com.jxkj.fit_5a.base.OrderInfoData;
-import com.jxkj.fit_5a.base.Result;
-import com.jxkj.fit_5a.conpoment.constants.ConstValues;
-import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
-import com.jxkj.fit_5a.conpoment.utils.StringUtil;
-import com.jxkj.fit_5a.view.activity.mine.order.OrderDetailsActivity;
 import com.jxkj.fit_5a.view.adapter.MineIssueAdapter;
 import com.jxkj.fit_5a.view.adapter.MineIssueQcTopAdapter;
-import com.jxkj.fit_5a.view.adapter.OrderListAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -30,10 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class QcIssueFragment extends BaseFragment {
     @BindView(R.id.rv_list_top)

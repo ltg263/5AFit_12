@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.view.View;
 
-
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.jxkj.fit_5a.R;

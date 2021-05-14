@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.security.biometrics.service.build.V;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
@@ -17,9 +16,6 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.entity.CircleQueryBean;
 import com.jxkj.fit_5a.view.activity.association.MineCircleActivity;
 import com.jxkj.fit_5a.view.adapter.InterestListAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import io.reactivex.Observer;

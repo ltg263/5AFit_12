@@ -13,11 +13,7 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.entity.CommentListBean;
-import com.jxkj.fit_5a.entity.ProductDetailsBean;
 import com.jxkj.fit_5a.view.adapter.ShoppingPingJiaAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import io.reactivex.Observer;
