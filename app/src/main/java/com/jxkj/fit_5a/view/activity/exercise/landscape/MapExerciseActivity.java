@@ -1,13 +1,16 @@
 package com.jxkj.fit_5a.view.activity.exercise.landscape;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,6 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -103,13 +108,24 @@ public class MapExerciseActivity extends Activity {
     private int time_z;
     private byte[] loadLists;
 
+    MediaPlayer mediaPlayer;
     public static void intentStartActivity(Context mContext, String mapId) {
+        //权限判断，如果没有权限就请求权限
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            return;
+        }
         Intent intent = new Intent(mContext, MapExerciseActivity.class);
         intent.putExtra("mapId", mapId);
         mContext.startActivity(intent);
     }
 
     public static void intentStartActivityKc(Context mContext, int time, byte[] loadLists) {
+        //权限判断，如果没有权限就请求权限
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            return;
+        }
         Intent intent = new Intent(mContext, MapExerciseActivity.class);
         intent.putExtra("time", time);
         intent.putExtra("loadLists",loadLists);
@@ -119,8 +135,13 @@ public class MapExerciseActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);//保持屏幕唤醒
         setContentView(R.layout.activity_landscape_map_exercise);
         ButterKnife.bind(this);
+        mediaPlayer = MediaPlayer.create(this, R.raw.ready_go);
+        mediaPlayer.setLooping(false);//设置为循环播放
+        mediaPlayer.start();
         Glide.with(this).load(R.drawable.ic_yundong_go).listener(new RequestListener() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {

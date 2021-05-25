@@ -4,9 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartModel;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAChartView;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AAOptionsConstructor;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartCreator.AASeriesElement;
+import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartAnimationType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartSymbolType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAChartEnum.AAChartType;
 import com.jxkj.fit_5a.AAChartCoreLib.AAOptionsModel.AAOptions;
@@ -81,6 +84,8 @@ public class RatePatternActivity extends BaseActivity {
     TextView tv_movingTye;
     @BindView(R.id.tv_distance)
     TextView tv_distance;
+    @BindView(R.id.tv_bfb)
+    TextView tv_bfb;
     @BindView(R.id.tv_current_xz)
     TextView tv_current_xz;
     @BindView(R.id.tv_ztime)
@@ -108,8 +113,11 @@ public class RatePatternActivity extends BaseActivity {
     private int ZTimeOK;
     private ArrayList<BpmDataBean> mBpmDataBeans;
 
+    MediaPlayer mediaPlayer;
     @Override
     protected int getContentView() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);//保持屏幕唤醒
         return R.layout.activity_rate_pattern;
     }
 
@@ -128,6 +136,10 @@ public class RatePatternActivity extends BaseActivity {
         }
         tv_movingTye.setText(movingType);
 //        GlideImgLoader.setGlideImage(this,);
+        mediaPlayer = MediaPlayer.create(this, R.raw.ready_go);
+        mediaPlayer.setLooping(false);//设置为循环播放
+        mediaPlayer.start();
+
         Glide.with(this).load(R.drawable.ic_yundong_go_h).listener(new RequestListener() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
@@ -191,12 +203,10 @@ public class RatePatternActivity extends BaseActivity {
             unregisterReceiver(mMyReceiver);
         }
     }
-
     private AAOptions aaOptions;
     private AAChartModel aaChartModel;
     private void initAAChar() {
-
-        AAChartModel aaChartModel = configureChartModel();
+        aaChartModel = configureChartModel();
         if (aaOptions == null) {
             aaOptions = AAOptionsConstructor.configureChartOptions(aaChartModel);
         }
@@ -205,7 +215,7 @@ public class RatePatternActivity extends BaseActivity {
 
 
     private AAChartModel configureChartModel() {
-        aaChartModel = new AAChartModel()
+        return new AAChartModel()
                 .chartType(AAChartType.Areaspline)
                 .title("")
                 .yAxisTitle("")
@@ -216,16 +226,16 @@ public class RatePatternActivity extends BaseActivity {
                 .xAxisVisible(false)
                 .legendEnabled(false)
                 .markerRadius(0f)
+                .touchEventEnabled(true)
                 .markerSymbol(AAChartSymbolType.Circle)
                 .scrollablePlotArea(
                         new AAScrollablePlotArea()
-                                .minWidth(300)
+                                .minWidth(3000)
                                 .scrollPositionX(1f)
                 )
                 .series(getDataList(mData1,mData2,mData3));
-        return aaChartModel;
     }
-    String[] str = null;
+
     private AASeriesElement[] getDataList(List<Byte> data1,List<Byte> data2,List<Byte> data3){
         AASeriesElement element = null;
         if(currentPos==1){
@@ -455,33 +465,16 @@ public class RatePatternActivity extends BaseActivity {
         if(Unit.equals("Stop")){
             return;
         }
-        setTextViewString(Calories+"",rpm+"",Pulse+"",speed+"",Distance+"",loadCurrent+"/"+loadMax,ZTime);
-        setBpmDataBeanTime(Pulse);
         mData1.add((byte) Pulse);
         mData2.add((byte) speed);
         mData3.add((byte) Watt);
-        List<Byte> mData11= new ArrayList<>();
-        if(mData1.size()>10){
-            mData11.addAll(mData1.subList(Math.max(mData1.size() - 10, 0), mData1.size()));
-        }else{
-            mData11.addAll(mData1);
-        }
 
-        List<Byte> mData22= new ArrayList<>();
-        if(mData2.size()>10){
-            mData22.addAll(mData2.subList(Math.max(mData2.size() - 10, 0), mData2.size()));
-        }else{
-            mData22.addAll(mData2);
-        }
+        setTextViewString(Calories+"",rpm+"",Pulse+"",speed+"",Distance+"",loadCurrent+"/"+loadMax,ZTime);
 
-        List<Byte> mData33= new ArrayList<>();
-        if(mData3.size()>10){
-            mData33.addAll(mData3.subList(Math.max(mData3.size() - 10, 0), mData3.size()));
-        }else{
-            mData33.addAll(mData3);
-        }
+        setBpmDataBeanTime(Pulse);
 
-        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(getDataList(mData11,mData22,mData33));
+        mSv.setCurrentCount(50, Pulse,tv_bfb);
+
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
                 String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
                 null,String.valueOf(loadCurrent),String.valueOf(loadCurrent),
@@ -523,33 +516,11 @@ public class RatePatternActivity extends BaseActivity {
                 +",脉跳："+Pulse;
         Log.w("---》》》", re);
 
-        setTextViewString(Calories+"","0",Pulse+"",speed+"",Distance+"",loadCurrent+"/"+loadMax,ZTime);
-        setBpmDataBeanTime(Pulse);
         mData1.add((byte) Pulse);
         mData2.add((byte) speed);
         mData3.add((byte) rpm2);
-        List<Byte> mData11= new ArrayList<>();
-        if(mData1.size()>10){
-            mData11.addAll(mData1.subList(Math.max(mData1.size() - 10, 0), mData1.size()));
-        }else{
-            mData11.addAll(mData1);
-        }
-
-        List<Byte> mData22= new ArrayList<>();
-        if(mData2.size()>10){
-            mData22.addAll(mData2.subList(Math.max(mData2.size() - 10, 0), mData2.size()));
-        }else{
-            mData22.addAll(mData2);
-        }
-
-        List<Byte> mData33= new ArrayList<>();
-        if(mData3.size()>10){
-            mData33.addAll(mData3.subList(Math.max(mData3.size() - 10, 0), mData3.size()));
-        }else{
-            mData33.addAll(mData3);
-        }
-
-        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(getDataList(mData11,mData22,mData33));
+        setTextViewString(Calories+"","0",Pulse+"",speed+"",Distance+"",loadCurrent+"/"+loadMax,ZTime);
+        setBpmDataBeanTime(Pulse);
 
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
                 String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
@@ -606,33 +577,11 @@ public class RatePatternActivity extends BaseActivity {
         if(Unit.equals("Stop")){
             return;
         }
-        setTextViewString(Calories+"",0+"",Pulse+"",0+"",Distance+"",loadCurrent+"/"+loadMax,ZTime);
-        setBpmDataBeanTime(Pulse);
         mData1.add((byte) Pulse);
         mData2.add((byte) stroke);
         mData3.add((byte) Watt);
-        List<Byte> mData11= new ArrayList<>();
-        if(mData1.size()>10){
-            mData11.addAll(mData1.subList(Math.max(mData1.size() - 10, 0), mData1.size()));
-        }else{
-            mData11.addAll(mData1);
-        }
-
-        List<Byte> mData22= new ArrayList<>();
-        if(mData2.size()>10){
-            mData22.addAll(mData2.subList(Math.max(mData2.size() - 10, 0), mData2.size()));
-        }else{
-            mData22.addAll(mData2);
-        }
-
-        List<Byte> mData33= new ArrayList<>();
-        if(mData3.size()>10){
-            mData33.addAll(mData3.subList(Math.max(mData3.size() - 10, 0), mData3.size()));
-        }else{
-            mData33.addAll(mData3);
-        }
-
-        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(getDataList(mData11,mData22,mData33));
+        setTextViewString(Calories+"",0+"",Pulse+"",0+"",Distance+"",loadCurrent+"/"+loadMax,ZTime);
+        setBpmDataBeanTime(Pulse);
 
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
                 String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
@@ -682,33 +631,12 @@ public class RatePatternActivity extends BaseActivity {
             startTaskFinishActivity();
             return;
         }
-        setTextViewString(Calories+"",0+"",Pulse+"",speed+"",Distance+"",loadCurrent+"/"+loadMax,ZTime);
-        setBpmDataBeanTime(Pulse);
         mData1.add((byte) Pulse);
         mData2.add((byte) speed);
         mData3.add((byte) Calories);
-        List<Byte> mData11= new ArrayList<>();
-        if(mData1.size()>10){
-            mData11.addAll(mData1.subList(Math.max(mData1.size() - 10, 0), mData1.size()));
-        }else{
-            mData11.addAll(mData1);
-        }
 
-        List<Byte> mData22= new ArrayList<>();
-        if(mData2.size()>10){
-            mData22.addAll(mData2.subList(Math.max(mData2.size() - 10, 0), mData2.size()));
-        }else{
-            mData22.addAll(mData2);
-        }
-
-        List<Byte> mData33= new ArrayList<>();
-        if(mData3.size()>10){
-            mData33.addAll(mData3.subList(Math.max(mData3.size() - 10, 0), mData3.size()));
-        }else{
-            mData33.addAll(mData3);
-        }
-
-        mAAChartView.aa_onlyRefreshTheChartDataWithChartOptionsSeriesArray(getDataList(mData11,mData22,mData33));
+        setTextViewString(Calories+"",0+"",Pulse+"",speed+"",Distance+"",loadCurrent+"/"+loadMax,ZTime);
+        setBpmDataBeanTime(Pulse);
 
         logs.add(new PostUser.SportLogInfo.DetailsBean.LogsBean(
                 String.valueOf(Calories),String.valueOf(Distance),String.valueOf(Pulse),
@@ -736,6 +664,16 @@ public class RatePatternActivity extends BaseActivity {
         tv_distance.setText(distance);
         tv_load.setText(load);
         tv_time.setText(time);
+
+        aaChartModel.scrollablePlotArea(
+                new AAScrollablePlotArea()
+                        .minWidth(mData1.size()*30)
+                        .scrollPositionX(1f)
+
+        ).series(getDataList(mData1,mData2,mData3))
+                .animationDuration(0)
+                .animationType(AAChartAnimationType.BouncePast);
+        mAAChartView.aa_drawChartWithChartOptions(AAOptionsConstructor.configureChartOptions(aaChartModel));
     }
 
     long durationLs = 0;

@@ -1,7 +1,9 @@
 package com.jxkj.fit_5a.view.activity.exercise;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Parcelable;
 import android.text.Html;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -219,6 +223,11 @@ public class RateControlActivity extends BaseActivity {
                 FacilityAddSbActivity.intentActivity(this);
                 break;
             case R.id.tv_ok:
+                //权限判断，如果没有权限就请求权限
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    return;
+                }
                 if(PopupWindowLanYan.ble4Util!=null && PopupWindowLanYan.ble4Util.isConnect()){
                     Intent mIntent = new Intent(this, RatePatternActivity.class);
                     mIntent.putExtra("movingType",movingType);

@@ -9,6 +9,7 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
 import com.jxkj.fit_5a.R;
 
@@ -45,7 +46,7 @@ public class StepArcView extends View {
     /**
      * 动画时长
      */
-    private int animationLength = 3000;
+    private int animationLength = 1000;
 
     public StepArcView(Context context) {
         super(context);
@@ -177,12 +178,29 @@ public class StepArcView extends View {
         return (int) (dip * density + 0.5f * (dip >= 0 ? 1 : -1));
     }
 
+    float last = 0;
     /**
      * 所走的步数进度
      *
      * @param totalStepNum  设置的步数
      * @param currentCounts 所走步数
      */
+    public void setCurrentCount(int totalStepNum, int currentCounts, TextView tv_bfb) {
+        stepNumber = currentCounts + "";
+        setTextSize(currentCounts);
+/**如果当前走的步数超过总步数则圆弧还是270度，不能成为园*/
+        if (currentCounts > totalStepNum) {
+            currentCounts = totalStepNum;
+        }
+/**所走步数占用总共步数的百分比*/
+        float scale = (float) currentCounts / totalStepNum;
+/**换算成弧度最后要到达的角度的长度-->弧长*/
+        float currentAngleLength = scale * angleLength;
+/**开始执行动画*/
+        setAnimation(last, currentAngleLength, animationLength);
+        last = currentAngleLength;
+        tv_bfb.setText((int)(scale*100)+"%");
+    }
     public void setCurrentCount(int totalStepNum, int currentCounts) {
         stepNumber = currentCounts + "";
         setTextSize(currentCounts);
@@ -195,9 +213,9 @@ public class StepArcView extends View {
 /**换算成弧度最后要到达的角度的长度-->弧长*/
         float currentAngleLength = scale * angleLength;
 /**开始执行动画*/
-        setAnimation(0, currentAngleLength, animationLength);
+        setAnimation(last, currentAngleLength, animationLength);
+        last = currentAngleLength;
     }
-
     /**
      * 为进度设置动画
      * ValueAnimator是整个属性动画机制当中最核心的一个类，属性动画的运行机制是通过不断地对值进行操作来实现的，
