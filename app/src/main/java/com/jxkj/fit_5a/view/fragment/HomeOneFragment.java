@@ -37,6 +37,7 @@ import com.jxkj.fit_5a.conpoment.utils.SharedHistoryEquipment;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.AdListData;
 import com.jxkj.fit_5a.entity.AdminInspireBean;
+import com.jxkj.fit_5a.entity.AnnouncementList;
 import com.jxkj.fit_5a.entity.ProductListBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
 import com.jxkj.fit_5a.entity.RankDetailsData;
@@ -48,6 +49,8 @@ import com.jxkj.fit_5a.view.activity.exercise.HistoryEquipmentActivity;
 import com.jxkj.fit_5a.view.activity.home.RankListActivity;
 import com.jxkj.fit_5a.view.activity.home.TaskSignActivity;
 import com.jxkj.fit_5a.view.activity.login_other.FacilityAddSbActivity;
+import com.jxkj.fit_5a.view.activity.mine.MineMessageActivity;
+import com.jxkj.fit_5a.view.activity.mine.MineMessageAnnouncementActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingActivity;
 import com.jxkj.fit_5a.view.activity.mine.ShoppingDetailsActivity;
 import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
@@ -298,7 +301,7 @@ public class HomeOneFragment extends BaseFragment {
     }
 
     @OnClick({R.id.tv_left_text, R.id.tv_right_text, R.id.tv_top_jyz,R.id.tv_phb_ck,R.id.tv_gdsp,
-            R.id.tv_top_jyy, R.id.on_rv_qd})
+            R.id.tv_top_jyy, R.id.on_rv_qd,R.id.tv_message})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_left_text:
@@ -333,6 +336,9 @@ public class HomeOneFragment extends BaseFragment {
                 break;
             case R.id.tv_phb_ck:
                 startActivity(new Intent(getActivity(), RankListActivity.class));
+                break;
+            case R.id.tv_message:
+                startActivity(new Intent(getActivity(), MineMessageAnnouncementActivity.class));
                 break;
             case R.id.tv_gdsp:
                 ShoppingActivity.intentStartActivity(getActivity());
@@ -669,26 +675,26 @@ public class HomeOneFragment extends BaseFragment {
 
     private void getAdList() {
         RetrofitUtil.getInstance().apiService()
-                .getAdList()
+                .getAnnouncementList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result<AdListData>>() {
+                .subscribe(new Observer<Result<AnnouncementList>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result<AdListData> result) {
+                    public void onNext(Result<AnnouncementList> result) {
                         if (isDataInfoSucceed(result)) {
 //                            mTvMessageContent.setText(
 //                                    StringToUtil.getStringAll(result.getData().getList()));
 
-                            List<AdListData.ListBean> data = result.getData().getList();
+                            List<AnnouncementList.ListBean> data = result.getData().getList();
                             if(data!=null && data.size()>0){
-                                mTvMessageContent.setDataSetAdapter(new DataSetAdapter<AdListData.ListBean>(data) {
+                                mTvMessageContent.setDataSetAdapter(new DataSetAdapter<AnnouncementList.ListBean>(data) {
                                     @Override
-                                    protected CharSequence text(AdListData.ListBean s) {
+                                    protected CharSequence text(AnnouncementList.ListBean s) {
                                         return s.getTitle();
                                     }
                                 });

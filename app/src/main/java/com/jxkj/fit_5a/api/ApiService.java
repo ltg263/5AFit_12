@@ -25,6 +25,7 @@ import com.jxkj.fit_5a.entity.AdListData;
 import com.jxkj.fit_5a.entity.AddressData;
 import com.jxkj.fit_5a.entity.AddressModel;
 import com.jxkj.fit_5a.entity.AdminInspireBean;
+import com.jxkj.fit_5a.entity.AnnouncementList;
 import com.jxkj.fit_5a.entity.BluetoothChannelData;
 import com.jxkj.fit_5a.entity.CircleDetailsBean;
 import com.jxkj.fit_5a.entity.CircleQueryBean;
@@ -315,6 +316,20 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_2 + "api/v1/ad/query")
     Observable<Result<AdListData>> getAdList();
+
+    /**
+     * 公告列表
+     * @return
+     */
+    @GET(ConstValues.PORT_MESSAGE + "api/v1/announcement/list")
+    Observable<Result<AnnouncementList>> getAnnouncementList();
+
+    /**
+     * 获取公告url
+     * @return
+     */
+    @GET(ConstValues.PORT_MESSAGE + "api/v1/announcement/url")
+    Observable<Result<String>> getAnnouncementUrl(@Query("id") String id);
 
     /**
      * 用户设备列表 未完善

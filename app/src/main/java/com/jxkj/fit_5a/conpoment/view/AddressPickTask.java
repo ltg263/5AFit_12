@@ -106,7 +106,7 @@ public class AddressPickTask extends AsyncTask<String, Void, ArrayList<Province>
         dialog.dismiss();
         if (result.size() > 0) {
             AddressPicker picker = new AddressPicker(activity, result);
-            picker.setCanLoop(true);
+            picker.setCanLoop(false);
             picker.setSelectedTextColor(activity.getResources().getColor(R.color.color_text_theme));
             picker.setHideProvince(hideProvince);
             picker.setHideCounty(hideCounty);

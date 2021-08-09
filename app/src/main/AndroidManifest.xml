@@ -432,6 +432,10 @@
             android:name=".view.activity.mine.order.OrderAffirmActivity"
 
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.mine.MineMessageAnnouncementActivity"
+
+            android:screenOrientation="portrait" />
 
 
         <provider
