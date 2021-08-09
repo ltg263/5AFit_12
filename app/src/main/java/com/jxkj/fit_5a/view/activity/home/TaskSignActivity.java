@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.home;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.versionedparcelable.ParcelUtils;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -15,18 +17,25 @@ import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
+import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.base.SignLogData;
 import com.jxkj.fit_5a.base.TaskListBase;
+import com.jxkj.fit_5a.base.UserInfoData;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.view.PickerViewUtils;
+import com.jxkj.fit_5a.entity.CircleTaskData;
 import com.jxkj.fit_5a.view.adapter.HomeSignHdrwAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeSignRcrwAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeSignRlAdapter;
 import com.jxkj.fit_5a.view.adapter.HomeSignTopAdapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,8 +64,11 @@ public class TaskSignActivity extends BaseActivity {
     LinearLayout mLlRl;
     @BindView(R.id.tv_time)
     TextView mTvTime;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
     int type = 1;//周的形式
-
+    HomeSignRlAdapter mHomeSignRlAdapter;
+    HomeSignTopAdapter mHomeSignTopAdapter;
     @Override
     protected int getContentView() {
         return R.layout.activity_task_sign;
@@ -65,12 +77,78 @@ public class TaskSignActivity extends BaseActivity {
     @Override
     protected void initViews() {
         mTvJifenNum.setText(SharedUtils.singleton().get(ConstValues.MY_INTEGRAL,""));
+        Calendar cal = Calendar.getInstance();
+        year = String.valueOf(cal.get(Calendar.YEAR));
+        month = String.valueOf(cal.get(Calendar.MONTH) + 1);
+        if(month.length()==1){
+            month = "0"+month;
+        }
+
+        mHomeSignRlAdapter = new HomeSignRlAdapter(null);
+        mRvRlList.setLayoutManager(new GridLayoutManager(this,7));
+        mRvRlList.setHasFixedSize(true);
+        mRvRlList.setAdapter(mHomeSignRlAdapter);
+        mHomeSignRlAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
+            }
+        });
+
+        mHomeSignTopAdapter = new HomeSignTopAdapter(null);
+        mRvTopList.setLayoutManager(new GridLayoutManager(this,7));
+        mRvTopList.setHasFixedSize(true);
+        mRvTopList.setAdapter(mHomeSignTopAdapter);
+
+        mHomeSignTopAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
+            }
+        });
+        mTvGoSign.setText("签到领积分");
         getUserSignLog();
         getUserTaskList(2);
         getUserTaskList(4);
 
     }
 
+    private void getUserStatistic() {
+        RetrofitUtil.getInstance().apiService()
+                .getUserStatistic()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<UserInfoData>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<UserInfoData> result) {
+                        if (isDataInfoSucceed(result)) {
+                            UserInfoData data = result.getData();
+                            if(data!=null){
+                                mTvJifenNum.setText(data.getIntegral());
+                                SharedUtils.singleton().put(ConstValues.MY_BALANCE,data.getBalance()+"");
+                                SharedUtils.singleton().put(ConstValues.MY_COUPON_COUNT,data.getCouponCount()+"");
+                                SharedUtils.singleton().put(ConstValues.MY_GIFTCOUNT,data.getGiftCount()+"");
+                                SharedUtils.singleton().put(ConstValues.MY_INTEGRAL,data.getIntegral()+"");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showShort("系统异常" + e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
     private void getUserTaskList(int i) {
         RetrofitUtil.getInstance().apiService()
                 .getUserTaskList(i)
@@ -124,16 +202,21 @@ public class TaskSignActivity extends BaseActivity {
                 });
     }
 
-    int year;
-    int month;
+    String year;
+    String month;
+    int day=0;
     private void getUserSignLog() {
-        Calendar cal = Calendar.getInstance();
-        year = cal.get(Calendar.YEAR);
-        month = cal.get(Calendar.MONTH) + 1;
         mTvTime.setText(year+"."+month);
         //2020-11-01 01:00:00
         String beginCreateTime = year+"-"+month+"-01 00:00:00";
-        String endCreateTime = year+"-"+month+"-"+StringUtil.getCurrentMonthDay()+" 00:00:00";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+
+        try {
+            day = StringUtil.getDaysOfMonth(sdf.parse(year+"-"+month));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String endCreateTime = year+"-"+month+"-"+day+" 00:00:00";
         RetrofitUtil.getInstance().apiService()
                 .getUserSignLog(beginCreateTime,endCreateTime)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -162,49 +245,52 @@ public class TaskSignActivity extends BaseActivity {
                     }
                 });
     }
-
+    int num = 0;
     private void initTop(List<SignLogData.ListBean> listData) {
         List<SignLogData.ListBean> listRl = new ArrayList<>();
-        int currentMaxDays = StringUtil.getCurrentMonthDay();//当月天数
-        int pos = StringUtil.getPos();//星期几开始
+        int pos = 0;//星期几开始
+        try {
+            pos = StringUtil.getPos(new SimpleDateFormat("yyyy-MM-dd").parse(year+"-"+month+"-01"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         for(int i=0;i<pos;i++){
             listRl.add(null);
         }
-        mTvGoSign.setText("签到领积分");
-        for(int i=0;i<currentMaxDays;i++){
+        for(int i=0;i<day;i++){
             SignLogData.ListBean listBean = new SignLogData.ListBean();
             for (int j= 0;j<listData.size();j++){
                 String str = (i+1)+"";
                 if((i+1)<10){
                     str = "0"+(i+1);
                 }
-                String singDate = String.valueOf(year)+month+str;
-                if(month<10){
-                    singDate = year+"0"+month+str;
+                String singDate = year+month+str;
+                if(Integer.valueOf(month)<10){
+//                    singDate = year+month+str;
                 }
                 if((listData.get(j).getSignDate()).equals(singDate)){
+                    num++;
                     listBean = listData.get(j);
                     listBean.setSig(true);
+                }else if(!(listData.get(j).getSignDate()).equals(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyyMMdd"))){
+                    num = 0;
                 }
                 if((listData.get(j).getSignDate()).equals(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyyMMdd"))){
                     mTvGoSign.setText("已签到");
+                    tv_title.setText("当前积分  |  连续签到"+num+"天");
                 }
 
-                listBean.setSj(""+(i+1));
             }
+            listBean.setSj(""+(i+1));
 
             listRl.add(listBean);
         }
-        HomeSignRlAdapter mHomeSignRlAdapter = new HomeSignRlAdapter(listRl);
-        mRvRlList.setLayoutManager(new GridLayoutManager(this,7));
-        mRvRlList.setHasFixedSize(true);
-        mRvRlList.setAdapter(mHomeSignRlAdapter);
-        mHomeSignRlAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
-            }
-        });
+        Calendar cal = Calendar.getInstance();
+        mHomeSignRlAdapter.setSetCurrTime(false);
+        if(cal.get(Calendar.YEAR)==Integer.valueOf(year) && cal.get(Calendar.MONTH)+1==Integer.valueOf(month)){
+            mHomeSignRlAdapter.setSetCurrTime(true);
+        }
+        mHomeSignRlAdapter.setNewData(listRl);
 
 
         List<SignLogData.ListBean> listRl7 = new ArrayList<>();
@@ -222,22 +308,14 @@ public class TaskSignActivity extends BaseActivity {
             listRl7.add(listBean);
         }
 
-        HomeSignTopAdapter mHomeSignTopAdapter = new HomeSignTopAdapter(listRl7);
-        mRvTopList.setLayoutManager(new GridLayoutManager(this,7));
-        mRvTopList.setHasFixedSize(true);
-        mRvTopList.setAdapter(mHomeSignTopAdapter);
-
-        mHomeSignTopAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
-            }
-        });
+        if(cal.get(Calendar.YEAR)==Integer.valueOf(year) && cal.get(Calendar.MONTH)+1==Integer.valueOf(month)){
+            mHomeSignTopAdapter.setNewData(listRl7);
+        }
     }
 
 
 
-    @OnClick({R.id.iv_back, R.id.iv_show_type, R.id.tv_go_sign})
+    @OnClick({R.id.iv_back, R.id.iv_show_type, R.id.tv_go_sign,R.id.tv_time})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -263,6 +341,17 @@ public class TaskSignActivity extends BaseActivity {
                     addUserSign();
                 }
                 break;
+            case R.id.tv_time:
+                PickerViewUtils.selectorDate(this,
+                        new boolean[]{true,true,false,false,false,false}, new PickerViewUtils.GetTimeInterface() {
+                    @Override
+                    public void getTime(Date time) {
+                        year = new SimpleDateFormat("yyyy").format(time);
+                        month = new SimpleDateFormat("MM").format(time);
+                        getUserSignLog();
+                    }
+                });
+                break;
         }
     }
     private void addUserSign() {
@@ -279,7 +368,12 @@ public class TaskSignActivity extends BaseActivity {
                     @Override
                     public void onNext(Result result) {
                         if(isDataInfoSucceed(result)){
+                            mTvGoSign.setText("已签到");
+                            Calendar cal = Calendar.getInstance();
+                            year = String.valueOf(cal.get(Calendar.YEAR));
+                            month = String.valueOf(cal.get(Calendar.MONTH) + 1);
                             getUserSignLog();
+                            getUserStatistic();
                         }
                     }
 

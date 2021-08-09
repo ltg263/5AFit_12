@@ -95,7 +95,7 @@ public interface ApiService {
      *
      * @return 任务类型1:圈子任务2:日常任务3签到任务4活动任务
      */
-    @GET(ConstValues.PORT_1 + "api/v1/user/task/list")
+    @GET(ConstValues.PORT_TASK + "api/v1/user/task/list")
     Observable<Result<TaskListBase>> getUserTaskList(@Query("type") Integer type);
 
     /**
@@ -350,6 +350,13 @@ public interface ApiService {
     @GET(ConstValues.PORT_2 + "api/v1/device/model/query")
     Observable<Result<DeviceData>> queryDeviceModelLists(
             @Query("deviceBrandId") String deviceBrandId, @Query("deviceTypeId") String deviceTypeId);
+
+    /**
+     * 设备型号列表
+     * @return
+     */
+    @GET(ConstValues.PORT_2 + "api/v1/device/model/instructions_for_use_url")
+    Observable<Result<String>> queryInstructions_for_use_url(@Query("id") String id);
 
 
     /**

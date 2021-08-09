@@ -447,9 +447,13 @@ public class StringUtil {
         int maxDate = a.get(Calendar.DATE);
         return maxDate;
     }
-
-    public static int getPos() {
-        Date currTime = new Date(); // 当前日期baidu
+    public static int getDaysOfMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+    public static int getPos(Date currTime) {
+//        Date currTime = new Date(); // 当前日期baidu
         GregorianCalendar cale = new GregorianCalendar(); // 格里高利日历
         cale.setTime(currTime); // 绑定当前日期
         cale.set(Calendar.DAY_OF_MONTH, 1); // 变为本月第一天

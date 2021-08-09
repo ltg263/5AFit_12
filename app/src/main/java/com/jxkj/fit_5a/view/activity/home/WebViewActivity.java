@@ -41,13 +41,13 @@ public class WebViewActivity extends BaseActivity {
                 finish();
             }
         });
-        switch (type){
-            case "器材帮助":
-                mWeb.loadUrl("https://5afit.nbqichen.com/help/index.html#/helpEquip");
-                break;
-            case "常见问题":
-                mWeb.loadUrl("https://5afit.nbqichen.com/help/index.html#/help");
-                break;
+        if(type.equals("器材帮助")){
+            mWeb.loadUrl("https://5afit.nbqichen.com/help/index.html#/helpEquip");
+        }else if(type.equals("常见问题")){
+            mWeb.loadUrl("https://5afit.nbqichen.com/help/index.html#/help");
+        }else{
+            mTvTitle.setText(type);
+            mWeb.loadUrl(getIntent().getStringExtra("url"));
         }
     }
 

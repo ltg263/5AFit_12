@@ -79,6 +79,12 @@ public class IntentUtils {
         intent.putExtra(name1,con1);
         fromContext.startActivity(intent);
     }
+    public void intent(Context fromContext, Class<?> cls, String name, String con, String name1, String con1) {
+        Intent intent = new Intent(fromContext, cls);
+        intent.putExtra(name,con);
+        intent.putExtra(name1,con1);
+        fromContext.startActivity(intent);
+    }
     /**
      * 带参数的跳转
      *

@@ -71,6 +71,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_jifen_num"
@@ -263,6 +264,7 @@
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginBottom="@dimen/dimen_2dp"
                     android:layout_toEndOf="@id/tv1"
+                    android:visibility="invisible"
                     android:text="|  奖励24点前不领取会消失"
                     android:textColor="#CCCCCC"
                     android:textSize="12sp" />
@@ -319,6 +321,7 @@
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginBottom="@dimen/dimen_2dp"
                     android:layout_toEndOf="@id/tv2"
+                    android:visibility="invisible"
                     android:text="|  奖励24点前不领取会消失"
                     android:textColor="#CCCCCC"
                     android:textSize="12sp" />

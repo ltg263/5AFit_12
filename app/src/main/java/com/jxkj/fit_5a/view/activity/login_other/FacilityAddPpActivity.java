@@ -22,12 +22,14 @@ import com.jxkj.fit_5a.base.DeviceData;
 import com.jxkj.fit_5a.base.DeviceDrandData;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeThreadUtils;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowLanYan;
 import com.jxkj.fit_5a.entity.BluetoothChannelData;
 import com.jxkj.fit_5a.lanya.ConstValues_Ly;
+import com.jxkj.fit_5a.view.activity.home.WebViewActivity;
 import com.jxkj.fit_5a.view.adapter.FacilityAddAdapter;
 import com.jxkj.fit_5a.view.adapter.FacilitySbAddAdapter;
 
@@ -78,7 +80,6 @@ public class FacilityAddPpActivity extends BaseActivity {
         Bundle bundle = getIntent().getBundleExtra("bundle");
         ConstValues_Ly.DEVICE_TYPE_ID_URL =  bundle.getString("id");//设备类型id
         sbName = bundle.getString("name");
-        PopupWindowLanYan.BleName = sbName;
         mTvTitle.setText(sbName);
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         getBluetoothChannel();
@@ -216,6 +217,13 @@ public class FacilityAddPpActivity extends BaseActivity {
         mFacilitySbAddAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                DeviceData.ListBean data = mFacilitySbAddAdapter.getData().get(position);
+                queryInstructions_for_use_url(data.getId(),data.getName());
+            }
+        });
+        mFacilitySbAddAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 List<DeviceData.ListBean> data = mFacilitySbAddAdapter.getData();
                 for(int i = 0; i< data.size(); i++){
                     data.get(i).setSelect(false);
@@ -226,6 +234,38 @@ public class FacilityAddPpActivity extends BaseActivity {
                 mFacilitySbAddAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    private void queryInstructions_for_use_url(int id,String name) {
+        RetrofitUtil.getInstance().apiService()
+                .queryInstructions_for_use_url(id+"")
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<String> result) {
+                        if(isDataInfoSucceed(result) && result.getData()!=null) {
+                            IntentUtils.getInstence()
+                                    .intent(FacilityAddPpActivity.this,WebViewActivity.class,
+                                            "url",result.getData(),"type",name);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void initRvUi() {
@@ -295,10 +335,11 @@ public class FacilityAddPpActivity extends BaseActivity {
         if(str.equals("连接成功")){
             TimeThreadUtils.sendDataA2();
         }
-        DialogUtils.showDialogLyState(FacilityAddPpActivity.this, PopupWindowLanYan.BleName, str, new DialogUtils.DialogLyInterface() {
+        DialogUtils.showDialogLyState(FacilityAddPpActivity.this, sbName, str, new DialogUtils.DialogLyInterface() {
             @Override
             public void btnConfirm() {
                 if(str.equals("连接成功")){
+                    PopupWindowLanYan.BleName = sbName;
                     dismiss();
                     startActivity(new Intent(FacilityAddPpActivity.this, MainActivity.class));
                 }

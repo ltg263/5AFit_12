@@ -72,6 +72,7 @@ public class ConstValues {
 //    public static final String PORT_5 = "http://192.168.2.145:9505/";//积分商城
     public static final String PORT_8 = "pay/";//支付相关 pay
     public static final String PORT_21 = "community-service/";//社群
+    public static final String PORT_TASK = "task/";//任务(task)
 //    public static final String PORT_21 = "http://192.168.2.145:9021/";//社群
     public static final String POPT_LS = "";//没有
 

@@ -1,5 +1,7 @@
 package com.jxkj.fit_5a.view.adapter;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -20,6 +22,11 @@ public class HomeSignRlAdapter extends BaseQuickAdapter<SignLogData.ListBean, Ba
     public HomeSignRlAdapter(@Nullable List<SignLogData.ListBean> data) {
         super(R.layout.item_home_sign_rl, data);
     }
+    boolean setCurrTime = true;
+
+    public void setSetCurrTime(boolean setCurrTime) {
+        this.setCurrTime = setCurrTime;
+    }
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, SignLogData.ListBean item) {
@@ -34,7 +41,7 @@ public class HomeSignRlAdapter extends BaseQuickAdapter<SignLogData.ListBean, Ba
                 .setVisible(R.id.tv_rq,true).setVisible(R.id.view_dot,false)
                 .setTextColor(R.id.tv_rq,mContext.getResources().getColor(R.color.color_333333));
 
-        if(StringUtil.isNotBlank(item.getSj()) && StringUtil.getDay(new Date())==Integer.valueOf(item.getSj())){//当前日期选中
+        if(StringUtil.isNotBlank(item.getSj()) && StringUtil.getDay(new Date())==Integer.valueOf(item.getSj()) && setCurrTime){//当前日期选中
             helper.setVisible(R.id.view,true).setTextColor(R.id.tv_rq,mContext.getResources().getColor(R.color.color_ffffff));
         }
 

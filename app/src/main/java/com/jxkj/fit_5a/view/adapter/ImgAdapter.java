@@ -24,7 +24,7 @@ public class ImgAdapter extends BaseQuickAdapter<HotTopicBean, BaseViewHolder> {
     protected void convert(@NonNull BaseViewHolder helper, HotTopicBean item) {
         GlideImageUtils.setGlideImage(mContext,item.getImgUrl(),helper.getView(R.id.iv_img));
         helper.setVisible(R.id.iv_select,false).setBackgroundColor(R.id.rl,
-                mContext.getResources().getColor(R.color.transparent));
+                mContext.getResources().getColor(R.color.transparent)).setText(R.id.tv_title,item.getName());
 
         if(item.isSelect()){
             helper.setVisible(R.id.iv_select,true);

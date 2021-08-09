@@ -23,7 +23,7 @@ public class FacilitySbAddAdapter extends BaseQuickAdapter<DeviceData.ListBean, 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, DeviceData.ListBean item) {
         GlideImgLoader.loadImageViewWithCirclr(mContext,item.getImg(),helper.getView(R.id.iv));
-        helper.setText(R.id.tv,item.getName());
+        helper.setText(R.id.tv,item.getName()).addOnClickListener(R.id.iv_select);
         helper.setImageResource(R.id.iv_select,R.drawable.wxz_1);
         if(item.isSelect()){
             helper.setImageResource(R.id.iv_select,R.drawable.wxz_);
