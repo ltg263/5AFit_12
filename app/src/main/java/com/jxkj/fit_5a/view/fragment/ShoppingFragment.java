@@ -109,7 +109,7 @@ public class ShoppingFragment extends BaseFragment {
         mShoppingRmAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ShoppingDetailsActivity.startActivity(getActivity(), mHomeShoppingAdapter.getData().get(position).getId());
+                ShoppingDetailsActivity.startActivity(getActivity(), mShoppingRmAdapter.getData().get(position).getId());
             }
         });
 

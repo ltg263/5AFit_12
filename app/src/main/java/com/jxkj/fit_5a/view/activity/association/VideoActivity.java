@@ -251,7 +251,7 @@ public class VideoActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result<VideoPlayInfoBean> result) {
-                        if (isDataInfoSucceed(result)) {
+                        if (result.getCode()==0) {
                             if(StringUtil.isBlank(nextParam)){
 //                                getQuery_next_graphic(data.getMomentId());
                             }
