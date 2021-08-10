@@ -20,6 +20,7 @@
         android:src="@mipmap/icon_app_logo" />
 
     <TextView
+        android:id="@+id/tv_banben"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -83,6 +84,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tv_con"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_10"
