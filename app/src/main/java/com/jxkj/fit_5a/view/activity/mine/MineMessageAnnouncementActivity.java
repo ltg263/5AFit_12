@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -41,6 +42,15 @@ public class MineMessageAnnouncementActivity extends BaseActivity {
     LinearLayout mLvNot;
     private MineMessageAnnouncementAdapter mMineMessageAnnouncementAdapter;
 
+
+    @OnClick({R.id.ll_back})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_back:
+                finish();
+                break;
+        }
+    }
     @Override
     protected int getContentView() {
         return R.layout.activity_mine_message;
@@ -48,7 +58,7 @@ public class MineMessageAnnouncementActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        mTvTitle.setText("消 息");
+        mTvTitle.setText("公 告");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);

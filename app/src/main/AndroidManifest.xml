@@ -437,6 +437,10 @@
             android:name=".view.activity.mine.MineMessageAnnouncementActivity"
 
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.mine.MineMessageSubTypeActivity"
+
+            android:screenOrientation="portrait" />
 
 
         <provider

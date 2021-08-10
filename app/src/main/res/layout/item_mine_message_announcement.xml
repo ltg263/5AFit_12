@@ -33,15 +33,15 @@
         android:textSize="12sp" />
 
     <TextView
-        android:layout_width="@dimen/dimen_20dp"
-        android:layout_height="@dimen/dimen_20dp"
+        android:id="@+id/tv_doc"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/dp_10"
         android:layout_toStartOf="@id/iv_back"
         android:background="@drawable/bj_circle_red"
         android:gravity="center"
         android:visibility="invisible"
-        android:text="9"
         android:textColor="@color/color_ffffff"
         android:textSize="10sp" />
 

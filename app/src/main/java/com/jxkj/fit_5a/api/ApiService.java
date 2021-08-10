@@ -40,10 +40,12 @@ import com.jxkj.fit_5a.entity.DiscountUsableNotBean;
 import com.jxkj.fit_5a.entity.FavoriteQueryList;
 import com.jxkj.fit_5a.entity.FollowFansList;
 import com.jxkj.fit_5a.entity.HotTopicBean;
+import com.jxkj.fit_5a.entity.LastUnreadMessageBeanList;
 import com.jxkj.fit_5a.entity.LoginInfo;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
+import com.jxkj.fit_5a.entity.MessageSubtypeBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean;
 import com.jxkj.fit_5a.entity.MomentDetailsBean_X;
 import com.jxkj.fit_5a.entity.NotObtainedBean;
@@ -841,6 +843,26 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_21 + "api/v1/topic/all")
     Observable<ResultList<TopicAllBean>> getTopicAll();
+
+
+    /**
+     * 子消息类型列表
+     */
+    @GET(ConstValues.PORT_MESSAGE + "api/v1/message/subtype/list")
+    Observable<Result<List<MessageSubtypeBean>>> getMessageSubtypeList();
+
+
+    /**
+     *消息列表
+     */
+    @GET(ConstValues.PORT_MESSAGE + "api/v1/message/list")
+    Observable<Result<LastUnreadMessageBeanList>> getMessageList(@Query("subType") String subType);
+
+    /**
+     *设置为已读
+     */
+    @POST(ConstValues.PORT_MESSAGE + "api/v1/message/set_read")
+    Observable<Result> getMessagSetRead(@Query("ids") String ids);
 
 
     /**
