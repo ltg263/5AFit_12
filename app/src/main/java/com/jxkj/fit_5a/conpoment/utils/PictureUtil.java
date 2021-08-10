@@ -244,11 +244,11 @@ public class PictureUtil {
      * @return Bitmap 返回获取的Bitmap
      */
 
-    public static String getVideoThumb(String path) {
+    public static String getVideoThumb(Context mContext,String path) {
 
         MediaMetadataRetriever media = new MediaMetadataRetriever();
-
-        media.setDataSource(path);
+        media.setDataSource(mContext, Uri.parse(path));
+//        media.setDataSource(path);
         String pathF = saveBitmap(media.getFrameAtTime(),100);
         return pathF;
     }

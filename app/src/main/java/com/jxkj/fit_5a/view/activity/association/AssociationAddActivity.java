@@ -195,7 +195,7 @@ public class AssociationAddActivity extends BaseActivity {
     }
     String topics = null;
     private void setVideo(List<LocalMedia> selectList) {
-        String path = PictureUtil.getVideoThumb(selectList.get(0).getPath());
+        String path = PictureUtil.getVideoThumb(this,selectList.get(0).getPath());
         if (StringUtil.isNotBlank(path)) {
             HttpRequestUtils.postOSSFile(1, new HttpRequestUtils.OSSClientInterface() {
                 @Override

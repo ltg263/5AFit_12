@@ -116,7 +116,8 @@ public class LocationSelectActivity extends AppCompatActivity implements PoiSear
         tv_title_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                confirm();
+//                confirm();
+                submit();
             }
         });
 
