@@ -100,7 +100,7 @@ public class CreateCircleActivity extends BaseActivity {
     private List<DeviceTypeData.ListBean> dataSbType;
 
     private List<String> zqscLists = new ArrayList<>();
-    private String rewardJson;//任务说明
+    private TaskCircleQueryBean.ListBean.RewardDTOBean rewardDto;
 
     @Override
     protected int getContentView() {
@@ -135,6 +135,8 @@ public class CreateCircleActivity extends BaseActivity {
                 PickerViewUtils.selectorCustom(this, list, "设备类型", new PickerViewUtils.ConditionInterfacd() {
                     @Override
                     public void setIndex(int pos) {
+                        mTvMblx.setText("");
+                        mTvZqsc.setText("");
                         mTvSbName.setText(dataSbType.get(pos).getName());
                         deviceType = dataSbType.get(pos).getId();
                     }
@@ -217,11 +219,12 @@ public class CreateCircleActivity extends BaseActivity {
                         if (isDataInfoSucceed(result)) {
                             List<TaskCircleQueryBean.ListBean> data = result.getData().getList();
                             if(data==null || data.size()==0){
+                                ToastUtils.showShort("暂无可选运动任务，请选择其他其他设备类型");
                                 return;
                             }
                             List<String> listMblx = new ArrayList<>();
                             for (int i = 0; i < data.size(); i++) {
-                                listMblx.add(data.get(i).getDeviceTypeStr() + "");
+                                listMblx.add(data.get(i).getParamName());
                             }
                             PickerViewUtils.selectorCustom(CreateCircleActivity.this, listMblx, "目标类型",
                                     new PickerViewUtils.ConditionInterfacd() {
@@ -230,10 +233,10 @@ public class CreateCircleActivity extends BaseActivity {
                                             circleTargetId = data.get(pos).getId();
                                             mTvMblx.setText(data.get(pos).getDeviceTypeStr());
                                             zqscLists.clear();
-                                            rewardJson = data.get(pos).getReward();
+                                            rewardDto = data.get(pos).getRewardDTO();
                                             for (int i = data.get(pos).getMinCycle(); i < data.get(pos).getMaxCycle() + 1; i++) {
                                                 zqscLists.add(i + "");
-                                            }
+                                            }//
                                             Log.w("zqscLists:", "circleTargetId" + circleTargetId);
                                         }
                                     });
@@ -294,19 +297,13 @@ public class CreateCircleActivity extends BaseActivity {
         postUser.setDeviceType(deviceType);
         postUser.setName(mEt1.getText().toString());
         postUser.setExplain(mEt2.getText().toString());
-        postUser.setImgUrl("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3387716082,1768697998&fm=26&gp=0.jpg");
+        postUser.setImgUrl(avatar);
         postUser.setInterestId(0);
         PostUser.CreateCircle.TaskCircleFormDTOBean dtoBean = new PostUser.CreateCircle.TaskCircleFormDTOBean();
         dtoBean.setCircleTargetId(circleTargetId);
         dtoBean.setCycle(Integer.valueOf(mTvZqsc.getText().toString()));//mTvZqsc.getText().toString()
-        try {
-            JSONObject object = new JSONObject(rewardJson);
-            dtoBean.setImgUrl(object.getString("imgUrl"));
-            dtoBean.setExplain(object.getString("explain"));
-        } catch (JSONException e) {
-            dismiss();
-            e.printStackTrace();
-        }
+        dtoBean.setImgUrl(rewardDto.getImgUrl());
+        dtoBean.setExplain(rewardDto.getExplain());
         postUser.setTaskCircleFormDTO(dtoBean);
 
         RetrofitUtil.getInstance().apiService()

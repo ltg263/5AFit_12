@@ -832,7 +832,7 @@ public interface ApiService {
      *
      * @return
      */
-    @GET(ConstValues.PORT_21 + "api/v1/circle/task/query")
+    @GET(ConstValues.PORT_TASK + "api/v1/task/circle/target/query")
     Observable<Result<TaskCircleQueryBean>> getTaskCircleQuery(@Query("deviceType") int deviceType);
 
 

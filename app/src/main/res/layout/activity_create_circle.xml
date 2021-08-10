@@ -180,10 +180,9 @@
                         android:id="@+id/tv_sb_type"
                         android:layout_width="@dimen/dimen_100dp"
                         android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/icon_jiantou_xia_66"
                         android:gravity="center"
                         android:padding="@dimen/dp_10"
-                        android:text="无器械"
+                        android:text="设备类型"
                         android:textColor="@color/color_000000"
                         android:textSize="14sp" />
 
@@ -201,7 +200,7 @@
                         android:drawableEnd="@drawable/icon_jiantou_xia_66"
                         android:gravity="center"
                         android:padding="@dimen/dp_10"
-                        android:text="选择设备类型"
+                        android:hint="选择设备类型"
                         android:textColor="@color/color_999999"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -268,7 +267,7 @@
                         android:drawableEnd="@drawable/icon_jiantou_xia_66"
                         android:gravity="center"
                         android:padding="@dimen/dp_10"
-                        android:text="选择目标类型"
+                        android:hint="选择目标类型"
                         android:textColor="@color/color_999999"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -304,7 +303,7 @@
                         android:drawableEnd="@drawable/icon_jiantou_xia_66"
                         android:gravity="center"
                         android:padding="@dimen/dp_10"
-                        android:text="选择周期时长"
+                        android:hint="选择周期时长"
                         android:textColor="@color/color_999999"
                         android:textSize="14sp" />
                 </LinearLayout>

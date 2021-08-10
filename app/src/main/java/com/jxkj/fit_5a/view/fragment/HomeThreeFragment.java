@@ -125,7 +125,6 @@ public class HomeThreeFragment extends BaseFragment {
         mRvTopList.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         mRvTopList.setHasFixedSize(true);
         mRvTopList.setAdapter(mHomeThreeTopAdapter);
-
         mHomeThreeTopAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -340,6 +339,7 @@ public class HomeThreeFragment extends BaseFragment {
                             mHomeThreeRmhtAdapter.setNewData(result.getData().getHotTopics());
                             mHomeThreeSqAdapter.setNewData(result.getData().getHotMoments());
                             refreshLayout.finishLoadMoreWithNoMoreData();
+                            getCircleQueryJoined();
                         }
                     }
 

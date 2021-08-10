@@ -5,39 +5,19 @@ import java.util.List;
 public class TaskCircleQueryBean {
 
     /**
-     * page : 0
-     * pageSize : 0
-     * total : 2
-     * list : [{"id":1,"deviceType":2,"deviceTypeStr":"设备类型二","paramName":"运动时长","unit":"分钟","target":10,"maxCycle":100,"minCycle":1,"reward":"{\"detail\":\"{\\\"incrementValue\\\":101,\\\"initialValue\\\":10,\\\"maxValue\\\":100}\",\"explain\":\"\",\"hasDel\":0,\"id\":3,\"imgUrl\":\"\",\"name\":\"积分10递增（max-100）\",\"status\":1,\"type\":1}","expireTime":""},{"id":2,"deviceType":2,"deviceTypeStr":"设备类型二","paramName":"运动时长","unit":"分钟","target":10,"maxCycle":100,"minCycle":1,"reward":"{\"detail\":\"{\\\"incrementValue\\\":101,\\\"initialValue\\\":10,\\\"maxValue\\\":100}\",\"explain\":\"\",\"hasDel\":0,\"id\":3,\"imgUrl\":\"\",\"name\":\"积分10递增（max-100）\",\"status\":1,\"type\":1}","expireTime":""}]
+     * list : [{"id":14,"deviceType":5,"deviceTypeStr":"跑步机","paramId":9,"paramName":"运动距离","unit":"KM","target":5,"maxCycle":1,"minCycle":1,"rewardId":3,"rewardDTO":{"id":3,"name":"积分10递增（max-100）","imgUrl":"","explain":"","type":1,"detail":"{\"incrementValue\":10,\"initialValue\":10,\"maxValue\":40}","hasDel":0,"status":1},"expireTime":"2021-07-31 00:00:00"}]
+     * totalCount : 1
      */
 
-    private int page;
-    private int pageSize;
-    private int total;
+    private int totalCount;
     private List<ListBean> list;
 
-    public int getPage() {
-        return page;
+    public int getTotalCount() {
+        return totalCount;
     }
 
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
     }
 
     public List<ListBean> getList() {
@@ -50,27 +30,31 @@ public class TaskCircleQueryBean {
 
     public static class ListBean {
         /**
-         * id : 1
-         * deviceType : 2
-         * deviceTypeStr : 设备类型二
-         * paramName : 运动时长
-         * unit : 分钟
-         * target : 10
-         * maxCycle : 100
+         * id : 14
+         * deviceType : 5
+         * deviceTypeStr : 跑步机
+         * paramId : 9
+         * paramName : 运动距离
+         * unit : KM
+         * target : 5
+         * maxCycle : 1
          * minCycle : 1
-         * reward : {"detail":"{\"incrementValue\":101,\"initialValue\":10,\"maxValue\":100}","explain":"","hasDel":0,"id":3,"imgUrl":"","name":"积分10递增（max-100）","status":1,"type":1}
-         * expireTime :
+         * rewardId : 3
+         * rewardDTO : {"id":3,"name":"积分10递增（max-100）","imgUrl":"","explain":"","type":1,"detail":"{\"incrementValue\":10,\"initialValue\":10,\"maxValue\":40}","hasDel":0,"status":1}
+         * expireTime : 2021-07-31 00:00:00
          */
 
         private int id;
         private int deviceType;
         private String deviceTypeStr;
+        private int paramId;
         private String paramName;
         private String unit;
         private int target;
         private int maxCycle;
         private int minCycle;
-        private String reward;
+        private int rewardId;
+        private RewardDTOBean rewardDTO;
         private String expireTime;
 
         public int getId() {
@@ -95,6 +79,14 @@ public class TaskCircleQueryBean {
 
         public void setDeviceTypeStr(String deviceTypeStr) {
             this.deviceTypeStr = deviceTypeStr;
+        }
+
+        public int getParamId() {
+            return paramId;
+        }
+
+        public void setParamId(int paramId) {
+            this.paramId = paramId;
         }
 
         public String getParamName() {
@@ -137,12 +129,20 @@ public class TaskCircleQueryBean {
             this.minCycle = minCycle;
         }
 
-        public String getReward() {
-            return reward;
+        public int getRewardId() {
+            return rewardId;
         }
 
-        public void setReward(String reward) {
-            this.reward = reward;
+        public void setRewardId(int rewardId) {
+            this.rewardId = rewardId;
+        }
+
+        public RewardDTOBean getRewardDTO() {
+            return rewardDTO;
+        }
+
+        public void setRewardDTO(RewardDTOBean rewardDTO) {
+            this.rewardDTO = rewardDTO;
         }
 
         public String getExpireTime() {
@@ -151,6 +151,92 @@ public class TaskCircleQueryBean {
 
         public void setExpireTime(String expireTime) {
             this.expireTime = expireTime;
+        }
+
+        public static class RewardDTOBean {
+            /**
+             * id : 3
+             * name : 积分10递增（max-100）
+             * imgUrl :
+             * explain :
+             * type : 1
+             * detail : {"incrementValue":10,"initialValue":10,"maxValue":40}
+             * hasDel : 0
+             * status : 1
+             */
+
+            private int id;
+            private String name;
+            private String imgUrl;
+            private String explain;
+            private int type;
+            private String detail;
+            private int hasDel;
+            private int status;
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getImgUrl() {
+                return imgUrl;
+            }
+
+            public void setImgUrl(String imgUrl) {
+                this.imgUrl = imgUrl;
+            }
+
+            public String getExplain() {
+                return explain;
+            }
+
+            public void setExplain(String explain) {
+                this.explain = explain;
+            }
+
+            public int getType() {
+                return type;
+            }
+
+            public void setType(int type) {
+                this.type = type;
+            }
+
+            public String getDetail() {
+                return detail;
+            }
+
+            public void setDetail(String detail) {
+                this.detail = detail;
+            }
+
+            public int getHasDel() {
+                return hasDel;
+            }
+
+            public void setHasDel(int hasDel) {
+                this.hasDel = hasDel;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.jxkj.fit_5a.view.activity.association;
 
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
@@ -19,15 +20,20 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.appbar.AppBarLayout;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
+import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
 import com.jxkj.fit_5a.conpoment.utils.GlideImgLoader;
 import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.view.BlurringView;
+import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.PopupWindowTy;
 import com.jxkj.fit_5a.entity.CircleDetailsBean;
 import com.jxkj.fit_5a.entity.QueryPopularBean;
+import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
+import com.jxkj.fit_5a.view.activity.mine.MineSetActivity;
 import com.jxkj.fit_5a.view.activity.mine.UserHomeActivity;
 import com.jxkj.fit_5a.view.adapter.CircleDynamicAdapter;
 
@@ -193,6 +199,12 @@ public class MineCircleActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_share:
+                DialogUtils.showDialogHint(this, "确定要退出圈子吗？", false, new DialogUtils.ErrorDialogInterface() {
+                    @Override
+                    public void btnConfirm() {
+                        getCircleQuit();
+                    }
+                });
                 break;
             case R.id.tv_jiaru:
                 getCircleJoin(id);
@@ -379,7 +391,7 @@ public class MineCircleActivity extends BaseActivity {
                 });
     }
 
-    private void getCircleQuit(int id) {
+    private void getCircleQuit() {
         RetrofitUtil.getInstance().apiService()
                 .getCircleQuit(id)
                 .observeOn(AndroidSchedulers.mainThread())
