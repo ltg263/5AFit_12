@@ -85,8 +85,6 @@ public class MineMessageSubTypeActivity extends BaseActivity {
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
-        mLvNot.setVisibility(View.GONE);
-        mRvList.setVisibility(View.VISIBLE);
         mMineMessageSubTypeAdapter = new MineMessageSubTypeAdapter(null);
         mRvList.setAdapter(mMineMessageSubTypeAdapter);
         mMineMessageSubTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -179,6 +177,10 @@ public class MineMessageSubTypeActivity extends BaseActivity {
                         if (isDataInfoSucceed(result)) {
                             if(mMineMessageSubTypeAdapter!=null){
                                 mMineMessageSubTypeAdapter.setNewData(result.getData().getList());
+                                if(mMineMessageSubTypeAdapter.getData().size()>0){
+                                    mLvNot.setVisibility(View.GONE);
+                                    mRvList.setVisibility(View.VISIBLE);
+                                }
                             }
                         }
                     }
