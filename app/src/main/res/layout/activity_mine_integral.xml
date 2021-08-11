@@ -39,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:visibility="invisible"
             android:drawableStart="@drawable/icon_help"
             android:drawablePadding="@dimen/dimen_2dp"
             android:gravity="center"

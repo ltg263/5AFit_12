@@ -41,6 +41,7 @@
             android:drawableStart="@drawable/icon_help"
             android:drawablePadding="@dimen/dimen_2dp"
             android:gravity="center"
+            android:visibility="invisible"
             android:includeFontPadding="false"
             android:padding="@dimen/dimen_15dp"
             android:text="规则"
