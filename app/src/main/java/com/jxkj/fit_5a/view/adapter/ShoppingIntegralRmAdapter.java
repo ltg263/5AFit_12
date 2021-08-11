@@ -23,7 +23,7 @@ public class ShoppingIntegralRmAdapter extends BaseQuickAdapter<ProductListBean.
     @Override
     protected void convert(@NonNull BaseViewHolder helper, ProductListBean.ListBean item) {
         GlideImageUtils.setGlideImage(mContext,item.getImgUrl(),helper.getView(R.id.iv));
-        helper.setText(R.id.tv_name,item.getName()).setText(R.id.tv_price, item.getDeductIntegral());
+        helper.setText(R.id.tv_name,item.getName()).setText(R.id.tv_price, item.getDeductIntegral()+" + ￥"+item.getPrice());
     }
 
 }

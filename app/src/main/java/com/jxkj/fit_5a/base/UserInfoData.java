@@ -15,6 +15,24 @@ public class UserInfoData {
     private String couponCount;
     private String giftCount;
     private String integral;
+    private String integralGrandAmount;
+    private String integralThatDayGrandAmount;
+
+    public void setIntegralGrandAmount(String integralGrandAmount) {
+        this.integralGrandAmount = integralGrandAmount;
+    }
+
+    public void setIntegralThatDayGrandAmount(String integralThatDayGrandAmount) {
+        this.integralThatDayGrandAmount = integralThatDayGrandAmount;
+    }
+
+    public String getIntegralGrandAmount() {
+        return integralGrandAmount;
+    }
+
+    public String getIntegralThatDayGrandAmount() {
+        return integralThatDayGrandAmount;
+    }
 
     public String getBalance() {
         return StringUtil.getValue(balance);
