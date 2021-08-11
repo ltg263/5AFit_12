@@ -24,7 +24,6 @@ public class ConstValues {
     public static final String USER_PASSWORD = "user_password";
     public static final String USER_NAME = "user_name";
     public static final String USER_AGE = "user_age";
-    public static final String USER_GENDER = "user_gender";
     public static final String USER_IMG = "user_img";
     public static final String PHONE = "phone";
     public static final String LAT = "lat";
@@ -40,6 +39,11 @@ public class ConstValues {
     public static final String MY_GIFTCOUNT = "giftCount";//礼物
     public static final String MY_COUPON_COUNT = "couponCount";//券
     public static final String MY_INTEGRAL = "integral";//积分
+    public static final String USER_BIRTHDAY = "user_birthday";//	生日
+    public static final String USER_GENDER = "user_gender";//	性别
+    public static final String USER_HEIGHT = "user_height";//	身高cm
+    public static final String USER_WEIGHT = "user_weight";//	体重kg
+    public static final String USER_INTEREST = "user_interest";//	兴趣
 
     public static final String accessKeyId = "accessKeyId";
     public static final String accessKeySecret = "accessKeySecret";

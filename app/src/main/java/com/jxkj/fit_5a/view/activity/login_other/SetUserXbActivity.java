@@ -15,9 +15,13 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 
 import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -49,9 +53,31 @@ public class SetUserXbActivity extends BaseActivity {
     @Override
     protected void initViews() {
         MainApplication.getContext().addActivity(this);
+        sbType = Integer.parseInt(SharedUtils.singleton().get(ConstValues.USER_GENDER, "0"));
+        if(sbType==1){
+            mIvSelectNan.setImageDrawable(getResources().getDrawable(R.drawable.icon_select_yd_yse));
+            mIvSelectNv.setImageDrawable(getResources().getDrawable(R.drawable.icon_select_yd_no));
+            mRlNv.setBackgroundResource(R.drawable.bj_shape_line_66_6);
+            mRlNan.setBackgroundResource(R.drawable.bj_shape_line_theme_6);
+        }
+        if(sbType==2){
+            mIvSelectNan.setImageDrawable(getResources().getDrawable(R.drawable.icon_select_yd_no));
+            mIvSelectNv.setImageDrawable(getResources().getDrawable(R.drawable.icon_select_yd_yse));
+            mRlNan.setBackgroundResource(R.drawable.bj_shape_line_66_6);
+            mRlNv.setBackgroundResource(R.drawable.bj_shape_line_theme_6);
+        }
+
         setDatePickerDividerColor(mDatePicker);
         type = getIntent().getIntExtra("type",0);
         Calendar calendar = Calendar.getInstance();
+        csrq = SharedUtils.singleton().get(ConstValues.USER_BIRTHDAY, "0");
+        if(StringUtil.isNotBlank(csrq)){
+            try {
+                calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(csrq));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         int year = calendar.get(Calendar.YEAR);
         int monthOfYear = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);

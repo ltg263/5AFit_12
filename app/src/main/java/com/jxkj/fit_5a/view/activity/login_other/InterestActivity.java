@@ -17,6 +17,9 @@ import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.PostUser;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.base.ResultList;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.HotTopicBean;
 import com.jxkj.fit_5a.view.adapter.ImgAdapter;
 
@@ -40,7 +43,7 @@ public class InterestActivity extends BaseActivity {
     String sbType,csrq,sg,tz,interest;
 
     int page = 1;
-
+    String userInterest = "";
     @Override
     protected int getContentView() {
         return R.layout.activity_interest;
@@ -53,6 +56,7 @@ public class InterestActivity extends BaseActivity {
         csrq = getIntent().getStringExtra("csrq");
         sg = getIntent().getStringExtra("sg");
         tz = getIntent().getStringExtra("tz");
+        userInterest = SharedUtils.singleton().get(ConstValues.USER_INTEREST,"");
         getInterestList();
     }
 
@@ -86,7 +90,7 @@ public class InterestActivity extends BaseActivity {
 //                });
 
         RetrofitUtil.getInstance().apiService()
-                .getHotTopicList(null,page,6)
+                .getAllTopic(null,page,6)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultList<HotTopicBean>>() {
@@ -117,8 +121,17 @@ public class InterestActivity extends BaseActivity {
                 });
     }
     private void initRvUi(List<HotTopicBean> list) {
+
         if(list.size()>0){
-            list.get(0).setSelect(true);
+            if(StringUtil.isNotBlank(userInterest)){
+                for(int i= 0; i<list.size();i++){
+                    if(userInterest.contains(list.get(i).getId()+"")){
+                        list.get(i).setSelect(true);
+                    }
+                }
+            }else{
+                list.get(0).setSelect(true);
+            }
         }
         mImgAdapter = new ImgAdapter(list);
 
@@ -196,6 +209,11 @@ public class InterestActivity extends BaseActivity {
                     public void onNext(Result result) {
                         if (isDataInfoSucceed(result)) {
                             if(SetUserXbActivity.type==0){
+                                SharedUtils.singleton().put(ConstValues.USER_BIRTHDAY,csrq);
+                                SharedUtils.singleton().put(ConstValues.USER_GENDER,sbType);
+                                SharedUtils.singleton().put(ConstValues.USER_HEIGHT,sg);
+                                SharedUtils.singleton().put(ConstValues.USER_WEIGHT,tz);
+
                                 startActivity(new Intent(InterestActivity.this, MainActivity.class));
                             }
                             MainApplication.getContext().finishAllActivity();

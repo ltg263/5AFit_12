@@ -1,5 +1,6 @@
 package com.jxkj.fit_5a.view.activity.mine;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -148,6 +149,13 @@ public class MineInfoActivity extends BaseActivity {
     private void initUI(UserDetailData data) {
         avatar = data.getAvatar();
         backImg = data.getBackImg();
+        SharedUtils.singleton().put(ConstValues.USER_BIRTHDAY,data.getBirthDay());
+        SharedUtils.singleton().put(ConstValues.USER_GENDER,data.getGender());
+        SharedUtils.singleton().put(ConstValues.USER_HEIGHT,data.getHeight());
+        SharedUtils.singleton().put(ConstValues.USER_WEIGHT,data.getWeight());
+        SharedUtils.singleton().put(ConstValues.USER_WEIGHT,data.getWeight());
+        SharedUtils.singleton().put(ConstValues.USER_INTEREST,data.getInterest());
+
         GlideImageUtils.setGlideImage(this,backImg,mIvBackImg);
         GlideImgLoader.loadImageViewWithCirclr(MineInfoActivity.this,avatar,mIvImg);
         Glide.with(this)

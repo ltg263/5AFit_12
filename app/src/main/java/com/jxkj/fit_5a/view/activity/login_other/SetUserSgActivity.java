@@ -8,6 +8,9 @@ import android.widget.TextView;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.RulerView_xz;
 import com.zkk.view.rulerview.RulerView;
 
@@ -29,6 +32,8 @@ public class SetUserSgActivity extends BaseActivity {
     RulerView_xz mRulerHeight;
     int sbType;
     String csrq;
+    float selectorWeight = 60.0f;
+    float selectorHeight = 130f;
     @Override
     protected int getContentView() {
         isShowTitle();
@@ -40,6 +45,17 @@ public class SetUserSgActivity extends BaseActivity {
         MainApplication.getContext().addActivity(this);
         sbType = getIntent().getIntExtra("sbType",0);
         csrq = getIntent().getStringExtra("csrq");
+        String userHeiget = SharedUtils.singleton().get(ConstValues.USER_HEIGHT, "0");
+        String userWeiget = SharedUtils.singleton().get(ConstValues.USER_WEIGHT, "0");
+        if(StringUtil.isNotBlank(userHeiget)){
+            double s =Double.valueOf(userHeiget);
+            mTvSg.setText((int)s+"cm");
+            selectorHeight = 40-Float.parseFloat(userHeiget)+250;
+        }
+        if(StringUtil.isNotBlank(userWeiget)){
+            mTvTz.setText(String.format("%.1f",Double.parseDouble(userWeiget)));
+            selectorWeight = Float.parseFloat(userWeiget);
+        }
         if(sbType==1){
             mIvXb.setImageDrawable(getResources().getDrawable(R.mipmap.ic_ren_nan));
         }
@@ -51,7 +67,7 @@ public class SetUserSgActivity extends BaseActivity {
          * @param maxValue   最小的数值
          * @param per   最小单位  如 1:表示 每2条刻度差为1.   0.1:表示 每2条刻度差为0.1 在demo中 身高mPerValue为1  体重mPerValue 为0.1
          */
-        mRulerWeight.setValue(60.0f, 40, 300, 0.1f);
+        mRulerWeight.setValue(selectorWeight, 40, 300, 0.1f);
 
         mRulerHeight.setOnValueChangeListener(value -> mTvSg.setText((int) value + "cm"));
         /**
@@ -61,7 +77,7 @@ public class SetUserSgActivity extends BaseActivity {
          * @param maxValue   最小的数值
          * @param per   最小单位  如 1:表示 每2条刻度差为1.   0.1:表示 每2条刻度差为0.1 在demo中 身高mPerValue为1  体重mPerValue 为0.1
          */
-        mRulerHeight.setValue(130, 40, 250, 1f);
+        mRulerHeight.setValue(selectorHeight, 40, 250, 1f);
     }
 
     @OnClick({R.id.tv_go_xyb})
