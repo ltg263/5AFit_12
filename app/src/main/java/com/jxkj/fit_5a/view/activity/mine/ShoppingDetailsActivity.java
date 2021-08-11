@@ -114,7 +114,7 @@ public class ShoppingDetailsActivity extends BaseActivity {
     private void initTitle() {
         tvTitle.setText("商品详情");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
-        mIvRightimg.setImageDrawable(getResources().getDrawable(R.drawable.ic_zhuan_fa));
+//        mIvRightimg.setImageDrawable(getResources().getDrawable(R.drawable.ic_zhuan_fa));
         initRv();
         getProductDetails(id);
         usable_not_obtained();

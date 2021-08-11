@@ -34,7 +34,7 @@
             android:layout_below="@id/tv1"
             android:layout_marginTop="@dimen/dimen_2dp"
             android:layout_toEndOf="@id/iv"
-            android:text="完成23/120分钟"
+            android:text="0/0"
             android:textColor="@color/color_999999"
             android:textSize="10sp" />
 

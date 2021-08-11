@@ -379,7 +379,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.ShoppingActivity"
-
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineGiftActivity"
@@ -388,6 +388,7 @@
         <activity
             android:name=".view.activity.mine.MineIntegralActivity"
 
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.mine.MineJinDouActivity"

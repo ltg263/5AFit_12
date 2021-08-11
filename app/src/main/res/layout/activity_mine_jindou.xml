@@ -70,7 +70,7 @@
                     android:id="@+id/tv_jifen_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="888.88"
+                    android:text="0.0"
                     android:textColor="@color/color_ffffff"
                     android:textSize="36sp"
                     android:textStyle="bold" />

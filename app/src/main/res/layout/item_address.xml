@@ -38,7 +38,7 @@
                     android:id="@+id/tv_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="15555555"
+                    android:text=""
                     android:textColor="#333333"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -51,7 +51,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="地址"
-                android:textColor="#99999999"
+                android:textColor="@color/color_666666"
                 android:textSize="13sp" />
 
             <View
@@ -84,7 +84,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="默认地址"
-                        android:textColor="@color/color_999999"
+                        android:textColor="@color/color_666666"
                         android:textSize="12sp" />
                 </LinearLayout>
 

@@ -1,5 +1,8 @@
 package com.jxkj.fit_5a.view.adapter;
 
+import android.app.Activity;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -7,9 +10,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.conpoment.utils.GlideImageUtils;
+import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.CommentListBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +34,7 @@ public class ShoppingPingJiaAdapter extends BaseQuickAdapter<CommentListBean.Lis
 
         String[] strArr = item.getImgs().split(",");
         helper.setGone(R.id.rv_img_list,false);
+        ArrayList<String> list_path = new ArrayList<>();
         if(StringUtil.isNotBlank(item.getImgs()) && strArr!=null && strArr.length>0){
             helper.setGone(R.id.rv_img_list,true);
             if(strArr.length==1){
@@ -52,7 +58,33 @@ public class ShoppingPingJiaAdapter extends BaseQuickAdapter<CommentListBean.Lis
                 GlideImageUtils.setGlideImage(mContext,strArr[1],helper.getView(R.id.siv_2));
                 GlideImageUtils.setGlideImage(mContext,strArr[2],helper.getView(R.id.siv_3));
             }
+
+            for (int i = 0; i < strArr.length; i++) {
+                list_path.add(strArr[i]);
+            }
         }
+
+        helper.getView(R.id.siv_1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MatisseUtils.oPenUrlImg((Activity) mContext, list_path, 0);
+            }
+        });
+
+        helper.getView(R.id.siv_2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MatisseUtils.oPenUrlImg((Activity) mContext, list_path, 1);
+            }
+        });
+
+        helper.getView(R.id.siv_3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MatisseUtils.oPenUrlImg((Activity) mContext, list_path, 2);
+            }
+        });
+
     }
 
 }

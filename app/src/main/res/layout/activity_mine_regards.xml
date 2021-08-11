@@ -42,7 +42,7 @@
             android:drawablePadding="@dimen/dp_10"
             android:gravity="center_vertical"
             android:padding="@dimen/dimen_15dp"
-            android:text="关于我们介绍"
+            android:text="关于我们"
             android:textColor="@color/color_333333"
             android:textSize="16sp" />
 
