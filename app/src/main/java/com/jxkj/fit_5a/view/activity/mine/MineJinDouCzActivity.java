@@ -39,7 +39,7 @@ public class MineJinDouCzActivity extends BaseActivity {
     @Override
     protected void initViews() {
         mTvTitle.setText("金豆充值");
-//        mTvRighttext.setText("账单");
+        mTvRighttext.setText("账单");
         mIvBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_back_h));
         initRv();
     }
