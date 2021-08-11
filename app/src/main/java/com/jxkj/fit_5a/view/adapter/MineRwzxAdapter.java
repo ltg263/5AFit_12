@@ -29,18 +29,18 @@ public class MineRwzxAdapter extends BaseQuickAdapter<TaskListBase.ListBean, Bas
         helper.setText(R.id.tv1,item.getName());
 
         if(item.getRewards()!=null && item.getRewards().size()>0){
-            String detail = item.getRewards().get(0).getDetail();
+            String detail = item.getRewards().get(item.getRewards().size()-1).getDetail();
             String object="";
             try {
                 object = new JSONObject(detail).getString("incrementValue");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            helper.setText(R.id.tv3,object);
+            helper.setText(R.id.tv3,"+"+object);
         }
 
         if(item.getSpeeds()!=null && item.getSpeeds().size()>0){
-            helper.setText(R.id.tv2,"完成"+item.getSpeeds().get(0).getSpeed()+"/"+item.getSpeeds().get(0).getTarget()+item.getSpeeds().get(0).getUnit());
+            helper.setText(R.id.tv2,"完成"+item.getSpeeds().get(item.getSpeeds().size()-1).getSpeed()+"/"+item.getSpeeds().get(item.getSpeeds().size()-1).getTarget()+item.getSpeeds().get(item.getSpeeds().size()-1).getUnit());
         }
 
     }

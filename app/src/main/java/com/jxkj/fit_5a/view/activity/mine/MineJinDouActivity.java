@@ -38,12 +38,8 @@ public class MineJinDouActivity extends BaseActivity {
     }
     private void initRv() {
         mTvJifenNum.setText(SharedUtils.singleton().get(ConstValues.MY_BALANCE,""));
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
 
-        mMineJinDouAdapter = new MineJinDouAdapter(list);
+        mMineJinDouAdapter = new MineJinDouAdapter(null);
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mRvList.setHasFixedSize(true);
         mRvList.setAdapter(mMineJinDouAdapter);
