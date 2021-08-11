@@ -57,7 +57,7 @@ public class MineYhqFragment extends BaseFragment {
     private void initRv(int type) {
 
         if (type == 0) {
-            ll_dh.setVisibility(View.VISIBLE);
+            ll_dh.setVisibility(View.GONE);
             mBaseQuickAdapter = new MineYhqAdapter(null);
             mRvList.setLayoutManager(new LinearLayoutManager(getActivity()));
         } else if (type == 1) {
