@@ -247,6 +247,7 @@ public class TaskSignActivity extends BaseActivity {
     }
     int num = 0;
     private void initTop(List<SignLogData.ListBean> listData) {
+        num = 0;
         List<SignLogData.ListBean> listRl = new ArrayList<>();
         int pos = 0;//星期几开始
         try {
@@ -273,7 +274,7 @@ public class TaskSignActivity extends BaseActivity {
                     listBean = listData.get(j);
                     listBean.setSig(true);
                 }else if(!(listData.get(j).getSignDate()).equals(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyyMMdd"))){
-                    num = 0;
+//                    num = 0;
                 }
                 if((listData.get(j).getSignDate()).equals(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyyMMdd"))){
                     mTvGoSign.setText("已签到");
