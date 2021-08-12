@@ -70,6 +70,7 @@ import com.jxkj.fit_5a.entity.TaskCircleQueryBean;
 import com.jxkj.fit_5a.entity.TemplateBean;
 import com.jxkj.fit_5a.entity.TopicAllBean;
 import com.jxkj.fit_5a.entity.UserOwnInfo;
+import com.jxkj.fit_5a.entity.UserWalletData;
 import com.jxkj.fit_5a.entity.VideoInfoBean;
 import com.jxkj.fit_5a.entity.VideoPlayAuthBean;
 import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
@@ -125,6 +126,13 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_1 + "api/v1/user/statistic/my")
     Observable<Result<UserInfoData>> getUserStatistic();
+
+    /**
+     * 获取用户所有余额
+     * @return
+     */
+    @GET(ConstValues.PORT_8 + "api/v1/user/wallet/all")
+    Observable<Result<UserWalletData>> getUserWalletAll();
 
     /**
      * 微信登录
