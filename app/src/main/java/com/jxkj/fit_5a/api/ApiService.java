@@ -74,6 +74,7 @@ import com.jxkj.fit_5a.entity.VideoInfoBean;
 import com.jxkj.fit_5a.entity.VideoPlayAuthBean;
 import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
 import com.jxkj.fit_5a.entity.WalletDetailsBean;
+import com.jxkj.fit_5a.entity.WalletListBean;
 
 import java.util.List;
 import java.util.Map;
@@ -773,6 +774,14 @@ public interface ApiService {
      */
     @GET(ConstValues.PORT_8 + "api/v1/user/wallet/details")
     Observable<Result<WalletDetailsBean>> getWalletDetails(@Query("type") int type);
+
+
+    /**
+     * 余额详情  	余额类型1金豆,2卡路里
+     */
+    @GET(ConstValues.PORT_8 + "api/v1/user/wallet/list")
+    Observable<Result<WalletListBean>> getWalletList(@Query("beginCreateTime") String beginCreateTime, @Query("endCreateTime") String endCreateTime,
+                                                     @Query("inOrOut") int inOrOut, @Query("type") int type);
 
 
     /**

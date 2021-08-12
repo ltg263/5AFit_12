@@ -292,6 +292,14 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:overScrollMode="never" />
 
+                <TextView
+                    android:id="@+id/tv_not"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_150dp"
+                    android:layout_below="@id/view1"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:gravity="center"
+                    android:text="暂无数据" />
 
             </RelativeLayout>
 

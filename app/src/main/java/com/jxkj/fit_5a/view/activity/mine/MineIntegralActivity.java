@@ -18,8 +18,10 @@ import com.jxkj.fit_5a.base.UserInfoData;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.CustomPopWindow;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.ProductListBean;
-import com.jxkj.fit_5a.view.adapter.ShoppingIntegralJlAdapter;
+import com.jxkj.fit_5a.entity.WalletListBean;
+import com.jxkj.fit_5a.view.adapter.MineJinDouAdapter;
 import com.jxkj.fit_5a.view.adapter.ShoppingIntegralRmAdapter;
 
 import java.text.ParseException;
@@ -49,10 +51,12 @@ public class MineIntegralActivity extends BaseActivity {
     TextView tv_logPay;
     @BindView(R.id.tv_time)
     TextView tv_time;
+    @BindView(R.id.tv_not)
+    TextView tv_not;
     private CustomPopWindow distancePopWindow;
     private ShoppingIntegralRmAdapter mShoppingIntegralRmAdapter;
-    private ShoppingIntegralJlAdapter mShoppingIntegralJlAdapter;
-
+    private MineJinDouAdapter mMineJinDouAdapter;
+    String beginCreateTime,endCreateTime;
     @Override
     protected int getContentView() {
         return R.layout.activity_mine_integral;
@@ -81,17 +85,25 @@ public class MineIntegralActivity extends BaseActivity {
             }
         });
 
-        mShoppingIntegralJlAdapter = new ShoppingIntegralJlAdapter(null);
+        mMineJinDouAdapter = new MineJinDouAdapter(null);
         mRvLsjlList.setLayoutManager(new LinearLayoutManager(this));
         mRvLsjlList.setHasFixedSize(true);
-        mRvLsjlList.setAdapter(mShoppingIntegralJlAdapter);
+        mRvLsjlList.setAdapter(mMineJinDouAdapter);
 
-        mShoppingIntegralJlAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mMineJinDouAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 //                startActivity(new Intent(FacilityAddPpActivity.this, FacilityAddPpActivity.class));
             }
         });
+
+        tv_time.setText(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyy.MM"));
+        String ym = getLastMonth(0);
+        beginCreateTime = ym.replace(".","-")+"-01 00:00:00";
+        int day = getDaysByYearMonth(ym.substring(0,ym.indexOf(".")),ym.substring(ym.indexOf(".")+1));
+        endCreateTime = ym.replace(".","-")+"-"+day+" 00:00:00";
+        inOrOut = 2;
+        getWalletList();
     }
 
     @OnClick({R.id.iv_back, R.id.tv_right_text,R.id.tv_jfsc,R.id.tv_logPay,R.id.iv_1,R.id.iv_2})
@@ -103,10 +115,20 @@ public class MineIntegralActivity extends BaseActivity {
             case R.id.tv_right_text:
                 break;
             case R.id.iv_1:
-                tv_time.setText(getLastMonth(-1));
+                String ym = getLastMonth(-1);
+                beginCreateTime = ym.replace(".","-")+"-01 00:00:00";
+                int day = getDaysByYearMonth(ym.substring(0,ym.indexOf(".")),ym.substring(ym.indexOf(".")+1));
+                endCreateTime = ym.replace(".","-")+"-"+day+" 00:00:00";
+                tv_time.setText(ym);
+                getWalletList();
                 break;
             case R.id.iv_2:
-                tv_time.setText(getLastMonth(1));
+                String ym1 = getLastMonth(1);
+                beginCreateTime = ym1.replace(".","-")+"-01 00:00:00";
+                int day1 = getDaysByYearMonth(ym1.substring(0,ym1.indexOf(".")),ym1.substring(ym1.indexOf(".")+1));
+                endCreateTime = ym1.replace(".","-")+"-"+day1+" 00:00:00";
+                tv_time.setText(ym1);
+                getWalletList();
                 break;
             case R.id.tv_logPay:
                 if(distancePopWindow!=null){
@@ -134,6 +156,16 @@ public class MineIntegralActivity extends BaseActivity {
         calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + x); // 设置为上一个月
         return format.format(calendar.getTime());
     }
+    private int getDaysByYearMonth(String year, String month){
+        Calendar a = Calendar.getInstance();
+        a.set(Calendar.YEAR, Integer.valueOf(year));
+        a.set(Calendar.MONTH, Integer.valueOf(month) - 1);
+        a.set(Calendar.DATE, 1);
+        a.roll(Calendar.DATE, -1);
+        int maxDate = a.get(Calendar.DATE);
+        System.out.println(maxDate);
+        return maxDate;
+    }
 
     private void initPopupWindow() {
         View view = getLayoutInflater().inflate(R.layout.popup_window_cqxc, null, false);
@@ -145,6 +177,8 @@ public class MineIntegralActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 tv_logPay.setText("支出记录");
+                inOrOut = 2;
+                getWalletList();
                 distancePopWindow.dissmiss();
 
             }
@@ -153,6 +187,8 @@ public class MineIntegralActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 tv_logPay.setText("收入记录");
+                inOrOut = 1;
+                getWalletList();
                 distancePopWindow.dissmiss();
             }
         });
@@ -227,6 +263,42 @@ public class MineIntegralActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         ToastUtils.showShort("系统异常" + e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+    int inOrOut;
+    private void getWalletList() {
+        tv_not.setVisibility(View.VISIBLE);
+        mRvLsjlList.setVisibility(View.GONE);
+        RetrofitUtil.getInstance().apiService()
+                .getWalletList(beginCreateTime,endCreateTime,inOrOut,2)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<WalletListBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<WalletListBean> result) {
+                        if(isDataInfoSucceed(result)){
+                            mMineJinDouAdapter.setNewData(result.getData().getList());
+                            if(mMineJinDouAdapter.getData().size()>0){
+                                tv_not.setVisibility(View.GONE);
+                                mRvLsjlList.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
                     }
 
                     @Override

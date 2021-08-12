@@ -11,7 +11,7 @@
         android:layout_height="@dimen/dimen_55dp"
         android:layout_margin="@dimen/dp_10"
         android:background="@drawable/bj_circle_f2_5"
-        android:src="@mipmap/ic_18" />
+        android:src="@mipmap/icon_app_logo" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,6 +28,7 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/tv_paymentTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_user"
@@ -36,13 +37,27 @@
             android:textSize="10sp" />
 
         <TextView
+            android:id="@+id/tv_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_15dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/dp_10"
+            android:text="0"
+            android:textColor="@color/color_000000" />
+
+        <TextView
+            android:id="@+id/tv_amount_dou"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dimen_15dp"
             android:drawableEnd="@drawable/ic_dou"
+            android:visibility="invisible"
             android:drawablePadding="@dimen/dp_10"
-            android:text="-100"
+            android:text="0"
             android:textColor="@color/color_000000" />
     </RelativeLayout>
 
