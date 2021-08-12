@@ -269,7 +269,7 @@ public interface ApiService {
     /**
      * 圈子任务列表
      */
-    @GET(ConstValues.PORT_1 + "api/v1/user/circle/task/list")
+    @GET(ConstValues.PORT_TASK + "api/v1/user/circle/task/list")
     Observable<ResultList<CircleTaskData>> getCircleTaskList();
 
     /**
