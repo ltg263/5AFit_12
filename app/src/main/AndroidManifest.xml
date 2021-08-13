@@ -21,6 +21,9 @@
     <uses-permission
         android:name="android.permission.CHANGE_CONFIGURATION"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -61,11 +64,11 @@
         android:icon="@mipmap/icon_app_logo"
         android:label="@string/app_name"
         android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon,allowBackup">
         <!--        SplashScreenActivity-->
@@ -82,6 +85,7 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="56403f814c7de80adca0068a742cd113" />
+
         <service android:name="com.amap.api.location.APSService"></service>
 
         <activity
@@ -454,12 +458,30 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-<!--    <uses-feature-->
-<!--        android:name="android.hardware.bluetooth_le"-->
-<!--        android:required="true" />-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-<!--        <service-->
-<!--            android:name="com.inuker.bluetooth.library.BluetoothService" />-->
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent101964667" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--    <uses-feature-->
+        <!--        android:name="android.hardware.bluetooth_le"-->
+        <!--        android:required="true" />-->
+
+        <!--        <service-->
+        <!--            android:name="com.inuker.bluetooth.library.BluetoothService" />-->
 
 
         <!--        <intent-filter>-->

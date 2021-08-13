@@ -10,6 +10,8 @@ public class ConstValues {
      */
     public static String APPNAME_ENGLISH = "5AFit";
 
+    public static String APP_ID_TENCENT = "101964667";
+    public static final String APP_AUTHORITIES="com.jxkj.fit_5a.fileprovider";
     /**
      * 文件夹父路径
      */

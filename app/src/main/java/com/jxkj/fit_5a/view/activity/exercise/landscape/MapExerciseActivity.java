@@ -499,7 +499,7 @@ public class MapExerciseActivity extends Activity {
         Log.w("MaxSpeed:","MaxSpeed"+MaxSpeed);
         mBpmDataBeans.get(0).setBpmTopData(
                 new BpmDataBean.BpmTopData(String.valueOf(Calories), String.valueOf(Distance),
-                        duration + "", pjDuration, String.valueOf(MaxSpeed), "--","--",load_dx,"--","--"));
+                        duration + "", pjDuration, String.valueOf(MaxSpeed), "0","0",load_dx,"0","0"));
         mIntent.putParcelableArrayListExtra("mBpmDataBeans", mBpmDataBeans);
         mIntent.putParcelableArrayListExtra("logs",logs);
         startActivity(mIntent);

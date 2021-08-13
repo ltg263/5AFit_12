@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/dimen_120dp"
+        android:layout_marginTop="@dimen/dimen_50dp"
         android:layout_marginEnd="@dimen/dimen_20dp"
         android:background="@drawable/bj_circle_fff_4">
 
@@ -165,6 +165,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:visibility="gone"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_yundong_go" />
 </RelativeLayout>

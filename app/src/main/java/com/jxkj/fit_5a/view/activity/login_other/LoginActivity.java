@@ -1,22 +1,22 @@
 package com.jxkj.fit_5a.view.activity.login_other;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
 import android.net.Uri;
-import android.telephony.TelephonyManager;
+import android.os.Message;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.MainActivity;
@@ -29,12 +29,20 @@ import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeCounter;
 import com.jxkj.fit_5a.entity.LoginInfo;
-import com.umeng.socialize.UMAuthListener;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.tencent.connect.UserInfo;
+import com.tencent.connect.auth.AuthAgent;
+import com.tencent.connect.common.Constants;
+import com.tencent.open.log.SLog;
+import com.tencent.tauth.DefaultUiListener;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,6 +50,11 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.tencent.connect.common.Constants.KEY_ENABLE_SHOW_DOWNLOAD_URL;
+import static com.tencent.connect.common.Constants.KEY_QRCODE;
+import static com.tencent.connect.common.Constants.KEY_RESTORE_LANDSCAPE;
+import static com.tencent.connect.common.Constants.KEY_SCOPE;
 
 public class LoginActivity extends BaseActivity {
 
@@ -67,6 +80,7 @@ public class LoginActivity extends BaseActivity {
     LinearLayout mLl3;
     int loginType = 2;//密码登录
     private TimeCounter mTimeCounter;
+    private Tencent mTencent;
 
     @Override
     protected int getContentView() {
@@ -81,9 +95,11 @@ public class LoginActivity extends BaseActivity {
         mLl2.setVisibility(View.INVISIBLE);
         mLl3.setVisibility(View.VISIBLE);
         mTvLoginWjmm.setVisibility(View.INVISIBLE);
+
+        mTencent = Tencent.createInstance(ConstValues.APP_ID_TENCENT, this, ConstValues.APP_AUTHORITIES);
     }
 
-    @OnClick({R.id.tv_login_yzm, R.id.tv_login_wjmm, R.id.iv_login_wx,R.id.iv_iconsole,R.id.tv_go_login, R.id.ll_go_zc,R.id.tv_go_yzm})
+    @OnClick({R.id.tv_login_yzm, R.id.tv_login_wjmm, R.id.iv_login_wx,R.id.iv_login_qq,R.id.iv_iconsole,R.id.tv_go_login, R.id.ll_go_zc,R.id.tv_go_yzm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_login_yzm:
@@ -102,7 +118,13 @@ public class LoginActivity extends BaseActivity {
                 }
                 break;
             case R.id.iv_login_wx:
-                getPlatformInfo();
+                break;
+            case R.id.iv_login_qq:
+                if(!mTencent.isQQInstalled(this)){
+                    ToastUtils.showShort("未安装QQ");
+                    return;
+                }
+                onClickLogin();
                 break;
             case R.id.iv_iconsole:
                 startIconsoleApp();
@@ -145,13 +167,14 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.w("requestCode:","requestCode:"+resultCode);
-        Log.w("resultCode:","resultCode:"+resultCode);
-        if(data!=null){
-            Log.w("data:","data:"+data.toString());
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("123", "-->onActivityResult " + requestCode  + " resultCode=" + resultCode);
+        if (requestCode == Constants.REQUEST_LOGIN ||
+                requestCode == Constants.REQUEST_APPBAR) {
+            Tencent.onActivityResultData(requestCode,resultCode,data,loginListener);
         }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void userVerifyLogin() {
@@ -224,94 +247,6 @@ public class LoginActivity extends BaseActivity {
         SharedUtils.singleton().put(ConstValues.AVATAR,data.getUserPermissionBaseDTO().getAvatar());
     }
 
-    private void getPlatformInfo() {
-        UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
-            @Override
-            public void onStart(SHARE_MEDIA share_media) {
-
-            }
-
-            @Override
-            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-                //6.0以上动态获取权限
-                if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                    //申请权限，REQUEST_TAKE_PHOTO_PERMISSION是自定义的常量
-                    ActivityCompat.requestPermissions(LoginActivity.this,new String[]{Manifest.permission.READ_PHONE_STATE},1);
-                    return;
-                }
-                TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-                String registrationId = "";
-                if(tm.getDeviceId()!=null){
-                    registrationId = tm.getDeviceId();
-                }
-//                TextUtil.logOut("--:"+registrationId);
-                Log.w("微信登录1：","-->>:"+registrationId);
-                Log.w("微信登录2：","-->>:"+map.get("accessToken"));
-                Log.w("微信登录3：","-->>:"+map.get("openid"));
-
-//                HttpRequestUtils.getVerifyAppEmpower(LoginActivity.this,
-//                        map.get("accessToken"), map.get("openid"), registrationId, null,
-//                        new HttpRequestUtils.LoginInterface() {
-//                            @Override
-//                            public void succeed(String path) {
-////                                if(StringUtil.isBlank(path.getHashMap().getUserNo())){
-////                                    IntentUtils.getInstence().intent(getActivity(), BindingPhoneNumberActivity.class);
-////                                    return;
-////                                }
-////                                getData();
-//                            }
-//                        });
-
-            }
-
-            @Override
-            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-                dismiss();
-            }
-
-            @Override
-            public void onCancel(SHARE_MEDIA share_media, int i) {
-                dismiss();
-            }
-        });
-    }
-    private void quitLogin() {
-        UMShareAPI.get(this).deleteOauth(this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
-            @Override
-            public void onStart(SHARE_MEDIA share_media) {
-
-            }
-
-            @Override
-            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-//                GlideCircleTransform.glideCircleImg(R.drawable.ic_icon_img, mCivHead);
-//                mTvName.setText("");
-//                mTvId.setText("请先登录");
-//                mTvConcernNumber.setText("0");
-//                mTvDynamicNumber.setText("0");
-//                mTvEtcNumber.setText("0");
-//                mTvJfNumber.setText("0");
-//                mTvYeNumber.setText("0");
-//                tv_jkhb.setVisibility(View.GONE);
-                SharedUtils.singleton().clear();
-            }
-
-            @Override
-            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-                dismiss();
-            }
-
-            @Override
-            public void onCancel(SHARE_MEDIA share_media, int i) {
-                dismiss();
-            }
-        });
-    }
-
-    private void guitLogin(){
-
-    }
-
 
     private void goGetYzm(String sjh) {
         RetrofitUtil.getInstance().apiService()
@@ -357,6 +292,150 @@ public class LoginActivity extends BaseActivity {
         super.onStop();
         if(mTimeCounter!=null){
             mTimeCounter.cancel();
+        }
+    }
+    private void onClickLogin() {
+        if (!mTencent.isSessionValid()) {
+            // 强制扫码登录
+            this.getIntent().putExtra(AuthAgent.KEY_FORCE_QR_LOGIN, false);
+            HashMap<String, Object> params = new HashMap<String, Object>();
+            if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE) {
+                params.put(KEY_RESTORE_LANDSCAPE, true);
+            }
+            params.put(KEY_SCOPE, "all");
+            params.put(KEY_QRCODE, false);
+            params.put(KEY_ENABLE_SHOW_DOWNLOAD_URL, false);
+            mTencent.login(this, loginListener, params);
+            Log.d("SDKQQAgentPref", "FirstLaunch_SDK:" + SystemClock.elapsedRealtime());
+        } else {
+//            if (isServerSideLogin) { // Server-Side 模式的登录, 先退出，再进行SSO登录
+//                mTencent.logout(this);
+//                mTencent.login(this, "all", loginListener);
+//                isServerSideLogin = false;
+//                Log.d("SDKQQAgentPref", "FirstLaunch_SDK:" + SystemClock.elapsedRealtime());
+//                return;
+//            }
+//            mTencent.logout(this);
+//            // 第三方也可以选择注销的时候不去清除第三方的targetUin/targetMiniAppId
+//            saveTargetUin("");
+//            saveTargetMiniAppId("");
+//            updateUserInfo();
+//            updateLoginButton();
+        }
+    }
+
+    IUiListener loginListener = new BaseUiListener() {
+        @Override
+        protected void doComplete(JSONObject values) {
+            Log.d("SDKQQAgentPref", "AuthorSwitch_SDK:++++++" + SystemClock.elapsedRealtime());
+            initOpenidAndToken(values);
+            updateUserInfo();
+        }
+    };
+    private void updateUserInfo() {
+        if (mTencent != null && mTencent.isSessionValid()) {
+            IUiListener listener = new DefaultUiListener() {
+
+                @Override
+                public void onError(UiError e) {
+                    Log.d("SDKQQAgentPref", "AuthorSwitch_SDK:e" + e);
+                }
+
+                @Override
+                public void onComplete(final Object response) {
+                    Message msg = new Message();
+                    msg.obj = response;
+                    msg.what = 0;
+                    Log.d("SDKQQAgentPref", "AuthorSwitch_SDK:response" + response);
+//                    mHandler.sendMessage(msg);
+//                    new Thread(){
+//
+//                        @Override
+//                        public void run() {
+//                            JSONObject json = (JSONObject)response;
+//                            if(json.has("figureurl")){
+//                                Bitmap bitmap = null;
+//                                try {
+//                                    bitmap = Util.getbitmap(json.getString("figureurl_qq_2"));
+//                                } catch (JSONException e) {
+//                                    SLog.e(TAG, "Util.getBitmap() jsonException : " + e.getMessage());
+//                                }
+//                                Message msg = new Message();
+//                                msg.obj = bitmap;
+//                                msg.what = 1;
+//                                mHandler.sendMessage(msg);
+//                            }
+//                        }
+//
+//                    }.start();
+                }
+
+                @Override
+                public void onCancel() {
+                    Log.d("SDKQQAgentPref", "AuthorSwitch_SDK:onCancel");
+
+                }
+            };
+            UserInfo info = new UserInfo(this, mTencent.getQQToken());
+            info.getUserInfo(listener);
+
+        } else {
+            Log.d("SDKQQAgentPref", "AuthorSwitch_SDK:123456");
+//            mUserInfo.setText("");
+//            mUserInfo.setVisibility(android.view.View.GONE);
+//            mUserLogo.setVisibility(android.view.View.GONE);
+        }
+    }
+
+    private void initOpenidAndToken(JSONObject jsonObject) {
+        try {
+            String token = jsonObject.getString(Constants.PARAM_ACCESS_TOKEN);
+            String expires = jsonObject.getString(Constants.PARAM_EXPIRES_IN);
+            String openId = jsonObject.getString(Constants.PARAM_OPEN_ID);
+            Log.w("-->>>","token:"+token);
+            Log.w("-->>>","expires:"+expires);
+            Log.w("-->>>","openId:"+openId);
+            if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(expires)
+                    && !TextUtils.isEmpty(openId)) {
+                mTencent.setAccessToken(token, expires);
+                mTencent.setOpenId(openId);
+            }
+        } catch(Exception e) {
+
+        }
+    }
+    private class BaseUiListener extends DefaultUiListener {
+
+        @Override
+        public void onComplete(Object response) {
+            Log.d("SDKQQAgentPref", "AuthorSwitch_SDK:response"+response);
+            if (null == response) {
+                ToastUtils.showShort( "返回为空", "登录失败");
+                return;
+            }
+            JSONObject jsonResponse = (JSONObject) response;
+            if (jsonResponse.length() == 0) {
+                ToastUtils.showShort( "返回为空", "登录失败");
+                return;
+            }
+            ToastUtils.showShort( "登录成功");
+            doComplete((JSONObject)response);
+        }
+
+        protected void doComplete(JSONObject values) {
+
+        }
+
+        @Override
+        public void onError(UiError e) {
+            Log.d("SDKQQAgentPref", "AuthorSwitch_SDK:errorDetail"+e.errorDetail);
+            ToastUtils.showShort("onError: " + e.errorDetail);
+        }
+
+        @Override
+        public void onCancel() {
+            Log.d("SDKQQAgentPref", "AuthorSwitch_SDK:onCancel");
+            ToastUtils.showShort("onCancel: ");
         }
     }
 }

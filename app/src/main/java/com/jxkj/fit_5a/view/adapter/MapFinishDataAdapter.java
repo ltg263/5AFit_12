@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jxkj.fit_5a.R;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.entity.BpmDataBean;
 
 import java.util.List;
@@ -30,7 +31,8 @@ public class MapFinishDataAdapter extends BaseQuickAdapter<String, BaseViewHolde
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.mipmap.ic_ydxq_2))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("运动时间")){
-            helper.setText(R.id.tv_v,stats.getDuration()+"s")
+
+            helper.setText(R.id.tv_v,StringUtil.getTimeGeShi(Long.parseLong(stats.getDuration())))
                     .setImageDrawable(R.id.iv_icon,mContext.getResources().getDrawable(R.mipmap.ic_ydxq_3))
                     .setBackgroundRes(R.id.iv_icon,R.drawable.bj_circle_fdf7e5);
         }else if(item.equals("功率")){
