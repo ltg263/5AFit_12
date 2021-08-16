@@ -132,6 +132,12 @@ public class HomeFourFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUserDetail();
+        getUserStatistic();
+    }
 
     @Override
     public void initImmersionBar() {

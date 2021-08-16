@@ -6,8 +6,8 @@ android {
         applicationId "com.jxkj.fit_5a"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 //        renderscriptTargetApi 29
 //        renderscriptSupportModeEnabled true
