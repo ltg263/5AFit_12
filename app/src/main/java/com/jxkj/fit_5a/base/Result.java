@@ -1,5 +1,7 @@
 package com.jxkj.fit_5a.base;
 
+import com.blankj.utilcode.util.ToastUtils;
+
 public class Result<T> {
     private String sub_mesg;
     private int code;
@@ -14,6 +16,9 @@ public class Result<T> {
     }
 
     public int getCode() {
+        if(code!=0){
+            ToastUtils.showShort(sub_mesg);
+        }
         return code;
     }
 

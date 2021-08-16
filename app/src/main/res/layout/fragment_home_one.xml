@@ -210,6 +210,7 @@
                             android:drawableEnd="@drawable/icon_jiantou_you_99"
                             android:gravity="end"
                             android:paddingStart="@dimen/dimen_5dp"
+                            android:layout_marginEnd="@dimen/dp_10"
                             android:text="更多"
                             android:textColor="@color/color_999999"
                             android:textSize="14sp" />

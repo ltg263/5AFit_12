@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.Glide;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
@@ -194,7 +195,23 @@ public class CreateCircleActivity extends BaseActivity {
                             avatar = SharedUtils.singleton().get(ConstValues.host,"")
                                     +"/"+SharedUtils.singleton().get(ConstValues.dir,"")+"/"+fileName;
                             Log.w("--:","avfater:"+avatar);
-                            GlideImgLoader.loadImageViewRadius(CreateCircleActivity.this, avatar, 10, mIvBgImg);
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Thread.sleep(1000);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                GlideImgLoader.loadImageViewRadius(CreateCircleActivity.this, avatar, 10, mIvBgImg);
+                                            }
+                                        });
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }).start();
                         }
                     }
                 });
@@ -232,11 +249,19 @@ public class CreateCircleActivity extends BaseActivity {
                                         public void setIndex(int pos) {
                                             circleTargetId = data.get(pos).getId();
                                             mTvMblx.setText(data.get(pos).getDeviceTypeStr());
+                                            String det = data.get(pos).getRewardDTO().getDetail();
+                                            try {
+                                                int object = new JSONObject(det).getInt("maxValue");
+                                                mTvV.setText(object+"");
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
                                             zqscLists.clear();
                                             rewardDto = data.get(pos).getRewardDTO();
                                             for (int i = data.get(pos).getMinCycle(); i < data.get(pos).getMaxCycle() + 1; i++) {
                                                 zqscLists.add(i + "");
-                                            }//
+                                            }
                                             Log.w("zqscLists:", "circleTargetId" + circleTargetId);
                                         }
                                     });
@@ -318,6 +343,7 @@ public class CreateCircleActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result result) {
+                        dismiss();
                         if (isDataInfoSucceed(result)) {
                             DialogUtils.showDialogCgCircle(CreateCircleActivity.this,
                                     "创建圈子权限", 1, new DialogUtils.DialogLyInterface() {
@@ -326,11 +352,15 @@ public class CreateCircleActivity extends BaseActivity {
                                             CreateCircleActivity.this.finish();
                                         }
                                     });
+                        }else{
+                            ToastUtils.showShort(result.getMesg());
                         }
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        dismiss();
                     }
 
                     @Override

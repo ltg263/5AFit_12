@@ -141,7 +141,7 @@ public class MineCircleActivity extends BaseActivity {
                     case R.id.tv_time:
                         UserHomeActivity.startActivity(MineCircleActivity.this,data.getUser().getUserId()+"");
                         break;
-                    case R.id.tv_wgz:
+                    case R.id.tv_ygz:
                         show();
                         HttpRequestUtils.postfollowCancel(data.getUser().getUserId() + "", new HttpRequestUtils.LoginInterface() {
                             @Override
@@ -154,9 +154,22 @@ public class MineCircleActivity extends BaseActivity {
                             }
                         });
                         break;
+                    case R.id.tv_wgz:
+                        show();
+                        HttpRequestUtils.postfollow(data.getUser().getUserId() + "", new HttpRequestUtils.LoginInterface() {
+                            @Override
+                            public void succeed(String path) {
+                                dismiss();
+                                if(path.equals("0")){
+                                    data.getUser().setRelation(1);
+                                    mCircleDynamicAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        });
+                        break;
                     case R.id.ll_xihuan:
                         if(data.isIsLike()){
-                            HttpRequestUtils.postLikeCancel1("0",data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                            HttpRequestUtils.postLikeCancel1(id+"",data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
                                 @Override
                                 public void succeed(String path) {
                                     if(path.equals("0")){
@@ -167,7 +180,7 @@ public class MineCircleActivity extends BaseActivity {
                                 }
                             });
                         }else{
-                            HttpRequestUtils.postLike1("0",data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
+                            HttpRequestUtils.postLike1(id+"",data.getMomentId()+"", data.getPublisherId() + "", new HttpRequestUtils.LoginInterface() {
                                 @Override
                                 public void succeed(String path) {
                                     if(path.equals("0")) {
