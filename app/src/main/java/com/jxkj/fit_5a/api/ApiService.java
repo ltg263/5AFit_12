@@ -72,7 +72,7 @@ import com.jxkj.fit_5a.entity.TopicAllBean;
 import com.jxkj.fit_5a.entity.UserOwnInfo;
 import com.jxkj.fit_5a.entity.UserWalletData;
 import com.jxkj.fit_5a.entity.VideoInfoBean;
-import com.jxkj.fit_5a.entity.VideoPlayAuthBean;
+import com.jxkj.fit_5a.entity.VerifyAppOauthQq;
 import com.jxkj.fit_5a.entity.VideoPlayInfoBean;
 import com.jxkj.fit_5a.entity.WalletDetailsBean;
 import com.jxkj.fit_5a.entity.WalletListBean;
@@ -91,6 +91,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -531,16 +532,15 @@ public interface ApiService {
      * 登录方式1手机号码2微信3QQ4新浪5iconsole
      */
     @POST(ConstValues.PORT_5 + "api/v1/user/bind/third/bind")
-    Observable<Result> userThirdBind(@Query("clientType") int clientType, @Query("loginType") int loginType, @Query("phone") String phone,
-                                     @Query("verify") String verify, @Query("gender") String gender, @Query("nickName") String nickName,
-                                     @Query("portraitUri") String portraitUri);
+    Observable<Result<LoginInfo>> userThirdBind(@Query("clientType") int clientType, @Query("phone") String phone,
+                                                    @Query("verify") String verify);
 
 
     /**
      * 获取视频播放凭证
      */
-    @GET(ConstValues.PORT_5 + "api/v1/video/play_auth")
-    Observable<Result<VideoPlayAuthBean>> getPlay_auth(@Query("videoId") String videoId);
+    @POST(ConstValues.PORT_5 + "api/v1/user/verify/qq/app/{name}/oauth")
+    Observable<Result<VerifyAppOauthQq>> postVerifyAppOauth(@Path("name") String name, @Query("accessToken") String accessToken);
 
     /**
      * 获取视频播放地址

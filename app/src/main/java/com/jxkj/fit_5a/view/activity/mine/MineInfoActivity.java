@@ -278,32 +278,32 @@ public class MineInfoActivity extends BaseActivity {
                 });
     }
     private void userThirdBind(String str) {
-        RetrofitUtil.getInstance().apiService()
-                .userThirdBind(3,1,str,"1234","",null,null)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Result>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Result result) {
-                        if (isDataInfoSucceed(result)) {
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtils.showShort("系统异常" + e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+//        RetrofitUtil.getInstance().apiService()
+//                .userThirdBind(3,1,str,"1234","",null,null)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(new Observer<Result>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(Result result) {
+//                        if (isDataInfoSucceed(result)) {
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        ToastUtils.showShort("系统异常" + e);
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
     }
 
     public void onAddressPicker() {

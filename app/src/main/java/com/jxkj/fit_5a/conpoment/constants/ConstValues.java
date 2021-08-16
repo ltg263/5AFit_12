@@ -31,8 +31,7 @@ public class ConstValues {
     public static final String LAT = "lat";
     public static final String LON = "lon";
     public static final String NICKNAME = "nickname";
-    public static final String AVATAR = "avatar";
-    public static final String IS_REALNAME = "is_realname";
+    public static final String THIRD_LOGIN_BIND_INFO = "third-login-temp-header";
     public static final String INTEGRALJUMP = "integral_jump";
     public static final String OPENSTART = "openstart";
     public static final String USER_DETAIL = "user_detail";

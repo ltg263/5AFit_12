@@ -25,10 +25,12 @@ import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
 import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
+import com.jxkj.fit_5a.conpoment.utils.IntentUtils;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.utils.TimeCounter;
 import com.jxkj.fit_5a.entity.LoginInfo;
+import com.jxkj.fit_5a.entity.VerifyAppOauthQq;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.AuthAgent;
 import com.tencent.connect.common.Constants;
@@ -80,7 +82,7 @@ public class LoginActivity extends BaseActivity {
     LinearLayout mLl3;
     int loginType = 2;//密码登录
     private TimeCounter mTimeCounter;
-    private Tencent mTencent;
+    public static Tencent mTencent;
 
     @Override
     protected int getContentView() {
@@ -215,7 +217,6 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onNext(Result<LoginInfo> result) {
                         if(isDataInfoSucceed(result)){
-                            SharedUtils.singleton().put(ConstValues.TOKEN,"Bearer "+result.getData().getTokenId());
                             if(finalMm!=null){
                                 SharedUtils.singleton().put(ConstValues.USER_PASSWORD, finalMm);
                             }
@@ -241,10 +242,13 @@ public class LoginActivity extends BaseActivity {
 
     public static void saveUserInfo(LoginInfo data) {
         SharedUtils.singleton().put(ConstValues.ISLOGIN,true);
+        SharedUtils.singleton().put(ConstValues.TOKEN,"Bearer "+data.getTokenId());
         SharedUtils.singleton().put(ConstValues.USER_PHONE,data.getUserPermissionBaseDTO().getUserNo());
         SharedUtils.singleton().put(ConstValues.USERID,data.getUserPermissionBaseDTO().getId());
         SharedUtils.singleton().put(ConstValues.USER_NAME,data.getUserPermissionBaseDTO().getNickName());
-        SharedUtils.singleton().put(ConstValues.AVATAR,data.getUserPermissionBaseDTO().getAvatar());
+        SharedUtils.singleton().put(ConstValues.USER_IMG,data.getUserPermissionBaseDTO().getAvatar());
+        SharedUtils.singleton().put(ConstValues.USER_AGE,data.getUserPermissionBaseDTO().getAge());
+        SharedUtils.singleton().put(ConstValues.USER_GENDER,data.getUserPermissionBaseDTO().getGender());
     }
 
 
@@ -329,9 +333,53 @@ public class LoginActivity extends BaseActivity {
         protected void doComplete(JSONObject values) {
             Log.d("SDKQQAgentPref", "AuthorSwitch_SDK:++++++" + SystemClock.elapsedRealtime());
             initOpenidAndToken(values);
-            updateUserInfo();
+//            updateUserInfo();
         }
     };
+
+    private void postVerifyAppOauth(String token) {
+        RetrofitUtil.getInstance().apiService()
+                .postVerifyAppOauth("qqweb",token)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<VerifyAppOauthQq>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<VerifyAppOauthQq> result) {
+                        if(isDataInfoSucceed(result)){
+                            if(result.getData().isBindFlag()){
+                                SharedUtils.singleton().put(ConstValues.ISLOGIN,true);
+                                SharedUtils.singleton().put(ConstValues.TOKEN,"Bearer "+result.getData().getTokenId());
+                                SharedUtils.singleton().put(ConstValues.USER_PHONE,result.getData().getUserBase().getUserNo());
+                                SharedUtils.singleton().put(ConstValues.USERID,result.getData().getUserBase().getId());
+                                SharedUtils.singleton().put(ConstValues.USER_NAME,result.getData().getUserBase().getNickName());
+                                SharedUtils.singleton().put(ConstValues.USER_IMG,result.getData().getUserBase().getAvatar());
+                                SharedUtils.singleton().put(ConstValues.USER_AGE,result.getData().getUserBase().getAge());
+                                SharedUtils.singleton().put(ConstValues.USER_GENDER,result.getData().getUserBase().getGender());
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            }else{
+                                SharedUtils.singleton().put(ConstValues.THIRD_LOGIN_BIND_INFO,result.getData().getThirdLoginBindInfo());
+                                IntentUtils.getInstence().intent(LoginActivity.this,LoginBindPhoneActivity.class);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+    }
     private void updateUserInfo() {
         if (mTencent != null && mTencent.isSessionValid()) {
             IUiListener listener = new DefaultUiListener() {
@@ -399,9 +447,10 @@ public class LoginActivity extends BaseActivity {
                     && !TextUtils.isEmpty(openId)) {
                 mTencent.setAccessToken(token, expires);
                 mTencent.setOpenId(openId);
+                postVerifyAppOauth(token.trim());
             }
         } catch(Exception e) {
-
+            ToastUtils.showShort("授权失败："+e.toString());
         }
     }
     private class BaseUiListener extends DefaultUiListener {

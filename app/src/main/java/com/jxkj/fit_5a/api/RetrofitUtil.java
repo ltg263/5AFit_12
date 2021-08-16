@@ -4,6 +4,7 @@ package com.jxkj.fit_5a.api;
 import com.blankj.utilcode.util.LogUtils;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
+import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -38,9 +39,14 @@ public class RetrofitUtil {
         httpClientBuilder.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
+                String bindInfo = SharedUtils.singleton().get(ConstValues.THIRD_LOGIN_BIND_INFO,"");
+                if(StringUtil.isBlank(bindInfo)){
+                    bindInfo = "";
+                }
                 Request request = chain.request();
                 Request.Builder builder = request.newBuilder();
-                Request build = builder.addHeader("Authorization", SharedUtils.getToken()).build();
+                Request build = builder.addHeader("Authorization", SharedUtils.getToken())
+                        .addHeader(ConstValues.THIRD_LOGIN_BIND_INFO,bindInfo).build();
                 return chain.proceed(build);
             }
         });

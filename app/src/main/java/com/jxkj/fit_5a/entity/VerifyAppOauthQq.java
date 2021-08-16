@@ -1,22 +1,21 @@
 package com.jxkj.fit_5a.entity;
 
-public class LoginInfo {
+
+public class VerifyAppOauthQq {
 
     /**
-     * userPermissionBaseDTO : {"id":96,"userNo":"13111111111","nickName":"恍恍惚惚","level":0,"levelNo":"","levelExpireTime":"","avatar":"http://5a-fit-oss.nbqichen.com/user/680DC980255963991B5401665B77B6C6.jpg","gender":2,"status":1,"createTime":"","clientType":0,"loginType":0,"openId":"","uionId":"","sign":"","birthday":"","age":0,"height":193,"weight":71}
-     * tokenId : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHQiOiJ7XCJyZWxhdGlvblR5cGVcIjowLFwicmVsYXRpb25JZFwiOjAsXCJzeXNVc2VySWRcIjo3M30iLCJ1c2VySW5mbyI6IntcImFnZVwiOjAsXCJhdmF0YXJcIjpcImh0dHA6Ly81YS1maXQtb3NzLm5icWljaGVuLmNvbS91c2VyLzY4MERDOTgwMjU1OTYzOTkxQjU0MDE2NjVCNzdCNkM2LmpwZ1wiLFwiZ2VuZGVyXCI6MixcImhlaWdodFwiOjE5My4wMCxcImlkXCI6OTYsXCJsZXZlbFwiOjAsXCJsZXZlbE5vXCI6XCJcIixcImxvZ2luVHlwZVwiOjAsXCJuaWNrTmFtZVwiOlwi5oGN5oGN5oOa5oOaXCIsXCJvcGVuSWRcIjpcIlwiLFwic3RhdHVzXCI6MSxcInVzZXJOb1wiOlwiMTMxMTExMTExMTFcIixcIndlaWdodFwiOjcxLjAwfSIsInVzZXJfbmFtZSI6IntcInVzZXJuYW1lVHlwZVwiOjEsXCJ1c2VybmFtZVwiOlwiMTMxMTExMTExMTFcIn0iLCJzY29wZSI6WyJyZWFkIl0sImV4cCI6MTk0NDQ0MzcwNSwianRpIjoiX1hjaFQ5TEZTUzdWR3FnWm5mb212a1hVVDJNIiwiY2xpZW50X2lkIjoidGVzdF9jbGllbnQifQ.vsEd7mWjBta-1l_zPu0tpcXtnhhV3XoWU3yzK5V_L2E
+     * tokenId :
+     * bindFlag : false
+     * infoFlag : true
+     * userBase : {"id":0,"userNo":"","nickName":"🍃Happy ✔","level":0,"levelNo":"","levelExpireTime":"","avatar":"http://thirdqq.qlogo.cn/g?b=oidb&k=yB0Ozib9tibVgGPfibo08TemQ&s=100&t=1555870063","gender":0,"status":0,"createTime":"","clientType":4,"loginType":0,"openId":"120D967737C16FCD162E5FDFC2050D07","uionId":"120D967737C16FCD162E5FDFC2050D07","sign":"","birthday":"","age":0,"height":0,"weight":0}
+     * thirdLoginBindInfo : {"loginType":13,"thirdName":"qqweb","thirdUserId":"120D967737C16FCD162E5FDFC2050D07"}
      */
 
-    private UserPermissionBaseDTOBean userPermissionBaseDTO;
     private String tokenId;
-
-    public UserPermissionBaseDTOBean getUserPermissionBaseDTO() {
-        return userPermissionBaseDTO;
-    }
-
-    public void setUserPermissionBaseDTO(UserPermissionBaseDTOBean userPermissionBaseDTO) {
-        this.userPermissionBaseDTO = userPermissionBaseDTO;
-    }
+    private boolean bindFlag;
+    private boolean infoFlag;
+    private UserBaseBean userBase;
+    private String thirdLoginBindInfo;
 
     public String getTokenId() {
         return tokenId;
@@ -26,27 +25,59 @@ public class LoginInfo {
         this.tokenId = tokenId;
     }
 
-    public static class UserPermissionBaseDTOBean {
+    public boolean isBindFlag() {
+        return bindFlag;
+    }
+
+    public void setBindFlag(boolean bindFlag) {
+        this.bindFlag = bindFlag;
+    }
+
+    public boolean isInfoFlag() {
+        return infoFlag;
+    }
+
+    public void setInfoFlag(boolean infoFlag) {
+        this.infoFlag = infoFlag;
+    }
+
+    public UserBaseBean getUserBase() {
+        return userBase;
+    }
+
+    public void setUserBase(UserBaseBean userBase) {
+        this.userBase = userBase;
+    }
+
+    public String getThirdLoginBindInfo() {
+        return thirdLoginBindInfo;
+    }
+
+    public void setThirdLoginBindInfo(String thirdLoginBindInfo) {
+        this.thirdLoginBindInfo = thirdLoginBindInfo;
+    }
+
+    public static class UserBaseBean {
         /**
-         * id : 96
-         * userNo : 13111111111
-         * nickName : 恍恍惚惚
+         * id : 0
+         * userNo :
+         * nickName : 🍃Happy ✔
          * level : 0
          * levelNo :
          * levelExpireTime :
-         * avatar : http://5a-fit-oss.nbqichen.com/user/680DC980255963991B5401665B77B6C6.jpg
-         * gender : 2
-         * status : 1
+         * avatar : http://thirdqq.qlogo.cn/g?b=oidb&k=yB0Ozib9tibVgGPfibo08TemQ&s=100&t=1555870063
+         * gender : 0
+         * status : 0
          * createTime :
-         * clientType : 0
+         * clientType : 4
          * loginType : 0
-         * openId :
-         * uionId :
+         * openId : 120D967737C16FCD162E5FDFC2050D07
+         * uionId : 120D967737C16FCD162E5FDFC2050D07
          * sign :
          * birthday :
          * age : 0
-         * height : 193
-         * weight : 71
+         * height : 0
+         * weight : 0
          */
 
         private int id;
