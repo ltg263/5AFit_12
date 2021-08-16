@@ -111,6 +111,19 @@ public class MineTopicActivity extends BaseActivity {
                         break;
                     case R.id.tv_wgz:
                         show();
+                        HttpRequestUtils.postfollow(data.getUser().getUserId() + "", new HttpRequestUtils.LoginInterface() {
+                            @Override
+                            public void succeed(String path) {
+                                dismiss();
+                                if(path.equals("0")){
+                                    data.getUser().setRelation(1);
+                                    mCircleDynamicAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        });
+                        break;
+                    case R.id.tv_ygz:
+                        show();
                         HttpRequestUtils.postfollowCancel(data.getUser().getUserId() + "", new HttpRequestUtils.LoginInterface() {
                             @Override
                             public void succeed(String path) {
