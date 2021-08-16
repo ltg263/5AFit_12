@@ -274,9 +274,12 @@ public class TaskSignActivity extends BaseActivity {
                     listBean = listData.get(j);
                     listBean.setSig(true);
                 }else if(!(listData.get(j).getSignDate()).equals(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyyMMdd"))){
-//                    num = 0;
+                    num = 0;
                 }
                 if((listData.get(j).getSignDate()).equals(StringUtil.getTimeToYMD(System.currentTimeMillis(),"yyyyMMdd"))){
+                    if(num==0){
+                        num++;
+                    }
                     mTvGoSign.setText("已签到");
                     tv_title.setText("当前积分  |  连续签到"+num+"天");
                 }
@@ -373,6 +376,9 @@ public class TaskSignActivity extends BaseActivity {
                             Calendar cal = Calendar.getInstance();
                             year = String.valueOf(cal.get(Calendar.YEAR));
                             month = String.valueOf(cal.get(Calendar.MONTH) + 1);
+                            if(month.length()==1){
+                                month = "0"+month;
+                            }
                             getUserSignLog();
                             getUserStatistic();
                         }

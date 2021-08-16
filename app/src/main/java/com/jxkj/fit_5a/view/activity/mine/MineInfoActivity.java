@@ -135,7 +135,7 @@ public class MineInfoActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(Throwable e) {//
                         ToastUtils.showShort("系统异常" + e);
                     }
 
