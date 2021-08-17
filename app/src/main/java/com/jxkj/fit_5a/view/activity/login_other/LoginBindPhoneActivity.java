@@ -30,6 +30,8 @@ public class LoginBindPhoneActivity extends BaseActivity {
     EditText mEtInputSjh;
     @BindView(R.id.et_input_yzm)
     EditText mEtInputYzm;
+    @BindView(R.id.et_input_mm)
+    EditText mEtInputMm;
     @BindView(R.id.tv_go_yzm)
     TextView mTvGoYzm;
     private TimeCounter mTimeCounter;
@@ -61,11 +63,16 @@ public class LoginBindPhoneActivity extends BaseActivity {
             case R.id.tv_go_login:
                 String verify = mEtInputYzm.getText().toString();
                 String phone = mEtInputSjh.getText().toString();
-                if(StringUtil.isBlank(verify)||StringUtil.isBlank(phone)){
-                    ToastUtils.showShort("手机号或验证码不能为空");
+                String mm = mEtInputMm.getText().toString();
+                if(StringUtil.isBlank(verify)||StringUtil.isBlank(phone) || StringUtil.isBlank(mm)){
+                    ToastUtils.showShort("填写不能为空");
                     return;
                 }
-                userThirdBind(verify,phone);
+                if(!TextUtils.isEmpty(phone)&&phone.length()==11){
+                    userThirdBind(verify,phone,mm);
+                }else{
+                    ToastUtils.showShort("请输入正确的手机号");
+                }
                 break;
             case R.id.tv_login:
                 LoginActivity.mTencent.logout(this);
@@ -103,9 +110,12 @@ public class LoginBindPhoneActivity extends BaseActivity {
                 });
 
     }
-    private void userThirdBind(String verify,String phone) {
+    private void userThirdBind(String verify,String phone,String mm) {
+//        if(StringUtil.phone){
+//
+//        }
         RetrofitUtil.getInstance().apiService()
-                .userThirdBind(3,verify,phone)
+                .userThirdBind(3,phone,verify,mm)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result<LoginInfo>>() {
@@ -119,6 +129,7 @@ public class LoginBindPhoneActivity extends BaseActivity {
                         if (isDataInfoSucceed(result)) {
                             LoginActivity.saveUserInfo(result.getData());
                             startActivity(new Intent(LoginBindPhoneActivity.this, MainActivity.class));
+                            finish();
                         }
                     }
 

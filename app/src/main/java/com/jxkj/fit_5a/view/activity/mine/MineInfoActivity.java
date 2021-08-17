@@ -34,6 +34,9 @@ import com.jxkj.fit_5a.conpoment.utils.StringUtil;
 import com.jxkj.fit_5a.conpoment.view.AddressPickTask;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.RoundImageView;
+import com.jxkj.fit_5a.entity.LoginUserThirdInfo;
+import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
+import com.jxkj.fit_5a.view.activity.login_other.LoginBindPhoneActivity;
 import com.jxkj.fit_5a.view.activity.login_other.SetUserXbActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -114,6 +117,7 @@ public class MineInfoActivity extends BaseActivity {
     @Override
     protected void initViews() {
         getUserDetail();
+        getUserBind();
     }
 
     private void getUserDetail() {
@@ -219,6 +223,7 @@ public class MineInfoActivity extends BaseActivity {
 //                });
                 break;
             case R.id.ll_info_7:
+                IntentUtils.getInstence().intent(MineInfoActivity.this, LoginBindPhoneActivity.class);
 //                DialogUtils.showEditTextDialog(this, 1,"绑定QQ","输入您的QQ", season -> {
 //                    mTvInfo7.setText(season);
 //                });
@@ -277,33 +282,49 @@ public class MineInfoActivity extends BaseActivity {
                     }
                 });
     }
-    private void userThirdBind(String str) {
-//        RetrofitUtil.getInstance().apiService()
-//                .userThirdBind(3,1,str,"1234","",null,null)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(new Observer<Result>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(Result result) {
-//                        if (isDataInfoSucceed(result)) {
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        ToastUtils.showShort("系统异常" + e);
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
+    private void getUserBind() {
+        RetrofitUtil.getInstance().apiService()
+                .getUserBind()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<List<LoginUserThirdInfo>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<List<LoginUserThirdInfo>> result) {
+                        if (isDataInfoSucceed(result)) {
+                            for(int i= 0;i<result.getData().size();i++){
+                                switch (result.getData().get(i).getName()){
+                                    case "qqweb":
+                                        mTvInfo7.setText("已绑定");
+                                        break;
+                                    case "iconsole":
+                                        mTvInfo9.setText("已绑定");
+                                        break;
+                                    case "weixin":
+                                        mTvInfo6.setText("已绑定");
+                                        break;
+                                    case "sina":
+                                        mTvInfo8.setText("已绑定");
+                                        break;
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showShort("系统异常" + e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     public void onAddressPicker() {

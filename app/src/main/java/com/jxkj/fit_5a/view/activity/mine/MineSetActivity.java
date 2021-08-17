@@ -77,6 +77,9 @@ public class MineSetActivity extends BaseActivity {
                 DialogUtils.showDialogHint(this, "您确定要退出吗？", false, new DialogUtils.ErrorDialogInterface() {
                     @Override
                     public void btnConfirm() {
+                        if(LoginActivity.mTencent!=null){
+                            LoginActivity.mTencent.logout(MineSetActivity.this);
+                        }
                         startActivity(new Intent(MineSetActivity.this, LoginActivity.class));
                         MainApplication.getContext().AppExit();
                         SharedUtils.singleton().clear();

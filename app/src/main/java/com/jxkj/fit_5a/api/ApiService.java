@@ -42,6 +42,7 @@ import com.jxkj.fit_5a.entity.FollowFansList;
 import com.jxkj.fit_5a.entity.HotTopicBean;
 import com.jxkj.fit_5a.entity.LastUnreadMessageBeanList;
 import com.jxkj.fit_5a.entity.LoginInfo;
+import com.jxkj.fit_5a.entity.LoginUserThirdInfo;
 import com.jxkj.fit_5a.entity.MapDetailsBean;
 import com.jxkj.fit_5a.entity.MapListSposrt;
 import com.jxkj.fit_5a.entity.MedalListData;
@@ -533,7 +534,13 @@ public interface ApiService {
      */
     @POST(ConstValues.PORT_5 + "api/v1/user/bind/third/bind")
     Observable<Result<LoginInfo>> userThirdBind(@Query("clientType") int clientType, @Query("phone") String phone,
-                                                    @Query("verify") String verify);
+                                                    @Query("verify") String verify,@Query("password") String pas);
+
+    /**
+     * 获取用户已经绑定过的第三方信息
+     */
+    @POST(ConstValues.PORT_5 + "api/v1/user/bind/third/list")
+    Observable<Result<List<LoginUserThirdInfo>>> getUserBind();
 
 
     /**
