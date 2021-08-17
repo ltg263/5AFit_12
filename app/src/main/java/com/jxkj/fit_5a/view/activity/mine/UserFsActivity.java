@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
+import com.jxkj.fit_5a.conpoment.utils.HttpRequestUtils;
 import com.jxkj.fit_5a.entity.FollowFansList;
 import com.jxkj.fit_5a.view.adapter.UserGzAdapter;
 
@@ -57,6 +58,39 @@ public class UserFsActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 UserHomeActivity.startActivity(UserFsActivity.this,mUserGzAdapter.getData().get(position).getUser().getUserId()+"");
+            }
+        });
+
+        mUserGzAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                FollowFansList.DataBean data = mUserGzAdapter.getData().get(position);
+
+                if(view.getId()==R.id.tv_wgz){
+                    show();
+                    HttpRequestUtils.postfollow(data.getUser().getUserId() + "", new HttpRequestUtils.LoginInterface() {
+                        @Override
+                        public void succeed(String path) {
+                            dismiss();
+                            if(path.equals("0")){
+                                data.getUser().setRelation(1);
+                                mUserGzAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
+                }else if(view.getId()==R.id.tv_ygz){
+                    show();
+                    HttpRequestUtils.postfollowCancel(data.getUser().getUserId() + "", new HttpRequestUtils.LoginInterface() {
+                        @Override
+                        public void succeed(String path) {
+                            dismiss();
+                            if(path.equals("1")){
+                                data.getUser().setRelation(0);
+                                mUserGzAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
+                }
             }
         });
         getFollowFansList();

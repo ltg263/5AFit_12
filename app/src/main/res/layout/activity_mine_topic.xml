@@ -9,15 +9,16 @@
     <RelativeLayout
         android:id="@+id/rl_actionbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:background="@mipmap/ic_circle_bj">
 
         <ImageView
             android:id="@+id/iv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_circle_bj"
-            android:visibility="invisible" />
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_home_bj_cen_zz"
+            android:visibility="visible" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -65,7 +66,8 @@
             android:text=""
             android:textColor="@color/color_ffffff"
             android:textSize="@dimen/dimen_15dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 
@@ -258,6 +260,18 @@
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
+        <TextView
+            android:id="@+id/tv_not_data"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_below="@id/ll"
+            android:gravity="center"
+            android:overScrollMode="never"
+            android:visibility="invisible"
+            android:text="无数据"
+            android:textColor="@color/color_999999"
+            android:textSize="12sp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_list_sp"

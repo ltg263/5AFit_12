@@ -154,6 +154,8 @@ public class HomeFourFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_avatar:
+            case R.id.tv_nickName:
+            case R.id.tv_explain:
                 startActivity(new Intent(getActivity(), MineInfoActivity.class));
                 break;
             case R.id.on_iv_set:

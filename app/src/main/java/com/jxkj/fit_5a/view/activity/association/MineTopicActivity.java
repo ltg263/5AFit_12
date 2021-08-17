@@ -3,7 +3,10 @@ package com.jxkj.fit_5a.view.activity.association;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,6 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
@@ -65,6 +71,8 @@ public class MineTopicActivity extends BaseActivity {
     TextView mTvJianjie;
     @BindView(R.id.tv_dongtai)
     TextView mTvDongtai;
+    @BindView(R.id.tv_not_data)
+    TextView tv_not_data;
     @BindView(R.id.tv_nr)
     TextView mTvNr;
     @BindView(R.id.rl)
@@ -196,7 +204,11 @@ public class MineTopicActivity extends BaseActivity {
                 }
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         getQueryByPublisher(2);
         getQueryByPublisher(3);
     }
@@ -207,14 +219,14 @@ public class MineTopicActivity extends BaseActivity {
         mTvDongtai.setText(mHotTopicBean.getArticlesCount()+"条");
         mTvNr.setText(mHotTopicBean.getIntroduction());
         GlideImgLoader.loadImageViewWithCirclr(this,mHotTopicBean.getImgUrl(),mIvHeadImg);
-//        Glide.with(this).asBitmap().load(mChildrenBean.getImgUrl())
-//                .into(new SimpleTarget<Bitmap>() {
-//                    @Override
-//                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-//                        Drawable drawable = new BitmapDrawable(resource);
-//                        mRlActionbar.setBackground(drawable);
-//                    }
-//                });
+        Glide.with(this).asBitmap().load(mHotTopicBean.getImgUrl())
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        Drawable drawable = new BitmapDrawable(resource);
+                        mRlActionbar.setBackground(drawable);
+                    }
+                });
     }
 
 
@@ -233,6 +245,7 @@ public class MineTopicActivity extends BaseActivity {
                 initView(mTv1, mView1);
                 mRvListSp.setVisibility(View.VISIBLE);
                 mRvListTp.setVisibility(View.GONE);
+
                 break;
             case R.id.rl2:
                 initView(mTv2, mView2);
