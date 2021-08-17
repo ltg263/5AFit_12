@@ -1111,6 +1111,22 @@ public interface ApiService {
                                          @Query("momentId") String momentId);
 
     /**
+     * 用户点赞动态评论
+     */
+    @POST(ConstValues.PORT_21 + "api/v1/circle/moment/comment/like")
+    Observable<Result> postCommentLike_circle(@Query("commentId") String commentId,
+                                       @Query("momentId") String momentId);
+
+
+    /**
+     * 用户取消点赞动态评论
+     */
+    @POST(ConstValues.PORT_21 + "api/v1/circle/moment/comment/like/cancel")
+    Observable<Result> postCommentLikeCancel_circle(@Query("commentId") String commentId,
+                                             @Query("momentId") String momentId);
+
+
+    /**
      * 获取热门话题
      * @return
      */

@@ -253,7 +253,7 @@ public class AssociationActivity extends BaseActivity {
                         break;
                     case R.id.tv_liuyan:
                     case R.id.rl_all_comment:
-                        ShowCommentPackageDialog(data);
+                        ShowCommentPackageDialog(data,((TextView)view.findViewById(R.id.tv_liuyan)));
                         break;
                 }
             }
@@ -267,7 +267,7 @@ public class AssociationActivity extends BaseActivity {
     }
 
 
-    private void ShowCommentPackageDialog(MomentDetailsBean data) {
+    private void ShowCommentPackageDialog(MomentDetailsBean data,TextView tv_liuyan) {
         DialogCommentPackage choicePackageDialog = new DialogCommentPackage(this,circleId);
         HttpRequestUtils.getCommentMoment1(circleId,data.getMomentId(), data.getPublisherId() + "",1,100,
                 new HttpRequestUtils.ResultInterface() {
@@ -288,16 +288,19 @@ public class AssociationActivity extends BaseActivity {
                     @Override
                     public void succeed(String path) {
                         dismiss();
-                        HttpRequestUtils.getCommentMoment1(circleId,data.getMomentId(), data.getPublisherId() + "",1,100,
-                                new HttpRequestUtils.ResultInterface() {
-                                    @Override
-                                    public void succeed(ResultList<CommentMomentBean> result) {
-                                        if(isDataInfoSucceed(result)){
-                                            data.setCommentCount(data.getCommentCount()+1);
-                                            choicePackageDialog.setNewData(result.getData(),data.getCommentCount()+"");
-                                        }
-                                    }
-                                });
+                        choicePackageDialog.dismissDialog();
+                        data.setCommentCount(data.getCommentCount()+1);
+                        tv_liuyan.setText(data.getCommentCount()+"");
+//                        HttpRequestUtils.getCommentMoment1(circleId,data.getMomentId(), data.getPublisherId() + "",1,100,
+//                                new HttpRequestUtils.ResultInterface() {
+//                                    @Override
+//                                    public void succeed(ResultList<CommentMomentBean> result) {
+//                                        if(isDataInfoSucceed(result)){
+//                                            data.setCommentCount(data.getCommentCount()+1);
+//                                            choicePackageDialog.setNewData(result.getData(),data.getCommentCount()+"");
+//                                        }
+//                                    }
+//                                });
                     }
                 });
             }

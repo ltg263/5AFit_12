@@ -77,6 +77,34 @@ public class DialogCommentPackage {
             CommentMomentBean data = mMineCommentAdapter.getData().get(position);
             switch (view.getId()){
                 case R.id.ll_xh:
+                    if(!circleId.equals("0")){
+                        if(data.isIsLike()){
+                            HttpRequestUtils.postCommentLikeCancel_circle(data.getCommentId()+"", data.getMomentId() + "", new HttpRequestUtils.LoginInterface() {
+                                @Override
+                                public void succeed(String path) {
+                                    if(path.equals("0")){
+                                        ((TextView)view.findViewById(R.id.tv_xh_s)).setText((data.getLikeCount() - 1)+"");
+                                        ((ImageView)view.findViewById(R.id.iv_xh)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.icon_xin_99_d));
+                                        data.setIsLike(false);
+                                        data.setLikeCount(data.getLikeCount()-1);
+                                    }
+                                }
+                            });
+                        }else{
+                            HttpRequestUtils.postCommentLike_circle(data.getCommentId()+"", data.getMomentId() + "", new HttpRequestUtils.LoginInterface() {
+                                @Override
+                                public void succeed(String path) {
+                                    if(path.equals("0")) {
+                                        ((TextView)view.findViewById(R.id.tv_xh_s)).setText((data.getLikeCount() + 1)+"");
+                                        ((ImageView)view.findViewById(R.id.iv_xh)).setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_celect_xh_yes));
+                                        data.setIsLike(true);
+                                        data.setLikeCount(data.getLikeCount() + 1);
+                                    }
+                                }
+                            });
+                        }
+                        return;
+                    }
                     if(data.isIsLike()){
                         HttpRequestUtils.postCommentLikeCancel(data.getCommentId()+"", data.getMomentId() + "", new HttpRequestUtils.LoginInterface() {
                             @Override
@@ -133,6 +161,11 @@ public class DialogCommentPackage {
     public void showDialog() {
         if (dialog != null)
             dialog.show();
+    }
+
+    public void dismissDialog() {
+        if (dialog != null)
+            dialog.dismiss();
     }
 
 

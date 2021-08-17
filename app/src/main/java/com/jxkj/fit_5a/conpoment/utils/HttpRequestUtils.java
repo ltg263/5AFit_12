@@ -526,6 +526,40 @@ public class HttpRequestUtils {
                     }
                 });
     }
+    /**
+     * 用户点赞动态评论
+     */
+    public static void postCommentLike_circle(String commentId,String momentId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postCommentLike_circle(commentId,momentId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("0");
+                        }else{
+                            mLoginInterface.succeed("-1");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 
 
 
@@ -535,6 +569,41 @@ public class HttpRequestUtils {
     public static void postCommentLikeCancel(String commentId,String momentId,LoginInterface mLoginInterface) {
         RetrofitUtil.getInstance().apiService()
                 .postCommentLikeCancel(commentId,momentId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if(result.getCode()==0){
+                            mLoginInterface.succeed("0");
+                        }else{
+                            mLoginInterface.succeed("-1");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mLoginInterface.succeed("-1");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    /**
+     * 用户取消点赞动态评论
+     */
+    public static void postCommentLikeCancel_circle(String commentId,String momentId,LoginInterface mLoginInterface) {
+        RetrofitUtil.getInstance().apiService()
+                .postCommentLikeCancel_circle(commentId,momentId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Result>() {
