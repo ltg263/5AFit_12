@@ -9,6 +9,18 @@ public class PostUser {
 
 
     public static class CreateCircle{
+        @Override
+        public String toString() {
+            return "CreateCircle{" +
+                    "bgImg='" + bgImg + '\'' +
+                    ", deviceType=" + deviceType +
+                    ", explain='" + explain + '\'' +
+                    ", imgUrl='" + imgUrl + '\'' +
+                    ", interestId=" + interestId +
+                    ", name='" + name + '\'' +
+                    ", taskCircleFormDTO=" + taskCircleFormDTO +
+                    '}';
+        }
 
         /**
          * bgImg :
@@ -127,6 +139,16 @@ public class PostUser {
 
             public void setImgUrl(String imgUrl) {
                 this.imgUrl = imgUrl;
+            }
+
+            @Override
+            public String toString() {
+                return "TaskCircleFormDTOBean{" +
+                        "circleTargetId=" + circleTargetId +
+                        ", cycle=" + cycle +
+                        ", explain='" + explain + '\'' +
+                        ", imgUrl='" + imgUrl + '\'' +
+                        '}';
             }
         }
     }

@@ -330,7 +330,7 @@ public class CreateCircleActivity extends BaseActivity {
         dtoBean.setImgUrl(rewardDto.getImgUrl());
         dtoBean.setExplain(rewardDto.getExplain());
         postUser.setTaskCircleFormDTO(dtoBean);
-
+        Log.w("postUser","postUser:"+postUser.toString());
         RetrofitUtil.getInstance().apiService()
                 .getCircleCreate(postUser)
                 .observeOn(AndroidSchedulers.mainThread())

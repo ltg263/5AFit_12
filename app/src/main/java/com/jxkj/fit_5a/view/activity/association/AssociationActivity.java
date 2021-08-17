@@ -2,6 +2,7 @@ package com.jxkj.fit_5a.view.activity.association;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -264,20 +265,24 @@ public class AssociationActivity extends BaseActivity {
         }
 
     }
+
+
     private void ShowCommentPackageDialog(MomentDetailsBean data) {
         DialogCommentPackage choicePackageDialog = new DialogCommentPackage(this,circleId);
         HttpRequestUtils.getCommentMoment1(circleId,data.getMomentId(), data.getPublisherId() + "",1,100,
                 new HttpRequestUtils.ResultInterface() {
             @Override
             public void succeed(ResultList<CommentMomentBean> result) {
-                isDataInfoSucceed(result);
-                choicePackageDialog.setNewData(result.getData(),data.getCommentCount()+"");
+                if(isDataInfoSucceed(result)){
+                    choicePackageDialog.setNewData(result.getData(),data.getCommentCount()+"");
+                }
             }
         });
         choicePackageDialog.setOnCommentPackageDialogListener(new DialogCommentPackage.OnCommentPackageDialogListener() {
             @Override
             public void addListener(String context, String commentId) {
                 show();
+                postCommentMoment1();
                 HttpRequestUtils.postCommentMoment1(circleId,context, data.getMomentId(), data.getPublisherId()+"",
                         commentId, new HttpRequestUtils.LoginInterface() {
                     @Override
@@ -287,9 +292,10 @@ public class AssociationActivity extends BaseActivity {
                                 new HttpRequestUtils.ResultInterface() {
                                     @Override
                                     public void succeed(ResultList<CommentMomentBean> result) {
-                                        isDataInfoSucceed(result);
-                                        data.setCommentCount(data.getCommentCount()+1);
-                                        choicePackageDialog.setNewData(result.getData(),data.getCommentCount()+"");
+                                        if(isDataInfoSucceed(result)){
+                                            data.setCommentCount(data.getCommentCount()+1);
+                                            choicePackageDialog.setNewData(result.getData(),data.getCommentCount()+"");
+                                        }
                                     }
                                 });
                     }
@@ -304,6 +310,11 @@ public class AssociationActivity extends BaseActivity {
         });
         choicePackageDialog.showDialog();
     }
+
+    private void postCommentMoment1() {
+
+    }
+
     @OnClick({R.id.ll_back, R.id.tv_righttext, R.id.iv_rightimg})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -408,6 +419,7 @@ public class AssociationActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.w("onError e","e"+e.toString());
                         dismiss();
                     }
 

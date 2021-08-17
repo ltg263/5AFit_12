@@ -82,7 +82,6 @@ public class LoginBindPhoneActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_login:
-                ThirdLoginUtils.mTencent.logout(this);
                 finish();
                 break;
         }

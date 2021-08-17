@@ -10,7 +10,6 @@ import android.util.Log;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jxkj.fit_5a.app.MainApplication;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
-import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
 import com.tencent.connect.auth.AuthAgent;
 import com.tencent.connect.common.Constants;
 import com.tencent.tauth.DefaultUiListener;
@@ -33,6 +32,9 @@ public class ThirdLoginUtils {
     private static ThirdLoginInterface loginInterface;
     public static void onClickLoginQQweb(Activity mActivity,ThirdLoginInterface loginInterface) {
         ThirdLoginUtils.loginInterface = loginInterface;
+        if(mTencent.isSessionValid()){
+            mTencent.logout(mActivity);
+        }
         if (!mTencent.isSessionValid()) {
             // 强制扫码登录
             mActivity.getIntent().putExtra(AuthAgent.KEY_FORCE_QR_LOGIN, false);
@@ -48,7 +50,7 @@ public class ThirdLoginUtils {
         } else {
             ToastUtils.showShort("QQ登录");
 //            if (isServerSideLogin) { // Server-Side 模式的登录, 先退出，再进行SSO登录
-//                mTencent.logout(this);
+//
 //                mTencent.login(this, "all", loginListener);
 //                isServerSideLogin = false;
 //                Log.d("SDKQQAgentPref", "FirstLaunch_SDK:" + SystemClock.elapsedRealtime());
