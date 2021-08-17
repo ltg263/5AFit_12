@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.jxkj.fit_5a.MainActivity;
 import com.jxkj.fit_5a.R;
 import com.jxkj.fit_5a.api.RetrofitUtil;
 import com.jxkj.fit_5a.base.BaseActivity;
@@ -31,16 +32,20 @@ import com.jxkj.fit_5a.conpoment.utils.MatisseUtils;
 import com.jxkj.fit_5a.conpoment.utils.PictureUtil;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.utils.ThirdLoginUtils;
 import com.jxkj.fit_5a.conpoment.view.AddressPickTask;
 import com.jxkj.fit_5a.conpoment.view.DialogUtils;
 import com.jxkj.fit_5a.conpoment.view.RoundImageView;
 import com.jxkj.fit_5a.entity.LoginUserThirdInfo;
+import com.jxkj.fit_5a.entity.VerifyAppOauthQq;
 import com.jxkj.fit_5a.view.activity.login_other.LoginActivity;
 import com.jxkj.fit_5a.view.activity.login_other.LoginBindPhoneActivity;
 import com.jxkj.fit_5a.view.activity.login_other.SetUserXbActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.tencent.connect.common.Constants;
+import com.tencent.tauth.Tencent;
 
 import java.io.File;
 import java.util.List;
@@ -223,10 +228,17 @@ public class MineInfoActivity extends BaseActivity {
 //                });
                 break;
             case R.id.ll_info_7:
-                IntentUtils.getInstence().intent(MineInfoActivity.this, LoginBindPhoneActivity.class);
-//                DialogUtils.showEditTextDialog(this, 1,"绑定QQ","输入您的QQ", season -> {
-//                    mTvInfo7.setText(season);
-//                });
+
+                if(!ThirdLoginUtils.mTencent.isQQInstalled(this)){
+                    ToastUtils.showShort("未安装QQ");
+                    return;
+                }
+                ThirdLoginUtils.onClickLoginQQweb(this, new ThirdLoginUtils.ThirdLoginInterface() {
+                    @Override
+                    public void loginInterface(String token) {
+                        postVerifyAppOauth(token);
+                    }
+                });
                 break;
             case R.id.ll_info_8:
 //                DialogUtils.showEditTextDialog(this, 0,"绑定微博","输入您的微博", season -> {
@@ -243,6 +255,7 @@ public class MineInfoActivity extends BaseActivity {
                 break;
         }
     }
+
 
     String avatar = null;
     String backImg = null;
@@ -282,6 +295,39 @@ public class MineInfoActivity extends BaseActivity {
                     }
                 });
     }
+
+    private void postVerifyAppOauth(String token) {
+        RetrofitUtil.getInstance().apiService()
+                .postVerifyAppOauth("qqweb",token)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Result<VerifyAppOauthQq>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<VerifyAppOauthQq> result) {
+                        if(isDataInfoSucceed(result)) {
+                            ToastUtils.showShort("绑定成功");
+                            mTvInfo7.setText("已绑定");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+    }
+
     private void getUserBind() {
         RetrofitUtil.getInstance().apiService()
                 .getUserBind()
@@ -353,6 +399,11 @@ public class MineInfoActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Constants.REQUEST_LOGIN ||
+                requestCode == Constants.REQUEST_APPBAR) {
+            Tencent.onActivityResultData(requestCode,resultCode,data,ThirdLoginUtils.loginListener);
+        }
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:

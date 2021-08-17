@@ -15,6 +15,7 @@ import com.jxkj.fit_5a.base.Result;
 import com.jxkj.fit_5a.conpoment.constants.ConstValues;
 import com.jxkj.fit_5a.conpoment.utils.SharedUtils;
 import com.jxkj.fit_5a.conpoment.utils.StringUtil;
+import com.jxkj.fit_5a.conpoment.utils.ThirdLoginUtils;
 import com.jxkj.fit_5a.conpoment.utils.TimeCounter;
 import com.jxkj.fit_5a.entity.LoginInfo;
 
@@ -34,7 +35,10 @@ public class LoginBindPhoneActivity extends BaseActivity {
     EditText mEtInputMm;
     @BindView(R.id.tv_go_yzm)
     TextView mTvGoYzm;
+    @BindView(R.id.tv_login)
+    TextView tv_login;
     private TimeCounter mTimeCounter;
+    String type;
 
     @Override
     protected int getContentView() {
@@ -43,7 +47,10 @@ public class LoginBindPhoneActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-
+        type = getIntent().getStringExtra("type");
+        if(StringUtil.isNotBlank(type) && type.equals("0")){
+            tv_login.setText("重新绑定");
+        }
     }
 
 
@@ -75,7 +82,7 @@ public class LoginBindPhoneActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_login:
-                LoginActivity.mTencent.logout(this);
+                ThirdLoginUtils.mTencent.logout(this);
                 finish();
                 break;
         }

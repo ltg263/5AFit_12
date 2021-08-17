@@ -539,12 +539,12 @@ public interface ApiService {
     /**
      * 获取用户已经绑定过的第三方信息
      */
-    @POST(ConstValues.PORT_5 + "api/v1/user/bind/third/list")
+    @GET(ConstValues.PORT_5 + "api/v1/user/bind/third/list")
     Observable<Result<List<LoginUserThirdInfo>>> getUserBind();
 
 
     /**
-     * 获取视频播放凭证
+     *app 通过qq验证登陆
      */
     @POST(ConstValues.PORT_5 + "api/v1/user/verify/qq/app/{name}/oauth")
     Observable<Result<VerifyAppOauthQq>> postVerifyAppOauth(@Path("name") String name, @Query("accessToken") String accessToken);
